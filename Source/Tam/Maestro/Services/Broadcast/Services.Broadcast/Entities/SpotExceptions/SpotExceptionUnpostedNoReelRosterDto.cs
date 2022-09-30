@@ -16,9 +16,6 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string IngestedBy { get; set; }
         public System.DateTime IngestedAt { get; set; }
         public int ClientSpotLengthId { get; set; }
-        public string CreatedBy { get; set; }
-        public System.DateTime CreatedAt { get; set; }
-        public string ModifiedBy { get; set; }
-        public System.DateTime ModifiedAt { get; set; }
+        public int IngestedMediaWeekId { get; set; }
     }
 }

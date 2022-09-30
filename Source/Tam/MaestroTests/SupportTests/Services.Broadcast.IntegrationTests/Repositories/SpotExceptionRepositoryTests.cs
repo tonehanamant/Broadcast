@@ -77,10 +77,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     ProgramGenre = "INFORMATIONAL/NEWS",
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -158,10 +155,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     ProgramGenre = "COMEDY",
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -234,10 +228,7 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     ProgramGenre = "TALK",
                     IngestedBy= ingestedBy,
                     IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -308,12 +299,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 106,
                     ProgramName = "Funny You Should Ask",
                     ProgramGenre = "GAME SHOW",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -425,27 +413,24 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                  new SpotExceptionsOutOfSpecsDto
                  {
                       Id=1,
-                      ReasonCodeMessage="",
-                      EstimateId= 191756,
-                      IsciName="AB82TXT2H",
-                      RecommendedPlanId= 1196,
-                      ProgramName="Q13 news at 10",
-                      StationLegacyCallLetters="KOB",
-                      SpotLengthId= 1,
-                      AudienceId= 4,
-                      Product="Pizza Hut",
-                      FlightStartDate =  new DateTime(2020, 6, 2),
+                      ReasonCodeMessage = "",
+                      EstimateId = 191756,
+                      IsciName = "AB82TXT2H",
+                      RecommendedPlanId = 1196,
+                      ProgramName = "Q13 news at 10",
+                      StationLegacyCallLetters = "KOB",
+                      SpotLengthId = 1,
+                      AudienceId = 4,
+                      Product = "Pizza Hut",
+                      FlightStartDate = new DateTime(2020, 6, 2),
                       FlightEndDate = new DateTime(2020, 7, 2),
-                      DaypartCode="PT",
-                      GenreName="Horror",
+                      DaypartCode = "PT",
+                      GenreName = "Horror",
                       ProgramNetwork = "",
                       ProgramAirTime = new DateTime(2010,1,4,8,7,15),
-                      IngestedBy=ingestedBy,
-                      IngestedAt=ingestedDateTime,
-                      CreatedBy=ingestedBy,
-                      CreatedAt=ingestedDateTime,
-                      ModifiedBy=ingestedBy,
-                      ModifiedAt=ingestedDateTime,
+                      IngestedBy = ingestedBy,
+                      IngestedAt = ingestedDateTime,
+                      IngestedMediaWeekId = 1,
                       SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                       {
                           Id = 2,
@@ -460,27 +445,24 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                  new SpotExceptionsOutOfSpecsDto
                  {
                       Id = 2,
-                      ReasonCodeMessage="",
-                      EstimateId= 191757,
-                      IsciName="AB82VR58",
-                      RecommendedPlanId= 1197,
-                      ProgramName="FOX 13 10:00 News",
-                      StationLegacyCallLetters="KSTP",
-                      SpotLengthId= 2,
-                      AudienceId= 5,
-                      Product="Spotify",
-                      FlightStartDate =  new DateTime(2018, 7, 2),
+                      ReasonCodeMessage = "",
+                      EstimateId = 191757,
+                      IsciName = "AB82VR58",
+                      RecommendedPlanId = 1197,
+                      ProgramName = "FOX 13 10:00 News",
+                      StationLegacyCallLetters = "KSTP",
+                      SpotLengthId = 2,
+                      AudienceId = 5,
+                      Product = "Spotify",
+                      FlightStartDate = new DateTime(2018, 7, 2),
                       FlightEndDate = new DateTime(2018, 8, 2),
-                      DaypartCode="PT",
-                      GenreName="Horror",
+                      DaypartCode = "PT",
+                      GenreName = "Horror",
                       ProgramNetwork = "",
                       ProgramAirTime = new DateTime(2010,1,4,8,7,15),
-                      IngestedBy=ingestedBy,
-                      IngestedAt=ingestedDateTime,
-                      CreatedBy=ingestedBy,
-                      CreatedAt=ingestedDateTime,
-                      ModifiedBy=ingestedBy,
-                      ModifiedAt=ingestedDateTime,
+                      IngestedBy = ingestedBy,
+                      IngestedAt = ingestedDateTime,
+                      IngestedMediaWeekId = 1,
                       SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                       {
                           Id = 3,
@@ -495,27 +477,24 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                  new SpotExceptionsOutOfSpecsDto
                  {
                       Id = 3,
-                      ReasonCodeMessage="",
-                      EstimateId= 191758,
-                      IsciName="AB44NR58",
-                      RecommendedPlanId= 1198,
-                      ProgramName="TEN O'CLOCK NEWS",
-                      StationLegacyCallLetters="KHGI",
-                      SpotLengthId= 3,
-                      AudienceId= 6,
-                      Product="Spotify",
-                      FlightStartDate =  new DateTime(2018, 7, 2),
+                      ReasonCodeMessage = "",
+                      EstimateId = 191758,
+                      IsciName = "AB44NR58",
+                      RecommendedPlanId = 1198,
+                      ProgramName = "TEN O'CLOCK NEWS",
+                      StationLegacyCallLetters = "KHGI",
+                      SpotLengthId = 3,
+                      AudienceId = 6,
+                      Product = "Spotify",
+                      FlightStartDate = new DateTime(2018, 7, 2),
                       FlightEndDate = new DateTime(2018, 8, 2),
-                      DaypartCode="PT",
-                      GenreName="Horror",
+                      DaypartCode = "PT",
+                      GenreName = "Horror",
                       ProgramNetwork = "",
                       ProgramAirTime = new DateTime(2010,1,11,8,7,15),
-                      IngestedBy=ingestedBy,
-                      IngestedAt=ingestedDateTime,
-                      CreatedBy=ingestedBy,
-                      CreatedAt=ingestedDateTime,
-                      ModifiedBy=ingestedBy,
-                      ModifiedAt=ingestedDateTime,
+                      IngestedBy = ingestedBy,
+                      IngestedAt = ingestedDateTime,
+                      IngestedMediaWeekId = 1,
                       SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                       {
                           Id = 4,
@@ -577,12 +556,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 33,
                     ProgramName = "CBS Mornings",
                     ProgramGenre = "INFORMATIONAL/NEWS",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -688,12 +664,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 33,
                     ProgramName = "CBS Mornings",
                     ProgramGenre = "INFORMATIONAL/NEWS",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -792,12 +765,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 33,
                     ProgramName = "CBS Mornings",
                     ProgramGenre = "INFORMATIONAL/NEWS",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -872,12 +842,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 3873,
                     ProgramName = "Mike & Molly",
                     ProgramGenre = "COMEDY",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -947,12 +914,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 11,
                     ProgramName = "LIVE with Kelly and Ryan",
                     ProgramGenre = "TALK",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto
@@ -1022,12 +986,9 @@ namespace Services.Broadcast.IntegrationTests.Repositories
                     MarketRank = 106,
                     ProgramName = "Funny You Should Ask",
                     ProgramGenre = "GAME SHOW",
-                    IngestedBy= ingestedBy,
-                    IngestedAt= ingestedDateTime,
-                    CreatedBy = ingestedBy,
-                    CreatedAt = ingestedDateTime,
-                    ModifiedBy = ingestedBy,
-                    ModifiedAt = ingestedDateTime,
+                    IngestedBy = ingestedBy,
+                    IngestedAt = ingestedDateTime,
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
                     {
                         new SpotExceptionsRecommendedPlanDetailsDto

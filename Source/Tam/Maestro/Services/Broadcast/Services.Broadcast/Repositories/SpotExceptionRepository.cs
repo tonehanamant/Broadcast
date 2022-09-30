@@ -251,15 +251,13 @@ namespace Services.Broadcast.Repositories
                         program_genre = recommendedPlan.ProgramGenre,
                         ingested_by = recommendedPlan.IngestedBy,
                         ingested_at = recommendedPlan.IngestedAt,
-                        created_by = recommendedPlan.CreatedBy,
-                        created_at = recommendedPlan.CreatedAt,
-                        modified_by = recommendedPlan.ModifiedBy,
-                        modified_at = recommendedPlan.ModifiedAt,
+                        ingested_media_week_id = recommendedPlan.IngestedMediaWeekId,
                         spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails
                             .Select(recommendedPlanDetails =>
                             {
                                 var spotExceptionsRecommendedPlanDetail = new spot_exceptions_recommended_plan_details()
                                 {
+                                    spot_exceptions_recommended_plan_id = recommendedPlan.Id,
                                     recommended_plan_id = recommendedPlanDetails.RecommendedPlanId,
                                     execution_trace_id = recommendedPlanDetails.ExecutionTraceId,
                                     rate = recommendedPlanDetails.Rate,
@@ -278,11 +276,14 @@ namespace Services.Broadcast.Repositories
                                     friday = recommendedPlanDetails.Friday,
                                     saturday = recommendedPlanDetails.Saturday,
                                     sunday = recommendedPlanDetails.Sunday,
-                                    plan_spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
-                                    plan_execution_id_external = recommendedPlan.ExecutionIdExternal,
-                                    spot_delivered_impression = recommendedPlanDetails.SpotDeliveredImpressions,
+                                    spot_delivered_impressions = recommendedPlanDetails.SpotDeliveredImpressions,
                                     plan_total_contracted_impressions = recommendedPlanDetails.PlanTotalContractedImpressions,
-                                    plan_total_delivered_impressions = recommendedPlanDetails.PlanTotalDeliveredImpressions
+                                    plan_total_delivered_impressions = recommendedPlanDetails.PlanTotalDeliveredImpressions,
+                                    ingested_by = recommendedPlanDetails.IngestedBy,
+                                    ingested_at = recommendedPlanDetails.IngestedAt,
+                                    ingested_media_week_id = recommendedPlanDetails.IngestedMediaWeekId,
+                                    spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
+                                    execution_id_external = recommendedPlan.ExecutionIdExternal
                                 };
                                 if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
                                 {
@@ -332,10 +333,7 @@ namespace Services.Broadcast.Repositories
                         market_rank = outOfSpecs.MarketRank,
                         ingested_by = outOfSpecs.IngestedBy,
                         ingested_at = outOfSpecs.IngestedAt,
-                        created_by = outOfSpecs.CreatedBy,
-                        created_at = outOfSpecs.CreatedAt,
-                        modified_by = outOfSpecs.ModifiedBy,
-                        modified_at = outOfSpecs.ModifiedAt,
+                        ingested_media_week_id = outOfSpecs.IngestedMediaWeekId,
                         inventory_source_name = outOfSpecs.InventorySourceName
                     };
                     if (outOfSpecs.SpotExceptionsOutOfSpecDecision != null)
@@ -523,10 +521,7 @@ namespace Services.Broadcast.Repositories
                 ProgramAirTime = spotExceptionsOutOfSpecEntity.program_air_time,
                 IngestedBy = spotExceptionsOutOfSpecEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecEntity.ingested_at,
-                CreatedBy = spotExceptionsOutOfSpecEntity.created_by,
-                CreatedAt = spotExceptionsOutOfSpecEntity.created_at,
-                ModifiedBy = spotExceptionsOutOfSpecEntity.modified_by,
-                ModifiedAt = spotExceptionsOutOfSpecEntity.modified_at,
+                IngestedMediaWeekId = spotExceptionsOutOfSpecEntity.ingested_media_week_id,
                 Impressions = spotExceptionsOutOfSpecEntity.impressions,
                 PlanId = spotExceptionsOutOfSpecEntity.recommended_plan_id ?? 0,
                 FlightStartDate = planVersion?.flight_start_date,
@@ -668,7 +663,7 @@ namespace Services.Broadcast.Repositories
                         Friday = spotExceptionsRecommendedPlanDetailDb.friday,
                         Saturday = spotExceptionsRecommendedPlanDetailDb.saturday,
                         Sunday = spotExceptionsRecommendedPlanDetailDb.sunday,
-                        SpotDeliveredImpressions = spotExceptionsRecommendedPlanDetailDb.spot_delivered_impression,
+                        SpotDeliveredImpressions = spotExceptionsRecommendedPlanDetailDb.spot_delivered_impressions,
                         PlanTotalContractedImpressions = spotExceptionsRecommendedPlanDetailDb.plan_total_contracted_impressions,
                         PlanTotalDeliveredImpressions = spotExceptionsRecommendedPlanDetailDb.plan_total_delivered_impressions,
                         RecommendedPlanDetail = new RecommendedPlanDetailDto
@@ -818,10 +813,7 @@ namespace Services.Broadcast.Repositories
                         program_genre = recommendedPlan.ProgramGenre,
                         ingested_by = recommendedPlan.IngestedBy,
                         ingested_at = recommendedPlan.IngestedAt,
-                        created_by = recommendedPlan.CreatedBy,
-                        created_at = recommendedPlan.CreatedAt,
-                        modified_by = recommendedPlan.ModifiedBy,
-                        modified_at = recommendedPlan.ModifiedAt,
+                        ingested_media_week_id = recommendedPlan.IngestedMediaWeekId,
                         spot_exceptions_recommended_plan_details = recommendedPlan.SpotExceptionsRecommendedPlanDetails
                             .Select(recommendedPlanDetails =>
                             {
@@ -845,8 +837,11 @@ namespace Services.Broadcast.Repositories
                                     friday = recommendedPlanDetails.Friday,
                                     saturday = recommendedPlanDetails.Saturday,
                                     sunday = recommendedPlanDetails.Sunday,
-                                    plan_spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
-                                    plan_execution_id_external = recommendedPlan.ExecutionIdExternal
+                                    ingested_by = recommendedPlanDetails.IngestedBy,
+                                    ingested_at = recommendedPlanDetails.IngestedAt,
+                                    ingested_media_week_id = recommendedPlanDetails.IngestedMediaWeekId,
+                                    spot_unique_hash_external = recommendedPlan.SpotUniqueHashExternal,
+                                    execution_id_external = recommendedPlan.ExecutionIdExternal
                                 };
                                 if (recommendedPlanDetails.SpotExceptionsRecommendedPlanDecision != null)
                                 {
@@ -895,10 +890,7 @@ namespace Services.Broadcast.Repositories
                     program_air_time = outOfSpecs.ProgramAirTime,
                     ingested_by = outOfSpecs.IngestedBy,
                     ingested_at = outOfSpecs.IngestedAt,
-                    created_by = outOfSpecs.CreatedBy,
-                    created_at = outOfSpecs.CreatedAt,
-                    modified_by = outOfSpecs.ModifiedBy,
-                    modified_at = outOfSpecs.ModifiedAt,
+                    ingested_media_week_id = outOfSpecs.IngestedMediaWeekId,
                     execution_id_external = executionId.ToString(),
                     spot_unique_hash_external = outOfSpecs.SpotUniqueHashExternal,
                     house_isci = outOfSpecs.HouseIsci,

@@ -222,9 +222,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_out_of_spec_reason_codes> spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual DbSet<custom_daypart_organizations> custom_daypart_organizations { get; set; }
         public virtual DbSet<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
-        public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
-        public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
-        public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
         public virtual DbSet<plan_version_daypart_goals> plan_version_daypart_goals { get; set; }
         public virtual DbSet<plan_version_daypart_available_markets> plan_version_daypart_available_markets { get; set; }
         public virtual DbSet<plan_version_daypart_flight_days> plan_version_daypart_flight_days { get; set; }
@@ -240,17 +237,21 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<fluidity_categories> fluidity_categories { get; set; }
         public virtual DbSet<plan_iscis> plan_iscis { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
-        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }
-        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
         public virtual DbSet<schedule> schedules { get; set; }
-        public virtual DbSet<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
-        public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
-        public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
-        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
         public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<campaign_plan_secondary_audiences> campaign_plan_secondary_audiences { get; set; }
         public virtual DbSet<stations_secondary_affiliations> stations_secondary_affiliations { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
+        public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
+        public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
+        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
+        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
+        public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
+        public virtual DbSet<staged_unposted_no_plan> staged_unposted_no_plan { get; set; }
+        public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
         public virtual DbSet<program_genres> program_genres { get; set; }
     }
 }

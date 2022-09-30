@@ -39,11 +39,14 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> friday { get; set; }
         public Nullable<int> saturday { get; set; }
         public Nullable<int> sunday { get; set; }
-        public string plan_spot_unique_hash_external { get; set; }
-        public string plan_execution_id_external { get; set; }
-        public Nullable<double> spot_delivered_impression { get; set; }
+        public Nullable<double> spot_delivered_impressions { get; set; }
         public Nullable<double> plan_total_contracted_impressions { get; set; }
         public Nullable<double> plan_total_delivered_impressions { get; set; }
+        public int ingested_media_week_id { get; set; }
+        public string ingested_by { get; set; }
+        public System.DateTime ingested_at { get; set; }
+        public string spot_unique_hash_external { get; set; }
+        public string execution_id_external { get; set; }
     
         public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }

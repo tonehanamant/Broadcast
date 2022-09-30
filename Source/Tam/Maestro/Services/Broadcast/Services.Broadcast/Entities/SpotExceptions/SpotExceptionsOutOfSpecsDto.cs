@@ -31,11 +31,8 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public DateTime ProgramAirTime { get; set; }
         public string IngestedBy { get; set; }
         public DateTime IngestedAt { get; set; }
-        public string ModifiedBy { get; set; }
-        public DateTime ModifiedAt { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime CreatedAt { get; set; }
         public double Impressions { get; set; }
+        public int IngestedMediaWeekId { get; set; }
         public int PlanId { get; set; }
         public SpotExceptionsOutOfSpecDecisionsDto SpotExceptionsOutOfSpecDecision { get; set; } = new SpotExceptionsOutOfSpecDecisionsDto();
         public SpotExceptionsOutOfSpecReasonCodeDto SpotExceptionsOutOfSpecReasonCode { get; set; } = new SpotExceptionsOutOfSpecReasonCodeDto();

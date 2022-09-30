@@ -12,15 +12,16 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class spot_exceptions_unposted_no_reel_roster
+    public partial class staged_unposted_no_plan
     {
         public int id { get; set; }
         public string house_isci { get; set; }
-        public int count { get; set; }
+        public string client_isci { get; set; }
+        public int client_spot_length { get; set; }
+        public int spot_count { get; set; }
         public System.DateTime program_air_time { get; set; }
         public long estimate_id { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public int ingested_media_week_id { get; set; }
     }
 }

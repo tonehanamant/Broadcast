@@ -2460,14 +2460,11 @@
           <Property Name="house_isci" Type="varchar" MaxLength="100" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="created_at" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="modified_at" Type="datetime" Nullable="false" />
           <Property Name="comment" Type="nvarchar" MaxLength="1024" />
           <Property Name="daypart_code" Type="nvarchar" MaxLength="20" />
           <Property Name="genre_name" Type="nvarchar" MaxLength="40" />
           <Property Name="inventory_source_name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_media_week_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
@@ -2505,11 +2502,14 @@
           <Property Name="friday" Type="int" />
           <Property Name="saturday" Type="int" />
           <Property Name="sunday" Type="int" />
-          <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="spot_delivered_impression" Type="float" />
+          <Property Name="spot_delivered_impressions" Type="float" />
           <Property Name="plan_total_contracted_impressions" Type="float" />
           <Property Name="plan_total_delivered_impressions" Type="float" />
+          <Property Name="ingested_media_week_id" Type="int" Nullable="false" />
+          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime" Nullable="false" />
+          <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plans">
           <Key>
@@ -2533,10 +2533,7 @@
           <Property Name="program_genre" Type="varchar" MaxLength="127" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="created_at" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="modified_at" Type="datetime" Nullable="false" />
+          <Property Name="ingested_media_week_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_plan">
           <Key>
@@ -2551,10 +2548,7 @@
           <Property Name="estimate_id" Type="bigint" Nullable="false" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="created_at" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="modified_at" Type="datetime" Nullable="false" />
+          <Property Name="ingested_media_week_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_reel_roster">
           <Key>
@@ -2567,10 +2561,7 @@
           <Property Name="estimate_id" Type="bigint" Nullable="false" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
-          <Property Name="created_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="created_at" Type="datetime" Nullable="false" />
-          <Property Name="modified_by" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="modified_at" Type="datetime" Nullable="false" />
+          <Property Name="ingested_media_week_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="spot_length_cost_multipliers">
           <Key>
@@ -2702,11 +2693,13 @@
           <Property Name="sunday" Type="int" />
           <Property Name="contracted_impressions" Type="float" />
           <Property Name="delivered_impressions" Type="float" />
-          <Property Name="plan_spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="plan_execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="spot_delivered_impression" Type="float" />
           <Property Name="plan_total_contracted_impressions" Type="float" />
           <Property Name="plan_total_delivered_impressions" Type="float" />
+          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime" Nullable="false" />
+          <Property Name="spot_unique_hash_external" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="staged_recommended_plans">
           <Key>
@@ -2729,6 +2722,20 @@
           <Property Name="market_rank" Type="int" />
           <Property Name="program_name" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="program_genre" Type="varchar" MaxLength="127" />
+          <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ingested_at" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staged_unposted_no_plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="house_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="client_isci" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="client_spot_length" Type="int" Nullable="false" />
+          <Property Name="spot_count" Type="int" Nullable="false" />
+          <Property Name="program_air_time" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="estimate_id" Type="bigint" Nullable="false" />
           <Property Name="ingested_by" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
         </EntityType>
@@ -7747,6 +7754,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="staged_out_of_specs" EntityType="Self.staged_out_of_specs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staged_recommended_plan_details" EntityType="Self.staged_recommended_plan_details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staged_recommended_plans" EntityType="Self.staged_recommended_plans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="staged_unposted_no_plan" EntityType="Self.staged_unposted_no_plan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="staged_unposted_no_reel_roster" EntityType="Self.staged_unposted_no_reel_roster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="standard_dayparts" EntityType="Self.standard_dayparts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="station_contacts" EntityType="Self.station_contacts" Schema="dbo" store:Type="Tables" />
@@ -10513,9 +10521,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
             <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
           </AssociationSet>
-          <EntitySet Name="staged_unposted_no_reel_roster" EntityType="BroadcastModel.staged_unposted_no_reel_roster" />
-          <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" />
-          <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" />
           <EntitySet Name="plan_version_daypart_goals" EntityType="BroadcastModel.plan_version_daypart_goals" />
           <AssociationSet Name="FK_plan_version_daypart_goals_plan_version_dayparts" Association="BroadcastModel.FK_plan_version_daypart_goals_plan_version_dayparts">
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
@@ -10703,29 +10708,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_iscis" EntitySet="plan_iscis" />
           </AssociationSet>
           <EntitySet Name="spot_exceptions_out_of_spec_decisions" EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" />
-          <EntitySet Name="spot_exceptions_out_of_specs" EntityType="BroadcastModel.spot_exceptions_out_of_specs" />
           <EntitySet Name="spot_exceptions_recommended_plan_decision" EntityType="BroadcastModel.spot_exceptions_recommended_plan_decision" />
-          <EntitySet Name="staged_out_of_specs" EntityType="BroadcastModel.staged_out_of_specs" />
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_audiences" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences">
-            <End Role="audience" EntitySet="audiences" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_plans" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs">
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-            <End Role="spot_exceptions_out_of_spec_decisions" EntitySet="spot_exceptions_out_of_spec_decisions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
-            <End Role="spot_exceptions_out_of_spec_reason_codes" EntitySet="spot_exceptions_out_of_spec_reason_codes" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_lengths" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
           <EntitySet Name="schedules" EntityType="BroadcastModel.schedule" />
           <AssociationSet Name="FK_schedules_media_months" Association="BroadcastModel.FK_schedules_media_months">
             <End Role="media_months" EntitySet="media_months" />
@@ -10750,30 +10733,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="schedule_restriction_markets" Association="BroadcastModel.schedule_restriction_markets">
             <End Role="market" EntitySet="markets" />
             <End Role="schedule" EntitySet="schedules" />
-          </AssociationSet>
-          <EntitySet Name="spot_exceptions_recommended_plan_details" EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" />
-          <EntitySet Name="spot_exceptions_recommended_plans" EntityType="BroadcastModel.spot_exceptions_recommended_plans" />
-          <EntitySet Name="staged_recommended_plans" EntityType="BroadcastModel.staged_recommended_plans" />
-          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details">
-            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
-            <End Role="spot_exceptions_recommended_plan_decision" EntitySet="spot_exceptions_recommended_plan_decision" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans">
-            <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
-            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_recommended_plans_spot_lengths" Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths">
-            <End Role="spot_lengths" EntitySet="spot_lengths" />
-            <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
-          </AssociationSet>
-          <EntitySet Name="staged_recommended_plan_details" EntityType="BroadcastModel.staged_recommended_plan_details" />
-          <AssociationSet Name="FK_staged_recommended_plan_details_staged_recommended_plans" Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans">
-            <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
-            <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
           </AssociationSet>
           <EntitySet Name="programs" EntityType="BroadcastModel.program" />
           <AssociationSet Name="FK_programs_genres" Association="BroadcastModel.FK_programs_genres">
@@ -10803,6 +10762,56 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="stations_secondary_affiliations" EntitySet="stations_secondary_affiliations" />
           </AssociationSet>
           <EntitySet Name="program_genres" EntityType="BroadcastModel.program_genres" />
+          <EntitySet Name="spot_exceptions_out_of_specs" EntityType="BroadcastModel.spot_exceptions_out_of_specs" />
+          <EntitySet Name="spot_exceptions_recommended_plan_details" EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" />
+          <EntitySet Name="spot_exceptions_recommended_plans" EntityType="BroadcastModel.spot_exceptions_recommended_plans" />
+          <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" />
+          <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="BroadcastModel.spot_exceptions_unposted_no_reel_roster" />
+          <EntitySet Name="staged_out_of_specs" EntityType="BroadcastModel.staged_out_of_specs" />
+          <EntitySet Name="staged_recommended_plan_details" EntityType="BroadcastModel.staged_recommended_plan_details" />
+          <EntitySet Name="staged_recommended_plans" EntityType="BroadcastModel.staged_recommended_plans" />
+          <EntitySet Name="staged_unposted_no_plan" EntityType="BroadcastModel.staged_unposted_no_plan" />
+          <EntitySet Name="staged_unposted_no_reel_roster" EntityType="BroadcastModel.staged_unposted_no_reel_roster" />
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_audiences" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences">
+            <End Role="audience" EntitySet="audiences" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_plans" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs">
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+            <End Role="spot_exceptions_out_of_spec_decisions" EntitySet="spot_exceptions_out_of_spec_decisions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
+            <End Role="spot_exceptions_out_of_spec_reason_codes" EntitySet="spot_exceptions_out_of_spec_reason_codes" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_lengths" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details">
+            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
+            <End Role="spot_exceptions_recommended_plan_decision" EntitySet="spot_exceptions_recommended_plan_decision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans">
+            <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
+            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_recommended_plans_spot_lengths" Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_staged_recommended_plan_details_staged_recommended_plans" Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans">
+            <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
+            <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -10856,8 +10865,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_audiences" FromRole="audience" ToRole="inventory_proprietary_summary_station_audiences" />
           <NavigationProperty Name="plan_version_audience_daypart_vpvh" Relationship="BroadcastModel.FK_plan_version_audience_daypart_vpvh_audiences" FromRole="audience" ToRole="plan_version_audience_daypart_vpvh" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_audiences" FromRole="audience" ToRole="plan_versions" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="audience" ToRole="spot_exceptions_out_of_specs" />
           <NavigationProperty Name="campaign_plan_secondary_audiences" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_audiences" FromRole="audience" ToRole="campaign_plan_secondary_audiences" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="audience" ToRole="spot_exceptions_out_of_specs" />
           </EntityType>
         <EntityType Name="daypart">
           <Key>
@@ -14279,10 +14288,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="deleted_at" Type="DateTime" Precision="7" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan" ToRole="plan_versions" />
           <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
           <Property Name="unified_tactic_line_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
@@ -17492,52 +17501,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="staged_unposted_no_reel_roster">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="spot_count" Type="Int32" Nullable="false" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="estimate_id" Type="Int64" Nullable="false" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="spot_exceptions_unposted_no_plan">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="count" Type="Int32" Nullable="false" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estimate_id" Type="Int64" Nullable="false" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="client_spot_length_id" Type="Int32" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="spot_exceptions_unposted_no_reel_roster">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="count" Type="Int32" Nullable="false" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estimate_id" Type="Int64" Nullable="false" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="plan_version_daypart_goals">
           <Key>
             <PropertyRef Name="id" />
@@ -18427,44 +18390,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="daypart_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_spec_decisions" ToRole="spot_exceptions_out_of_specs" />
         </EntityType>
-        <EntityType Name="spot_exceptions_out_of_specs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="recommended_plan_id" Type="Int32" />
-          <Property Name="program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="spot_length_id" Type="Int32" />
-          <Property Name="audience_id" Type="Int32" />
-          <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="reason_code_id" Type="Int32" Nullable="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="market_code" Type="Int32" />
-          <Property Name="market_rank" Type="Int32" />
-          <Property Name="house_isci" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="genre_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="daypart_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="inventory_source_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
-          <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
-          <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
-        </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_decision">
           <Key>
             <PropertyRef Name="id" />
@@ -18478,107 +18403,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="accepted_as_in_spec" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" FromRole="spot_exceptions_recommended_plan_decision" ToRole="spot_exceptions_recommended_plan_details" />
         </EntityType>
-        <EntityType Name="staged_out_of_specs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="inventory_source" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="client_spot_length" Type="Int32" Nullable="false" />
-          <Property Name="broadcast_aired_date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="aired_time" Type="Int32" Nullable="false" />
-          <Property Name="station_legacy_call_letters" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="affiliate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int32" />
-          <Property Name="market_rank" Type="Int32" />
-          <Property Name="rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="audience_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="impressions" Type="Double" Nullable="false" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="reason_code" Type="Int32" Nullable="false" />
-          <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="lead_in_program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="lead_out_program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="plan_id" Type="Int32" Nullable="false" />
-          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="start_time" Type="Int32" />
-          <Property Name="end_time" Type="Int32" />
-          <Property Name="monday" Type="Int32" />
-          <Property Name="tuesday" Type="Int32" />
-          <Property Name="wednesday" Type="Int32" />
-          <Property Name="thursday" Type="Int32" />
-          <Property Name="friday" Type="Int32" />
-          <Property Name="saturday" Type="Int32" />
-          <Property Name="sunday" Type="Int32" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <Association Name="FK_spot_exceptions_out_of_specs_audiences">
-          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="audience">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs">
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_spec_decisions" Role="spot_exceptions_out_of_spec_decisions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_spec_decisions">
-              <PropertyRef Name="spot_exceptions_out_of_spec_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
-          <End Type="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Role="spot_exceptions_out_of_spec_reason_codes" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_exceptions_out_of_spec_reason_codes">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="reason_code_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="schedule">
           <Key>
             <PropertyRef Name="id" />
@@ -18676,184 +18500,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
         <Association Name="schedule_restriction_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="*" />
           <End Type="BroadcastModel.schedule" Role="schedule" Multiplicity="*" />
-        </Association>
-        <EntityType Name="spot_exceptions_recommended_plan_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_exceptions_recommended_plan_id" Type="Int32" Nullable="false" />
-          <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
-          <Property Name="execution_trace_id" Type="Int64" Nullable="false" />
-          <Property Name="rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="audience_name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="contracted_impressions" Type="Double" />
-          <Property Name="delivered_impressions" Type="Double" />
-          <Property Name="is_recommended_plan" Type="Boolean" Nullable="false" />
-          <Property Name="plan_clearance_percentage" Type="Double" />
-          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="start_time" Type="Int32" />
-          <Property Name="end_time" Type="Int32" />
-          <Property Name="monday" Type="Int32" />
-          <Property Name="tuesday" Type="Int32" />
-          <Property Name="wednesday" Type="Int32" />
-          <Property Name="thursday" Type="Int32" />
-          <Property Name="friday" Type="Int32" />
-          <Property Name="saturday" Type="Int32" />
-          <Property Name="sunday" Type="Int32" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="plan" />
-          <NavigationProperty Name="spot_exceptions_recommended_plan_decision" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plan_decision" />
-          <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plans" />
-          <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="spot_delivered_impression" Type="Double" />
-          <Property Name="plan_total_contracted_impressions" Type="Double" />
-          <Property Name="plan_total_delivered_impressions" Type="Double" />
-        </EntityType>
-        <EntityType Name="spot_exceptions_recommended_plans">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ambiguity_code" Type="Int32" Nullable="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="inventory_source" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="spot_length_id" Type="Int32" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="station_legacy_call_letters" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="affiliate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int32" />
-          <Property Name="market_rank" Type="Int32" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="created_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plans" ToRole="spot_exceptions_recommended_plan_details" />
-          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" FromRole="spot_exceptions_recommended_plans" ToRole="spot_lengths" />
-        </EntityType>
-        <EntityType Name="staged_recommended_plans">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ambiguity_code" Type="Int32" Nullable="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="estimate_id" Type="Int32" Nullable="false" />
-          <Property Name="inventory_source" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="client_spot_length" Type="Int32" Nullable="false" />
-          <Property Name="broadcast_aired_date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="aired_time" Type="Int32" Nullable="false" />
-          <Property Name="station_legacy_call_letters" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="affiliate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="market_code" Type="Int32" />
-          <Property Name="market_rank" Type="Int32" />
-          <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="staged_recommended_plan_details" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plans" ToRole="staged_recommended_plan_details" />
-        </EntityType>
-        <Association Name="FK_spot_exceptions_recommended_plan_details_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_recommended_plan_details">
-              <PropertyRef Name="recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details">
-          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_recommended_plan_decision" Role="spot_exceptions_recommended_plan_decision" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_exceptions_recommended_plan_details">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_recommended_plan_decision">
-              <PropertyRef Name="spot_exceptions_recommended_plan_detail_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans">
-          <End Type="BroadcastModel.spot_exceptions_recommended_plans" Role="spot_exceptions_recommended_plans" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_exceptions_recommended_plans">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_recommended_plan_details">
-              <PropertyRef Name="spot_exceptions_recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_recommended_plans_spot_lengths">
-          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_recommended_plans" Role="spot_exceptions_recommended_plans" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="spot_lengths">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_recommended_plans">
-              <PropertyRef Name="spot_length_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="staged_recommended_plan_details">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="staged_recommended_plan_id" Type="Int32" Nullable="false" />
-          <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
-          <Property Name="execution_trace_id" Type="Int64" Nullable="false" />
-          <Property Name="rate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="audience_name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
-          <Property Name="is_recommended_plan" Type="Boolean" Nullable="false" />
-          <Property Name="plan_clearance_percentage" Type="Double" />
-          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="start_time" Type="Int32" />
-          <Property Name="end_time" Type="Int32" />
-          <Property Name="monday" Type="Int32" />
-          <Property Name="tuesday" Type="Int32" />
-          <Property Name="wednesday" Type="Int32" />
-          <Property Name="thursday" Type="Int32" />
-          <Property Name="friday" Type="Int32" />
-          <Property Name="saturday" Type="Int32" />
-          <Property Name="sunday" Type="Int32" />
-          <Property Name="contracted_impressions" Type="Double" />
-          <Property Name="delivered_impressions" Type="Double" />
-          <NavigationProperty Name="staged_recommended_plans" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plan_details" ToRole="staged_recommended_plans" />
-          <Property Name="plan_spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="plan_execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="spot_delivered_impression" Type="Double" />
-          <Property Name="plan_total_contracted_impressions" Type="Double" />
-          <Property Name="plan_total_delivered_impressions" Type="Double" />
-        </EntityType>
-        <Association Name="FK_staged_recommended_plan_details_staged_recommended_plans">
-          <End Type="BroadcastModel.staged_recommended_plans" Role="staged_recommended_plans" Multiplicity="1" />
-          <End Type="BroadcastModel.staged_recommended_plan_details" Role="staged_recommended_plan_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="staged_recommended_plans">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="staged_recommended_plan_details">
-              <PropertyRef Name="staged_recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         <EntityType Name="program">
           <Key>
@@ -18955,6 +18601,376 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="stations_secondary_affiliations">
               <PropertyRef Name="stations_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="spot_exceptions_out_of_specs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="recommended_plan_id" Type="Int32" />
+          <Property Name="program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="spot_length_id" Type="Int32" />
+          <Property Name="audience_id" Type="Int32" />
+          <Property Name="program_network" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="reason_code_id" Type="Int32" Nullable="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="market_code" Type="Int32" />
+          <Property Name="market_rank" Type="Int32" />
+          <Property Name="house_isci" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="daypart_code" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="genre_name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="inventory_source_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
+          <NavigationProperty Name="spot_exceptions_out_of_spec_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_decisions" />
+          <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_recommended_plan_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_exceptions_recommended_plan_id" Type="Int32" Nullable="false" />
+          <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
+          <Property Name="execution_trace_id" Type="Int64" Nullable="false" />
+          <Property Name="rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="audience_name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="contracted_impressions" Type="Double" />
+          <Property Name="delivered_impressions" Type="Double" />
+          <Property Name="is_recommended_plan" Type="Boolean" Nullable="false" />
+          <Property Name="plan_clearance_percentage" Type="Double" />
+          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Int32" />
+          <Property Name="end_time" Type="Int32" />
+          <Property Name="monday" Type="Int32" />
+          <Property Name="tuesday" Type="Int32" />
+          <Property Name="wednesday" Type="Int32" />
+          <Property Name="thursday" Type="Int32" />
+          <Property Name="friday" Type="Int32" />
+          <Property Name="saturday" Type="Int32" />
+          <Property Name="sunday" Type="Int32" />
+          <Property Name="spot_delivered_impressions" Type="Double" />
+          <Property Name="plan_total_contracted_impressions" Type="Double" />
+          <Property Name="plan_total_delivered_impressions" Type="Double" />
+          <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="plan" />
+          <NavigationProperty Name="spot_exceptions_recommended_plan_decision" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plan_decision" />
+          <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plans" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_recommended_plans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ambiguity_code" Type="Int32" Nullable="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="spot_length_id" Type="Int32" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="station_legacy_call_letters" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="affiliate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int32" />
+          <Property Name="market_rank" Type="Int32" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plans" ToRole="spot_exceptions_recommended_plan_details" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" FromRole="spot_exceptions_recommended_plans" ToRole="spot_lengths" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_unposted_no_plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client_spot_length_id" Type="Int32" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estimate_id" Type="Int64" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_unposted_no_reel_roster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estimate_id" Type="Int64" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="staged_out_of_specs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="client_spot_length" Type="Int32" Nullable="false" />
+          <Property Name="broadcast_aired_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="aired_time" Type="Int32" Nullable="false" />
+          <Property Name="station_legacy_call_letters" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="affiliate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int32" />
+          <Property Name="market_rank" Type="Int32" />
+          <Property Name="rate" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="audience_name" Type="String" Nullable="false" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="impressions" Type="Double" Nullable="false" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="reason_code" Type="Int32" Nullable="false" />
+          <Property Name="reason_code_message" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="lead_in_program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="lead_out_program_name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Int32" />
+          <Property Name="end_time" Type="Int32" />
+          <Property Name="monday" Type="Int32" />
+          <Property Name="tuesday" Type="Int32" />
+          <Property Name="wednesday" Type="Int32" />
+          <Property Name="thursday" Type="Int32" />
+          <Property Name="friday" Type="Int32" />
+          <Property Name="saturday" Type="Int32" />
+          <Property Name="sunday" Type="Int32" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="staged_recommended_plan_details">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="staged_recommended_plan_id" Type="Int32" Nullable="false" />
+          <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
+          <Property Name="execution_trace_id" Type="Int64" Nullable="false" />
+          <Property Name="rate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="audience_name" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="is_recommended_plan" Type="Boolean" Nullable="false" />
+          <Property Name="plan_clearance_percentage" Type="Double" />
+          <Property Name="daypart_code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="Int32" />
+          <Property Name="end_time" Type="Int32" />
+          <Property Name="monday" Type="Int32" />
+          <Property Name="tuesday" Type="Int32" />
+          <Property Name="wednesday" Type="Int32" />
+          <Property Name="thursday" Type="Int32" />
+          <Property Name="friday" Type="Int32" />
+          <Property Name="saturday" Type="Int32" />
+          <Property Name="sunday" Type="Int32" />
+          <Property Name="contracted_impressions" Type="Double" />
+          <Property Name="delivered_impressions" Type="Double" />
+          <Property Name="spot_delivered_impression" Type="Double" />
+          <Property Name="plan_total_contracted_impressions" Type="Double" />
+          <Property Name="plan_total_delivered_impressions" Type="Double" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="staged_recommended_plans" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plan_details" ToRole="staged_recommended_plans" />
+        </EntityType>
+        <EntityType Name="staged_recommended_plans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ambiguity_code" Type="Int32" Nullable="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="client_spot_length" Type="Int32" Nullable="false" />
+          <Property Name="broadcast_aired_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="aired_time" Type="Int32" Nullable="false" />
+          <Property Name="station_legacy_call_letters" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="affiliate" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="market_code" Type="Int32" />
+          <Property Name="market_rank" Type="Int32" />
+          <Property Name="program_name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="program_genre" Type="String" MaxLength="127" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="staged_recommended_plan_details" Relationship="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" FromRole="staged_recommended_plans" ToRole="staged_recommended_plan_details" />
+        </EntityType>
+        <EntityType Name="staged_unposted_no_plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="client_spot_length" Type="Int32" Nullable="false" />
+          <Property Name="spot_count" Type="Int32" Nullable="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="estimate_id" Type="Int64" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="staged_unposted_no_reel_roster">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_isci" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="spot_count" Type="Int32" Nullable="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="estimate_id" Type="Int64" Nullable="false" />
+          <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK_spot_exceptions_out_of_specs_audiences">
+          <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="audience">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="audience_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_recommended_plan_details_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_recommended_plan_details">
+              <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs">
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_spec_decisions" Role="spot_exceptions_out_of_spec_decisions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_spec_decisions">
+              <PropertyRef Name="spot_exceptions_out_of_spec_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
+          <End Type="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Role="spot_exceptions_out_of_spec_reason_codes" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_exceptions_out_of_spec_reason_codes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="reason_code_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details">
+          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_recommended_plan_decision" Role="spot_exceptions_recommended_plan_decision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_exceptions_recommended_plan_details">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_recommended_plan_decision">
+              <PropertyRef Name="spot_exceptions_recommended_plan_detail_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans">
+          <End Type="BroadcastModel.spot_exceptions_recommended_plans" Role="spot_exceptions_recommended_plans" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_exceptions_recommended_plans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_recommended_plan_details">
+              <PropertyRef Name="spot_exceptions_recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_recommended_plans_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_recommended_plans" Role="spot_exceptions_recommended_plans" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_recommended_plans">
+              <PropertyRef Name="spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_staged_recommended_plan_details_staged_recommended_plans">
+          <End Type="BroadcastModel.staged_recommended_plans" Role="staged_recommended_plans" Multiplicity="1" />
+          <End Type="BroadcastModel.staged_recommended_plan_details" Role="staged_recommended_plan_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="staged_recommended_plans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="staged_recommended_plan_details">
+              <PropertyRef Name="staged_recommended_plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -21681,55 +21697,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="staged_unposted_no_reel_roster">
-            <EntityTypeMapping TypeName="BroadcastModel.staged_unposted_no_reel_roster">
-              <MappingFragment StoreEntitySet="staged_unposted_no_reel_roster">
-                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
-                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
-                <ScalarProperty Name="spot_count" ColumnName="spot_count" />
-                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_unposted_no_plan">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_plan">
-              <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_plan">
-                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="client_spot_length_id" ColumnName="client_spot_length_id" />
-                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
-                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="client_isci" ColumnName="client_isci" />
-                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_unposted_no_reel_roster">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_reel_roster">
-              <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_reel_roster">
-                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
-                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
-                <ScalarProperty Name="count" ColumnName="count" />
-                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_daypart_goals">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_daypart_goals">
               <MappingFragment StoreEntitySet="plan_version_daypart_goals">
@@ -22014,17 +21981,84 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_recommended_plan_decision">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_decision">
+              <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_decision">
+                <ScalarProperty Name="accepted_as_in_spec" ColumnName="accepted_as_in_spec" />
+                <ScalarProperty Name="synced_at" ColumnName="synced_at" />
+                <ScalarProperty Name="synced_by" ColumnName="synced_by" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="spot_exceptions_recommended_plan_detail_id" ColumnName="spot_exceptions_recommended_plan_detail_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="schedules">
+            <EntityTypeMapping TypeName="BroadcastModel.schedule">
+              <MappingFragment StoreEntitySet="schedules">
+                <ScalarProperty Name="advertiser_master_id" ColumnName="advertiser_master_id" />
+                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
+                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
+                <ScalarProperty Name="post_type" ColumnName="post_type" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="posting_book_id" ColumnName="posting_book_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="schedule_restriction_markets" TypeName="BroadcastModel.schedule_restriction_markets" StoreEntitySet="schedule_restriction_markets">
+            <EndProperty Name="schedule">
+              <ScalarProperty Name="id" ColumnName="schedule_id" />
+            </EndProperty>
+            <EndProperty Name="market">
+              <ScalarProperty Name="market_code" ColumnName="market_code" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="programs">
+            <EntityTypeMapping TypeName="BroadcastModel.program">
+              <MappingFragment StoreEntitySet="programs">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="campaign_plan_secondary_audiences">
+            <EntityTypeMapping TypeName="BroadcastModel.campaign_plan_secondary_audiences">
+              <MappingFragment StoreEntitySet="campaign_plan_secondary_audiences">
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stations_secondary_affiliations">
+            <EntityTypeMapping TypeName="BroadcastModel.stations_secondary_affiliations">
+              <MappingFragment StoreEntitySet="stations_secondary_affiliations">
+                <ScalarProperty Name="affiliate_id" ColumnName="affiliate_id" />
+                <ScalarProperty Name="stations_id" ColumnName="stations_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="spot_exceptions_out_of_specs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
+                <ScalarProperty Name="ingested_media_week_id" ColumnName="ingested_media_week_id" />
                 <ScalarProperty Name="inventory_source_name" ColumnName="inventory_source_name" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="genre_name" ColumnName="genre_name" />
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
                 <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="house_isci" ColumnName="house_isci" />
@@ -22048,15 +22082,91 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_recommended_plan_decision">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_decision">
-              <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_decision">
-                <ScalarProperty Name="accepted_as_in_spec" ColumnName="accepted_as_in_spec" />
-                <ScalarProperty Name="synced_at" ColumnName="synced_at" />
-                <ScalarProperty Name="synced_by" ColumnName="synced_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="spot_exceptions_recommended_plan_detail_id" ColumnName="spot_exceptions_recommended_plan_detail_id" />
+          <EntitySetMapping Name="spot_exceptions_recommended_plan_details">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_details">
+              <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_details">
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
+                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="ingested_media_week_id" ColumnName="ingested_media_week_id" />
+                <ScalarProperty Name="plan_total_delivered_impressions" ColumnName="plan_total_delivered_impressions" />
+                <ScalarProperty Name="plan_total_contracted_impressions" ColumnName="plan_total_contracted_impressions" />
+                <ScalarProperty Name="spot_delivered_impressions" ColumnName="spot_delivered_impressions" />
+                <ScalarProperty Name="sunday" ColumnName="sunday" />
+                <ScalarProperty Name="saturday" ColumnName="saturday" />
+                <ScalarProperty Name="friday" ColumnName="friday" />
+                <ScalarProperty Name="thursday" ColumnName="thursday" />
+                <ScalarProperty Name="wednesday" ColumnName="wednesday" />
+                <ScalarProperty Name="tuesday" ColumnName="tuesday" />
+                <ScalarProperty Name="monday" ColumnName="monday" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
+                <ScalarProperty Name="plan_clearance_percentage" ColumnName="plan_clearance_percentage" />
+                <ScalarProperty Name="is_recommended_plan" ColumnName="is_recommended_plan" />
+                <ScalarProperty Name="delivered_impressions" ColumnName="delivered_impressions" />
+                <ScalarProperty Name="contracted_impressions" ColumnName="contracted_impressions" />
+                <ScalarProperty Name="audience_name" ColumnName="audience_name" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="execution_trace_id" ColumnName="execution_trace_id" />
+                <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
+                <ScalarProperty Name="spot_exceptions_recommended_plan_id" ColumnName="spot_exceptions_recommended_plan_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_recommended_plans">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plans">
+              <MappingFragment StoreEntitySet="spot_exceptions_recommended_plans">
+                <ScalarProperty Name="ingested_media_week_id" ColumnName="ingested_media_week_id" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="program_genre" ColumnName="program_genre" />
+                <ScalarProperty Name="program_name" ColumnName="program_name" />
+                <ScalarProperty Name="market_rank" ColumnName="market_rank" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
+                <ScalarProperty Name="client_isci" ColumnName="client_isci" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
+                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
+                <ScalarProperty Name="ambiguity_code" ColumnName="ambiguity_code" />
+                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_unposted_no_plan">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_plan">
+              <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_plan">
+                <ScalarProperty Name="ingested_media_week_id" ColumnName="ingested_media_week_id" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="client_spot_length_id" ColumnName="client_spot_length_id" />
+                <ScalarProperty Name="client_isci" ColumnName="client_isci" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_unposted_no_reel_roster">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_unposted_no_reel_roster">
+              <MappingFragment StoreEntitySet="spot_exceptions_unposted_no_reel_roster">
+                <ScalarProperty Name="ingested_media_week_id" ColumnName="ingested_media_week_id" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -22103,43 +22213,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="schedules">
-            <EntityTypeMapping TypeName="BroadcastModel.schedule">
-              <MappingFragment StoreEntitySet="schedules">
-                <ScalarProperty Name="advertiser_master_id" ColumnName="advertiser_master_id" />
-                <ScalarProperty Name="equivalized" ColumnName="equivalized" />
-                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
-                <ScalarProperty Name="post_type" ColumnName="post_type" />
-                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="posting_book_id" ColumnName="posting_book_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="advertiser_id" ColumnName="advertiser_id" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="schedule_restriction_markets" TypeName="BroadcastModel.schedule_restriction_markets" StoreEntitySet="schedule_restriction_markets">
-            <EndProperty Name="schedule">
-              <ScalarProperty Name="id" ColumnName="schedule_id" />
-            </EndProperty>
-            <EndProperty Name="market">
-              <ScalarProperty Name="market_code" ColumnName="market_code" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="spot_exceptions_recommended_plan_details">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plan_details">
-              <MappingFragment StoreEntitySet="spot_exceptions_recommended_plan_details">
+          <EntitySetMapping Name="staged_recommended_plan_details">
+            <EntityTypeMapping TypeName="BroadcastModel.staged_recommended_plan_details">
+              <MappingFragment StoreEntitySet="staged_recommended_plan_details">
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
+                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
                 <ScalarProperty Name="plan_total_delivered_impressions" ColumnName="plan_total_delivered_impressions" />
                 <ScalarProperty Name="plan_total_contracted_impressions" ColumnName="plan_total_contracted_impressions" />
                 <ScalarProperty Name="spot_delivered_impression" ColumnName="spot_delivered_impression" />
-                <ScalarProperty Name="plan_execution_id_external" ColumnName="plan_execution_id_external" />
-                <ScalarProperty Name="plan_spot_unique_hash_external" ColumnName="plan_spot_unique_hash_external" />
+                <ScalarProperty Name="delivered_impressions" ColumnName="delivered_impressions" />
+                <ScalarProperty Name="contracted_impressions" ColumnName="contracted_impressions" />
                 <ScalarProperty Name="sunday" ColumnName="sunday" />
                 <ScalarProperty Name="saturday" ColumnName="saturday" />
                 <ScalarProperty Name="friday" ColumnName="friday" />
@@ -22152,41 +22237,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
                 <ScalarProperty Name="plan_clearance_percentage" ColumnName="plan_clearance_percentage" />
                 <ScalarProperty Name="is_recommended_plan" ColumnName="is_recommended_plan" />
-                <ScalarProperty Name="delivered_impressions" ColumnName="delivered_impressions" />
-                <ScalarProperty Name="contracted_impressions" ColumnName="contracted_impressions" />
                 <ScalarProperty Name="audience_name" ColumnName="audience_name" />
                 <ScalarProperty Name="rate" ColumnName="rate" />
                 <ScalarProperty Name="execution_trace_id" ColumnName="execution_trace_id" />
                 <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
-                <ScalarProperty Name="spot_exceptions_recommended_plan_id" ColumnName="spot_exceptions_recommended_plan_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_recommended_plans">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_recommended_plans">
-              <MappingFragment StoreEntitySet="spot_exceptions_recommended_plans">
-                <ScalarProperty Name="modified_at" ColumnName="modified_at" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
-                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
-                <ScalarProperty Name="program_genre" ColumnName="program_genre" />
-                <ScalarProperty Name="program_name" ColumnName="program_name" />
-                <ScalarProperty Name="market_rank" ColumnName="market_rank" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
-                <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />
-                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
-                <ScalarProperty Name="spot_length_id" ColumnName="spot_length_id" />
-                <ScalarProperty Name="client_isci" ColumnName="client_isci" />
-                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
-                <ScalarProperty Name="inventory_source" ColumnName="inventory_source" />
-                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
-                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
-                <ScalarProperty Name="ambiguity_code" ColumnName="ambiguity_code" />
-                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="staged_recommended_plan_id" ColumnName="staged_recommended_plan_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -22216,61 +22271,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="staged_recommended_plan_details">
-            <EntityTypeMapping TypeName="BroadcastModel.staged_recommended_plan_details">
-              <MappingFragment StoreEntitySet="staged_recommended_plan_details">
-                <ScalarProperty Name="plan_total_delivered_impressions" ColumnName="plan_total_delivered_impressions" />
-                <ScalarProperty Name="plan_total_contracted_impressions" ColumnName="plan_total_contracted_impressions" />
-                <ScalarProperty Name="spot_delivered_impression" ColumnName="spot_delivered_impression" />
-                <ScalarProperty Name="plan_execution_id_external" ColumnName="plan_execution_id_external" />
-                <ScalarProperty Name="plan_spot_unique_hash_external" ColumnName="plan_spot_unique_hash_external" />
-                <ScalarProperty Name="delivered_impressions" ColumnName="delivered_impressions" />
-                <ScalarProperty Name="contracted_impressions" ColumnName="contracted_impressions" />
-                <ScalarProperty Name="sunday" ColumnName="sunday" />
-                <ScalarProperty Name="saturday" ColumnName="saturday" />
-                <ScalarProperty Name="friday" ColumnName="friday" />
-                <ScalarProperty Name="thursday" ColumnName="thursday" />
-                <ScalarProperty Name="wednesday" ColumnName="wednesday" />
-                <ScalarProperty Name="tuesday" ColumnName="tuesday" />
-                <ScalarProperty Name="monday" ColumnName="monday" />
-                <ScalarProperty Name="end_time" ColumnName="end_time" />
-                <ScalarProperty Name="start_time" ColumnName="start_time" />
-                <ScalarProperty Name="daypart_code" ColumnName="daypart_code" />
-                <ScalarProperty Name="plan_clearance_percentage" ColumnName="plan_clearance_percentage" />
-                <ScalarProperty Name="is_recommended_plan" ColumnName="is_recommended_plan" />
-                <ScalarProperty Name="audience_name" ColumnName="audience_name" />
-                <ScalarProperty Name="rate" ColumnName="rate" />
-                <ScalarProperty Name="execution_trace_id" ColumnName="execution_trace_id" />
-                <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
-                <ScalarProperty Name="staged_recommended_plan_id" ColumnName="staged_recommended_plan_id" />
+          <EntitySetMapping Name="staged_unposted_no_plan">
+            <EntityTypeMapping TypeName="BroadcastModel.staged_unposted_no_plan">
+              <MappingFragment StoreEntitySet="staged_unposted_no_plan">
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="spot_count" ColumnName="spot_count" />
+                <ScalarProperty Name="client_spot_length" ColumnName="client_spot_length" />
+                <ScalarProperty Name="client_isci" ColumnName="client_isci" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="programs">
-            <EntityTypeMapping TypeName="BroadcastModel.program">
-              <MappingFragment StoreEntitySet="programs">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="campaign_plan_secondary_audiences">
-            <EntityTypeMapping TypeName="BroadcastModel.campaign_plan_secondary_audiences">
-              <MappingFragment StoreEntitySet="campaign_plan_secondary_audiences">
-                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
-                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="stations_secondary_affiliations">
-            <EntityTypeMapping TypeName="BroadcastModel.stations_secondary_affiliations">
-              <MappingFragment StoreEntitySet="stations_secondary_affiliations">
-                <ScalarProperty Name="affiliate_id" ColumnName="affiliate_id" />
-                <ScalarProperty Name="stations_id" ColumnName="stations_id" />
+          <EntitySetMapping Name="staged_unposted_no_reel_roster">
+            <EntityTypeMapping TypeName="BroadcastModel.staged_unposted_no_reel_roster">
+              <MappingFragment StoreEntitySet="staged_unposted_no_reel_roster">
+                <ScalarProperty Name="ingested_at" ColumnName="ingested_at" />
+                <ScalarProperty Name="ingested_by" ColumnName="ingested_by" />
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="spot_count" ColumnName="spot_count" />
+                <ScalarProperty Name="house_isci" ColumnName="house_isci" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

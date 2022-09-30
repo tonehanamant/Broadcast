@@ -37,10 +37,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string program_genre { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public string created_by { get; set; }
-        public System.DateTime created_at { get; set; }
-        public string modified_by { get; set; }
-        public System.DateTime modified_at { get; set; }
+        public int ingested_media_week_id { get; set; }
     
         public virtual ICollection<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }

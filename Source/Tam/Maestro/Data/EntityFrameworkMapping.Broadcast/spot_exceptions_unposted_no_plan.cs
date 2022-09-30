@@ -17,15 +17,12 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public string house_isci { get; set; }
         public string client_isci { get; set; }
+        public Nullable<int> client_spot_length_id { get; set; }
         public int count { get; set; }
         public System.DateTime program_air_time { get; set; }
         public long estimate_id { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public Nullable<int> client_spot_length_id { get; set; }
-        public string created_by { get; set; }
-        public System.DateTime created_at { get; set; }
-        public string modified_by { get; set; }
-        public System.DateTime modified_at { get; set; }
+        public int ingested_media_week_id { get; set; }
     }
 }

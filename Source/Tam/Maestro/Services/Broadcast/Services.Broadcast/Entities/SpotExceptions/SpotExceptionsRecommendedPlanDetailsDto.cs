@@ -133,6 +133,23 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public int? Sunday { get; set; }
 
         /// <summary>
+        /// Get or sets the Impression 
+        /// </summary>
+        public double? SpotDeliveredImpressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the plan total contracted impressions.
+        /// </summary>
+        /// <value>The plan total contracted impressions.</value>
+        public double? PlanTotalContractedImpressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the plan total delivered impressions.
+        /// </summary>
+        /// <value>The plan total delivered impressions.</value>
+        public double? PlanTotalDeliveredImpressions { get; set; }
+
+        /// <summary>
         /// Gets or sets the spot unique hash external.
         /// </summary>
         /// <value>The plan spot unique hash external.</value>
@@ -145,6 +162,36 @@ namespace Services.Broadcast.Entities.SpotExceptions
         public string PlanExecutionIdExternal { get; set; }
 
         /// <summary>
+        /// Gets or sets the ingested by.
+        /// </summary>
+        /// <value>The ingested by.</value>
+        public string IngestedBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ingested at.
+        /// </summary>
+        /// <value>The ingested at.</value>
+        public System.DateTime IngestedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ingested media week identifier.
+        /// </summary>
+        /// <value>The ingested media week identifier.</value>
+        public int IngestedMediaWeekId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot unique hash external.
+        /// </summary>
+        /// <value>The spot unique hash external.</value>
+        public string SpotUniqueHashExternal { get; set; }
+
+        /// <summary>
+        /// Gets or sets the execution identifier external.
+        /// </summary>
+        /// <value>The execution identifier external.</value>
+        public string ExecutionIdExternal { get; set; }
+
+        /// <summary>
         /// Gets or sets the spot exceptions recommended plan decision.
         /// </summary>
         /// <value>The spot exceptions recommended plan decision.</value>
@@ -155,12 +202,5 @@ namespace Services.Broadcast.Entities.SpotExceptions
         /// </summary>
         /// <value>The recommended plan detail.</value>
         public RecommendedPlanDetailDto RecommendedPlanDetail { get; set; }
-
-        /// <summary>
-        /// Get or sets the Impression 
-        /// </summary>
-        public double? SpotDeliveredImpressions { get; set; }
-        public double? PlanTotalContractedImpressions { get; set; }
-        public double? PlanTotalDeliveredImpressions { get; set; }
     }
 }

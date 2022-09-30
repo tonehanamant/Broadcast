@@ -468,23 +468,299 @@ IF NOT EXISTS (SELECT *
 
 /*************************************** START BP-5413 ***************************************/
 
-IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
-	WHERE TABLE_NAME = 'spot_exceptions_ingest_jobs' AND COLUMN_NAME= 'result')
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+        WHERE Name = 'ingested_media_week_id'
+        AND OBJECT_ID = OBJECT_ID('staged_recommended_plans'))
+		
 BEGIN
-	ALTER TABLE spot_exceptions_ingest_jobs
-		ADD result [nvarchar](max) NULL
-END
-GO
 
-/*************************************** END BP-5413 ***************************************/
+	DROP TABLE staged_recommended_plan_details
+	DROP TABLE staged_recommended_plans
+	DROP TABLE staged_out_of_specs
+	DROP TABLE staged_unposted_no_plan
+	DROP TABLE staged_unposted_no_reel_roster
 
-/*************************************** START BP-5413 ***************************************/
+	ALTER TABLE spot_exceptions_recommended_plan_decision
+		DROP CONSTRAINT FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details
 
-IF (OBJECT_ID('FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans') IS NULL)
-BEGIN
-    ALTER TABLE spot_exceptions_recommended_plan_details
-	ADD CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
-	FOREIGN KEY(spot_exceptions_recommended_plan_id) REFERENCES spot_exceptions_recommended_plans(id)
+	DROP TABLE spot_exceptions_recommended_plan_details
+	DROP TABLE spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_out_of_spec_decisions
+		DROP CONSTRAINT FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs
+
+	DROP TABLE spot_exceptions_out_of_specs
+	DROP TABLE spot_exceptions_unposted_no_plan
+	DROP TABLE spot_exceptions_unposted_no_reel_roster
+
+	CREATE TABLE staged_recommended_plans
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		ambiguity_code int NOT NULL,
+		execution_id_external varchar(100) NOT NULL,
+		estimate_id int NOT NULL,
+		inventory_source varchar(100) NOT NULL,
+		house_isci varchar(100) NOT NULL,
+		client_isci varchar(100) NOT NULL,
+		client_spot_length int NOT NULL,
+		broadcast_aired_date datetime2(7) NOT NULL,
+		aired_time int NOT NULL,
+		station_legacy_call_letters varchar(30) NULL,
+		affiliate varchar(30) NULL,
+		market_code int NULL,
+		market_rank int NULL,
+		program_name varchar(500) NOT NULL,
+		program_genre varchar(127) NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL
+	)
+
+	CREATE TABLE staged_recommended_plan_details
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		staged_recommended_plan_id int NOT NULL,
+		recommended_plan_id int NOT NULL,
+		execution_trace_id bigint NOT NULL,
+		rate money NULL,
+		audience_name varchar(127) NULL,
+		is_recommended_plan bit NOT NULL,
+		plan_clearance_percentage float NULL,
+		daypart_code varchar(10) NULL,
+		start_time int NULL,
+		end_time int NULL,
+		monday int NULL,
+		tuesday int NULL,
+		wednesday int NULL,
+		thursday int NULL,
+		friday int NULL,
+		saturday int NULL,
+		sunday int NULL,
+		contracted_impressions float NULL,
+		delivered_impressions float NULL,
+		spot_delivered_impression float NULL,
+		plan_total_contracted_impressions float NULL,
+		plan_total_delivered_impressions float NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		execution_id_external varchar(100) NOT NULL
+	)
+
+	ALTER TABLE staged_recommended_plan_details
+		ADD CONSTRAINT FK_staged_recommended_plan_details_staged_recommended_plans
+		FOREIGN KEY (staged_recommended_plan_id) REFERENCES staged_recommended_plans(id)
+
+	CREATE TABLE staged_out_of_specs
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		execution_id_external varchar(100) NOT NULL,
+		estimate_id int NOT NULL,
+		inventory_source varchar(100) NOT NULL,
+		house_isci varchar(100) NOT NULL,
+		client_isci varchar(100) NOT NULL,
+		client_spot_length int NOT NULL,
+		broadcast_aired_date datetime2(7) NOT NULL,
+		aired_time int NOT NULL,
+		station_legacy_call_letters varchar(30) NULL,
+		affiliate varchar(30) NULL,
+		market_code int NULL,
+		market_rank int NULL,
+		rate money NOT NULL,
+		audience_name varchar(127) NOT NULL,
+		impressions float NOT NULL,
+		program_name varchar(500) NOT NULL,
+		program_genre varchar(127) NULL,
+		reason_code int NOT NULL,
+		reason_code_message varchar(500) NULL,
+		lead_in_program_name varchar(500) NULL,
+		lead_out_program_name varchar(500) NULL,
+		plan_id int NOT NULL,
+		daypart_code varchar(10) NULL,
+		start_time int NULL,
+		end_time int NULL,
+		monday int NULL,
+		tuesday int NULL,
+		wednesday int NULL,
+		thursday int NULL,
+		friday int NULL,
+		saturday int NULL,
+		sunday int NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL
+	)
+
+	CREATE TABLE staged_unposted_no_plan
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		house_isci varchar(50) NOT NULL,
+		client_isci varchar(50) NOT NULL,
+		client_spot_length int NOT NULL,
+		spot_count int NOT NULL,
+		program_air_time datetime2(7) NOT NULL,
+		estimate_id bigint NOT NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL
+	)
+
+	CREATE TABLE staged_unposted_no_reel_roster
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		house_isci varchar(50) NOT NULL,
+		spot_count int NOT NULL,
+		program_air_time datetime2(7) NOT NULL,
+		estimate_id bigint NOT NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL
+	)
+
+	CREATE TABLE spot_exceptions_recommended_plans
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		ambiguity_code int NOT NULL,
+		execution_id_external varchar(100) NOT NULL,
+		estimate_id int NOT NULL,
+		inventory_source varchar(100) NOT NULL,
+		house_isci varchar(100) NOT NULL,
+		client_isci varchar(100) NOT NULL,
+		spot_length_id int NULL,
+		program_air_time datetime NOT NULL,
+		station_legacy_call_letters varchar(30) NULL,
+		affiliate varchar(30) NULL,
+		market_code int NULL,
+		market_rank int NULL,
+		program_name varchar(500) NOT NULL,
+		program_genre varchar(127) NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		ingested_media_week_id int NOT NULL
+	)
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ADD CONSTRAINT FK_spot_exceptions_recommended_plans_spot_lengths
+		FOREIGN KEY (spot_length_id) REFERENCES spot_lengths(id)
+
+	CREATE TABLE spot_exceptions_recommended_plan_details
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_exceptions_recommended_plan_id int NOT NULL,
+		recommended_plan_id int NOT NULL,
+		execution_trace_id bigint NOT NULL,
+		rate money NULL,
+		audience_name varchar(127) NULL,
+		contracted_impressions float NULL,
+		delivered_impressions float NULL,
+		is_recommended_plan bit NOT NULL,
+		plan_clearance_percentage float NULL,
+		daypart_code varchar(10) NULL,
+		start_time int NULL,
+		end_time int NULL,
+		monday int NULL,
+		tuesday int NULL,
+		wednesday int NULL,
+		thursday int NULL,
+		friday int NULL,
+		saturday int NULL,
+		sunday int NULL,
+		spot_delivered_impressions float NULL,
+		plan_total_contracted_impressions float NULL,
+		plan_total_delivered_impressions float NULL,
+		ingested_media_week_id int NOT NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		execution_id_external varchar(100) NOT NULL
+	)
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD CONSTRAINT FK_spot_exceptions_recommended_plan_details_plans
+		FOREIGN KEY (recommended_plan_id) REFERENCES plans(id)
+
+	ALTER TABLE spot_exceptions_recommended_plan_details
+		ADD CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
+		FOREIGN KEY (spot_exceptions_recommended_plan_id) REFERENCES spot_exceptions_recommended_plans(id)
+
+	ALTER TABLE spot_exceptions_recommended_plan_decision
+		ADD CONSTRAINT FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details
+		FOREIGN KEY (spot_exceptions_recommended_plan_detail_id) REFERENCES spot_exceptions_recommended_plan_details(id)
+
+	CREATE TABLE spot_exceptions_out_of_specs
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_unique_hash_external varchar(255) NOT NULL,
+		execution_id_external varchar(100) NOT NULL,
+		reason_code_message nvarchar(500) NULL,
+		estimate_id int NOT NULL,
+		isci_name varchar(100) NOT NULL,
+		recommended_plan_id int NULL,
+		program_name nvarchar(500) NULL,
+		station_legacy_call_letters varchar(15) NULL,
+		spot_length_id int NULL,
+		audience_id int NULL,
+		program_network varchar(10) NULL,
+		program_air_time datetime NOT NULL,
+		reason_code_id int NOT NULL,
+		impressions float NOT NULL,
+		market_code int NULL,
+		market_rank int NULL,
+		house_isci varchar(100) NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		comment nvarchar(1024) NULL,
+		daypart_code nvarchar(20) NULL,
+		genre_name nvarchar(40) NULL,
+		inventory_source_name varchar(100) NOT NULL,
+		ingested_media_week_id int NOT NULL
+	)
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_spot_exceptions_out_of_specs_audiences
+		FOREIGN KEY (audience_id) REFERENCES audiences(id)
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_spot_exceptions_out_of_specs_plans
+		FOREIGN KEY (recommended_plan_id) REFERENCES plans(id)
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes
+		FOREIGN KEY (reason_code_id) REFERENCES spot_exceptions_out_of_spec_reason_codes(id)
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ADD CONSTRAINT FK_spot_exceptions_out_of_specs_spot_lengths
+		FOREIGN KEY (spot_length_id) REFERENCES spot_lengths(id)
+
+	ALTER TABLE spot_exceptions_out_of_spec_decisions
+		ADD CONSTRAINT FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs
+		FOREIGN KEY (spot_exceptions_out_of_spec_id) REFERENCES spot_exceptions_out_of_specs(id)
+
+	CREATE TABLE spot_exceptions_unposted_no_plan
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		house_isci varchar(50) NOT NULL,
+		client_isci varchar(50) NOT NULL,
+		client_spot_length_id int NULL,
+		count int NOT NULL,
+		program_air_time datetime NOT NULL,
+		estimate_id bigint NOT NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		ingested_media_week_id int NOT NULL
+	)
+
+	CREATE TABLE spot_exceptions_unposted_no_reel_roster
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		house_isci varchar(50) NOT NULL,
+		count int NOT NULL,
+		program_air_time datetime NOT NULL,
+		estimate_id bigint NOT NULL,
+		ingested_by varchar(100) NOT NULL,
+		ingested_at datetime NOT NULL,
+		ingested_media_week_id int NOT NULL
+	)
+
 END
 GO
 

@@ -906,6 +906,9 @@
     <Compile Include="staged_recommended_plan_details.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="staged_unposted_no_plan.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="staged_unposted_no_reel_roster.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
