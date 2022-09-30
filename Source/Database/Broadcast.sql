@@ -483,12 +483,14 @@ BEGIN
 	ALTER TABLE spot_exceptions_recommended_plan_decision
 		DROP CONSTRAINT FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details
 
+	DROP TABLE spot_exceptions_recommended_plan_decision
 	DROP TABLE spot_exceptions_recommended_plan_details
 	DROP TABLE spot_exceptions_recommended_plans
 
 	ALTER TABLE spot_exceptions_out_of_spec_decisions
 		DROP CONSTRAINT FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs
 
+	DROP TABLE spot_exceptions_out_of_spec_decisions
 	DROP TABLE spot_exceptions_out_of_specs
 	DROP TABLE spot_exceptions_unposted_no_plan
 	DROP TABLE spot_exceptions_unposted_no_reel_roster
@@ -682,6 +684,17 @@ BEGIN
 		ADD CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
 		FOREIGN KEY (spot_exceptions_recommended_plan_id) REFERENCES spot_exceptions_recommended_plans(id)
 
+	CREATE TABLE spot_exceptions_recommended_plan_decision
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_exceptions_recommended_plan_detail_id int NOT NULL,
+		username varchar(63) NOT NULL,
+		created_at datetime NOT NULL,
+		synced_by varchar(100) NULL,
+		synced_at datetime2(7) NULL,
+		accepted_as_in_spec bit NOT NULL
+	)
+
 	ALTER TABLE spot_exceptions_recommended_plan_decision
 		ADD CONSTRAINT FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details
 		FOREIGN KEY (spot_exceptions_recommended_plan_detail_id) REFERENCES spot_exceptions_recommended_plan_details(id)
@@ -730,6 +743,21 @@ BEGIN
 	ALTER TABLE spot_exceptions_out_of_specs
 		ADD CONSTRAINT FK_spot_exceptions_out_of_specs_spot_lengths
 		FOREIGN KEY (spot_length_id) REFERENCES spot_lengths(id)
+
+	CREATE TABLE spot_exceptions_out_of_spec_decisions
+	(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		spot_exceptions_out_of_spec_id int NOT NULL,
+		accepted_as_in_spec bit NOT NULL,
+		decision_notes nvarchar(1024) NULL,
+		username varchar(63) NOT NULL,
+		created_at datetime NOT NULL,
+		synced_by varchar(100) NULL,
+		synced_at datetime2(7) NULL,
+		program_name nvarchar(500) NULL,
+		genre_name nvarchar(40) NULL,
+		daypart_code nvarchar(20) NULL
+	)
 
 	ALTER TABLE spot_exceptions_out_of_spec_decisions
 		ADD CONSTRAINT FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs
