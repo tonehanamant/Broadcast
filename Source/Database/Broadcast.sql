@@ -815,6 +815,17 @@ GO
 
 /*************************************** END BP-5532 ***************************************/
 
+/*************************************** START BP-5413 ***************************************/
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_ingest_jobs' AND COLUMN_NAME= 'end_date')
+BEGIN
+	ALTER TABLE spot_exceptions_ingest_jobs
+		DROP COLUMN end_date
+END
+GO
+
+/*************************************** END BP-5413 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

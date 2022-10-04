@@ -475,7 +475,6 @@
         <EntityTypeShape EntityType="BroadcastModel.reel_isci_ingest_jobs" Width="1.5" PointX="36.375" PointY="3.75" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_buying_result_spot_stations" Width="1.5" PointX="19.25" PointY="99.375" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_buying_result_spot_stations_plan_version_buying_results" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_ingest_jobs" Width="1.5" PointX="36.375" PointY="30.5" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_weekly_breakdown" Width="1.5" PointX="38.25" PointY="33.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_media_weeks" />
@@ -585,6 +584,7 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_ingest_jobs" Width="1.5" PointX="36.375" PointY="39.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

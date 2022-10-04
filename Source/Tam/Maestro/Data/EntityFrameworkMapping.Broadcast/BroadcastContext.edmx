@@ -2408,7 +2408,6 @@
           <Property Name="completed_at" Type="datetime2" Precision="7" />
           <Property Name="error_message" Type="nvarchar(max)" />
           <Property Name="start_date" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="end_date" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="result" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="spot_exceptions_out_of_spec_decisions">
@@ -10480,7 +10479,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_version_buying_results" EntitySet="plan_version_buying_results" />
             <End Role="plan_version_buying_result_spot_stations" EntitySet="plan_version_buying_result_spot_stations" />
           </AssociationSet>
-          <EntitySet Name="spot_exceptions_ingest_jobs" EntityType="BroadcastModel.spot_exceptions_ingest_jobs" />
           <AssociationSet Name="FK_scx_generation_job_files_shared_folder_files_id" Association="BroadcastModel.FK_scx_generation_job_files_shared_folder_files_id">
             <End Role="shared_folder_files" EntitySet="shared_folder_files" />
             <End Role="scx_generation_job_files" EntitySet="scx_generation_job_files" />
@@ -10812,6 +10810,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="staged_recommended_plans" EntitySet="staged_recommended_plans" />
             <End Role="staged_recommended_plan_details" EntitySet="staged_recommended_plan_details" />
           </AssociationSet>
+          <EntitySet Name="spot_exceptions_ingest_jobs" EntityType="BroadcastModel.spot_exceptions_ingest_jobs" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -17321,20 +17320,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="spot_exceptions_ingest_jobs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="completed_at" Type="DateTime" Precision="7" />
-          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <Association Name="FK_scx_generation_job_files_shared_folder_files_id">
           <End Type="BroadcastModel.shared_folder_files" Role="shared_folder_files" Multiplicity="0..1" />
           <End Type="BroadcastModel.scx_generation_job_files" Role="scx_generation_job_files" Multiplicity="*" />
@@ -18981,6 +18966,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="genre_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="spot_exceptions_ingest_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="error_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -21631,21 +21629,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_ingest_jobs">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_ingest_jobs">
-              <MappingFragment StoreEntitySet="spot_exceptions_ingest_jobs">
-                <ScalarProperty Name="result" ColumnName="result" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="error_message" ColumnName="error_message" />
-                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
-                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
-                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="plan_version_weekly_breakdown">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_weekly_breakdown">
               <MappingFragment StoreEntitySet="plan_version_weekly_breakdown">
@@ -22304,6 +22287,20 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="program_genres">
                 <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_ingest_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_ingest_jobs">
+              <MappingFragment StoreEntitySet="spot_exceptions_ingest_jobs">
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="error_message" ColumnName="error_message" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
