@@ -261,6 +261,10 @@ namespace Services.Broadcast.Converters.Scx
             {
                 throw new CadentException($"A buying job execution was not found for plan id '{request.PlanId}'.");
             }
+            if (job.Status == BackgroundJobProcessingStatus.Processing)
+            {
+                throw new CadentException($"A buying job execution is in progress for plan id '{request.PlanId}'.");
+            }
             if (!job.PlanVersionId.HasValue)
             {
                 throw new InvalidOperationException($"The buying job '{job.Id}' for plan '{request.PlanId}' does not have a plan version.");
