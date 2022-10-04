@@ -380,9 +380,12 @@ namespace Services.Broadcast.Entities.Campaign
            Dictionary<int, MarketCoverageByStation.Market> markets,
            Dictionary<int, BasePlanInventoryProgram.ManifestDaypart.Program> primaryProgramsByManifestDaypartIds)
         {
-            var dataRows = new List<DetailedViewRowData>();
-            var planDaypartById = plan.Dayparts.ToDictionary(x => x.DaypartCodeId, x => x);
-
+            var dataRows = new List<DetailedViewRowData>();            
+            Dictionary<int, PlanDaypartDto> planDaypartById = new Dictionary<int, PlanDaypartDto>();           
+             plan.Dayparts.GroupBy(x => x.DaypartCodeId).ToList().ForEach(x =>
+            {
+                planDaypartById.Add(x.First().DaypartCodeId, x.First());
+            });
             // we expect all records belong to the same daypart because it`s OpenMarket
             // So we can just group by StationInventoryManifestId for now
             var spotsByManifest = allocatedSpots
