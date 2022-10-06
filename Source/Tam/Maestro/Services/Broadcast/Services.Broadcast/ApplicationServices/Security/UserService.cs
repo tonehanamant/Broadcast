@@ -16,7 +16,9 @@ namespace Services.Broadcast.ApplicationServices.Security
         public string GetCurrentUserFullName()
         {
             var ssid = _GetCurrentUserSsid();
-            var employee = SMSClient.Handler.GetEmployee(ssid, false);
+            if (string.IsNullOrEmpty(ssid))
+                ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
+            var employee = SMSClient.Handler.GetEmployee(ssid, false);           
             if (employee == null)
             {
                 return null;
