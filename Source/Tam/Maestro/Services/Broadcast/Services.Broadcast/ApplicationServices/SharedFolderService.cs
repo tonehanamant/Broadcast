@@ -90,6 +90,7 @@ namespace Services.Broadcast.ApplicationServices
 
         public Guid SaveFile(SharedFolderFile file)
         {
+            _LogInfo($"File Path : {file.FolderPath} File Name : {file.FileNameWithExtension} File created by Name : {file.CreatedBy}");
             using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
             {
                 var registerResult = _AttachmentMicroServiceApiClient.RegisterAttachment(file.FileName, file.CreatedBy, "");
