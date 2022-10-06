@@ -67,6 +67,7 @@ namespace Services.Broadcast.Clients
             }
             catch (Exception ex)
             {
+                _LogError(ex.InnerException.Message);
                 throw new InvalidOperationException(String.Format("Error occured while Register Attachement, message:{0}", ex.Message.ToString()));
             }
         }

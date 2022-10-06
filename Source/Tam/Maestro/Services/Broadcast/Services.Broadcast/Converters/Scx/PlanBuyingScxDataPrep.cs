@@ -263,7 +263,7 @@ namespace Services.Broadcast.Converters.Scx
             }
             if (job.Status == BackgroundJobProcessingStatus.Processing)
             {
-                throw new CadentException($"A buying job execution is in progress for plan id '{request.PlanId}'.");
+                throw new CadentException($"There is a buying run in progress right now for plan id '{request.PlanId}'. Please wait until it is completed");
             }
             if (!job.PlanVersionId.HasValue)
             {
