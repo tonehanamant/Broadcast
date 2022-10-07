@@ -3,7 +3,7 @@ using System;
 using System.Security.Principal;
 using System.Web;
 using Tam.Maestro.Services.Clients;
-
+using Services.Broadcast.Helpers;
 namespace Services.Broadcast.ApplicationServices.Security
 {
     public interface IUserService : IApplicationService
@@ -11,19 +11,22 @@ namespace Services.Broadcast.ApplicationServices.Security
         string GetCurrentUserFullName();
     }
 
-    public class UserService : IUserService
+    public class UserService : BroadcastBaseClass, IUserService
     {
+        public UserService(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+        {
+
+        }
         public string GetCurrentUserFullName()
         {
             var ssid = _GetCurrentUserSsid();
-            if (string.IsNullOrEmpty(ssid))
-                ssid = HttpContext.Current.Request.LogonUserIdentity.User.Value;
-            var employee = SMSClient.Handler.GetEmployee(ssid, false);           
+            _LogInfo($"ssid: {ssid}");
+            var employee = SMSClient.Handler.GetEmployee(ssid, false);        
             if (employee == null)
             {
                 return null;
             }
-
+            _LogInfo($"Employee: {employee.Employee.FullName}");
             return employee.Employee.FullName;
         }
 

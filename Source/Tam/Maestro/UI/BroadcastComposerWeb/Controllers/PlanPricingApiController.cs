@@ -300,5 +300,14 @@ namespace BroadcastComposerWeb.Controllers
 
 	        return _ConvertToBaseResponse(() => service.GetPlanProprietarySummaryAggregation(request));
         }
+
+        [HttpPost]
+        [Route("CurrentUserFullNameTest")]
+        public string CurrentUserFullNameTest()
+        {
+            string userName= _GetCurrentUserFullName();
+            return userName;
+           
+        }
     }
 }
