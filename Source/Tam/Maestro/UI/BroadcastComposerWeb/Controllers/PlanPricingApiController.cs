@@ -239,6 +239,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ExportPricingScx")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<Guid> ExportPricingScx(int planId, SpotAllocationModelMode spotAllocationModelMode,
             PostingTypeEnum postingType)
         {
@@ -303,6 +304,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("CurrentUserFullNameTest")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public string CurrentUserFullNameTest()
         {
             string userName= _GetCurrentUserFullName();
