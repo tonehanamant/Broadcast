@@ -43,6 +43,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy);
 
         PlanIsciMappingsDetailsDto GetPlanIsciMappingsDetails(int planId);
+
+        /// <summary>
+        /// Search the Existing plan iscis based on the Plan
+        /// </summary>
+        /// <param name="searchIsciRequestDto">searchIsciRequestDto</param>
+        /// <returns>List of Found Iscis</returns>
+        SearchPlanIscisDto SearchPlanIscisByName(SearchIsciRequestDto searchIsciRequestDto);
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -529,6 +536,36 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planDefaultDaypartIds = planDayparts.Select(d => d.DaypartCodeId).ToList();
             var dayIds = _StandardDaypartRepository.GetDayIdsFromStandardDayparts(planDefaultDaypartIds);
             return dayIds;
+        }
+
+        public SearchPlanIscisDto SearchPlanIscisByName(SearchIsciRequestDto searchIsciRequestDto)
+        {
+            var plan = _PlanService.GetPlan(searchIsciRequestDto.SourcePlanId);
+            var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
+            var planIscis = _PlanIsciRepository.SearchIsciByName(searchIsciRequestDto, campaign.AdvertiserMasterId);
+            planIscis = _RemoveDuplicates(planIscis);
+            var iscis = new SearchPlanIscisDto
+            {
+                Iscis = planIscis.Select(x =>
+                {
+                    return new SearchPlan
+                    {
+                        Isci = x.Isci,
+                        SpotLengthId = x.SpotLengthId
+                    };
+                }).ToList()
+            };
+            return iscis;
+        }
+
+        private List<SearchPlan> _RemoveDuplicates(List<SearchPlan> searchPlans)
+        {
+            var distinctIscis = searchPlans
+                .GroupBy(x => x.Isci)
+                .Select(x => x.First())
+                .OrderBy(x => x.Isci)
+                .ToList();
+            return distinctIscis;
         }
     }
 }

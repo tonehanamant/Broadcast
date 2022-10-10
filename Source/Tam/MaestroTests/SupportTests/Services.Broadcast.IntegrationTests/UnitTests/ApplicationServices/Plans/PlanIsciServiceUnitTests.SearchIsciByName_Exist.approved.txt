@@ -1,0 +1,20 @@
+{
+  "Iscis": [
+    {
+      "Isci": "test12",
+      "SpotLengthId": [
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "Isci": "test123",
+      "SpotLengthId": [
+        3,
+        4,
+        5
+      ]
+    }
+  ]
+}

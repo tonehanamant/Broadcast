@@ -127,7 +127,15 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="idsToUnDelete">The ids to un delete.</param>
         /// <returns></returns>
-        int UnDeleteIsciPlanMappings(List<int> idsToUnDelete);       
+        int UnDeleteIsciPlanMappings(List<int> idsToUnDelete);
+
+        /// <summary>
+        /// Search the Existing plan iscis based on the Plan
+        /// </summary>
+        /// <param name="searchIsciRequestDto">searchIsciRequestDto</param>
+        /// <param name="advertiserMasterId">advertiserMasterId</param>
+        /// <returns>List of found iscis</returns>
+        List<SearchPlan> SearchIsciByName(SearchIsciRequestDto searchIsciRequestDto, Guid? advertiserMasterId);
     }
 
     /// <summary>
@@ -548,6 +556,24 @@ namespace Services.Broadcast.Repositories
                     }
                 });
                 return duplicateMappings;
+            });
+        }
+
+        public List<SearchPlan> SearchIsciByName(SearchIsciRequestDto searchIsciRequestDto, Guid? advertiserMasterId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotLengthIds = context.spot_lengths.Select(x => x.id).ToList();
+                var searchIscis = context.plan_iscis
+                    .Include(x => x.plan)
+                    .Include(x => x.plan.campaign)
+                    .Where(x => x.plan.campaign.advertiser_master_id == advertiserMasterId && x.isci.Contains(searchIsciRequestDto.SearchText))
+                    .Select(d => new SearchPlan
+                    {
+                        Isci = d.isci,
+                        SpotLengthId = spotLengthIds
+                    }).ToList();
+                return searchIscis;
             });
         }
     }

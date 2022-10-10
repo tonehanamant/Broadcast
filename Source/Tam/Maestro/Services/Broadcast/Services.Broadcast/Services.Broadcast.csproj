@@ -556,6 +556,8 @@
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
     <Compile Include="Entities\Campaign\CampaignPlanSecondaryAudiencesDto.cs" />
     <Compile Include="Entities\Campaign\CampaignWithDefaultsDto.cs" />
+    <Compile Include="Entities\Isci\SearchIsciRequestDto.cs" />
+    <Compile Include="Entities\Isci\SearchPlanIscisDto.cs" />
     <Compile Include="Entities\MasterProgramsDto.cs" />
     <Compile Include="Entities\MigrateFilesToAttachmentServiceResult.cs" />
     <Compile Include="Entities\AabAdvertiserDto.cs" />

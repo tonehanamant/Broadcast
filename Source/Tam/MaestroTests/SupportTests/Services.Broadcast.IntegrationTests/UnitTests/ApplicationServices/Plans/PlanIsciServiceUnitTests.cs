@@ -1586,5 +1586,128 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        public void SearchIsciByName_Exist()
+        {
+            // Arrange
+            const int planId = 23;
+            const int campaignId = 32;
+            var searchRequest = new SearchIsciRequestDto()
+            {
+                SourcePlanId = 467,
+                SearchText = "tes"
+            };
+            int expectedCount = 2;
+            _PlanIsciRepositoryMock.Setup(s => s.SearchIsciByName(It.IsAny<SearchIsciRequestDto>(), It.IsAny<Guid>()))
+                .Returns(new List<SearchPlan>
+                {
+                    new SearchPlan
+                    {
+                        Isci = "test12",
+                        SpotLengthId = new List<int>{3,4,5}
+                    },
+                    new SearchPlan
+                    {
+                        Isci = "test123",
+                        SpotLengthId = new List<int>{3,4,5}
+                    }
+                });
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    CampaignId = campaignId,
+                    ProductMasterId = new Guid("A1CA207C-250E-4C4E-ACB0-A94200693344"),
+                    Name = "TestPlanForGetPlanIsciMappingsDetails",
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto {DaypartCodeId = 1 },
+                        new PlanDaypartDto {DaypartCodeId = 2 }
+                    },
+                    FlightStartDate = DateTime.Parse("11/1/2021"),
+                    FlightEndDate = DateTime.Parse("11/10/2021"),
+                    AudienceId = 13,
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = 1,
+                            Weight = 25
+                        },
+                        new CreativeLength
+                        {
+                            SpotLengthId = 3,
+                            Weight = 75
+                        }
+                    }
+                });
+            _CampaignService.Setup(s => s.GetCampaignById(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    Id = campaignId,
+                    AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460")
+                });
+            // Act
+            var result = _PlanIsciService.SearchPlanIscisByName(searchRequest);
+            // Assert
+            Assert.AreEqual(result.Iscis.Count, expectedCount);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+        [Test]
+        public void SearchIsciByName_DoNotExist()
+        {
+            // Arrange
+            const int planId = 23;
+            const int campaignId = 32;
+            int expectedCount = 0;
+            var searchRequest = new SearchIsciRequestDto()
+            {
+                SourcePlanId = 467,
+                SearchText = "tes"
+            };
+            _PlanIsciRepositoryMock.Setup(s => s.SearchIsciByName(It.IsAny<SearchIsciRequestDto>(), It.IsAny<Guid>()))
+                .Returns(new List<SearchPlan> { });
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto
+                {
+                    Id = planId,
+                    CampaignId = campaignId,
+                    ProductMasterId = new Guid("A1CA207C-250E-4C4E-ACB0-A94200693344"),
+                    Name = "TestPlanForGetPlanIsciMappingsDetails",
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto {DaypartCodeId = 1 },
+                        new PlanDaypartDto {DaypartCodeId = 2 }
+                    },
+                    FlightStartDate = DateTime.Parse("11/1/2021"),
+                    FlightEndDate = DateTime.Parse("11/10/2021"),
+                    AudienceId = 13,
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength
+                        {
+                            SpotLengthId = 1,
+                            Weight = 25
+                        },
+                        new CreativeLength
+                        {
+                            SpotLengthId = 3,
+                            Weight = 75
+                        }
+                    }
+                });
+            _CampaignService.Setup(s => s.GetCampaignById(It.IsAny<int>()))
+                .Returns(new CampaignDto
+                {
+                    Id = campaignId,
+                    AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460")
+                });
+            // Act
+            var result = _PlanIsciService.SearchPlanIscisByName(searchRequest);
+            // Assert
+            Assert.AreEqual(result.Iscis.Count, expectedCount);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
     }
 }
