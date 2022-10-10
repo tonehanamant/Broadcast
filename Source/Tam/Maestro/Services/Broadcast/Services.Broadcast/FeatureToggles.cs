@@ -52,5 +52,6 @@
         public static string ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE = "broadcast-program-lineup-allocation-by-affiliate";
         public static string ENABLE_CENTRALIZED_PROGRAM_LIST = "broadcast-enable-centralized-program-list";
         public static string ENABLE_STATION_SECONDARY_AFFILIATIONS = "broadcast-enable-station-secondary-affiliations";
+        public static string PROGRAM_GENRE_RELATION_V_2 = "program-genre-relation-v-2";        
     }
 }

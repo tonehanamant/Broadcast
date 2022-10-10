@@ -17,6 +17,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             return _GetColumnDescriptors();
         }
 
+        public List<ColumnDescriptor> UT_GetColumnDescriptorsWithoutGenres()
+        {
+            return _GetColumnDescriptorsWithoutGenres();
+        }
+
         public string UT_GetDateGeneratedCellValue()
         {
             return _GetDateGeneratedCellValue();
@@ -25,6 +30,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         public List<List<object>> UT_TransformToExportLines(List<ProgramMappingsDto> mappings)
         {
             return _TransformToExportLines(mappings);
+        }
+
+        public List<List<object>> UT_TransformToExportLinesWithoutGenres(List<ProgramMappingsDto> mappings)
+        {
+            return _TransformToExportLinesWithoutGenres(mappings);
         }
 
         public DateTime? UT_CurrentDateTime { get; set; }

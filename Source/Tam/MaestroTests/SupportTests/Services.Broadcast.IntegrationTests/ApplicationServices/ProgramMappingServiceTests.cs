@@ -137,7 +137,28 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             Assert.IsTrue(hasContent);
         }
 
-        
+        [Test]
+        public void ExportProgramMappingsFile_ToggleOn()
+        {
+            // the content format, etc is tested via unit tests.
+            // here we will just test that it runs end to end 
+            // and the export stream is not empty
+            const string testUsername = "testUser";
+            const string expectedFileName = "BroadcastMappedPrograms.xlsx";
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PROGRAM_GENRE_RELATION_V_2] = true;
+            var exportedFile = _ProgramMappingService.ExportProgramMappingsFile(testUsername);
+            // verify it's named well
+            Assert.AreEqual(expectedFileName, exportedFile.Filename);
+            // verify the stream has contents
+            string fileContent;
+            using (var reader = new StreamReader(exportedFile.Stream))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+            var hasContent = fileContent.Length > 0;
+            Assert.IsTrue(hasContent);
+        }
+
         [Test]
         public void ExportUnmappedPrograms()
         {
@@ -185,6 +206,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             // verify it's named well
             Assert.IsTrue(exportedFile.Filename.StartsWith(expectedFileName));
             Assert.IsTrue(exportedFile.Filename.EndsWith(fileExtension));            
+
+            // verify the stream has contents
+            string fileContent;
+            using (var reader = new StreamReader(exportedFile.Stream))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+            var hasContent = fileContent.Length > 0;
+            Assert.IsTrue(hasContent);
+        }
+        [Test]
+        public void ExportUnmappedProgramsExcludeGenre_ToggleOn()
+        {
+            // the content format, etc is tested via unit tests.
+            // here we will just test that it runs end to end 
+            // and the export stream is not empty
+            const string expectedFileName = "Unmapped_";
+            const string fileExtension = ".zip";
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PROGRAM_GENRE_RELATION_V_2] = true;
+            var exportedFile = _ProgramMappingService.ExportUnmappedPrograms();
+
+            // verify it's named well
+            Assert.IsTrue(exportedFile.Filename.StartsWith(expectedFileName));
+            Assert.IsTrue(exportedFile.Filename.EndsWith(fileExtension));
 
             // verify the stream has contents
             string fileContent;

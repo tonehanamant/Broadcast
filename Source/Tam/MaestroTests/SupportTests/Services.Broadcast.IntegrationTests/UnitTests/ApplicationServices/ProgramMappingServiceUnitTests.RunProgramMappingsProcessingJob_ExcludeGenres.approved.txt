@@ -1,0 +1,92 @@
+[
+  {
+    "CreatedAt": null,
+    "CreatedBy": null,
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 1,
+      "Name": "Various",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "America Undercover",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "Event",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "America Undercover"
+  },
+  {
+    "CreatedAt": null,
+    "CreatedBy": null,
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 1,
+      "Name": "Various",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Good Morning NFL",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "Sports",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Good Morning NFL"
+  },
+  {
+    "CreatedAt": null,
+    "CreatedBy": null,
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 1,
+      "Name": "Various",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Breaking Bad",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "Series",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Breaking Bad"
+  },
+  {
+    "CreatedAt": null,
+    "CreatedBy": null,
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 1,
+      "Name": "Various",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "The Boys",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "Series",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "The Boys"
+  },
+  {
+    "CreatedAt": null,
+    "CreatedBy": null,
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 1,
+      "Name": "Various",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Community",
+    "OfficialShowType": {
+      "Id": 1,
+      "Name": "Mini-Movie",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Community"
+  }
+]

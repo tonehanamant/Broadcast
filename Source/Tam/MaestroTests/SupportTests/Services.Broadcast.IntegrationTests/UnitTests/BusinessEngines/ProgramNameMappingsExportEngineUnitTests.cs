@@ -14,6 +14,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         [UseReporter(typeof(DiffReporter))]
         public void GetColumnDescriptors()
         {
+            
             var engine = new ProgramNameMappingsExportEngineUnitTestClass(null,null);
 
             var result = engine.UT_GetColumnDescriptors();
@@ -21,6 +22,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
         
+        [Test]
+        [UseReporter(typeof(DiffReporter))]         
+        public void UT_GetColumnDescriptorsWithoutGenres()
+        {
+            var engine = new ProgramNameMappingsExportEngineUnitTestClass(null, null);
+            var result = engine.UT_GetColumnDescriptorsWithoutGenres();
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
         [Test]
         [UseReporter(typeof(DiffReporter))]
         public void GetDateGeneratedCellValue()
@@ -68,6 +78,25 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             };
 
             var result = engine.UT_TransformToExportLines(mappings);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void TransformToExportLines_WithoutGenre()
+        {
+            var createDateTime = new DateTime(2020, 10, 17, 7, 31, 26);
+            DateTime? modifiedDateTime = new DateTime(2020, 10, 20, 7, 31, 26);
+            ;
+            const int testProgramCount = 10;
+            var mappings = _GetTestPrograms(testProgramCount, createDateTime, modifiedDateTime);
+            var engine = new ProgramNameMappingsExportEngineUnitTestClass(null, null)
+            {
+                UT_CurrentDateTime = createDateTime
+            };
+
+            var result = engine.UT_TransformToExportLinesWithoutGenres(mappings);                
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }

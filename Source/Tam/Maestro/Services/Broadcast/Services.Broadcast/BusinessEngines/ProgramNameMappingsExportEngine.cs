@@ -2,6 +2,7 @@
 using OfficeOpenXml.Style;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Helpers;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
@@ -20,9 +21,11 @@ namespace Services.Broadcast.BusinessEngines
 
     public class ProgramNameMappingsExportEngine : BroadcastBaseClass, IProgramNameMappingsExportEngine
     {
+        private readonly Lazy<bool> _PROGRAMGENRERELATIONV2;
         public ProgramNameMappingsExportEngine(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
-
+            _PROGRAMGENRERELATIONV2 = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PROGRAM_GENRE_RELATION_V_2));
         }
         /// <summary>
         /// The types of columns used in this export
@@ -57,15 +60,42 @@ namespace Services.Broadcast.BusinessEngines
             new ColumnDescriptor {ColumnIndex = 6, Name = "Last Updated", ColumnType = ColumnTypeEnum.DateTime, Width = 20},
         };
 
+        /// <summary>
+        /// The base column headers without genre
+        /// </summary>
+        private readonly List<ColumnDescriptor> _BaseColumnHeadersWithoutGenre = new List<ColumnDescriptor>
+        {
+            new ColumnDescriptor {ColumnIndex = 1, Name = "Rate Card Program Name", ColumnType = ColumnTypeEnum.Text, Width = 38.86},
+            new ColumnDescriptor {ColumnIndex = 2, Name = "Official Program Name", ColumnType = ColumnTypeEnum.Text, Width = 32.14},            
+            new ColumnDescriptor {ColumnIndex = 3, Name = "Official Show Type", ColumnType = ColumnTypeEnum.Text, Width = 17.14},
+            new ColumnDescriptor {ColumnIndex = 4, Name = "Last Updated By", ColumnType = ColumnTypeEnum.Text, Width = 22.71},
+            new ColumnDescriptor {ColumnIndex = 5, Name = "Last Updated", ColumnType = ColumnTypeEnum.DateTime, Width = 20},
+        };
+
         private const int ROW_NUMBER_GENERATED_TIMESTAMP = 1;
         private const int ROW_NUMBER_TABLE_START = 3;
 
         /// <inheritdoc />
         public ExcelPackage GenerateExportFile(List<ProgramMappingsDto> mappings)
         {
-            var columnDescriptors = _GetColumnDescriptors();
-            var lines = _TransformToExportLines(mappings);
-
+            var columnDescriptors = new List<ColumnDescriptor>();
+            if(_PROGRAMGENRERELATIONV2.Value)
+            {
+                columnDescriptors = _GetColumnDescriptorsWithoutGenres();
+            }
+            else
+            {
+                columnDescriptors = _GetColumnDescriptors();
+            }
+            var lines = new List<List<object>>();
+            if (_PROGRAMGENRERELATIONV2.Value)
+            {
+                lines = _TransformToExportLinesWithoutGenres(mappings);
+            }
+            else
+            {
+                lines = _TransformToExportLines(mappings);
+            }
             var excelPackage = new ExcelPackage();
             var excelProgramMappingsTab = excelPackage.Workbook.Worksheets.Add("Program Mappings");
 
@@ -107,6 +137,14 @@ namespace Services.Broadcast.BusinessEngines
             return headers;
         }
 
+        protected List<ColumnDescriptor> _GetColumnDescriptorsWithoutGenres()
+        {
+            var headers = _BaseColumnHeadersWithoutGenre;
+            return headers;
+        }
+
+
+
         protected string _GetDateGeneratedCellValue()
         {
             var formattedDateGenerated = _GetCurrentDateTime().ToString("MM/dd/yyyy HH:mm:ss");
@@ -117,13 +155,12 @@ namespace Services.Broadcast.BusinessEngines
         protected List<List<object>> _TransformToExportLines(List<ProgramMappingsDto> mappings)
         {
             var lineStrings = new ConcurrentBag<List<object>>();
-
             Parallel.ForEach(mappings, (mapping) =>
-                {
-                    var lastUpdatedBy = string.IsNullOrWhiteSpace(mapping.ModifiedBy) ? mapping.CreatedBy : mapping.ModifiedBy;
-                    var lastUpdatedAt = mapping.ModifiedAt ?? mapping.CreatedAt;
+            {
+                var lastUpdatedBy = string.IsNullOrWhiteSpace(mapping.ModifiedBy) ? mapping.CreatedBy : mapping.ModifiedBy;
+                var lastUpdatedAt = mapping.ModifiedAt ?? mapping.CreatedAt;
 
-                    var lineColumnValues = new List<object>
+                var lineColumnValues = new List<object>
                     {
                         mapping.OriginalProgramName,
                         mapping.OfficialProgramName,
@@ -132,10 +169,39 @@ namespace Services.Broadcast.BusinessEngines
                         lastUpdatedBy,
                         lastUpdatedAt
                     };
-                    lineStrings.Add(lineColumnValues);
-                }
-            );
+                lineStrings.Add(lineColumnValues);
+            }
+           );
+            var rateCardProgramNameIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Rate Card Program Name")).ColumnIndex - 1; // 0 indexed
+            var officialCardProgramNameIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Official Program Name")).ColumnIndex - 1; // 0 indexed
 
+            var orderedLines = lineStrings
+                .OrderBy(s => s[rateCardProgramNameIndex])
+                .ThenBy(s => s[officialCardProgramNameIndex])
+                .ToList();
+
+            return orderedLines;
+        }
+
+        protected List<List<object>> _TransformToExportLinesWithoutGenres(List<ProgramMappingsDto> mappings)
+        {
+            var lineStrings = new ConcurrentBag<List<object>>();
+            Parallel.ForEach(mappings, (mapping) =>
+            {
+                var lastUpdatedBy = string.IsNullOrWhiteSpace(mapping.ModifiedBy) ? mapping.CreatedBy : mapping.ModifiedBy;
+                var lastUpdatedAt = mapping.ModifiedAt ?? mapping.CreatedAt;
+
+                var lineColumnValues = new List<object>
+                    {
+                        mapping.OriginalProgramName,
+                        mapping.OfficialProgramName,                        
+                        mapping.OfficialShowType.Name,
+                        lastUpdatedBy,
+                        lastUpdatedAt
+                    };
+                lineStrings.Add(lineColumnValues);
+            }
+           );
             var rateCardProgramNameIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Rate Card Program Name")).ColumnIndex - 1; // 0 indexed
             var officialCardProgramNameIndex = _BaseColumnHeaders.First(s => s.Name.Equals("Official Program Name")).ColumnIndex - 1; // 0 indexed
 

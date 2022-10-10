@@ -42,6 +42,8 @@ namespace Services.Broadcast.Converters
         private const string EventLocation = "event_location";
         private const string WwtvTitle = "WWTV_Title";
         private const string ProgramShowType = "Miscellaneous";
+        // This is going to remove in BP-5532 story
+        private const string ProgramGenre = "Various";   
 
         private readonly List<string> FileHeaders = new List<string>
         {
@@ -162,11 +164,11 @@ namespace Services.Broadcast.Converters
                             _LogWarning($"Line {LineIndex} has an invalid Genre of 'NULL'");
                         }
                         else
-                        {                           
-                            var sourceGenre = _GenreCache.GetSourceGenreLookupDtoByName(genre, ProgramSourceEnum.Master);
-                            var maestroGenre = _GenreCache.GetMaestroGenreLookupDtoBySourceGenre(sourceGenre, ProgramSourceEnum.Master);
-                            var officialGenre = _GenreCache.GetMaestroGenreByName(maestroGenre.Display);
-
+                        {
+                            //** This is going to remove in BP-5532 story **//
+                            //** Start **//                            
+                            var officialGenre = _GenreCache.GetMaestroGenreByName(ProgramGenre);
+                            //** End **//
                             var sourceShowType = _ShowTypeCache.GetMasterShowTypeByName(csvFileReader.GetCellValue(ShowType));
                             var maestroShowType = _ShowTypeCache.GetMaestroShowTypeByMasterShowType(sourceShowType);
 
@@ -174,6 +176,7 @@ namespace Services.Broadcast.Converters
                             {
                                 Id = Convert.ToInt32(csvFileReader.GetCellValue(ProgramId)),
                                 OfficialProgramName = csvFileReader.GetCellValue(Title),
+                                //** This is going to remove in BP-5532 story **//
                                 OfficialGenre = officialGenre,
                                 OfficialShowType = maestroShowType
                             };
@@ -200,15 +203,16 @@ namespace Services.Broadcast.Converters
         public List<ProgramMappingsDto> UploadMasterPrograms(Stream stream)
         {
             var excelProgramList = _ReadProgramFile(stream);
-            var masterList = new List<ProgramMappingsDto>();            
-            List<Genre> genres = _GenreCache.GetGenresBySource(ProgramSourceEnum.Maestro);
+            var masterList = new List<ProgramMappingsDto>();                        
             foreach (var program in excelProgramList)
-            {               
-                    Genre officialGenre = genres.FirstOrDefault(x => x.Name.ToLower() == program.OfficialGenre.Trim().ToLower());                     
+            {
+                    // This is going to remove in BP-5532 story
+                    Genre officialGenre = _GenreCache.GetMaestroGenreByName(ProgramGenre);                    
                     var sourceShowType = _ShowTypeCache.GetMaestroShowTypeByName(ProgramShowType);
                     var programMapping = new ProgramMappingsDto
                     {
                         OfficialProgramName = program.OfficialProgramName,
+                        // This is going to remove in BP-5532 story
                         OfficialGenre = officialGenre,
                         OfficialShowType = sourceShowType
                     };
