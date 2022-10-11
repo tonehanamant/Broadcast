@@ -5,7 +5,7 @@ BEGIN
 
 	BEGIN TRY
 		-- check if there's data
-		IF (SELECT COUNT(1) FROM [dbo].[strata_estimate]) > 0
+		IF (SELECT COUNT(1) FROM nsi_staging.dbo.strata_estimate) > 0
 		BEGIN
 			BEGIN TRANSACTION;
 
