@@ -20,13 +20,11 @@ namespace Services.Broadcast.ApplicationServices.Security
         public string GetCurrentUserFullName()
         {
             var ssid = _GetCurrentUserSsid();
-            _LogInfo($"ssid: {ssid}");
             var employee = SMSClient.Handler.GetEmployee(ssid, false);        
             if (employee == null)
             {
                 return null;
-            }
-            _LogInfo($"Employee: {employee.Employee.FullName}");
+            }            
             return employee.Employee.FullName;
         }
 

@@ -301,15 +301,5 @@ namespace BroadcastComposerWeb.Controllers
 
 	        return _ConvertToBaseResponse(() => service.GetPlanProprietarySummaryAggregation(request));
         }
-
-        [HttpPost]
-        [Route("CurrentUserFullNameTest")]
-        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
-        public string CurrentUserFullNameTest()
-        {
-            string userName= _GetCurrentUserFullName();
-            return userName;
-           
-        }
     }
 }
