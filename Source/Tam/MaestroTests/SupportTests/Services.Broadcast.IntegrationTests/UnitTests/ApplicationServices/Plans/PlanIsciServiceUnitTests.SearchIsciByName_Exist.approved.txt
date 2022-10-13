@@ -5,51 +5,51 @@
       "SpotLengths": [
         {
           "Id": 1,
-          "Length": "30"
+          "Length": ":30"
         },
         {
           "Id": 2,
-          "Length": "60"
+          "Length": ":60"
         },
         {
           "Id": 3,
-          "Length": "15"
+          "Length": ":15"
         },
         {
           "Id": 4,
-          "Length": "120"
+          "Length": ":120"
         },
         {
           "Id": 5,
-          "Length": "180"
+          "Length": ":180"
         },
         {
           "Id": 6,
-          "Length": "300"
+          "Length": ":300"
         },
         {
           "Id": 7,
-          "Length": "90"
+          "Length": ":90"
         },
         {
           "Id": 8,
-          "Length": "45"
+          "Length": ":45"
         },
         {
           "Id": 9,
-          "Length": "10"
+          "Length": ":10"
         },
         {
           "Id": 10,
-          "Length": "150"
+          "Length": ":150"
         },
         {
           "Id": 11,
-          "Length": "75"
+          "Length": ":75"
         },
         {
           "Id": 12,
-          "Length": "5"
+          "Length": ":5"
         }
       ]
     },
@@ -58,51 +58,51 @@
       "SpotLengths": [
         {
           "Id": 1,
-          "Length": "30"
+          "Length": ":30"
         },
         {
           "Id": 2,
-          "Length": "60"
+          "Length": ":60"
         },
         {
           "Id": 3,
-          "Length": "15"
+          "Length": ":15"
         },
         {
           "Id": 4,
-          "Length": "120"
+          "Length": ":120"
         },
         {
           "Id": 5,
-          "Length": "180"
+          "Length": ":180"
         },
         {
           "Id": 6,
-          "Length": "300"
+          "Length": ":300"
         },
         {
           "Id": 7,
-          "Length": "90"
+          "Length": ":90"
         },
         {
           "Id": 8,
-          "Length": "45"
+          "Length": ":45"
         },
         {
           "Id": 9,
-          "Length": "10"
+          "Length": ":10"
         },
         {
           "Id": 10,
-          "Length": "150"
+          "Length": ":150"
         },
         {
           "Id": 11,
-          "Length": "75"
+          "Length": ":75"
         },
         {
           "Id": 12,
-          "Length": "5"
+          "Length": ":5"
         }
       ]
     }

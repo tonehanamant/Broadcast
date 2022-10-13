@@ -549,7 +549,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var spotLengths = _SpotLengthRepository.GetSpotLengths().Select(x => new IsciSearchSpotLengthDto
             {
                 Id = x.Id,
-                Length = Convert.ToString(x.Display)
+                Length = $":{x.Display}"
             }).ToList();
             var iscis = new SearchPlanIscisDto
             {
