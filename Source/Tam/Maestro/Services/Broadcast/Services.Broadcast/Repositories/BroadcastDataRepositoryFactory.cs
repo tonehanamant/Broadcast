@@ -4,6 +4,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories.Inventory;
+using Services.Broadcast.Repositories.SpotExceptions;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using Tam.Maestro.Data.EntityFrameworkMapping.BroadcastForecast;
@@ -114,7 +115,10 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IPlanIsciRepository, PlanIsciRepository>();
             instance.RegisterType<IReelIsciIngestJobsRepository, ReelIsciIngestJobsRepository>();
             instance.RegisterType<IReelIsciRepository, ReelIsciRepository>();
-            instance.RegisterType<ISpotExceptionRepository, SpotExceptionRepository>();
+            instance.RegisterType<ISpotExceptionsRepository, SpotExceptionsRepository>();
+            instance.RegisterType<ISpotExceptionsRecommendedPlanRepository, SpotExceptionsRecommendedPlanRepository>();
+            instance.RegisterType<ISpotExceptionsOutOfSpecRepository, SpotExceptionsOutOfSpecRepository>();
+            instance.RegisterType<ISpotExceptionsUnpostedRepository, SpotExceptionsUnpostedRepository>();
             instance.RegisterType<ISpotExceptionsIngestJobRepository, SpotExceptionsIngestJobRepository>();
 
             WasRegistered = true;

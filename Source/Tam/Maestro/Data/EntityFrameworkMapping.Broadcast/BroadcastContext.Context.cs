@@ -235,8 +235,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_versions> plan_versions { get; set; }
         public virtual DbSet<fluidity_categories> fluidity_categories { get; set; }
         public virtual DbSet<plan_iscis> plan_iscis { get; set; }
-        public virtual DbSet<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
-        public virtual DbSet<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }
         public virtual DbSet<schedule> schedules { get; set; }
         public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<campaign_plan_secondary_audiences> campaign_plan_secondary_audiences { get; set; }
@@ -253,5 +251,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<staged_unposted_no_plan> staged_unposted_no_plan { get; set; }
         public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
         public virtual DbSet<spot_exceptions_ingest_jobs> spot_exceptions_ingest_jobs { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_spec_done_decisions> spot_exceptions_out_of_spec_done_decisions { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plan_details_done> spot_exceptions_recommended_plan_details_done { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plan_done_decisions> spot_exceptions_recommended_plan_done_decisions { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
     }
 }

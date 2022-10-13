@@ -545,8 +545,6 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="33.5" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_spot_lengths" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_decisions" Width="1.5" PointX="43.875" PointY="26.125" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_decision" Width="1.5" PointX="39.5" PointY="12.375" />
         <EntityTypeShape EntityType="BroadcastModel.schedule" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_schedules_media_months" />
         <AssociationConnector Association="BroadcastModel.FK_schedule_audiences_schedule" />
@@ -577,14 +575,26 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_decisions_spot_exceptions_out_of_specs" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_decision_spot_exceptions_recommended_plans_details" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_ingest_jobs" Width="1.5" PointX="36.375" PointY="39.75" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_done_decisions" Width="1.5" PointX="46.875" PointY="13" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs_done" Width="1.5" PointX="44.625" PointY="11.25" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details_done" Width="1.5" PointX="10.25" PointY="71.125" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_done_decisions" Width="1.5" PointX="12.5" PointY="73.5" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans_done" Width="1.5" PointX="3" PointY="100.375" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_exceptions_out_of_spec_reason_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_spot_exceptions_recommended_plans_done" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_done_decisions_spot_exceptions_recommended_plans_details_done" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

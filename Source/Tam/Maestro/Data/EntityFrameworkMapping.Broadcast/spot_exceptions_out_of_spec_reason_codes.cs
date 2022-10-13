@@ -17,6 +17,7 @@ namespace EntityFrameworkMapping.Broadcast
         public spot_exceptions_out_of_spec_reason_codes()
         {
             this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
+            this.spot_exceptions_out_of_specs_done = new HashSet<spot_exceptions_out_of_specs_done>();
         }
     
         public int id { get; set; }
@@ -25,5 +26,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string label { get; set; }
     
         public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual ICollection<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
     }
 }

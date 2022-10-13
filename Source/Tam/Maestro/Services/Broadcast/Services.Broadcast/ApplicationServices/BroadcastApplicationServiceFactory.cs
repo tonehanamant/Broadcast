@@ -11,6 +11,7 @@ using Services.Broadcast.ApplicationServices.Inventory.ProgramMapping;
 using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
 using Services.Broadcast.BusinessEngines.InventoryProgramsProcessing;
@@ -187,8 +188,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IInventoryProgramsRepairEngine, InventoryProgramsRepairEngine>();
             unityContainer.RegisterType<IInventoryWeekEngine, InventoryWeekEngine>();
 
-            unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();
-            unityContainer.RegisterType<ISpotExceptionService, SpotExceptionService>();            
+            unityContainer.RegisterType<IPlanIsciService, PlanIsciService>();           
             unityContainer.RegisterType<IInventorySummaryService, InventorySummaryService>();
             unityContainer.RegisterType<IInventoryProprietarySummaryService, InventoryProprietarySummaryService>();
             unityContainer.RegisterType<IInventoryGapCalculationEngine, InventoryGapCalculationEngine>();
@@ -289,6 +289,10 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IAabEngine, AabEngine>();
 
             // Spot Exceptions Api
+            unityContainer.RegisterType<ISpotExceptionsService, SpotExceptionsService>();
+            unityContainer.RegisterType<ISpotExceptionsRecommendedPlanService, SpotExceptionsRecommendedPlanService>();
+            unityContainer.RegisterType<ISpotExceptionsOutOfSpecService, SpotExceptionsOutOfSpecService>();
+            unityContainer.RegisterType<ISpotExceptionsUnpostedService, SpotExceptionsUnpostedService>();
             unityContainer.RegisterType<ISpotExceptionsSyncService, SpotExceptionsSyncService>();
             unityContainer.RegisterType<ISpotExceptionsIngestApiClient, SpotExceptionsIngestApiClient>();
 

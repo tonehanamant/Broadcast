@@ -14,11 +14,6 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class spot_exceptions_recommended_plan_details
     {
-        public spot_exceptions_recommended_plan_details()
-        {
-            this.spot_exceptions_recommended_plan_decision = new HashSet<spot_exceptions_recommended_plan_decision>();
-        }
-    
         public int id { get; set; }
         public int spot_exceptions_recommended_plan_id { get; set; }
         public int recommended_plan_id { get; set; }
@@ -49,7 +44,6 @@ namespace EntityFrameworkMapping.Broadcast
         public string execution_id_external { get; set; }
     
         public virtual plan plan { get; set; }
-        public virtual ICollection<spot_exceptions_recommended_plan_decision> spot_exceptions_recommended_plan_decision { get; set; }
         public virtual spot_exceptions_recommended_plans spot_exceptions_recommended_plans { get; set; }
     }
 }

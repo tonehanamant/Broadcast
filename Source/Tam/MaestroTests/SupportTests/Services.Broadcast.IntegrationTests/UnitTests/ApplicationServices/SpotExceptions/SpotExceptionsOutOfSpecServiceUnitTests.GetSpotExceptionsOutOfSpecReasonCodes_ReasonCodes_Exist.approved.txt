@@ -1,0 +1,20 @@
+[
+  {
+    "Description": "spot aired outside daypart",
+    "Id": 2,
+    "Label": "Daypart",
+    "ReasonCode": 1
+  },
+  {
+    "Description": "genre content restriction",
+    "Id": 3,
+    "Label": "Genre",
+    "ReasonCode": 2
+  },
+  {
+    "Description": "affiliate content restriction",
+    "Id": 4,
+    "Label": "Affiliate",
+    "ReasonCode": 3
+  }
+]

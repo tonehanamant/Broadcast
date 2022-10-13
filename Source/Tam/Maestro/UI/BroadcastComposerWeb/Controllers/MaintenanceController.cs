@@ -6,13 +6,13 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Maintenance;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.ApplicationServices.Security;
+using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Repositories;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -851,7 +851,7 @@ namespace BroadcastComposerWeb.Controllers
         [HttpPost]
         public ActionResult AddOrClearSpotExceptionsData(string addMockData, string clearMockData, string clearAllData)
         {
-            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>();
+            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsService>();
             if (!string.IsNullOrEmpty(addMockData))
             {
                 service.AddSpotExceptionData();

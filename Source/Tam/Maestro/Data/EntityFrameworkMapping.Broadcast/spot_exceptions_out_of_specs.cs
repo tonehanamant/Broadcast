@@ -14,11 +14,6 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class spot_exceptions_out_of_specs
     {
-        public spot_exceptions_out_of_specs()
-        {
-            this.spot_exceptions_out_of_spec_decisions = new HashSet<spot_exceptions_out_of_spec_decisions>();
-        }
-    
         public int id { get; set; }
         public string spot_unique_hash_external { get; set; }
         public string execution_id_external { get; set; }
@@ -47,7 +42,6 @@ namespace EntityFrameworkMapping.Broadcast
     
         public virtual audience audience { get; set; }
         public virtual plan plan { get; set; }
-        public virtual ICollection<spot_exceptions_out_of_spec_decisions> spot_exceptions_out_of_spec_decisions { get; set; }
         public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
     }

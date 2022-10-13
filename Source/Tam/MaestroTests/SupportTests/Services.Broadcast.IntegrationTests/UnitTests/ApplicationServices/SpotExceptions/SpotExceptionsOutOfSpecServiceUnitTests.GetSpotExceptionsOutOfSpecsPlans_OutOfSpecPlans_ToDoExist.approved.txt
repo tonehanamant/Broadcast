@@ -1,0 +1,16 @@
+{
+  "Active": [
+    {
+      "AdvertiserName": "Advertiser With Id ='3a9c5c03-3ce7-4652-955a-a6ea8cbc82fb'",
+      "AffectedSpotsCount": 2,
+      "AudienceName": "Men 50-64",
+      "FlightString": "12/01 - 12/09/2019 (2 Weeks)",
+      "Impressions": 0.0,
+      "PlanId": 215,
+      "PlanName": "3Q' 21 Reckitt HYHO Early Morning Upfront",
+      "SpotLengthString": ":45",
+      "SyncedTimestamp": null
+    }
+  ],
+  "Completed": []
+}

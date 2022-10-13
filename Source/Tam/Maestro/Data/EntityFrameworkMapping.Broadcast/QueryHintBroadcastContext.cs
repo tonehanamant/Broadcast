@@ -1,5 +1,6 @@
 ﻿using EntityFrameworkMapping.Broadcast.Interceptors;
 using System.Data.Entity.Infrastructure.Interception;
+using System.Diagnostics;
 
 namespace EntityFrameworkMapping.Broadcast
 {
