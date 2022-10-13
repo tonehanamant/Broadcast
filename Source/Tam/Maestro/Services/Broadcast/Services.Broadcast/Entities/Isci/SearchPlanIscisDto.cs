@@ -17,6 +17,11 @@ namespace Services.Broadcast.Entities.Isci
     public class SearchPlan
     {
         public string Isci { get; set; }
-        public List<int> SpotLengthId { get; set; }
+        public List<IsciSearchSpotLengthDto> SpotLengths { get; set; }
+    }
+    public class IsciSearchSpotLengthDto
+    {
+        public int Id { get; set; }
+        public string Length { get; set; }
     }
 }

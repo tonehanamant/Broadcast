@@ -41,6 +41,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IAudienceRepository> _AudienceRepository;
         private Mock<IReelIsciRepository> _ReelIsciRepository;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
 
         [SetUp]
         public void SetUp()
@@ -49,6 +50,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MediaMonthAndWeekAggregateCacheMock = new Mock<IMediaMonthAndWeekAggregateCache>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
+            _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
             _StandardDaypartRepositoryMock = new Mock<IStandardDaypartRepository>();
             _AabEngineMock = new Mock<IAabEngine>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
@@ -76,6 +78,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetDataRepository<IReelIsciRepository>())
                 .Returns(_ReelIsciRepository.Object);
 
+            _DataRepositoryFactoryMock
+              .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
+              .Returns(_SpotLengthRepositoryMock.Object);
+
             _SpotLengthEngine.Setup(s => s.GetSpotLengthValueById(It.IsAny<int>()))
                 .Returns<int>(SpotLengthTestData.GetSpotLengthValueById);
 
@@ -97,7 +103,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _CampaignService.Object,
                 _StandardDaypartService.Object,
                 _SpotLengthEngine.Object,
-                _DateTimeEngineMock.Object,
+                _DateTimeEngineMock.Object,                
                 _AabEngineMock.Object,
                 featureToggleHelper,
                 _ConfigurationSettingsHelperMock.Object);
@@ -1599,18 +1605,36 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SearchText = "tes"
             };
             int expectedCount = 2;
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
             _PlanIsciRepositoryMock.Setup(s => s.SearchIsciByName(It.IsAny<SearchIsciRequestDto>(), It.IsAny<Guid>()))
                 .Returns(new List<SearchPlan>
                 {
                     new SearchPlan
                     {
                         Isci = "test12",
-                        SpotLengthId = new List<int>{3,4,5}
+                        SpotLengths =new List<IsciSearchSpotLengthDto>
+                        {
+                            new IsciSearchSpotLengthDto
+                            {
+                                Id=1,
+                                Length="30"
+                            }
+                        }
                     },
                     new SearchPlan
                     {
                         Isci = "test123",
-                        SpotLengthId = new List<int>{3,4,5}
+                       SpotLengths =new List<IsciSearchSpotLengthDto>
+                        {
+                            new IsciSearchSpotLengthDto
+                            {
+                                Id=2,
+                                Length="45"
+                            }
+                        }
                     }
                 });
             _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
@@ -1666,6 +1690,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 SourcePlanId = 467,
                 SearchText = "tes"
             };
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengths())
+                .Returns(SpotLengthTestData.GetAllSpotLengths());
             _PlanIsciRepositoryMock.Setup(s => s.SearchIsciByName(It.IsAny<SearchIsciRequestDto>(), It.IsAny<Guid>()))
                 .Returns(new List<SearchPlan> { });
             _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))

@@ -66,6 +66,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IStandardDaypartService _StandardDaypartService;
         private readonly ISpotLengthEngine _SpotLengthEngine;
         private readonly IAudienceRepository _AudienceRepository;
+        private readonly ISpotLengthRepository _SpotLengthRepository;
         protected Lazy<bool> _IsUnifiedCampaignEnabled;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
         /// <summary>
@@ -87,7 +88,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             ICampaignService campaignService,
             IStandardDaypartService standardDaypartService,
             ISpotLengthEngine spotLengthEngine,
-            IDateTimeEngine dateTimeEngine,
+            IDateTimeEngine dateTimeEngine,            
             IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper)
             : base(featureToggleHelper, configurationSettingsHelper)
@@ -103,6 +104,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
+            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>(); 
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
@@ -544,6 +546,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
             var planIscis = _PlanIsciRepository.SearchIsciByName(searchIsciRequestDto, campaign.AdvertiserMasterId);
             planIscis = _RemoveDuplicates(planIscis);
+            var spotLengths = _SpotLengthRepository.GetSpotLengths().Select(x => new IsciSearchSpotLengthDto
+            {
+                Id = x.Id,
+                Length = Convert.ToString(x.Display)
+            }).ToList();
             var iscis = new SearchPlanIscisDto
             {
                 Iscis = planIscis.Select(x =>
@@ -551,7 +558,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     return new SearchPlan
                     {
                         Isci = x.Isci,
-                        SpotLengthId = x.SpotLengthId
+                        SpotLengths = spotLengths
                     };
                 }).ToList()
             };

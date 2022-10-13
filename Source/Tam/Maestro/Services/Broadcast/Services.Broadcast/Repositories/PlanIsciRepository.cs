@@ -173,8 +173,8 @@ namespace Services.Broadcast.Repositories
                                   Isci = isci.isci,
                                   PlanIsci = context.plan_iscis
                                                     .Where(planIsci => planIsci.deleted_at == null
-                                                            && (planIsci.flight_start_date <= startDate && planIsci.flight_end_date >= endDate 
-                                                                || planIsci.flight_start_date >= startDate && planIsci.flight_start_date <= endDate 
+                                                            && (planIsci.flight_start_date <= startDate && planIsci.flight_end_date >= endDate
+                                                                || planIsci.flight_start_date >= startDate && planIsci.flight_start_date <= endDate
                                                                 || planIsci.flight_end_date >= startDate && planIsci.flight_end_date <= endDate))
                                                     .Count(planIsci => planIsci.isci == isci.isci)
                               }).ToList();
@@ -220,7 +220,7 @@ namespace Services.Broadcast.Repositories
                         AdvertiserMasterId = plan.campaign.advertiser_master_id,
                         SpotLengthValues = planVersion.plan_version_creative_lengths.Select(x => x.spot_lengths.length).ToList(),
                         AudienceCode = planVersion.audience.code,
-                        PlanDayparts= planVersion.plan_version_dayparts.Select(x=>new PlanDaypartDto {DaypartCodeId=x.standard_daypart_id }).ToList(),
+                        PlanDayparts = planVersion.plan_version_dayparts.Select(x => new PlanDaypartDto { DaypartCodeId = x.standard_daypart_id }).ToList(),
                         FlightHiatusDays = planVersion.plan_version_flight_hiatus_days.Select(x => x.hiatus_day).ToList(),
                         FlightDays = planVersion.plan_version_flight_days.Select(x => x.day_id).ToList(),
                         Dayparts = planVersion.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
@@ -231,7 +231,7 @@ namespace Services.Broadcast.Repositories
                         UnifiedCampaignLastSentAt = plan.unified_campaign_last_sent_at,
                         UnifiedCampaignLastReceivedAt = plan.unified_campaign_last_received_at,
                         Iscis = plan.plan_iscis
-                                        .Where(planIsci => planIsci.deleted_at == null 
+                                        .Where(planIsci => planIsci.deleted_at == null
                                                 && (planIsci.flight_start_date <= mediaMonthStartDate && planIsci.flight_end_date >= mediaMonthEndDate
                                                     || planIsci.flight_start_date >= mediaMonthStartDate && planIsci.flight_start_date <= mediaMonthEndDate
                                                     || planIsci.flight_end_date >= mediaMonthStartDate && planIsci.flight_end_date <= mediaMonthEndDate))
@@ -242,7 +242,7 @@ namespace Services.Broadcast.Repositories
                 return result;
             });
         }
-        
+
         /// <inheritdoc />
         public int SaveIsciPlanMappings(List<PlanIsciDto> isciPlanMappings, string createdBy, DateTime createdAt)
         {
@@ -258,14 +258,14 @@ namespace Services.Broadcast.Repositories
                         created_by = createdBy,
                         flight_start_date = isciPlanMapping.FlightStartDate,
                         flight_end_date = isciPlanMapping.FlightEndDate,
-                        spot_length_id= isciPlanMapping.SpotLengthId,
+                        spot_length_id = isciPlanMapping.SpotLengthId,
                         modified_at = createdAt,
                         modified_by = createdBy,
                         start_time = isciPlanMapping.StartTime,
                         end_time = isciPlanMapping.EndTime
                     });
                 });
-                
+
                 var savedCount = context.SaveChanges();
                 return savedCount;
             });
@@ -326,9 +326,9 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var deletedCount = 0;
-                
+
                 var isciPlanMappingsToDelete = context.plan_iscis
-                    .Where(planIsci => planIsci.plan_id == planId  && !(planIsci.deleted_at.HasValue))
+                    .Where(planIsci => planIsci.plan_id == planId && !(planIsci.deleted_at.HasValue))
                     .ToList();
 
                 if (!isciPlanMappingsToDelete.Any())
@@ -513,7 +513,7 @@ namespace Services.Broadcast.Repositories
                         Isci = x.isci,
                         FlightStartDate = x.flight_start_date,
                         FlightEndDate = x.flight_end_date,
-                        SpotLengthId=x.spot_length_id,
+                        SpotLengthId = x.spot_length_id,
                         StartTime = x.start_time,
                         EndTime = x.end_time
                     })
@@ -550,7 +550,7 @@ namespace Services.Broadcast.Repositories
                                       DeletedAt = duplicates.deleted_at
 
                                   });
-                    if(result != null)
+                    if (result != null)
                     {
                         duplicateMappings.AddRange(result);
                     }
@@ -563,15 +563,14 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var spotLengthIds = context.spot_lengths.Select(x => x.id).ToList();
                 var searchIscis = context.plan_iscis
                     .Include(x => x.plan)
                     .Include(x => x.plan.campaign)
+                    .Include(x => x.spot_lengths)
                     .Where(x => x.plan.campaign.advertiser_master_id == advertiserMasterId && x.isci.Contains(searchIsciRequestDto.SearchText))
                     .Select(d => new SearchPlan
                     {
-                        Isci = d.isci,
-                        SpotLengthId = spotLengthIds
+                        Isci = d.isci                       
                     }).ToList();
                 return searchIscis;
             });
