@@ -3,6 +3,6 @@
     "Genre": {
       "Display": "Comedy"
     },
-    "Name": "black-ish"
+    "Name": "BLACK-ISH"
   }
 ]

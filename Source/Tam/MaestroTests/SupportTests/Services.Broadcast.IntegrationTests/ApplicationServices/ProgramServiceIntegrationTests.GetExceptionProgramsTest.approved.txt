@@ -3,6 +3,6 @@
     "Genre": {
       "Display": "Sports"
     },
-    "Name": "Golf"
+    "Name": "GOLF"
   }
 ]

@@ -15,18 +15,18 @@
     "Genre": {
       "Display": "Comedy"
     },
-    "Name": "Jojo Rabbit"
+    "Name": "JOJO RABBIT"
   },
   {
     "Genre": {
       "Display": "Crime"
     },
-    "Name": "Joker"
+    "Name": "JOKER"
   },
   {
     "Genre": {
       "Display": "Drama"
     },
-    "Name": "Mr. Jones"
+    "Name": "MR. JONES"
   }
 ]

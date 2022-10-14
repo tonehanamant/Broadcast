@@ -50,7 +50,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
 			// Assert
 			Assert.AreEqual(2, result.Count, "Valid Count");
-			Assert.AreEqual("Golf", result.FirstOrDefault().Name, "Valid Result");
+			Assert.AreEqual("GOLF", result.FirstOrDefault().Name, "Valid Result");
 			Assert.AreNotEqual("NBC", result.FirstOrDefault().Name, "Invalid Result");
 		}
 
@@ -90,7 +90,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
 			// Assert
 			Assert.AreEqual(1, result.Count, "Valid Count");
-			Assert.AreEqual("Golf 123", result.FirstOrDefault().Name, "Valid Result");			
+			Assert.AreEqual("GOLF 123", result.FirstOrDefault().Name, "Valid Result");			
 		}
 
 		[Test]
@@ -129,7 +129,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
 			// Assert
 			Assert.AreEqual(1, result.Count, "Valid Count");
-			Assert.AreEqual("Golf", result.FirstOrDefault().Name, "Valid Result");
+			Assert.AreEqual("GOLF", result.FirstOrDefault().Name, "Valid Result");
 		}
 	}
 }

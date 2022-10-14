@@ -51,9 +51,11 @@ namespace Services.Broadcast.ApplicationServices
             }
 
 			_RemoveVariousAndUnmatched(result);
-	        var sortedResults = result
-		        .Distinct(new ProgramEqualityComparer())
-		        .OrderBy(x => x.Name)
+
+			var deDupedResults = ProgramDeDuperHelper.RemoveDuplicateProgramsByName(result);
+			deDupedResults.ForEach(s => s.Name = s.Name.Trim().ToUpper());
+			var sortedResults = deDupedResults
+				.OrderBy(x => x.Name)
 		        .ToList();
 
 	        durationSw.Stop();

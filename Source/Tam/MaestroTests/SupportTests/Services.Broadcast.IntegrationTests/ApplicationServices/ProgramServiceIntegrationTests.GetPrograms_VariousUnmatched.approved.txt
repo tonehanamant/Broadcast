@@ -9,13 +9,13 @@
     "Genre": {
       "Display": "Court"
     },
-    "Name": "Judge Mathis"
+    "Name": "JUDGE MATHIS"
   },
   {
     "Genre": {
       "Display": "Special"
     },
-    "Name": "Justice Matters"
+    "Name": "JUSTICE MATTERS"
   },
   {
     "Genre": {
