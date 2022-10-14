@@ -214,6 +214,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpPost]
         [Route("ExportBuyingScx")]
+        [RestrictedAccess(RequiredRole = RoleType.Broadcast_Proposer)]
         public BaseResponse<Guid> ExportBuyingScx(PlanBuyingScxExportRequest request,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency,
             PostingTypeEnum postingType = PostingTypeEnum.NSI)
