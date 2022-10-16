@@ -1882,14 +1882,6 @@
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="market_coverage_file_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="program_genres">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="genre_id" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="program_name_exceptions">
           <Key>
             <PropertyRef Name="id" />
@@ -7870,7 +7862,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="pricing_guide_distribution_open_market_inventory" EntityType="Self.pricing_guide_distribution_open_market_inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pricing_guide_distribution_proprietary_inventory" EntityType="Self.pricing_guide_distribution_proprietary_inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pricing_guide_distributions" EntityType="Self.pricing_guide_distributions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="program_genres" EntityType="Self.program_genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_name_exceptions" EntityType="Self.program_name_exceptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_name_mapping_keywords" EntityType="Self.program_name_mapping_keywords" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_name_mappings" EntityType="Self.program_name_mappings" Schema="dbo" store:Type="Tables" />
@@ -10975,7 +10966,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="station" EntitySet="stations" />
             <End Role="stations_secondary_affiliations" EntitySet="stations_secondary_affiliations" />
           </AssociationSet>
-          <EntitySet Name="program_genres" EntityType="BroadcastModel.program_genres" />
           <EntitySet Name="spot_exceptions_out_of_specs" EntityType="BroadcastModel.spot_exceptions_out_of_specs" />
           <EntitySet Name="spot_exceptions_recommended_plan_details" EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" />
           <EntitySet Name="spot_exceptions_recommended_plans" EntityType="BroadcastModel.spot_exceptions_recommended_plans" />
@@ -19158,14 +19148,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="program_genres">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="genre_id" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="spot_exceptions_ingest_jobs">
           <Key>
             <PropertyRef Name="id" />
@@ -22681,15 +22663,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
                 <ScalarProperty Name="spot_count" ColumnName="spot_count" />
                 <ScalarProperty Name="house_isci" ColumnName="house_isci" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="program_genres">
-            <EntityTypeMapping TypeName="BroadcastModel.program_genres">
-              <MappingFragment StoreEntitySet="program_genres">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

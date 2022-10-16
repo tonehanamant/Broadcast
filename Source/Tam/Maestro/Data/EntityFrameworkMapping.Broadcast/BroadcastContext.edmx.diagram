@@ -561,7 +561,6 @@
         <EntityTypeShape EntityType="BroadcastModel.stations_secondary_affiliations" Width="1.5" PointX="11.5" PointY="44.75" />
         <AssociationConnector Association="BroadcastModel.FK_stations_secondary_affiliations_affiliates" />
         <AssociationConnector Association="BroadcastModel.FK_stations_secondary_affiliations_stations" />
-        <EntityTypeShape EntityType="BroadcastModel.program_genres" Width="1.5" PointX="36.375" PointY="18.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="41.625" PointY="18.5" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" Width="1.5" PointX="9.25" PointY="63.125" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans" Width="1.5" PointX="3" PointY="93.75" />

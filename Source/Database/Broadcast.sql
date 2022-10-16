@@ -937,6 +937,33 @@ DELETE FROM program_name_mappings WHERE official_program_name = 'TMZ  LIVE'
 GO
 /*************************************** END BP-5366 ***************************************/
 
+
+/*************************************** START BP-5532 ***************************************/
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'program_genres' AND COLUMN_NAME= 'name')
+BEGIN
+		DROP TABLE program_genres
+		
+			CREATE TABLE [program_genres]
+			(
+				[id] INT NOT NULL PRIMARY KEY IDENTITY, 		
+				[program_id] INT NOT NULL, 
+				[genre_id] INT NOT NULL, 
+				CONSTRAINT [FK_program_genres_programs] FOREIGN KEY ([program_id]) REFERENCES [dbo].[programs] ([id]),
+				CONSTRAINT [FK_program_genres_genres] FOREIGN KEY ([genre_id]) REFERENCES [dbo].[genres] ([id])
+		
+			)	
+END
+GO
+IF NOT EXISTS (SELECT top 1 * FROM program_genres)
+BEGIN
+INSERT INTO program_genres(program_id, genre_id)
+			SELECT DISTINCT P.id,G.id from program_name_mappings M join genres G on M.genre_id=g.id join programs P on M.official_program_name=P.name
+END
+Go
+/*************************************** END BP-5532 ***************************************/
+
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
