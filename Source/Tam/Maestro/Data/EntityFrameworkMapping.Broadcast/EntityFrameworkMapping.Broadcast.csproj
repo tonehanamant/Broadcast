@@ -733,6 +733,9 @@
     <Compile Include="program.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="program_genres.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="program_name_exceptions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
