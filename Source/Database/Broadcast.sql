@@ -477,12 +477,6 @@ BEGIN
 		genre_id int NOT NULL
 	)
 End
-
-IF NOT EXISTS (SELECT top 1 * FROM   program_genres)
-Begin
-INSERT INTO dbo.program_genres ([name], genre_id)
-select distinct m.official_program_name, g.id as genre_id from program_name_mappings m join genres g on m.genre_id = g.id
-End
 GO
 
 /*************************************** END BP-5532 ***************************************/
