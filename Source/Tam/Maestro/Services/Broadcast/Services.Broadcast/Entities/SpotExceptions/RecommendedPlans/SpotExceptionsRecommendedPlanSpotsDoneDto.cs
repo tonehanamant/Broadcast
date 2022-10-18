@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
-    public class SpotExceptionsRecommendedPlansToDoDto
+    public class SpotExceptionsRecommendedPlanSpotsDoneDto
     {
-        public SpotExceptionsRecommendedPlansToDoDto()
+        public SpotExceptionsRecommendedPlanSpotsDoneDto()
         {
             SpotLength = new SpotLengthDto();
-            SpotExceptionsRecommendedPlanDetailsToDo = new List<SpotExceptionsRecommendedPlanDetailsToDoDto>();
+            SpotExceptionsRecommendedPlanDetailsDone = new List<SpotExceptionsRecommendedPlanDetailsDoneDto>();
         }
 
         /// <summary>
@@ -16,6 +16,11 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// </summary>
         /// <value>The identifier.</value>
         public int Id { get; set; }
+
+        /// <summary>
+        /// The recommended plan type
+        /// </summary>
+        public string recommendedPlanType = "ToDo";
 
         /// <summary>
         /// Gets or sets the spot unique hash external.
@@ -135,7 +140,6 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// Gets or sets the spot exceptions recommended plan details.
         /// </summary>
         /// <value>The spot exceptions recommended plan details.</value>
-        public List<SpotExceptionsRecommendedPlanDetailsToDoDto> SpotExceptionsRecommendedPlanDetailsToDo { get; set; }
+        public List<SpotExceptionsRecommendedPlanDetailsDoneDto> SpotExceptionsRecommendedPlanDetailsDone { get; set; }
     }
 }
-

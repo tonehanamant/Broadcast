@@ -1,11 +1,16 @@
 ﻿using System;
 
-/// <summary></summary>
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
     /// <summary></summary>
-    public class SpotExceptionsRecommendedPlanAdvertisersRequestDto
+    public class SpotExceptionsRecommendedPlanSpotsRequestDto
     {
+        /// <summary>
+        /// Gets or sets the plan identifier.
+        /// </summary>
+        /// <value>The plan identifier.</value>
+        public int PlanId { get; set; }
+
         /// <summary>
         /// Gets or sets the week start date.
         /// </summary>

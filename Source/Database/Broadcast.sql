@@ -924,13 +924,14 @@ BEGIN
 END
 GO
 
-/*************************************** END BP-5413 ***************************************/
+/*************************************** END BP-5672 ***************************************/
+
 /*************************************** START BP-5366 ***************************************/
+
 DELETE FROM program_name_exceptions WHERE custom_program_name = 'TMZ  LIVE'
 DELETE FROM program_name_mappings WHERE official_program_name = 'TMZ  LIVE'
 GO
 /*************************************** END BP-5366 ***************************************/
-
 
 /*************************************** START BP-5532 ***************************************/
 IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'program_genres' AND COLUMN_NAME= 'name')
@@ -956,6 +957,20 @@ END
 Go
 /*************************************** END BP-5532 ***************************************/
 
+/*************************************** START BP-5672 ************************************/
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+where CONSTRAINT_NAME = 'FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans' 
+AND DELETE_RULE ='CASCADE')
+BEGIN
+	ALTER TABLE [dbo].[spot_exceptions_recommended_plan_details] DROP CONSTRAINT [FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans]
+
+	ALTER TABLE [dbo].[spot_exceptions_recommended_plan_details]  WITH CHECK ADD  CONSTRAINT [FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans] FOREIGN KEY([spot_exceptions_recommended_plan_id])
+	REFERENCES [dbo].[spot_exceptions_recommended_plans] ([id]) ON DELETE CASCADE
+END
+GO
+
+/*************************************** END BP-5672 ***************************************/
 
 
 /*************************************** END UPDATE SCRIPT *******************************************************/

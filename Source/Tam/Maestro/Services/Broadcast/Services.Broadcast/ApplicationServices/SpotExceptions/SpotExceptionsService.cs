@@ -57,8 +57,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
         {
-            List<SpotExceptionsRecommendedPlansToDoDto> spotExceptionsRecommendedPlansToDo = _GetSpotExceptionsRecommendedPlansToDoMock();
-            List<SpotExceptionsRecommendedPlansDoneDto> spotExceptionsRecommendedPlansDone = _GetSpotExceptionsRecommendedPlansDoneMock();
+            List<SpotExceptionsRecommendedPlanSpotsToDoDto> spotExceptionsRecommendedPlansToDo = _GetSpotExceptionsRecommendedPlansToDoMock();
+            List<SpotExceptionsRecommendedPlanSpotsDoneDto> spotExceptionsRecommendedPlansDone = _GetSpotExceptionsRecommendedPlansDoneMock();
             List<SpotExceptionsOutOfSpecsToDoDto> spotExceptionsOutOfSpecsToDo = _GetSpotExceptionsOutOfSpecsToDoMock();
             List<SpotExceptionsOutOfSpecsDoneDto> spotExceptionsOutOfSpecsDone = _GetSpotExceptionsOutOfSpecsDoneMock();
 
@@ -127,7 +127,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <inheritdoc />
         public async Task<int> GetQueuedDecisionCount()
         {
-            int totalDecisionCount = 0;
+            int totalDecisionCount;
             try
             {
                 var outOfSpecDecisonQueuedCount = await _SpotExceptionsRepository.GetOutOfSpecDecisionQueuedCountAsync();
@@ -143,11 +143,11 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return totalDecisionCount;
         }
 
-        private List<SpotExceptionsRecommendedPlansToDoDto> _GetSpotExceptionsRecommendedPlansToDoMock()
+        private List<SpotExceptionsRecommendedPlanSpotsToDoDto> _GetSpotExceptionsRecommendedPlansToDoMock()
         {
-            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansToDoDto>
+            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSpotsToDoDto>
             {
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=+",
                     AmbiguityCode = 1,
@@ -200,7 +200,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 },
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=+",
                     AmbiguityCode = 1,
@@ -282,7 +282,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 },
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=+",
                     AmbiguityCode = 1,
@@ -364,7 +364,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 },
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwMjA4Nw=+",
                     AmbiguityCode = 1,
@@ -446,7 +446,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 },
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDIwODcxNw=+",
                     AmbiguityCode = 1,
@@ -528,7 +528,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 },
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDIyMzAzMw=+",
                     AmbiguityCode = 1,
@@ -610,7 +610,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 },
-                new SpotExceptionsRecommendedPlansToDoDto
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDM2NTgwMw=+",
                     AmbiguityCode = 1,
@@ -696,11 +696,11 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return spotExceptionsRecommendedPlans;
         }
 
-        private List<SpotExceptionsRecommendedPlansDoneDto> _GetSpotExceptionsRecommendedPlansDoneMock()
+        private List<SpotExceptionsRecommendedPlanSpotsDoneDto> _GetSpotExceptionsRecommendedPlansDoneMock()
         {
-            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlansDoneDto>
+            var spotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSpotsDoneDto>
             {
-                new SpotExceptionsRecommendedPlansDoneDto
+                new SpotExceptionsRecommendedPlanSpotsDoneDto
                 {
                     SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=+",
                     AmbiguityCode = 1,
@@ -750,7 +750,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             IngestedAt=DateTime.Now,
                             SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=+",
                             ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                            SpotExceptionsRecommendedPlanDoneDecisions = new SpotExceptionsRecommendedPlanDoneDecisionsDto
+                            SpotExceptionsRecommendedPlanDoneDecisions = new SpotExceptionsRecommendedPlanSpotDecisionsDoneDto
                             {
                                 DecidedBy = "Mock Data",
                                 DecidedAt = DateTime.Now

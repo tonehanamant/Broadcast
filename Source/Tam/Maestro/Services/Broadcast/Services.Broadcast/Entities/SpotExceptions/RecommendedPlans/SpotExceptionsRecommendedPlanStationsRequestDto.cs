@@ -4,7 +4,7 @@
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
     /// <summary></summary>
-    public class SpotExceptionsRecommendedPlanAdvertisersRequestDto
+    public class SpotExceptionsRecommendedPlanStationsRequestDto
     {
         /// <summary>
         /// Gets or sets the week start date.

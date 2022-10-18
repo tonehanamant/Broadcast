@@ -34,7 +34,6 @@
   "Queued": [
     {
       "Affiliate": "IND",
-      "DecisionString": null,
       "EstimateId": 6616,
       "Id": 0,
       "Impressions": 0.05,
@@ -52,7 +51,6 @@
   "Synced": [
     {
       "Affiliate": "ABC",
-      "DecisionString": null,
       "EstimateId": 6289,
       "Id": 0,
       "Impressions": 0.05,

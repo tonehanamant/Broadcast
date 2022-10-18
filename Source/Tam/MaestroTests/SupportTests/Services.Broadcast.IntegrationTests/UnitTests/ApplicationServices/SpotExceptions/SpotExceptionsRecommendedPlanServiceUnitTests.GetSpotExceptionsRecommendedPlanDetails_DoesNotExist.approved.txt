@@ -1,0 +1,14 @@
+{
+  "EstimateId": 0,
+  "FlightDateString": null,
+  "FlightEndDate": null,
+  "FlightStartDate": null,
+  "Id": 0,
+  "InventorySourceName": null,
+  "Plans": [],
+  "Product": null,
+  "ProgramAirDate": null,
+  "ProgramAirTime": null,
+  "ProgramName": null,
+  "SpotLengthString": null
+}

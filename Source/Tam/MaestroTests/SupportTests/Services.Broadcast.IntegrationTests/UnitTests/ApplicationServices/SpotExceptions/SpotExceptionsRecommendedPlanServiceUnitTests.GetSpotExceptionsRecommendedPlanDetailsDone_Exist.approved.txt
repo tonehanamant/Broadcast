@@ -1,0 +1,41 @@
+{
+  "EstimateId": 6840,
+  "FlightDateString": "01/01-01/01/0001",
+  "FlightEndDate": "1/1/0001 12:00:00 AM",
+  "FlightStartDate": "1/1/0001 12:00:00 AM",
+  "Id": 0,
+  "InventorySourceName": "Tegna",
+  "Plans": [
+    {
+      "AudienceName": "Women 25-54",
+      "DaypartCode": "SYN",
+      "FlightDateString": "01/01-01/01/0001",
+      "FlightEndDate": "1/1/0001 12:00:00 AM",
+      "FlightStartDate": "1/1/0001 12:00:00 AM",
+      "Id": 0,
+      "Impressions": 0.05,
+      "IsRecommendedPlan": true,
+      "IsSelected": false,
+      "Name": "4Q'21 Macy's EM",
+      "Pacing": "50%",
+      "Product": null,
+      "RecommendedPlanId": 332,
+      "SpotLengthString": ":15",
+      "TotalContractedImpressions": 1.0,
+      "TotalDeliveredImpressionsSelected": 0.1,
+      "TotalDeliveredImpressionsUnselected": 0.05,
+      "TotalPacingSelected": 10.0,
+      "TotalPacingUnselected": 5.0,
+      "WeeklyContractedImpressions": 100.0,
+      "WeeklyDeliveredImpressionsSelected": 50.05,
+      "WeeklyDeliveredImpressionsUnselected": 50.0,
+      "WeeklyPacingSelected": 50.05,
+      "WeeklyPacingUnselected": 50.0
+    }
+  ],
+  "Product": null,
+  "ProgramAirDate": "04/10/2022",
+  "ProgramAirTime": "08:28:28 AM",
+  "ProgramName": "CBS Mornings",
+  "SpotLengthString": ":0"
+}

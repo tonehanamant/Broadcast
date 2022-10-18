@@ -9,7 +9,7 @@
       "Impressions": 0.05,
       "PlanId": 334,
       "PlanName": "4Q'21 Macy's SYN",
-      "SpotLengthString": ":30"
+      "SpotLengthString": "30"
     },
     {
       "AdvertiserName": "Name2",
@@ -19,7 +19,7 @@
       "Impressions": 0.05,
       "PlanId": 332,
       "PlanName": "4Q'21 Macy's EM",
-      "SpotLengthString": ":30"
+      "SpotLengthString": "30"
     }
   ]
 }

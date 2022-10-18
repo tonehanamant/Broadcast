@@ -2038,7 +2038,7 @@ namespace Services.Broadcast.ApplicationServices
 
         //    if (spotExceptionsRecommendedSpotsResult == null)
         //    {
-        //        return recommendedPlanFiltersResult;
+        //        return recommendedPlanFiltersResultz;
         //    }
 
         //    var marketCodes = spotExceptionsRecommendedSpotsResult.Select(x => x.MarketCode ?? 0).ToList();

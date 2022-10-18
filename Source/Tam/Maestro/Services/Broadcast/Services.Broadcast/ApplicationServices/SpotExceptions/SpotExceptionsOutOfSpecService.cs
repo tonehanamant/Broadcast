@@ -411,13 +411,23 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             {
                 foreach (var spotExceptionsOutOfSpec in spotExceptionsOutOfSpecSaveRequest.Decisions)
                 {
-                    var decisionsPlans = await _GetSpotExceptionsRecommendedPlanByDecisionAsync(spotExceptionsOutOfSpec);
 
-                    var countAdded = await _AddSpotExceptionsRecommendedPlanToDoneAsync(decisionsPlans);
+                    var outOfSpecToDo = await _SpotExceptionsOutOfSpecRepository.GetSpotExceptionOutOfSpecByDecisionToDoAsync(spotExceptionsOutOfSpec);
+                    var outOfSpecDone = await _SpotExceptionsOutOfSpecRepository.GetSpotExceptionOutOfSpecByDecisionDoneAsync(spotExceptionsOutOfSpec);
 
-                    var countDeleted = await _DeleteSpotExceptionsOutOfSpecFromToDoAsync(decisionsPlans.Id);
+                    if (outOfSpecToDo == null && outOfSpecDone == null)
+                    {
+                        return false;
+                    }
 
-                    isSaved = await _SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(spotExceptionsOutOfSpec, userName, decidedAt);
+                    if (outOfSpecToDo != null)
+                    {
+                        isSaved = await _SaveOutOfSpectDecisionsToDoAsync(spotExceptionsOutOfSpec, outOfSpecToDo, userName);
+                    }
+                    else
+                    {
+                        isSaved = await _SaveOutOfSpecDecisionsDoneAsync(spotExceptionsOutOfSpec, outOfSpecDone, userName);
+                    }
                 }
             }
             catch (Exception ex)
@@ -429,73 +439,46 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return isSaved;
         }
 
-        private async Task<SpotExceptionsOutOfSpecsToDoDto> _GetSpotExceptionsRecommendedPlanByDecisionAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec)
+        private async Task<bool> _SaveOutOfSpectDecisionsToDoAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec, SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo, string userName)
         {
-            var outOfSpec = new SpotExceptionsOutOfSpecsToDoDto();
+            bool isMoved = false;
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
+
+            _LogInfo($"Starting: Moving the Spot Exception Plan by Decision to Done");
             try
             {
-                outOfSpec = await _SpotExceptionsOutOfSpecRepository.GetSpotExceptionOutOfSpecByDecisionAsync(spotExceptionsOutOfSpec);
+                isMoved = await _SpotExceptionsOutOfSpecRepository.SaveSpotExceptionsOutOfSpecToDoDecisionsAsync(spotExceptionsOutOfSpec, outOfSpecToDo, userName, currentDate);
+
+
+                _LogInfo($"Finished: Moving the Spot Exception Plan by Decision to Done");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not move Spot Exception Recommended Plan to Done";
                 throw new CadentException(msg, ex);
             }
 
-            return outOfSpec;
+            return isMoved;
         }
 
-        private async Task<int> _AddSpotExceptionsRecommendedPlanToDoneAsync(SpotExceptionsOutOfSpecsToDoDto decisionsPlans)
-        {
-            int addedCount;
-
-            try
-            {
-                var transformedToDone = await _TransformToDoToDone(decisionsPlans);
-
-                addedCount = await _SpotExceptionsOutOfSpecRepository.AddSpotExceptionsOutOfSpecToDoneAsync(transformedToDone);
-            }
-            catch (Exception ex)
-            {
-                var msg = $"Could not save to the the Database";
-                throw new CadentException(msg, ex);
-            }
-
-            return addedCount;
-        }
-
-        private async Task<int> _DeleteSpotExceptionsOutOfSpecFromToDoAsync(int spotExceptionOutOfSpecId)
-        {
-            int deletedCunt;
-            try
-            {
-                deletedCunt = await _SpotExceptionsOutOfSpecRepository.DeleteSpotExceptionsOutOfSpecFromToDoAsync(spotExceptionOutOfSpecId);
-            }
-            catch (Exception ex)
-            {
-                var msg = $"Could not retrieve the data from the Database";
-                throw new CadentException(msg, ex);
-            }
-
-            return deletedCunt;
-        }
-
-        private async Task<bool> _SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec, string userName, DateTime decidedAt)
+        private async Task<bool> _SaveOutOfSpecDecisionsDoneAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpecSaveRequest, SpotExceptionsOutOfSpecsDoneDto outOfSpecToDo, string userName)
         {
             bool isSpotExceptionsOutOfSpecDoneDecisionSaved;
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
+
             try
             {
                 var spotExceptionsOutOfSpecDoneDecision = new SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto
                 {
-                    Id = spotExceptionsOutOfSpec.Id,
-                    AcceptAsInSpec = spotExceptionsOutOfSpec.AcceptAsInSpec,
-                    Comments = spotExceptionsOutOfSpec.Comments,
-                    ProgramName = spotExceptionsOutOfSpec.ProgramName,
-                    GenreName = spotExceptionsOutOfSpec.GenreName,
-                    DaypartCode = spotExceptionsOutOfSpec.DaypartCode
+                    Id = outOfSpecToDo.Id,
+                    AcceptAsInSpec = spotExceptionsOutOfSpecSaveRequest.AcceptAsInSpec,
+                    Comments = outOfSpecToDo.Comments,
+                    ProgramName = outOfSpecToDo.ProgramName,
+                    GenreName = outOfSpecToDo.GenreName,
+                    DaypartCode = outOfSpecToDo.DaypartCode
                 };
 
-                isSpotExceptionsOutOfSpecDoneDecisionSaved = await _SpotExceptionsOutOfSpecRepository.SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(spotExceptionsOutOfSpecDoneDecision, userName, decidedAt);
+                isSpotExceptionsOutOfSpecDoneDecisionSaved = await _SpotExceptionsOutOfSpecRepository.SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(spotExceptionsOutOfSpecDoneDecision, userName, currentDate);
             }
             catch (Exception ex)
             {
@@ -574,46 +557,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             result.RemoveAll(x => _GenreCache.GetGenreLookupDtoById(x.GenreId).Display.Equals("Various", StringComparison.OrdinalIgnoreCase)
                     || x.OfficialProgramName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
-        }
-
-        private async Task<SpotExceptionsOutOfSpecsDoneDto> _TransformToDoToDone(SpotExceptionsOutOfSpecsToDoDto todoPlan)
-        {
-            var donePlan = new SpotExceptionsOutOfSpecsDoneDto
-            {
-                Id = todoPlan.Id,
-                SpotUniqueHashExternal = todoPlan.SpotUniqueHashExternal,
-                ReasonCodeMessage = todoPlan.ReasonCodeMessage,
-                EstimateId = todoPlan.EstimateId,
-                IsciName = todoPlan.IsciName,
-                HouseIsci = todoPlan.HouseIsci,
-                RecommendedPlanId = todoPlan.RecommendedPlanId,
-                RecommendedPlanName = todoPlan.RecommendedPlanName,
-                ProgramName = todoPlan.ProgramName,
-                StationLegacyCallLetters = todoPlan.StationLegacyCallLetters,
-                DaypartCode = todoPlan.DaypartCode,
-                GenreName = todoPlan.GenreName,
-                Affiliate = todoPlan.Affiliate,
-                Market = todoPlan.Market,
-                SpotLength = todoPlan.SpotLength,
-                Audience = todoPlan.Audience,
-                ProgramAirTime = todoPlan.ProgramAirTime,
-                IngestedBy = todoPlan.IngestedBy,
-                IngestedAt = todoPlan.IngestedAt,
-                IngestedMediaWeekId = todoPlan.IngestedMediaWeekId,
-                Impressions = todoPlan.Impressions,
-                PlanId = todoPlan.PlanId,
-                FlightStartDate = todoPlan.FlightStartDate,
-                FlightEndDate = todoPlan.FlightEndDate,
-                AdvertiserMasterId = todoPlan.AdvertiserMasterId,
-                Product = todoPlan.Product,
-                SpotExceptionsOutOfSpecReasonCode = todoPlan.SpotExceptionsOutOfSpecReasonCode,
-                MarketCode = todoPlan.MarketCode,
-                MarketRank = todoPlan.MarketRank,
-                Comments = todoPlan.Comments,
-                InventorySourceName = todoPlan.InventorySourceName
-            };
-
-            return donePlan;
         }
     }
 }

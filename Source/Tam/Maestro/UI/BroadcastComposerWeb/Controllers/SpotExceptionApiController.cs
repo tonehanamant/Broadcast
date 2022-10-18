@@ -22,10 +22,20 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        [Obsolete]
+        [Route("recommended-plans")]
+        public BaseResponse<List<SpotExceptionsRecommendedPlansResultsDto>> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
+        {
+            //return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest));
+            throw new NotSupportedException("We thought this operation is not used, this added 7/13/22 - BP-4306 !");
+        }
+
+        [Obsolete]
+        [HttpPost]
         [Route("spot-exception-recommanded-plans")]
         public async Task<BaseResponse<SpotExceptionsRecommendedPlansResultsDto>> GetSpotExceptionRecommandedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetSpotExceptionRecommendedPlansAsync(spotExceptionsRecommendedPlansRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlansAsync(spotExceptionsRecommendedPlansRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
@@ -37,9 +47,9 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("spot-exception-recommended-plans")]
-        public async Task<BaseResponse<SpotExceptionsRecommendedPlansResultsDto>> GetSpotExceptionRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
+        public async Task<BaseResponse<SpotExceptionsRecommendedPlansResultsDto>> GetSpotExceptionRecommendedPlansAsync(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetSpotExceptionRecommendedPlansAsync(spotExceptionsRecommendedPlansRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlansAsync(spotExceptionsRecommendedPlansRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
@@ -47,65 +57,69 @@ namespace BroadcastComposerWeb.Controllers
         /// <summary>
         /// Gets the spot exceptions recommended plan spots.
         /// </summary>
-        /// <param name="RecomendedPlansRequest">The recomended plans request.</param>
+        /// <param name="spotExceptionRecomendedPlanSpotsRequest">The recomended plans request.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("recommended-plan-spots")]
-        public async Task<BaseResponse<SpotExceptionsRecommendedPlanSpotsResultDto>> GetSpotExceptionsRecommendedPlanSpots(RecomendedPlansRequestDto RecomendedPlansRequest)
+        public async Task<BaseResponse<SpotExceptionsRecommendedPlanSpotsResultDto>> GetSpotExceptionsRecommendedPlanSpotsAsync(SpotExceptionsRecommendedPlanSpotsRequestDto spotExceptionRecomendedPlanSpotsRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetSpotExceptionsRecommendedPlanSpotsAsync(RecomendedPlansRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlanSpotsAsync(spotExceptionRecomendedPlanSpotsRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
 
-        [HttpPost]
-        [Obsolete]
-        [Route("recommended-plans")]
-        public BaseResponse<List<SpotExceptionsRecommendedPlansResultsDto>> GetSpotExceptionsRecommendedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
-        {
-            //return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlans(spotExceptionsRecommendedPlansRequest));
-            throw new NotSupportedException("We thought this operation is not used, this added 7/13/22 - BP-4306 !");
-        }
-
-        //[HttpGet]
-        //[Route("recommended-plans-details")]
-        //public BaseResponse<SpotExceptionsRecommendedPlanDetailsResultDto> GetSpotExceptionsRecommendedPlanDetails(int spotExceptionsRecommendedPlanId)
-        //{
-        //    return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanId));
-        //}
-
+        /// <summary>
+        /// Gets the spot exceptions recommended plan details asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlanId">The spot exceptions recommended plan details identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("recommended-plans-details")]
-        public async Task<BaseResponse<SpotExceptionsRecommendedPlanDetailsResultDto>> GetSpotExceptionsRecommendedPlanDetails(int spotExceptionsRecommendedPlanId)
+        public async Task<BaseResponse<SpotExceptionsRecommendedPlanDetailsResultDto>> GetSpotExceptionsRecommendedPlanDetailsAsync(int spotExceptionsRecommendedPlanId)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetSpotExceptionsRecommendedPlanDetails(spotExceptionsRecommendedPlanId);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlanDetailsAsync(spotExceptionsRecommendedPlanId);
 
             return _ConvertToBaseResponse(() => result);
         }
 
+        /// <summary>
+        /// Gets the spot exceptions recommended plans advertisers.
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlansAdvertisersRequest">The spot exceptions recommended plans advertisers request.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("recommended-plans-advertisers")]
         public async Task<BaseResponse<List<string>>> GetSpotExceptionsRecommendedPlansAdvertisers(SpotExceptionsRecommendedPlanAdvertisersRequestDto spotExceptionsRecommendedPlansAdvertisersRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetSpotExceptionsRecommendedPlanAdvertisersAsync(spotExceptionsRecommendedPlansAdvertisersRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlanAdvertisersAsync(spotExceptionsRecommendedPlansAdvertisersRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
 
+        /// <summary>
+        /// Gets the spot exceptions recommended plan stations.
+        /// </summary>
+        /// <param name="spotExceptionsRecommendedPlansStationRequest">The spot exceptions recommended plans station request.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("recommended-plans-stations")]
-        public async Task<BaseResponse<List<string>>> GetSpotExceptionsRecommendedPlansStations(SpotExceptionsRecommendedPlanStationRequestDto spotExceptionsRecommendedPlansStationRequest)
+        public async Task<BaseResponse<List<string>>> GetSpotExceptionsRecommendedPlanStations(SpotExceptionsRecommendedPlanStationsRequestDto spotExceptionsRecommendedPlansStationRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetSpotExceptionsRecommendedPlansStationsAsync(spotExceptionsRecommendedPlansStationRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlanStationsAsync(spotExceptionsRecommendedPlansStationRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
 
+        /// <summary>
+        /// Gets the recommended plans filters.
+        /// </summary>
+        /// <param name="recomendedPlansFilterRequest">The recomended plans filter request.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("recommended-plan-filters")]
-        public async Task<BaseResponse<RecommendedPlanFiltersResultDto>> GetRecommendedPlansFilters(RecomendedPlansRequestDto recomendedPlansFilterRequest)
+        public async Task<BaseResponse<RecommendedPlanFiltersResultDto>> GetRecommendedPlansFilters(SpotExceptionsRecommendedPlansRequestDto recomendedPlansFilterRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlansFilters(recomendedPlansFilterRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlanFilters(recomendedPlansFilterRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
@@ -115,13 +129,13 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlanSaveRequest">The spot exceptions recommended plan save request.</param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("recommended-plans-save")]
         public async Task<BaseResponse<bool>> SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveDecisionsRequestDto spotExceptionsRecommendedPlanSaveRequest)
         {
             var userName = _GetCurrentUserFullName();
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().HandleSaveSpotExceptionsRecommendedPlanAsync(spotExceptionsRecommendedPlanSaveRequest, userName);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().HandleSaveRecommendedPlanDecisionsAsync(spotExceptionsRecommendedPlanSaveRequest, userName);
 
             return _ConvertToBaseResponse(() => result);
         }
@@ -160,7 +174,6 @@ namespace BroadcastComposerWeb.Controllers
             throw new NotSupportedException("We thought this operation is not used, this added 9/06/22 - BP-5672 !");
         }
 
-        //ovo je out of spec page
         [HttpPost]
         [Route("out-of-spec-plan-spots")]
         public async Task<BaseResponse<SpotExceptionsOutOfSpecPlanSpotsResultDto>> GetSpotExceptionsOutOfSpecsSpots(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
@@ -170,7 +183,6 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => result);
         }
 
-        //ovo je out of spec page
         [HttpPost]
         [Route("out-of-spec-inventory-sources")]
         public async Task<BaseResponse<List<string>>> GetSpotExceptionsOutOfSpecSpotsInventorySources(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
@@ -179,7 +191,6 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => result);
         }
 
-        // ovo je out of spec page
         [HttpGet]
         [Route("out-of-spec-reason-codes")]
         public async Task<BaseResponse<List<SpotExceptionsOutOfSpecReasonCodeResultDto>>> GetSpotExceptionsOutOfSpecReasonCodes()
@@ -189,7 +200,6 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => result);
         }
 
-        // ovo je out of spec page
         [HttpPost]
         [Route("out-of-spec-markets")]
         public async Task<BaseResponse<List<string>>> GetSpotExceptionsOutOfSpecMarkets(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
@@ -208,7 +218,6 @@ namespace BroadcastComposerWeb.Controllers
             throw new NotSupportedException("We thought this operation is not used, this added  BP-5470 !");
         }
 
-        //ovo je out of spec edit
         [HttpGet]
         [Route("out-of-spec-programs")]
         public async Task<BaseResponse<List<SpotExceptionsOutOfSpecProgramsDto>>> GetPrograms(string programNameQuery)
@@ -220,7 +229,6 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => result);
         }
 
-        // ovo je exception page
         [HttpPost]
         [Route("out-of-spec-advertisers")]
         public async Task<BaseResponse<List<string>>> GetSpotExceptionsOutofSpecAdvertisers(SpotExceptionsOutOfSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest)
@@ -255,7 +263,6 @@ namespace BroadcastComposerWeb.Controllers
             throw new NotSupportedException("We thought this operation is not used, this added 9/06/22 - BP-5672 !");
         }
 
-        //ovo je kad save edit spot
         [HttpPost]
         [Route("out-of-spec-saves")]
         public async Task<BaseResponse<bool>> SaveOutofSpecDecisionsPlans(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest)
@@ -285,7 +292,6 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => result);
         }
 
-        //ovo je svuda
         [HttpGet]
         [Route("queued-decision-count")]
         public async Task<BaseResponse<int>> GetQueuedDecisionCount()

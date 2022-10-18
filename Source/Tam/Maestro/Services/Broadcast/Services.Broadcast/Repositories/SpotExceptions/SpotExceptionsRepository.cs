@@ -14,7 +14,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 {
     public interface ISpotExceptionsRepository : IDataRepository
     {
-        bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansToDoDto> spotExceptionsRecommendedPlansToDo, List<SpotExceptionsRecommendedPlansDoneDto> spotExceptionsRecommendedPlansDone,
+        bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlanSpotsToDoDto> spotExceptionsRecommendedPlansToDo, List<SpotExceptionsRecommendedPlanSpotsDoneDto> spotExceptionsRecommendedPlansDone,
              List<SpotExceptionsOutOfSpecsToDoDto> spotExceptionsOutOfSpecsToDo, List<SpotExceptionsOutOfSpecsDoneDto> spotExceptionsOutOfSpecsDone);
 
   
@@ -41,8 +41,8 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         { }
 
-        public bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlansToDoDto> spotExceptionsRecommendedPlansToDo, 
-            List<SpotExceptionsRecommendedPlansDoneDto> spotExceptionsRecommendedPlansDone,
+        public bool AddSpotExceptionData(List<SpotExceptionsRecommendedPlanSpotsToDoDto> spotExceptionsRecommendedPlansToDo, 
+            List<SpotExceptionsRecommendedPlanSpotsDoneDto> spotExceptionsRecommendedPlansDone,
              List<SpotExceptionsOutOfSpecsToDoDto> spotExceptionsOutOfSpecsToDo, List<SpotExceptionsOutOfSpecsDoneDto> spotExceptionsOutOfSpecsDone)
         {
             var executionId = Guid.NewGuid();
@@ -284,7 +284,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                                                     + "WHERE decided_by = 'Mock Data'");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_details_done "
                                                     + "WHERE ingested_by = 'Mock Data'");
-                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plans "
+                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plans_done "
                                                     + "WHERE ingested_by = 'Mock Data';");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_specs "
                                                     + "WHERE ingested_by = 'Mock Data';");

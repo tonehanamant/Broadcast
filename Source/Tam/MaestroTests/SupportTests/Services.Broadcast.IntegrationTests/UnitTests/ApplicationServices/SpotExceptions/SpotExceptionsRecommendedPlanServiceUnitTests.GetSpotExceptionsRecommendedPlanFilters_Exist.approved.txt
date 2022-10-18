@@ -2,19 +2,16 @@
   "InventorySources": [
     "Ference POD",
     "Sinclair Corp - Day Syn 10a-4p",
-    "Tegna",
-    "TVB Syndication/ROS"
+    "Tegna"
   ],
   "Markets": [
     "Columbus, OH",
-    "Evansville",
     "Paducah-Cape Girard-Harsbg",
     "Seattle-Tacoma"
   ],
   "Stations": [
     "KOMO",
     "WBNS",
-    "WDKA",
-    "WEVV"
+    "WDKA"
   ]
 }

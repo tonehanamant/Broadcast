@@ -642,12 +642,12 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecsDoneDto.cs" />
-    <Compile Include="Entities\SpotExceptions\RecommendedPlans\RecomendedPlansRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanSpotsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\RecommendedPlanDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\RecommendedPlanFiltersResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanDetailsDoneDto.cs" />
-    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlansDoneDto.cs" />
-    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanDoneDecisionsDto.cs" />
+    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanSpotsDoneDto.cs" />
+    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanSpotDecisionsDoneDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecSaveDecisionsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\SpotExceptionsUnpostedResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecAdvertisersRequestDto.cs" />
@@ -672,9 +672,9 @@
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanDetailsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanAdvertisersRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanSaveDecisionsRequestDto.cs" />
-    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlansToDoDto.cs" />
+    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanSpotsToDoDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlansRequestDto.cs" />
-    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanStationRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanStationsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\DecisionSync\TriggerDecisionSyncRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\SpotExceptionsUnpostedNoPlanDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\SpotExceptionsUnpostedNoReelRosterDto.cs" />

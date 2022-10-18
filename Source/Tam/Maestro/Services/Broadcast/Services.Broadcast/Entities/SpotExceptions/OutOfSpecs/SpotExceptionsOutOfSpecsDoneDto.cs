@@ -6,6 +6,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
     {
         public int Id { get; set; }
         public string SpotUniqueHashExternal { get; set; }
+        public string ExecutionIdExternal { get; set; }
         public string ReasonCodeMessage { get; set; }
         public int EstimateId { get; set; }
         public string IsciName { get; set; }

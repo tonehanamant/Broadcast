@@ -2,13 +2,19 @@
 
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
-    public class SpotExceptionsRecommendedPlanDoneDecisionsDto
+    public class SpotExceptionsRecommendedPlanSpotDecisionsDoneDto
     {
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
         /// <value>The identifier.</value>
         public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot exceptions recommended plan identifier.
+        /// </summary>
+        /// <value>The spot exceptions recommended plan identifier.</value>
+        public int SpotExceptionsRecommendedPlanId { get; set; }
 
         /// <summary>
         /// Gets or sets the spot exceptions recommended plan details done identifier.
