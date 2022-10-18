@@ -25,16 +25,21 @@ BEGIN
 					COUNT(1)>1;
 
 			-- ETL
-			INSERT INTO stratadw.dbo.estimates ([estimate_id], [flight_start_date], [flight_end_date], [description], [estimate_group], [product_name])
+			INSERT INTO stratadw.dbo.estimates ([estimate_id], [flight_start_date], [flight_end_date], [description], [estimate_group], [product_name], [estimate_code], [plan_id])
 				SELECT DISTINCT
 					e.ESTIMATEID,
 					e.FLIGHTSTARTDATE,
 					e.FLIGHTENDDATE,
 					e.ESTIMATEDESCRIPTION,
 					e.ESTIMATEGROUP,
-					e.PRODUCTNAME
+					e.PRODUCTNAME,
+					e.ESTIMATECODE,
+					p.id
 				FROM
 					nsi_staging.dbo.strata_estimate e
+					LEFT JOIN broadcast.dbo.plans p ON p.id=CASE WHEN TRY_PARSE(e.ESTIMATECODE AS INT) IS NULL THEN NULL ELSE CAST(e.ESTIMATECODE AS INT) END
+					LEFT JOIN broadcast.dbo.plan_versions pv ON pv.id=p.latest_version_id
+						AND e.FLIGHTSTARTDATE BETWEEN pv.flight_start_date AND pv.flight_end_date
 				WHERE
 					e.ESTIMATEID NOT IN (
 						SELECT estimate_id FROM #duplicate_estimate_ids
@@ -60,8 +65,8 @@ BEGIN
 					od.DEMO,
 					a.id,
 					od.DEMOORDERID,
-					od.IMP000 * 1000,
-					od.RTG / 100
+					od.IMP000 * 1000.0,
+					od.RTG / 100.0
 				FROM
 					nsi_staging.dbo.strata_orderdetails od
 					LEFT JOIN nsi_staging.dbo.strata_market_mappings smm ON smm.marketid=od.MARKETID

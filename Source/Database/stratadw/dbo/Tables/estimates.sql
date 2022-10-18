@@ -5,6 +5,8 @@
     [description]       VARCHAR (4096) NOT NULL,
     [estimate_group]    VARCHAR (1024) NOT NULL,
     [product_name]      VARCHAR (256)  NOT NULL,
+    [estimate_code]     VARCHAR(64) NOT NULL, 
+    [plan_id]           INT NULL, 
     CONSTRAINT [PK_estimates] PRIMARY KEY CLUSTERED ([estimate_id] ASC)
 );
 
