@@ -63,14 +63,17 @@ BEGIN
 					ISNULL(od.VENDORNAME, ''),
 					ISNULL(od.PROGRAM, ''),
 					od.DEMO,
-					a.id,
+					COALESCE(a1.id, a2.id, a3.id, a4.id) AS audience_id,
 					od.DEMOORDERID,
 					od.IMP000 * 1000.0,
 					od.RTG / 100.0
 				FROM
 					nsi_staging.dbo.strata_orderdetails od
 					LEFT JOIN nsi_staging.dbo.strata_market_mappings smm ON smm.marketid=od.MARKETID
-					LEFT JOIN broadcast.dbo.audiences a WITH (NOLOCK) ON a.name=od.DEMO
+					LEFT JOIN broadcast.dbo.audiences a1 WITH (NOLOCK) ON a1.name=od.DEMO
+					LEFT JOIN broadcast.dbo.audiences a2 WITH (NOLOCK) ON a2.name=REPLACE(REPLACE(od.DEMO, 'Children', 'Kids'), 'Teens', 'Kids')
+					LEFT JOIN broadcast.dbo.audiences a3 WITH (NOLOCK) ON a3.code=od.DEMO
+					LEFT JOIN broadcast.dbo.audiences a4 WITH (NOLOCK) ON a4.code=REPLACE(REPLACE(REPLACE(od.DEMO, 'C', 'K'), 'T', 'K'), 'F', 'W')
 				WHERE
 					od.ESTIMATEID NOT IN (
 						SELECT estimate_id FROM #duplicate_estimate_ids
