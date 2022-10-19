@@ -170,7 +170,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<station_mappings> station_mappings { get; set; }
         public virtual DbSet<station_month_details> station_month_details { get; set; }
         public virtual DbSet<plan_version_creative_lengths> plan_version_creative_lengths { get; set; }
-        public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
         public virtual DbSet<inventory_export_jobs> inventory_export_jobs { get; set; }
         public virtual DbSet<vpvh_files> vpvh_files { get; set; }
         public virtual DbSet<vpvh> vpvhs { get; set; }
@@ -236,7 +235,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<fluidity_categories> fluidity_categories { get; set; }
         public virtual DbSet<plan_iscis> plan_iscis { get; set; }
         public virtual DbSet<schedule> schedules { get; set; }
-        public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<campaign_plan_secondary_audiences> campaign_plan_secondary_audiences { get; set; }
         public virtual DbSet<stations_secondary_affiliations> stations_secondary_affiliations { get; set; }
         public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
@@ -256,5 +254,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_recommended_plan_done_decisions> spot_exceptions_recommended_plan_done_decisions { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
         public virtual DbSet<program_genres> program_genres { get; set; }
+        public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
+        public virtual DbSet<program> programs { get; set; }
     }
 }

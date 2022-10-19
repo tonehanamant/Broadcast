@@ -58,8 +58,7 @@ namespace Services.Broadcast.Repositories
                 {
                     return _InReadUncommitedTransaction(context =>
                     {
-                        return context.program_name_mappings
-                            .Include(x => x.genre)
+                        return context.program_name_mappings                          
                             .Include(x => x.show_types)
                             .Where(x => chunk.Contains(x.inventory_program_name))
                             .ToList()
@@ -168,8 +167,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var mappingEntities = context.program_name_mappings
-                    .Include(x => x.genre)
+                var mappingEntities = context.program_name_mappings                    
                     .Include(x => x.show_types)
                     .ToList();
 
@@ -188,12 +186,7 @@ namespace Services.Broadcast.Repositories
             {
                 Id = program_name_mappings.id,
                 OriginalProgramName = program_name_mappings.inventory_program_name,
-                OfficialProgramName = program_name_mappings.official_program_name,
-                OfficialGenre = new Genre
-                {
-                    Id = program_name_mappings.genre.id,
-                    Name = program_name_mappings.genre.name
-                },
+                OfficialProgramName = program_name_mappings.official_program_name,                
                 OfficialShowType = new ShowTypeDto
                 {
                     Id = program_name_mappings.show_types.id,
@@ -211,8 +204,7 @@ namespace Services.Broadcast.Repositories
         {
             programMapping.inventory_program_name = programMappingDto.OriginalProgramName;
             programMapping.official_program_name = programMappingDto.OfficialProgramName;
-            programMapping.show_type_id = programMappingDto.OfficialShowType.Id;
-            programMapping.genre_id = programMappingDto.OfficialGenre.Id;
+            programMapping.show_type_id = programMappingDto.OfficialShowType.Id;            
         }
 
         /// <inheritdoc/>
@@ -220,8 +212,7 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var mappingEntities = context.programs
-                    .Include(x => x.genre)
+                var mappingEntities = context.programs                   
                     .Include(x => x.show_types)
                     .ToList();
 
@@ -239,13 +230,7 @@ namespace Services.Broadcast.Repositories
             return new ProgramMappingsDto
             {
                 Id = programMappings.id,
-                OfficialProgramName = programMappings.name,
-                OfficialGenre = new Genre
-                {
-                    Id = programMappings.genre.id,
-                    Name = programMappings.genre.name,
-                    ProgramSourceId = programMappings.genre.program_source_id
-                },
+                OfficialProgramName = programMappings.name,               
                 OfficialShowType = new ShowTypeDto
                 {
                     Id = programMappings.show_types.id,
@@ -298,8 +283,7 @@ namespace Services.Broadcast.Repositories
             return new MasterProgramsDto
             {
                 Name = masterProgram.name,
-                ShowTypeId = masterProgram.show_type_id,
-                GenreId = masterProgram.genre_id
+                ShowTypeId = masterProgram.show_type_id
             };
         }
         private void _MapToProgramsDto(ProgramMappingsDto programMappingDto, programs masterProgram)

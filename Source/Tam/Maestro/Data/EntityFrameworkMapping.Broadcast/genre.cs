@@ -20,7 +20,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.genre_mappings1 = new HashSet<genre_mappings>();
             this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
             this.plan_version_daypart_genre_restrictions = new HashSet<plan_version_daypart_genre_restrictions>();
-            this.program_name_mappings = new HashSet<program_name_mappings>();
             this.proposal_version_detail_criteria_genres = new HashSet<proposal_version_detail_criteria_genres>();
             this.station_inventory_manifest_daypart_genres = new HashSet<station_inventory_manifest_daypart_genres>();
             this.station_inventory_manifest_daypart_programs = new HashSet<station_inventory_manifest_daypart_programs>();
@@ -29,7 +28,6 @@ namespace EntityFrameworkMapping.Broadcast
             this.program_name_exceptions = new HashSet<program_name_exceptions>();
             this.program_name_mapping_keywords = new HashSet<program_name_mapping_keywords>();
             this.inventory_proprietary_daypart_programs = new HashSet<inventory_proprietary_daypart_programs>();
-            this.programs = new HashSet<program>();
             this.program_genres = new HashSet<program_genres>();
         }
     
@@ -46,7 +44,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual program_sources program_sources { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
-        public virtual ICollection<program_name_mappings> program_name_mappings { get; set; }
         public virtual ICollection<proposal_version_detail_criteria_genres> proposal_version_detail_criteria_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
         public virtual ICollection<station_inventory_manifest_daypart_programs> station_inventory_manifest_daypart_programs { get; set; }
@@ -55,7 +52,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<program_name_exceptions> program_name_exceptions { get; set; }
         public virtual ICollection<program_name_mapping_keywords> program_name_mapping_keywords { get; set; }
         public virtual ICollection<inventory_proprietary_daypart_programs> inventory_proprietary_daypart_programs { get; set; }
-        public virtual ICollection<program> programs { get; set; }
         public virtual ICollection<program_genres> program_genres { get; set; }
     }
 }

@@ -117,8 +117,7 @@ namespace Services.Broadcast.ApplicationServices
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
         private const float MATCH_NOT_FOUND = 0;
-        private Lazy<bool> _IsCentralizedProgramListEnabled;
-        private readonly Lazy<bool> _PROGRAMGENRERELATIONV2;
+        private Lazy<bool> _IsCentralizedProgramListEnabled;        
         //This is going to remove in BP-5532 story
         private const string ProgramGenre = "Various";
 
@@ -145,9 +144,7 @@ namespace Services.Broadcast.ApplicationServices
             _ShowTypeCache = showTypeCache;
             _ProgramCleanupEngine = programMappingCleanupEngine;
             _MasterProgramListImporter = masterListImporter;
-            _DateTimeEngine = dateTimeEngine;
-            _PROGRAMGENRERELATIONV2 = new Lazy<bool>(() =>
-               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PROGRAM_GENRE_RELATION_V_2));
+            _DateTimeEngine = dateTimeEngine;            
             _IsCentralizedProgramListEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CENTRALIZED_PROGRAM_LIST));
         }
@@ -306,27 +303,12 @@ namespace Services.Broadcast.ApplicationServices
                 result.AddRange(transformed);
             }
             return result;
-        }
-
-        private Genre _GetCadentGenre(string genreName)
-        {
-            try
-            {
-                var foundGenre = _GenreCache.GetMaestroGenreByName(genreName);
-                return foundGenre;
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        }      
 
         private List<ProgramMappingValidationErrorDto> _ValidateProgramMappings(List<ProgramMappingsFileRequestDto> uniqueProgramMappings,
             List<ProgramMappingsDto> masterListPrograms, List<ProgramNameExceptionDto> programNameExceptions)
         {
             var programMappingValidationErrors = new List<ProgramMappingValidationErrorDto>();
-            if (_PROGRAMGENRERELATIONV2.Value)
-            {
                 foreach (var programMapping in uniqueProgramMappings)
                 {
                     // Validate the given Mapping Program Name
@@ -343,58 +325,6 @@ namespace Services.Broadcast.ApplicationServices
                         continue;
                     }                    
                 }
-            }
-            else
-            {
-                foreach (var programMapping in uniqueProgramMappings)
-                {
-                    // Validate the given Mapping Program Name
-                    var cadentPrograms = _GetCadentPrograms(programMapping.OfficialProgramName, masterListPrograms, programNameExceptions);
-                    if (!cadentPrograms.Any())
-                    {
-                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
-                        {
-                            RateCardName = programMapping.OriginalProgramName,
-                            MappingProgramName = programMapping.OfficialProgramName,
-                            MappingGenreName = programMapping.OfficialGenre,
-                            ErrorMessage = "Mapping Program not found in master list or exception list."
-                        });
-                        continue;
-                    }
-
-                    // Validate given Mapping Genres
-                    // does the given genre exist?
-                    var cadentGenre = _GetCadentGenre(programMapping.OfficialGenre);
-                    if (cadentGenre == null)
-                    {
-                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
-                        {
-                            RateCardName = programMapping.OriginalProgramName,
-                            MappingProgramName = programMapping.OfficialProgramName,
-                            MappingGenreName = programMapping.OfficialGenre,
-                            ErrorMessage = $"Mapping Genre not found: {programMapping.OfficialGenre}"
-                        });
-                        continue;
-                    }
-
-                    // does the given genre match CadentProgram.Genre
-                    var masterGenreList = cadentPrograms.Select(g => g.OfficialGenre).Select(g => g.Name).Distinct().ToList();
-                    var genresMatch = masterGenreList.Contains(cadentGenre.Name);
-                    if (!genresMatch)
-                    {
-                        programMappingValidationErrors.Add(new ProgramMappingValidationErrorDto
-                        {
-                            RateCardName = programMapping.OriginalProgramName,
-                            MappingProgramName = programMapping.OfficialProgramName,
-                            MappingGenreName = programMapping.OfficialGenre,
-                            ErrorMessage = $"Mapping Program name '{programMapping.OfficialProgramName}' found, but mistmatched on Genre. " +
-                            $"Found expected genres : '{string.Join(", ", masterGenreList)}'."
-                        });
-                    }
-                }
-            }
-                
-
             return programMappingValidationErrors;
         }
 
@@ -472,9 +402,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             newProgramMappings = new List<ProgramMappingsDto>();
             updatedProgramMappings = new List<ProgramMappingsDto>();
-            if (_PROGRAMGENRERELATIONV2.Value)
-            {
-                foreach (var mapping in mappings)
+            foreach (var mapping in mappings)
                 {
                     var genre = _GetGenre(ProgramGenre);
                     if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
@@ -502,45 +430,7 @@ namespace Services.Broadcast.ApplicationServices
 
                         newProgramMappings.Add(newProgramMapping);
                     }
-                }
-            }
-            else
-            {
-                foreach (var mapping in mappings)
-                {
-                    var genre = _GetGenre(mapping.OfficialGenre);
-
-                    if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
-                    {
-                        var showType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType);
-
-                        // if there are changes for an existing mapping
-                        if (existingMapping.OfficialProgramName != mapping.OfficialProgramName ||
-                            existingMapping.OfficialGenre.Name != genre.Name ||
-                            existingMapping.OfficialShowType.Name != showType.Name)
-                        {
-                            existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                            existingMapping.OfficialGenre = genre;
-                            existingMapping.OfficialShowType = showType;
-
-                            updatedProgramMappings.Add(existingMapping);
-                        }
-                    }
-                    else
-                    {
-                        var newProgramMapping = new ProgramMappingsDto
-                        {
-                            OriginalProgramName = mapping.OriginalProgramName,
-                            OfficialProgramName = mapping.OfficialProgramName,
-                            OfficialGenre = genre,
-                            OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType)
-                        };
-
-                        newProgramMappings.Add(newProgramMapping);
-                    }
-                }
-            }
-               
+                }           
         }
 
         private Genre _GetGenre(string genreName)
@@ -830,14 +720,8 @@ namespace Services.Broadcast.ApplicationServices
         private ReportOutput _GenerateExcelFile(List<UnmappedProgram> programs, string fileName)
         {
             var reportaData = new UnmappedProgramReportData(fileName, programs.OrderByDescending(p => p.MatchConfidence).ThenBy(p => p.OriginalName).ToList());
-            if (_PROGRAMGENRERELATIONV2.Value)
-            {
-                return new UnmappedProgramsReportGenerator().GenerateWithoutGenre(reportaData);                    
-            }
-            else
-            {
-                return new UnmappedProgramsReportGenerator().Generate(reportaData);
-            }               
+           
+                return new UnmappedProgramsReportGenerator().GenerateWithoutGenre(reportaData); 
         }
 
         //BP1-402 is pushed to next release so leaving this code for later use. Additional testing and coordination to point to the Dativa Search would be required.
@@ -879,8 +763,7 @@ namespace Services.Broadcast.ApplicationServices
             var distinctMasterList = _RemoveDuplicateFromMasterList(masterList);
             var masterDbList = _ProgramMappingRepository.GetMasterPrograms();
             var uniqueList = new List<ProgramMappingsDto>();
-            if (_PROGRAMGENRERELATIONV2.Value)
-            {
+
                 foreach (var disctinctMaster in distinctMasterList)
                 {
                     var disctinctMasterCount = masterDbList.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper());
@@ -893,22 +776,7 @@ namespace Services.Broadcast.ApplicationServices
                         uniqueList.Add(disctinctMaster);
                     }
                 }
-            }
-            else 
-            {
-                foreach (var disctinctMaster in distinctMasterList)
-                {
-                    var disctinctMasterCount = masterDbList.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper() && x.GenreId == disctinctMaster.OfficialGenre.Id);
-                    if (disctinctMasterCount > 0)
-                    {
-                        //do nothing
-                    }
-                    else
-                    {
-                        uniqueList.Add(disctinctMaster);
-                    }
-                }
-            }
+                       
             _ProgramMappingRepository.UploadMasterProgramMappings(uniqueList, userName, createdDate);
         }
         private List<ProgramMappingsDto> _RemoveDuplicateFromMasterList(List<ProgramMappingsDto> masterList)
@@ -933,8 +801,7 @@ namespace Services.Broadcast.ApplicationServices
             var masterPrograms = _ProgramMappingRepository.GetMasterPrograms();
 
             var filteredProgramList = new List<ProgramMappingsDto>();
-            if (_PROGRAMGENRERELATIONV2.Value)
-            {
+            
                 foreach (var disctinctMaster in filteredPrograms)
                 {
                     var disctinctMasterCount = masterPrograms.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper());
@@ -946,23 +813,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         filteredProgramList.Add(disctinctMaster);
                     }
-                }
-            }
-            else
-            {
-                foreach (var disctinctMaster in filteredPrograms)
-                {
-                    var disctinctMasterCount = masterPrograms.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper() && x.GenreId == disctinctMaster.OfficialGenre.Id);
-                    if (disctinctMasterCount > 0)
-                    {
-                        //do nothing                    
-                    }
-                    else
-                    {
-                        filteredProgramList.Add(disctinctMaster);
-                    }
-                }
-            }
+                }           
             _ProgramMappingRepository.UploadMasterProgramMappings(filteredProgramList, userName, createdDate);
         }
     }

@@ -83,16 +83,18 @@ namespace Services.Broadcast.Repositories
 	        return _InReadUncommitedTransaction(
 		        context =>
 		        {
-			        return context.program_name_mappings
-				        .Where(p => p.official_program_name.ToLower().Contains(programSearchString.ToLower()))
-				        .OrderBy(p => p.official_program_name)
-				        .Select(
-					        p => new ProgramNameMappingDto
-					        {
-						        OfficialProgramName = p.official_program_name,
-						        GenreId = p.genre_id,
-						        ShowTypeId = p.show_type_id
-					        }).ToList();
+                    
+                    var result = (from p in context.program_name_mappings
+                                  join pg in context.program_genres on p.id equals pg.program_id
+                                  where p.official_program_name.ToLower().Contains(programSearchString.ToLower()                                 
+                                  )                        
+                                  select new ProgramNameMappingDto
+                                  {
+                                      OfficialProgramName = p.official_program_name,
+                                      GenreId = pg.genre_id
+                                  }).OrderBy(p=>p.OfficialProgramName).ToList();
+                    return result;               
+
 		        });
         }
     }
