@@ -1595,22 +1595,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void SearchIsciByName_Exist()
+        public void GetMappedIscis_Exist()
         {
             // Arrange
             const int planId = 23;
-            const int campaignId = 32;
-            var searchRequest = new SearchIsciRequestDto()
-            {
-                SourcePlanId = 467,
-                SearchText = "tes"
-            };
+            const int campaignId = 32;            
             int expectedCount = 2;
 
             _SpotLengthRepositoryMock
                 .Setup(x => x.GetSpotLengths())
                 .Returns(SpotLengthTestData.GetAllSpotLengths());
-            _PlanIsciRepositoryMock.Setup(s => s.SearchIsciByName(It.IsAny<SearchIsciRequestDto>(), It.IsAny<Guid>()))
+            _PlanIsciRepositoryMock.Setup(s => s.GetMappedIscis(It.IsAny<Guid>()))
                 .Returns(new List<SearchPlan>
                 {
                     new SearchPlan
@@ -1674,13 +1669,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460")
                 });
             // Act
-            var result = _PlanIsciService.SearchPlanIscisByName(searchRequest);
+            var result = _PlanIsciService.GetMappedIscis(planId);
             // Assert
             Assert.AreEqual(result.Iscis.Count, expectedCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
         [Test]
-        public void SearchIsciByName_DoNotExist()
+        public void GetMappedIscis_DoNotExist()
         {
             // Arrange
             const int planId = 23;
@@ -1695,7 +1690,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _SpotLengthRepositoryMock
                 .Setup(x => x.GetSpotLengths())
                 .Returns(SpotLengthTestData.GetAllSpotLengths());
-            _PlanIsciRepositoryMock.Setup(s => s.SearchIsciByName(It.IsAny<SearchIsciRequestDto>(), It.IsAny<Guid>()))
+            _PlanIsciRepositoryMock.Setup(s => s.GetMappedIscis(It.IsAny<Guid>()))
                 .Returns(new List<SearchPlan> { });
             _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(new PlanDto
@@ -1733,7 +1728,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     AdvertiserMasterId = new Guid("137B64C4-4887-4C8E-85E0-239F08609460")
                 });
             // Act
-            var result = _PlanIsciService.SearchPlanIscisByName(searchRequest);
+            var result = _PlanIsciService.GetMappedIscis(planId);
             // Assert
             Assert.AreEqual(result.Iscis.Count, expectedCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -1745,7 +1740,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             const int planId = 23;
             const int campaignId = 32;
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = DateTime.Today;           
             int expectedCount = 1;
 
             _SpotLengthRepositoryMock
@@ -1766,7 +1761,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                             {
                                 id = 1,
                                 plan_id=1,
-                                flight_end_date = new DateTime(2022,10,19),
+                                flight_end_date =new DateTime(2024,08,29),
                                 flight_start_date = new DateTime(2021,08,29),
                                 plan_version_dayparts = new List<plan_version_dayparts>
                                 {

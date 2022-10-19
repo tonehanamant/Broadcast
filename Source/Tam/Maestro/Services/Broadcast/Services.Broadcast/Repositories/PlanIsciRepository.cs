@@ -131,11 +131,10 @@ namespace Services.Broadcast.Repositories
 
         /// <summary>
         /// Search the Existing plan iscis based on the Plan
-        /// </summary>
-        /// <param name="searchIsciRequestDto">searchIsciRequestDto</param>
+        /// </summary>        
         /// <param name="advertiserMasterId">advertiserMasterId</param>
         /// <returns>List of found iscis</returns>
-        List<SearchPlan> SearchIsciByName(SearchIsciRequestDto searchIsciRequestDto, Guid? advertiserMasterId);
+        List<SearchPlan> GetMappedIscis(Guid? advertiserMasterId);
 
         /// <summary>
         /// Get the isci plans basis of plan ID
@@ -566,7 +565,7 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<SearchPlan> SearchIsciByName(SearchIsciRequestDto searchIsciRequestDto, Guid? advertiserMasterId)
+        public List<SearchPlan> GetMappedIscis(Guid? advertiserMasterId)
         {
             return _InReadUncommitedTransaction(context =>
             {
@@ -574,7 +573,7 @@ namespace Services.Broadcast.Repositories
                     .Include(x => x.plan)
                     .Include(x => x.plan.campaign)
                     .Include(x => x.spot_lengths)
-                    .Where(x => x.plan.campaign.advertiser_master_id == advertiserMasterId && x.isci.Contains(searchIsciRequestDto.SearchText))
+                    .Where(x => x.plan.campaign.advertiser_master_id == advertiserMasterId)
                     .Select(d => new SearchPlan
                     {
                         Isci = d.isci                       

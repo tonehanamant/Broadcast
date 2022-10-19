@@ -47,9 +47,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <summary>
         /// Search the Existing plan iscis based on the Plan
         /// </summary>
-        /// <param name="searchIsciRequestDto">searchIsciRequestDto</param>
+        /// <param name="planId">plan Id</param>
         /// <returns>List of Found Iscis</returns>
-        SearchPlanIscisDto SearchPlanIscisByName(SearchIsciRequestDto searchIsciRequestDto);
+        SearchPlanIscisDto GetMappedIscis(int planId);
 
         /// <summary>
         /// Gets the Plan Iscis basis of the plan
@@ -547,11 +547,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return dayIds;
         }
 
-        public SearchPlanIscisDto SearchPlanIscisByName(SearchIsciRequestDto searchIsciRequestDto)
+        public SearchPlanIscisDto GetMappedIscis(int planId)
         {
-            var plan = _PlanService.GetPlan(searchIsciRequestDto.SourcePlanId);
+            var plan = _PlanService.GetPlan(planId);
             var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
-            var planIscis = _PlanIsciRepository.SearchIsciByName(searchIsciRequestDto, campaign.AdvertiserMasterId);
+            var planIscis = _PlanIsciRepository.GetMappedIscis(campaign.AdvertiserMasterId);
             planIscis = _RemoveDuplicates(planIscis);
             var spotLengths = _SpotLengthRepository.GetSpotLengths().Select(x => new IsciSearchSpotLengthDto
             {

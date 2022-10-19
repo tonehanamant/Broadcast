@@ -80,12 +80,12 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
-        [Route("isci-search")]
-        public BaseResponse<SearchPlanIscisDto> SearchPlanIscis(SearchIsciRequestDto searchIsciRequestDto)
+        [Route("mapped-iscis")]
+        public BaseResponse<SearchPlanIscisDto> SearchPlanIscis(int planId)
         {
             return
                 _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().SearchPlanIscisByName(searchIsciRequestDto));
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetMappedIscis(planId));
         }
 
         [HttpGet]
