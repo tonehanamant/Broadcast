@@ -30,16 +30,6 @@ namespace BroadcastComposerWeb.Controllers
             throw new NotSupportedException("We thought this operation is not used, this added 7/13/22 - BP-4306 !");
         }
 
-        [Obsolete]
-        [HttpPost]
-        [Route("spot-exception-recommanded-plans")]
-        public async Task<BaseResponse<SpotExceptionsRecommendedPlansResultsDto>> GetSpotExceptionRecommandedPlans(SpotExceptionsRecommendedPlansRequestDto spotExceptionsRecommendedPlansRequest)
-        {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsRecommendedPlanService>().GetRecommendedPlansAsync(spotExceptionsRecommendedPlansRequest);
-
-            return _ConvertToBaseResponse(() => result);
-        }
-
         /// <summary>
         /// Gets the spot exception recommended plans.
         /// </summary>
