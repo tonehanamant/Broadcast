@@ -2,6 +2,7 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Microsoft.EntityFrameworkCore.Internal;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
 using Services.Broadcast.Exceptions;
@@ -121,13 +122,16 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail.AdvertiserMasterId).First();
                             var flightStartDate = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightStartDate).First();
                             var flightEndDate = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightEndDate).First();
+                            var impressions = recommendedPlanToDo.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsToDo.Where(y => y.RecommendedPlanId == activeRecommendedPlan.Key.RecommendedPlanId)).Sum(p => p.SpotDeliveredImpressions) / 1000;
+                            var affectedSpotCount = recommendedPlanToDo.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsToDo.Where(y => y.RecommendedPlanId == activeRecommendedPlan.Key.RecommendedPlanId)).Count();
+
                             return new SpotExceptionsRecommendedToDoPlansDto
                             {
                                 PlanId = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
                                 AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
                                 PlanName = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
-                                AffectedSpotsCount = recommendedPlanToDo.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsToDo.Where(y => y.RecommendedPlanId == activeRecommendedPlan.Key.RecommendedPlanId)).Count(),
-                                Impressions = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.SpotDeliveredImpressions).First() / 1000,
+                                AffectedSpotsCount = affectedSpotCount,
+                                Impressions = impressions,
                                 SpotLengthString = $":{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
                                 AudienceName = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
                                 FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
@@ -141,16 +145,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         .Select(completedRecommendedPlan =>
                         {
                             var planDetails = completedRecommendedPlan.First();
-                            var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.AdvertiserMasterId).First();
+                            var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail.AdvertiserMasterId).First();
                             var flightStartDate = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightStartDate).First();
                             var flightEndDate = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightEndDate).First();
+                            var impressions = recommendedPlanDone.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsDone.Where(y => y.RecommendedPlanId == completedRecommendedPlan.Key.RecommendedPlanId)).Sum(p => p.SpotDeliveredImpressions) / 1000;
+                            var affectedSpotCount = recommendedPlanDone.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsDone.Where(y => y.RecommendedPlanId == completedRecommendedPlan.Key.RecommendedPlanId)).Count();
+                            
                             return new SpotExceptionsRecommendedDonePlansDto
                             {
                                 PlanId = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
                                 AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
                                 PlanName = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
-                                AffectedSpotsCount = recommendedPlanDone.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsDone.Where(y => y.RecommendedPlanId == completedRecommendedPlan.Key.RecommendedPlanId)).Count(),
-                                Impressions = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.SpotDeliveredImpressions).First() / 1000,
+                                AffectedSpotsCount = affectedSpotCount,
+                                Impressions = impressions,
                                 SpotLengthString = $":{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
                                 AudienceName = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
                                 FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
