@@ -300,13 +300,11 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         {
             return _InReadUncommitedTransaction(context =>
             {
-                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_decision");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_details");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plans");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_done_decisions");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plan_details_done");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_recommended_plans_done");
-                context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_spec_decisions");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_specs");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_spec_done_decisions");
                 context.Database.ExecuteSqlCommand("DELETE FROM spot_exceptions_out_of_specs_done");
