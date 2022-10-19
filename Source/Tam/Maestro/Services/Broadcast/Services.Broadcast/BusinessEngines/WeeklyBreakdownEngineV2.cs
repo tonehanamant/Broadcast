@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -555,10 +556,18 @@ namespace Services.Broadcast.BusinessEngines
 
             // apply the fully defined and validated weights on the request.
             request.CreativeLengths = weightedSpotLengths;
-            request.Dayparts.ForEach(d =>
+            try
             {
-                d.WeightingGoalPercent = weightedDayparts.Single(w => w.DaypartUniquekey == d.DaypartUniquekey).WeightingGoalPercent;
-            });
+                request.Dayparts.ForEach(d =>
+                {
+                    d.WeightingGoalPercent = weightedDayparts.Single(w => w.DaypartUniquekey == d.DaypartUniquekey).WeightingGoalPercent;
+                });
+            }
+            catch (Exception exception)
+            {
+
+                throw new CadentException("Same Daypart with same Organization and Name are not allowed");
+            }
 
             //calculate flight weeks based on start/end date of the flight
             List<DisplayMediaWeek> weeks = _MediaWeekCache.GetDisplayMediaWeekByFlight(request.FlightStartDate, request.FlightEndDate);
