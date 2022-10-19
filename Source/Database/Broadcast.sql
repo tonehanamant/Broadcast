@@ -946,15 +946,11 @@ BEGIN
 				CONSTRAINT [FK_program_genres_programs] FOREIGN KEY ([program_id]) REFERENCES [dbo].[programs] ([id]),
 				CONSTRAINT [FK_program_genres_genres] FOREIGN KEY ([genre_id]) REFERENCES [dbo].[genres] ([id])
 		
-			)	
+			)				
 END
+
 GO
-IF NOT EXISTS (SELECT top 1 * FROM program_genres)
-BEGIN
-INSERT INTO program_genres(program_id, genre_id)
-			SELECT DISTINCT P.id,G.id from program_name_mappings M join genres G on M.genre_id=g.id join programs P on M.official_program_name=P.name
-END
-Go
+
 /*************************************** END BP-5532 ***************************************/
 
 /*************************************** START BP-5672 ************************************/
