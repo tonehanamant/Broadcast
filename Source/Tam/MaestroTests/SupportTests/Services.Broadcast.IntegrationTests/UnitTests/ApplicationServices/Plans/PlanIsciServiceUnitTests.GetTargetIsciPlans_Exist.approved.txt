@@ -1,0 +1,12 @@
+{
+  "Plans": [
+    {
+      "DaypartsString": "SYN",
+      "DemoString": "test",
+      "FlightString": "08/29-10/19/2022",
+      "Id": 1,
+      "SpotLengthString": ":15",
+      "Title": "test123"
+    }
+  ]
+}

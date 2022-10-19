@@ -87,5 +87,14 @@ namespace BroadcastComposerWeb.Controllers
                 _ConvertToBaseResponse(
                     () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().SearchPlanIscisByName(searchIsciRequestDto));
         }
+
+        [HttpGet]
+        [Route("target-plans")]
+        public BaseResponse<IsciTargetPlansDto> GetTargetPlans(int sourcePlanId)
+        {
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().GetTargetIsciPlans(sourcePlanId));
+        }
     }
 }

@@ -50,6 +50,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="searchIsciRequestDto">searchIsciRequestDto</param>
         /// <returns>List of Found Iscis</returns>
         SearchPlanIscisDto SearchPlanIscisByName(SearchIsciRequestDto searchIsciRequestDto);
+
+        /// <summary>
+        /// Gets the Plan Iscis basis of the plan
+        /// </summary>
+        /// <param name="sourcePlanId">sourcePlanId</param>
+        /// <returns>plan Iscis</returns>
+        IsciTargetPlansDto GetTargetIsciPlans(int sourcePlanId);
     }
     /// <summary>
     /// Operations related to the PlanIsci domain.
@@ -88,7 +95,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             ICampaignService campaignService,
             IStandardDaypartService standardDaypartService,
             ISpotLengthEngine spotLengthEngine,
-            IDateTimeEngine dateTimeEngine,            
+            IDateTimeEngine dateTimeEngine,
             IAabEngine aabEngine, IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper)
             : base(featureToggleHelper, configurationSettingsHelper)
@@ -104,7 +111,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanService = planService;
             _CampaignService = campaignService;
             _SpotLengthEngine = spotLengthEngine;
-            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>(); 
+            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
@@ -383,7 +390,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var mappedIscis = _GetIsciPlanMappingIsciDetailsDto(planId, plan.FlightStartDate.Value, plan.FlightEndDate.Value);
 
             var isciMappings = mappedIscis.GroupBy(x => new { x.Isci, x.SpotLengthId, x.SpotLengthString ,x.SpotLengthValueForSort }).OrderBy(y => y.Key.SpotLengthValueForSort).ThenBy(s => s.Key.Isci).ToList();
-            
+
             var mappingsDetails = new PlanIsciMappingsDetailsDto
             {
                 PlanId = plan.Id,
@@ -426,7 +433,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             var result = planIscis.Select(i =>
             {
-        // we are using .First() here as a reel isci should never have same isci with different spot id.
+                // we are using .First() here as a reel isci should never have same isci with different spot id.
                 var spotLengthString = _GetSpotLengthsString(i.SpotLengthId);
                 int spotLengthValueForSort = _GetSpotLengthsValue(i.SpotLengthId);
                 var flightString = _GetFlightString(i.FlightStartDate, i.FlightEndDate);
@@ -573,6 +580,43 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 .OrderBy(x => x.Isci)
                 .ToList();
             return distinctIscis;
+        }
+
+        public IsciTargetPlansDto GetTargetIsciPlans(int sourcePlanId)
+        {
+            DateTime dateTime = DateTime.Today;
+            const string flightStartDateFormat = "MM/dd";
+            const string flightEndDateFormat = "MM/dd/yyyy";
+            var result = new IsciTargetPlansDto();
+            var plan = _PlanService.GetPlan(sourcePlanId);
+            var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
+            var planIscis = _PlanIsciRepository.GetTargetIsciPlans(campaign.AdvertiserMasterId);
+            foreach (var singlePlan in planIscis)
+            {
+                var isciplan = singlePlan.plan_versions.Where(x => x.flight_end_date >= dateTime & x.id == singlePlan.latest_version_id).ToList();
+                if (isciplan.Any())
+                {
+                    result = new IsciTargetPlansDto
+                    {
+                        Plans = isciplan.Select(x =>
+                        {
+                                var dayparts = x.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList();
+                                var spotLengthString = _GetSpotLengthsString(x.plan.plan_iscis.Select(y => y.spot_length_id).FirstOrDefault());
+                                var flightString = $"{x.flight_start_date.ToString(flightStartDateFormat)}-{x.flight_end_date.ToString(flightEndDateFormat)}";
+                                return new TargetPlans
+                                {
+                                    Id = x.plan_id,
+                                    SpotLengthString = spotLengthString,
+                                    DemoString = x.audience.code,
+                                    Title = x.plan.name,
+                                    DaypartsString = string.Join(", ", dayparts),
+                                    FlightString = flightString
+                                };
+                        }).ToList()
+                    };
+                }
+            }
+            return result;
         }
     }
 }

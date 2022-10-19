@@ -136,6 +136,13 @@ namespace Services.Broadcast.Repositories
         /// <param name="advertiserMasterId">advertiserMasterId</param>
         /// <returns>List of found iscis</returns>
         List<SearchPlan> SearchIsciByName(SearchIsciRequestDto searchIsciRequestDto, Guid? advertiserMasterId);
+
+        /// <summary>
+        /// Get the isci plans basis of plan ID
+        /// </summary>
+        /// <param name="advertiserMasterId">advertiserMasterId</param>
+        /// <returns>Plan Iscis</returns>
+        List<plan> GetTargetIsciPlans(Guid? advertiserMasterId);
     }
 
     /// <summary>
@@ -573,6 +580,24 @@ namespace Services.Broadcast.Repositories
                         Isci = d.isci                       
                     }).ToList();
                 return searchIscis;
+            });
+        }
+
+        public List<plan> GetTargetIsciPlans(Guid? advertiserMasterId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+
+                var planEntities = (from plans in context.plans
+                                    where (plans.campaign.advertiser_master_id == advertiserMasterId && plans.plan_iscis.Count != 0)
+                                    select plans)
+                                    .Include(x => x.campaign)
+                                    .Include(x => x.plan_versions)
+                                    .Include(p => p.plan_versions.Select(y => y.plan_version_dayparts.Select(z => z.standard_dayparts)))
+                                    .Include(p => p.plan_versions.Select(y => y.audience))
+                                    .Include(x => x.plan_iscis)
+                                    .ToList();
+                return planEntities;
             });
         }
     }
