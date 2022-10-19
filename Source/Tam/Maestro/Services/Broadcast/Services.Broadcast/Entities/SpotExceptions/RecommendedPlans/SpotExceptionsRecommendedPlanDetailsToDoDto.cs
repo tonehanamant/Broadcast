@@ -149,18 +149,6 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         public double? PlanTotalDeliveredImpressions { get; set; }
 
         /// <summary>
-        /// Gets or sets the spot unique hash external.
-        /// </summary>
-        /// <value>The plan spot unique hash external.</value>
-        public string PlanSpotUniqueHashExternal { get; set; }
-
-        /// <summary>
-        /// Gets or sets the execution identifier external.
-        /// </summary>
-        /// <value>The plan execution identifier external.</value>
-        public string PlanExecutionIdExternal { get; set; }
-
-        /// <summary>
         /// Gets or sets the ingested media week identifier.
         /// </summary>
         /// <value>The ingested media week identifier.</value>
