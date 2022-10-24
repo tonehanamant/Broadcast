@@ -987,22 +987,6 @@ BEGIN
 	REFERENCES [dbo].[spot_exceptions_recommended_plans] ([id]) ON DELETE CASCADE
 END
 GO
-
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'program_name_mappings' AND COLUMN_NAME= 'genre_id')
-BEGIN
-	ALTER TABLE program_name_mappings
-	DROP CONSTRAINT FK_program_name_mappings_genres
-	ALTER TABLE program_name_mappings
-	DROP COLUMN genre_id
-END
-IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'programs' AND COLUMN_NAME= 'genre_id')
-BEGIN
-	ALTER TABLE programs
-	DROP CONSTRAINT FK_programs_genres
-	ALTER TABLE programs
-	DROP COLUMN genre_id
-END
-GO
 /*************************************** END BP-5672 ***************************************/
 
 
