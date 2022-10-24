@@ -989,6 +989,18 @@ END
 GO
 /*************************************** END BP-5672 ***************************************/
 
+/*************************************** START BP-5847 ************************************/
+
+-- this is for the spot exceptions ingest lambda, not the broadcast app and so it doesn't need to be in the edmx.
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'staged_recommended_plans' AND COLUMN_NAME= 'skipped')
+BEGIN
+	ALTER TABLE staged_recommended_plans
+		ADD skipped BIT NULL
+END
+
+GO
+/*************************************** END BP-5847 ************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
