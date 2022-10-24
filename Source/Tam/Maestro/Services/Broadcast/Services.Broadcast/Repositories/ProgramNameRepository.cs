@@ -84,8 +84,8 @@ namespace Services.Broadcast.Repositories
 		        context =>
 		        {
                     
-                    var result = (from p in context.program_name_mappings
-                                  join pg in context.program_genres on p.id equals pg.program_id
+                  var result = (from p in context.program_name_mappings
+                                  join pg in context.programs on p.id equals pg.id
                                   where p.official_program_name.ToLower().Contains(programSearchString.ToLower()                                 
                                   )                        
                                   select new ProgramNameMappingDto
@@ -93,8 +93,7 @@ namespace Services.Broadcast.Repositories
                                       OfficialProgramName = p.official_program_name,
                                       GenreId = pg.genre_id
                                   }).OrderBy(p=>p.OfficialProgramName).ToList();
-                    return result;               
-
+                    return result;       
 		        });
         }
     }

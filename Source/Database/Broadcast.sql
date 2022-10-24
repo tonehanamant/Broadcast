@@ -948,7 +948,29 @@ BEGIN
 		
 			)				
 END
+GO
+IF OBJECT_ID('program_genres') IS NOT NULL
+BEGIN
+   DROP TABLE program_genres;
+END
+GO
+IF COL_LENGTH('programs','genre_id') IS NULL
+BEGIN
+  Truncate table programs
+  ALTER TABLE programs
+  ADD genre_id int not null
+END
+GO
+DECLARE @PopulatePrograms nvarchar(1000)
+SET @PopulatePrograms='TRUNCATE TABLE programs
+				INSERT INTO programs([name],show_type_id,genre_id) SELECT DISTINCT official_program_name,show_type_id,genre_id FROM program_name_mappings
+				ALTER TABLE dbo.program_name_mapings
+				DROP COLUMN genre_id'
 
+IF (COL_LENGTH('programs','genre_id') IS NOT NULL AND COL_LENGTH('program_name_mappings','genre_id') IS NOT NULL)
+BEGIN
+EXEC (@PopulatePrograms)
+END
 GO
 
 /*************************************** END BP-5532 ***************************************/

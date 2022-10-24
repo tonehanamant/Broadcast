@@ -312,15 +312,16 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             return _InReadUncommitedTransaction(
                  context =>
                  {
-                     var result = (from p in context.programs
-                                   join pg in context.program_genres on p.id equals pg.program_id
-                                   where p.name.ToLower().Contains(programSearchString.ToLower())
-                                   select new ProgramNameDto
-                                   {
-                                       OfficialProgramName = p.name,
-                                       GenreId = pg.genre_id
-                                   }).OrderBy(p=>p.OfficialProgramName).ToList();
-                     return result;
+                     return context.programs
+                      .Where(p => p.name.ToLower().Contains(programSearchString.ToLower()))
+                      .OrderBy(p => p.name)
+                      .Select(
+                          p => new ProgramNameDto
+                          {
+                              OfficialProgramName = p.name,
+                              GenreId = p.genre_id
+                          }).ToList();
+
                  });
         }
 

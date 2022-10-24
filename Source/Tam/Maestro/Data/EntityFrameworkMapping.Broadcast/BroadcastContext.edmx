@@ -1882,14 +1882,6 @@
           <Property Name="created_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="market_coverage_file_id" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="program_genres">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="program_id" Type="int" Nullable="false" />
-          <Property Name="genre_id" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="program_name_exceptions">
           <Key>
             <PropertyRef Name="id" />
@@ -1938,6 +1930,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="show_type_id" Type="int" Nullable="false" />
+          <Property Name="genre_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="proposal_buy_file_detail_audiences">
           <Key>
@@ -5845,30 +5838,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_program_genres_genres">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="program_genres" Type="Self.program_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="program_genres">
-              <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_program_genres_programs">
-          <End Role="programs" Type="Self.programs" Multiplicity="1" />
-          <End Role="program_genres" Type="Self.program_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="programs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="program_genres">
-              <PropertyRef Name="program_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_program_name_exceptions_genres">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="program_name_exceptions" Type="Self.program_name_exceptions" Multiplicity="*" />
@@ -7868,7 +7837,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="pricing_guide_distribution_open_market_inventory" EntityType="Self.pricing_guide_distribution_open_market_inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pricing_guide_distribution_proprietary_inventory" EntityType="Self.pricing_guide_distribution_proprietary_inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="pricing_guide_distributions" EntityType="Self.pricing_guide_distributions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="program_genres" EntityType="Self.program_genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_name_exceptions" EntityType="Self.program_name_exceptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_name_mapping_keywords" EntityType="Self.program_name_mapping_keywords" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="program_name_mappings" EntityType="Self.program_name_mappings" Schema="dbo" store:Type="Tables" />
@@ -8812,14 +8780,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_pricing_guide_distributions_proposal_versions" Association="Self.FK_pricing_guide_distributions_proposal_versions">
             <End Role="proposal_version_details" EntitySet="proposal_version_details" />
             <End Role="pricing_guide_distributions" EntitySet="pricing_guide_distributions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_program_genres_genres" Association="Self.FK_program_genres_genres">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="program_genres" EntitySet="program_genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK_program_genres_programs" Association="Self.FK_program_genres_programs">
-            <End Role="programs" EntitySet="programs" />
-            <End Role="program_genres" EntitySet="program_genres" />
           </AssociationSet>
           <AssociationSet Name="FK_program_name_exceptions_genres" Association="Self.FK_program_name_exceptions_genres">
             <End Role="genres" EntitySet="genres" />
@@ -11039,17 +10999,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_exceptions_recommended_plans_done" EntitySet="spot_exceptions_recommended_plans_done" />
           </AssociationSet>
-          <EntitySet Name="program_genres" EntityType="BroadcastModel.program_genres" />
-          <AssociationSet Name="FK_program_genres_genres" Association="BroadcastModel.FK_program_genres_genres">
-            <End Role="genre" EntitySet="genres" />
-            <End Role="program_genres" EntitySet="program_genres" />
-          </AssociationSet>
           <EntitySet Name="program_name_mappings" EntityType="BroadcastModel.program_name_mappings" />
           <EntitySet Name="programs" EntityType="BroadcastModel.program" />
-          <AssociationSet Name="FK_program_genres_programs" Association="BroadcastModel.FK_program_genres_programs">
-            <End Role="program" EntitySet="programs" />
-            <End Role="program_genres" EntitySet="program_genres" />
-          </AssociationSet>
           <AssociationSet Name="FK_program_name_mappings_show_types" Association="BroadcastModel.FK_program_name_mappings_show_types">
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program_name_mappings" EntitySet="program_name_mappings" />
@@ -15827,7 +15778,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="program_name_exceptions" Relationship="BroadcastModel.FK_program_name_exceptions_genres" FromRole="genre" ToRole="program_name_exceptions" />
           <NavigationProperty Name="program_name_mapping_keywords" Relationship="BroadcastModel.FK_program_name_mapping_keywords_genres" FromRole="genre" ToRole="program_name_mapping_keywords" />
           <NavigationProperty Name="inventory_proprietary_daypart_programs" Relationship="BroadcastModel.FK_inventory_proprietary_daypart_programs_genres" FromRole="genre" ToRole="inventory_proprietary_daypart_programs" />
-          <NavigationProperty Name="program_genres" Relationship="BroadcastModel.FK_program_genres_genres" FromRole="genre" ToRole="program_genres" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_daypart_programs">
           <Key>
@@ -19327,28 +19277,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="program_genres">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="program_id" Type="Int32" Nullable="false" />
-          <Property Name="genre_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="genre" Relationship="BroadcastModel.FK_program_genres_genres" FromRole="program_genres" ToRole="genre" />
-          <NavigationProperty Name="program" Relationship="BroadcastModel.FK_program_genres_programs" FromRole="program_genres" ToRole="program" />
-        </EntityType>
-        <Association Name="FK_program_genres_genres">
-          <End Type="BroadcastModel.genre" Role="genre" Multiplicity="1" />
-          <End Type="BroadcastModel.program_genres" Role="program_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genre">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="program_genres">
-              <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="program_name_mappings">
           <Key>
             <PropertyRef Name="id" />
@@ -19370,21 +19298,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="show_type_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="program_genres" Relationship="BroadcastModel.FK_program_genres_programs" FromRole="program" ToRole="program_genres" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="show_types" Relationship="BroadcastModel.FK_programs_show_types" FromRole="program" ToRole="show_types" />
         </EntityType>
-        <Association Name="FK_program_genres_programs">
-          <End Type="BroadcastModel.program" Role="program" Multiplicity="1" />
-          <End Type="BroadcastModel.program_genres" Role="program_genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="program">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="program_genres">
-              <PropertyRef Name="program_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_program_name_mappings_show_types">
           <End Type="BroadcastModel.show_types" Role="show_types" Multiplicity="1" />
           <End Type="BroadcastModel.program_name_mappings" Role="program_name_mappings" Multiplicity="*" />
@@ -22789,15 +22705,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="program_genres">
-            <EntityTypeMapping TypeName="BroadcastModel.program_genres">
-              <MappingFragment StoreEntitySet="program_genres">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="program_id" ColumnName="program_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="program_name_mappings">
             <EntityTypeMapping TypeName="BroadcastModel.program_name_mappings">
               <MappingFragment StoreEntitySet="program_name_mappings">
@@ -22815,6 +22722,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="programs">
             <EntityTypeMapping TypeName="BroadcastModel.program">
               <MappingFragment StoreEntitySet="programs">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
                 <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />

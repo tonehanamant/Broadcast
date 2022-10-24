@@ -588,11 +588,8 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_spot_exceptions_recommended_plans_done" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_done_decisions_spot_exceptions_recommended_plans_details_done" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" />
-        <EntityTypeShape EntityType="BroadcastModel.program_genres" Width="1.5" PointX="30.5" PointY="60.75" />
-        <AssociationConnector Association="BroadcastModel.FK_program_genres_genres" />
         <EntityTypeShape EntityType="BroadcastModel.program_name_mappings" Width="1.5" PointX="26.25" PointY="58" />
         <EntityTypeShape EntityType="BroadcastModel.program" Width="1.5" PointX="26.25" PointY="75.5" />
-        <AssociationConnector Association="BroadcastModel.FK_program_genres_programs" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_show_types" />
         <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
         </Diagram>

@@ -14,16 +14,11 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class program
     {
-        public program()
-        {
-            this.program_genres = new HashSet<program_genres>();
-        }
-    
         public int id { get; set; }
         public string name { get; set; }
         public int show_type_id { get; set; }
+        public int genre_id { get; set; }
     
-        public virtual ICollection<program_genres> program_genres { get; set; }
         public virtual show_types show_types { get; set; }
     }
 }
