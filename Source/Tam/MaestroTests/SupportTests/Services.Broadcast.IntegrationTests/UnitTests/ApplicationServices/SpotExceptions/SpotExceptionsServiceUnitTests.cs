@@ -3,6 +3,8 @@ using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
+using Services.Broadcast.Clients;
+using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Exceptions;
@@ -22,6 +24,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
         private Mock<ISpotExceptionsRepository> _SpotExceptionsRepositoryMock;
 
+        private Mock<ISpotExceptionsApiClient> _SpotExceptionsApiClientMock;
+
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
@@ -32,7 +36,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
             _SpotExceptionsRepositoryMock = new Mock<ISpotExceptionsRepository>();
 
+            _SpotExceptionsApiClientMock = new Mock<ISpotExceptionsApiClient>();
+
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
+                .Returns(true);
+
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
             _DataRepositoryFactoryMock
@@ -42,15 +51,65 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _SpotExceptionsService = new SpotExceptionsService
                 (
                     _DataRepositoryFactoryMock.Object,
+                    _SpotExceptionsApiClientMock.Object,
                     _FeatureToggleMock.Object,
                     _ConfigurationSettingsHelperMock.Object
                 );
         }
 
         [Test]
-        public async void TriggerDecisionSync_Exist()
+        public async Task TriggerDecisionSync()
         {
             // Arrange
+            bool notifySucceeded = true;
+            var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto { UserName = "Test User" };
+
+            _SpotExceptionsApiClientMock.Setup(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()))
+                .Returns(Task.FromResult(notifySucceeded));
+
+            // Act
+            var result = await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest);
+
+            // Assert
+            _SpotExceptionsApiClientMock.Verify(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()), Times.Once);
+            Assert.True(result);
+        }
+        
+
+        [Test]
+        public async Task TriggerDecisionSync_ThrowsException()
+        {
+            // Arrange
+            var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto { UserName = "Test User" };
+
+            _SpotExceptionsApiClientMock.Setup(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()))
+                .Throws(new Exception("Test Exception: TriggerDecisionSync_ThrowsException"));
+
+            Exception caught = null;
+
+            // Act
+            try
+            {
+                await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest);
+            }
+            catch (Exception ex)
+            {
+                caught = ex;
+            }
+
+            // Assert
+            Assert.NotNull(caught);
+            _SpotExceptionsApiClientMock.Verify(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()), Times.Once);
+        }
+
+
+        [Test]
+        public async Task TriggerDecisionSync_Exist_Mock()
+        {
+            // Arrange
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
+                .Returns(false);
+
             bool result = false;
             bool expectedResult = true;
             var spotExceptionSaveDecisionsPlansRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto();
@@ -88,11 +147,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public async void TriggerDecisionSync_DoesNotExist()
+        public async Task TriggerDecisionSync_DoesNotExist_Mock()
         {
+            // Arrange
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
+                .Returns(false);
+
             bool result = false;
             bool expectedResult = false;
-            
+
             var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto
             {
                 UserName = "Test User"
@@ -110,9 +173,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public void TriggerDecisionSync_ThrowsException()
+        public void TriggerDecisionSync_ThrowsException_Mock()
         {
             // Arrange
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
+                .Returns(false);
+
             var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto
             {
                 UserName = "Test User"
@@ -126,14 +192,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 });
 
             // Act
-            var result = Assert.Throws<CadentException>(async() => await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest));
 
             // Assert
             Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
         }
 
         [Test]
-        public async void GetDecisionCount_Exist()
+        public async Task GetDecisionCount_Exist()
         {
             // Arrange
             int outOfSpecDecisioncount = 2;
@@ -155,7 +221,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public async void GetDecisionCount_DoesNotExist()
+        public async Task GetDecisionCount_DoesNotExist()
         {
             // Arrange
             int outOfSpecDecisioncount = 0;

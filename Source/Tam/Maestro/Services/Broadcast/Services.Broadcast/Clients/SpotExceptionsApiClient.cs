@@ -8,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace Services.Broadcast.Clients
 {
-    public interface ISpotExceptionsIngestApiClient
+    public interface ISpotExceptionsApiClient
     {
         Task<IngestApiResponse> IngestAsync(IngestApiRequest request);
+
+        Task<bool> PublishSyncRequestAsync(ResultsSyncRequest request);
     }
 
-    public class SpotExceptionsIngestApiClient : CadentSecuredClientBase, ISpotExceptionsIngestApiClient
+    public class SpotExceptionsApiClient : CadentSecuredClientBase, ISpotExceptionsApiClient
     {
+        const string AppName_Ingest = "BroadcastSEIngest";
+        const string AppName_Results = "BroadcastSEResultsPush";
 
-        public SpotExceptionsIngestApiClient(IApiTokenManager apiTokenManager,
+        public SpotExceptionsApiClient(IApiTokenManager apiTokenManager,
             IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
                 : base(apiTokenManager, featureToggleHelper, configurationSettingsHelper)
         {
@@ -27,19 +31,31 @@ namespace Services.Broadcast.Clients
             var ingestUrl = @"pull-spot-exceptions/api/ingest";
             var ingestContent = new StringContent(JsonSerializerHelper.ConvertToJson(request), Encoding.UTF8, "application/json");
 
-            var client = await _GetSecureHttpClientAsync();
+            var client = await _GetSecureHttpClientAsync(AppName_Ingest);
             
             var postReponse = await client.PostAsync(ingestUrl, ingestContent);
             var result = await postReponse.Content.ReadAsAsync<IngestApiResponse>();
 
             return result;
         }
-        
-        private async Task<HttpClient> _GetSecureHttpClientAsync()
+
+        public async Task<bool> PublishSyncRequestAsync(ResultsSyncRequest request)
+        {
+            var requestUrl = @"pull-spot-exception-results/api/Results/notify-data-ready";
+            var requestContent = new StringContent(JsonSerializerHelper.ConvertToJson(request), Encoding.UTF8, "application/json");
+
+            var client = await _GetSecureHttpClientAsync(AppName_Results);
+
+            var postResponse = await client.PostAsync(requestUrl, requestContent);
+            var result = await postResponse.Content.ReadAsAsync<bool>();
+
+            return result;
+        }
+
+        private async Task<HttpClient> _GetSecureHttpClientAsync(string appName)
         {
             var apiBaseUrl = _GetApiBaseUrl();
             var applicationId = _GetApplicationId();
-            var appName = _GetAppName();
             var apiGwId = _GetApiGwId();
 
             var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);
@@ -59,12 +75,6 @@ namespace Services.Broadcast.Clients
         private string _GetApplicationId()
         {
             var result = _ConfigurationSettingsHelper.GetConfigValue<string>(SpotExceptionsIngestApiConfigKeys.ApplicationId);
-            return result;
-        }
-
-        private string _GetAppName()
-        {
-            var result = _ConfigurationSettingsHelper.GetConfigValue<string>(SpotExceptionsIngestApiConfigKeys.AppName);
             return result;
         }
 

@@ -1,6 +1,8 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
@@ -38,21 +40,23 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
     public class SpotExceptionsService : BroadcastBaseClass, ISpotExceptionsService
     {
-        const string flightStartDateFormat = "MM/dd";
-        const string flightEndDateFormat = "MM/dd/yyyy";
-
         private readonly ISpotExceptionsRepository _SpotExceptionsRepository;
+        private readonly ISpotExceptionsApiClient _SpotExceptionsApiClient;
 
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsNotifyDataReadyEnabled;
 
         public SpotExceptionsService(
             IDataRepositoryFactory dataRepositoryFactory,
+            ISpotExceptionsApiClient spotExceptionsApiClient,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper)
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionsRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionsRepository>();
-            _FeatureToggleHelper = featureToggleHelper;
+            _SpotExceptionsApiClient = spotExceptionsApiClient;
+
+            _IsNotifyDataReadyEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC));
         }
 
         public bool AddSpotExceptionData(bool isIntegrationTestDatabase = false)
@@ -98,30 +102,53 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <inheritdoc />
         public async Task<bool> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
-            var dateTime = DateTime.Now;
-            bool isSynced;
+            _LogInfo($"Beginning results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
 
-            try
+            bool result;
+
+            if (_IsNotifyDataReadyEnabled.Value)
             {
-                var isSyncedOutOfSpecDecision = await _SpotExceptionsRepository.SyncOutOfSpecDecisionsAsync(triggerDecisionSyncRequest, dateTime);
-                var isSyncedRecommandedPlanDecision = await _SpotExceptionsRepository.SyncRecommendedPlanDecisionsAsync(triggerDecisionSyncRequest, dateTime);
-
-                if (isSyncedOutOfSpecDecision == false && isSyncedRecommandedPlanDecision == false)
+                
+                _LogInfo($"Attempting to notify consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");
+                var syncRequest = new ResultsSyncRequest
                 {
-                    isSynced = false;
-                }
-                else
-                {
-                    isSynced = true;
-                }
+                    RequestedBy = triggerDecisionSyncRequest.UserName
+                };
+                result = await _SpotExceptionsApiClient.PublishSyncRequestAsync(syncRequest);
+                _LogInfo($"Successfully notified consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");
             }
-            catch (Exception ex)
+            else
             {
-                var msg = $"Could not retrieve the data from the Database";
-                throw new CadentException(msg, ex);
+                var dateTime = DateTime.Now;
+
+                _LogWarning($"Mocking the sync and just marking synced without notifying the DataLake.  Requested by '{triggerDecisionSyncRequest.UserName}';");
+                // this is the mock.
+                try
+                {
+                    var isSyncedOutOfSpecDecision = await _SpotExceptionsRepository.SyncOutOfSpecDecisionsAsync(triggerDecisionSyncRequest, dateTime);
+                    var isSyncedRecommandedPlanDecision = await _SpotExceptionsRepository.SyncRecommendedPlanDecisionsAsync(triggerDecisionSyncRequest, dateTime);
+
+                    if (isSyncedOutOfSpecDecision == false && isSyncedRecommandedPlanDecision == false)
+                    {
+                        result = false;
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var msg = $"Could not retrieve the data from the Database";
+                    throw new CadentException(msg, ex);
+                }
+
+                _LogInfo($"Completed results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
             }
 
-            return isSynced;
+            _LogInfo($"Completed results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
+
+            return result;
         }
 
         /// <inheritdoc />

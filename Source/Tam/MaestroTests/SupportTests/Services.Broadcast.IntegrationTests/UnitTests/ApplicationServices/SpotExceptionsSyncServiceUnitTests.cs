@@ -32,7 +32,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IBackgroundJobClient> _BackgroundJobClientMock;
         private Mock<ISpotExceptionsIngestJobRepository> _SpotExceptionsIngestJobRepository;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-        private Mock<ISpotExceptionsIngestApiClient> _ApiClient;
+        private Mock<ISpotExceptionsApiClient> _ApiClient;
 
         protected SpotExceptionsSyncService _GetService()
         {
@@ -42,7 +42,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _BackgroundJobClientMock = new Mock<IBackgroundJobClient>();
             _SpotExceptionsIngestJobRepository = new Mock<ISpotExceptionsIngestJobRepository>();
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
-            _ApiClient = new Mock<ISpotExceptionsIngestApiClient>();
+            _ApiClient = new Mock<ISpotExceptionsApiClient>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionsIngestJobRepository>())

@@ -35,12 +35,12 @@ namespace Services.Broadcast.ApplicationServices
     {
         private readonly IBackgroundJobClient _BackgroundJobClient;
         private readonly IDateTimeEngine _DateTimeEngine;
-        private readonly ISpotExceptionsIngestApiClient _ApiClient;
+        private readonly ISpotExceptionsApiClient _ApiClient;
 
         private readonly ISpotExceptionsIngestJobRepository _SpotExceptionsIngestJobRepository;
 
         public SpotExceptionsSyncService(IDataRepositoryFactory dataRepositoryFactory, IBackgroundJobClient backgroundJobClient,
-            IDateTimeEngine dateTimeEngine, ISpotExceptionsIngestApiClient apiClient,
+            IDateTimeEngine dateTimeEngine, ISpotExceptionsApiClient apiClient,
             IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) 
             : base(featureToggleHelper, configurationSettingsHelper)
         {
