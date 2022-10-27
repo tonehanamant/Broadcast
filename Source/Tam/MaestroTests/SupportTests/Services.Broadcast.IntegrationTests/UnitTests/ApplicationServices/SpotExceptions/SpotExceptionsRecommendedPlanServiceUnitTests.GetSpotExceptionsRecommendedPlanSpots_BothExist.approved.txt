@@ -2,67 +2,38 @@
   "Active": [
     {
       "Affiliate": "CBS",
-      "EstimateId": 6840,
-      "Id": 0,
-      "Impressions": 0.05,
+      "EstimateId": 2009,
+      "Id": 1,
+      "Impressions": 10.0,
       "InventorySource": "Tegna",
-      "IsciName": "QMAY2913OS1H",
-      "Market": null,
+      "IsciName": "840T42AY13H",
+      "Market": "Columbus, OH",
       "PlanId": 332,
       "ProgramAirDate": "4/10/2022",
       "ProgramAirTime": "8:28:28 AM",
       "ProgramName": "CBS Mornings",
       "RecommendedPlan": "4Q'21 Macy's EM",
+      "SpotLengthString": ":15",
       "Station": "WBNS"
-    },
-    {
-      "Affiliate": "ABC",
-      "EstimateId": 6289,
-      "Id": 0,
-      "Impressions": 0.05,
-      "InventorySource": "Sinclair Corp - Day Syn 10a-4p",
-      "IsciName": "QMAY2913OS1H",
-      "Market": null,
-      "PlanId": 334,
-      "ProgramAirDate": "4/10/2022",
-      "ProgramAirTime": "9:58:55 AM",
-      "ProgramName": "LIVE with Kelly and Ryan",
-      "RecommendedPlan": "4Q'21 Macy's SYN",
-      "Station": "KOMO"
     }
   ],
-  "Queued": [
-    {
-      "Affiliate": "IND",
-      "EstimateId": 6616,
-      "Id": 0,
-      "Impressions": 0.05,
-      "InventorySource": "Ference POD",
-      "IsciName": "QMAY2913OS1H",
-      "Market": null,
-      "PlanId": 334,
-      "ProgramAirDate": "4/10/2022",
-      "ProgramAirTime": "8:41:57 AM",
-      "ProgramName": "Mike & Molly",
-      "RecommendedPlan": "4Q'21 Macy's SYN",
-      "Station": "WDKA"
-    }
-  ],
+  "Queued": [],
   "Synced": [
     {
-      "Affiliate": "ABC",
-      "EstimateId": 6289,
-      "Id": 0,
-      "Impressions": 0.05,
-      "InventorySource": "Sinclair Corp - Day Syn 10a-4p",
-      "IsciName": "QMAY2913OS1H",
-      "Market": null,
+      "Affiliate": "CBS",
+      "EstimateId": 6840,
+      "Id": 1,
+      "Impressions": 10.0,
+      "InventorySource": "Tegna",
+      "IsciName": "840T42AY13H",
+      "Market": "Columbus, OH",
       "PlanId": 332,
       "ProgramAirDate": "4/10/2022",
-      "ProgramAirTime": "9:58:55 AM",
-      "ProgramName": "LIVE with Kelly and Ryan",
+      "ProgramAirTime": "8:28:28 AM",
+      "ProgramName": "CBS Mornings",
       "RecommendedPlan": "4Q'21 Macy's EM",
-      "Station": "KOMO"
+      "SpotLengthString": ":15",
+      "Station": "WBNS"
     }
   ]
 }

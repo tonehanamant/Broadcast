@@ -80,27 +80,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var outOfSpecToDo = _GetOutOfSpecToDoData();
-            var outOfSpecDone = _GetOutOfSpecDoneData();
+            var outOfSpecToDo = _GetOutOfSpecGroupingToDoData();
+            var outOfSpecDone = _GetOutOfSpecGroupingDoneData();
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecToDo));
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecDone));
 
             _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecsPlansAsync(spotExceptionsOutofSpecsPlansRequest);
+            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecGroupingAsync(spotExceptionsOutofSpecsPlansRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Active.Count, 1);
-            Assert.AreEqual(result.Completed.Count, 2);
+            Assert.AreEqual(result.Active.Count, 4);
+            Assert.AreEqual(result.Completed.Count, 1);
         }
 
         [Test]
@@ -113,26 +113,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var outOfSpecToDo = _GetOutOfSpecToDoData();
-            List<SpotExceptionsOutOfSpecsDoneDto> outOfSpecDone = null;
+            var outOfSpecToDo = _GetOutOfSpecGroupingToDoData();
+            List<SpotExceptionsOutOfSpecGroupingDto> outOfSpecDone = null;
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecToDo));
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecDone));
 
             _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecsPlansAsync(spotExceptionsOutofSpecsPlansRequest);
+            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecGroupingAsync(spotExceptionsOutofSpecsPlansRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Active.Count, 1);
+            Assert.AreEqual(result.Active.Count, 4);
             Assert.AreEqual(result.Completed.Count, 0);
         }
 
@@ -146,35 +146,35 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            List<SpotExceptionsOutOfSpecsToDoDto> outOfSpecToDo = null;
-            var outOfSpecDone = _GetOutOfSpecDoneData();
+            List<SpotExceptionsOutOfSpecGroupingDto> outOfSpecToDo = null;
+            var outOfSpecDone = _GetOutOfSpecGroupingDoneData();
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecToDo));
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecDone));
 
             _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecsPlansAsync(spotExceptionsOutofSpecsPlansRequest);
+            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecGroupingAsync(spotExceptionsOutofSpecsPlansRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             Assert.AreEqual(result.Active.Count, 0);
-            Assert.AreEqual(result.Completed.Count, 2);
+            Assert.AreEqual(result.Completed.Count, 1);
         }
 
         [Test]
         public async void GetSpotExceptionsOutOfSpecsPlans_OutOfSpecPlans_NeitherExist()
         {
             // Arrange
-            List<SpotExceptionsOutOfSpecsToDoDto> outOfSpecToDo = null;
-            List<SpotExceptionsOutOfSpecsDoneDto> outOfSpecDone = null;
+            List<SpotExceptionsOutOfSpecGroupingDto> outOfSpecToDo = null;
+            List<SpotExceptionsOutOfSpecGroupingDto> outOfSpecDone = null;
 
             SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutofSpecsPlansRequest = new SpotExceptionsOutOfSpecPlansRequestDto
             {
@@ -183,15 +183,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             };
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecToDo));
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecDone));
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecsPlansAsync(spotExceptionsOutofSpecsPlansRequest);
+            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecGroupingAsync(spotExceptionsOutofSpecsPlansRequest);
 
             // Assert            
             Assert.AreEqual(result.Active.Count, 0);
@@ -208,24 +208,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var outOfSpecToDo = _GetOutOfSpecToDoData();
+            var outOfSpecToDo = _GetOutOfSpecGroupingToDoData();
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecToDo));
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(x => x.GetOutOfSpecDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetOutOfSpecGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");
                 });
 
             // Act           
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecsPlansAsync(spotExceptionsOutofSpecsPlansRequest));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecGroupingAsync(spotExceptionsOutofSpecsPlansRequest));
 
             // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Groupings", result.Message);
         }
 
         [Test]
@@ -941,6 +941,110 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             // Assert
             Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+        }
+
+        private List<SpotExceptionsOutOfSpecGroupingDto> _GetOutOfSpecGroupingToDoData()
+        {
+            return new List<SpotExceptionsOutOfSpecGroupingDto>()
+            {
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    PlanId = 322,
+                    AdvertiserMasterId = new Guid("C56972B6-67F2-4986-A2BE-4B1F199A1420"),
+                    PlanName = "4Q'21 Dupixent Early Morning News",
+                    AffectedSpotsCount = 1,
+                    Impressions = 55,
+                    FlightStartDate = new DateTime(2021, 10, 4),
+                    FlightEndDate = new DateTime(2021, 12, 19),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                },
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    PlanId = 323,
+                    AdvertiserMasterId = new Guid("C56972B6-67F2-4986-A2BE-4B1F199A1420"),
+                    PlanName = "4Q'21 Dupixent Daytime",
+                    AffectedSpotsCount = 1,
+                    Impressions = 5,
+                    FlightStartDate = new DateTime(2021, 10, 4),
+                    FlightEndDate = new DateTime(2021, 12, 19),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                },
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    PlanId = 332,
+                    AdvertiserMasterId = new Guid( "B67C3C7B-E4F9-42AD-8EA5-CF18C83C61C0" ),
+                    PlanName = "4Q'21 Macy's EM",
+                    AffectedSpotsCount = 6,
+                    Impressions = 217,
+                    FlightStartDate = new DateTime(2021, 10, 4),
+                    FlightEndDate = new DateTime(2021, 12, 19),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                },
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    PlanId = 334,
+                    AdvertiserMasterId = new Guid( "C56972B6-67F2-4986-A2BE-4B1F199A1420" ),
+                    PlanName = "4Q'21 Macy's SYN",
+                    AffectedSpotsCount = 6,
+                    Impressions = 237,
+                    FlightStartDate = new DateTime(2021, 9, 28),
+                    FlightEndDate = new DateTime(2021, 12, 06),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                }
+            };
+        }
+
+        private List<SpotExceptionsOutOfSpecGroupingDto> _GetOutOfSpecGroupingDoneData()
+        {
+            return new List<SpotExceptionsOutOfSpecGroupingDto>()
+            {                
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    PlanId = 334,
+                    AdvertiserMasterId = new Guid( "C56972B6-67F2-4986-A2BE-4B1F199A1420" ),
+                    PlanName = "4Q'21 Macy's SYN",
+                    AffectedSpotsCount = 1,
+                    Impressions = 10,
+                    FlightStartDate = new DateTime(2021, 9, 28),
+                    FlightEndDate = new DateTime(2021, 12, 06),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                }
+            };
         }
 
         private List<SpotExceptionsOutOfSpecsToDoDto> _GetOutOfSpecToDoData()

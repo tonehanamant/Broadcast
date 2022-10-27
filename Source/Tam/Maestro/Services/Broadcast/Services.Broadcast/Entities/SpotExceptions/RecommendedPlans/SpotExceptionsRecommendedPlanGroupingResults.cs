@@ -1,37 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
     /// <summary></summary>
-    public class SpotExceptionsRecommendedPlansResultsDto
+    public class SpotExceptionsRecommendedPlanGroupingResults
     {
         /// <summary>Initializes a new instance of the 
-        /// <see cref="SpotExceptionsRecommendedPlansResultsDto" /> class.</summary>
-        public SpotExceptionsRecommendedPlansResultsDto()
+        /// <see cref="SpotExceptionsRecommendedPlanGroupingResults" /> class.</summary>
+        public SpotExceptionsRecommendedPlanGroupingResults()
         {
-            Active = new List<SpotExceptionsRecommendedToDoPlansDto>();
-            Completed = new List<SpotExceptionsRecommendedDonePlansDto>();
+            Active = new List<SpotExceptionsRecommendedPlanGroupingToDoResults>();
+            Completed = new List<SpotExceptionsRecommendedPlanGroupingDoneResults>();
         }
 
         /// <summary>
         /// Gets or sets the active.
         /// </summary>
         /// <value>The active.</value>
-        public List<SpotExceptionsRecommendedToDoPlansDto> Active { get; set; }
+        public List<SpotExceptionsRecommendedPlanGroupingToDoResults> Active { get; set; }
 
         /// <summary>
         /// Gets or sets the completed.
         /// </summary>
         /// <value>The completed.</value>
-        public List<SpotExceptionsRecommendedDonePlansDto> Completed { get; set; }
+        public List<SpotExceptionsRecommendedPlanGroupingDoneResults> Completed { get; set; }
     }
 
     /// <summary></summary>
-    public class SpotExceptionsRecommendedToDoPlansDto
+    public class SpotExceptionsRecommendedPlanGroupingToDoResults
     {
 
         /// <summary>
@@ -84,7 +80,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
     }
 
     /// <summary></summary>
-    public class SpotExceptionsRecommendedDonePlansDto
+    public class SpotExceptionsRecommendedPlanGroupingDoneResults
     {
         /// <summary>
         /// Gets or sets the plan identifier.

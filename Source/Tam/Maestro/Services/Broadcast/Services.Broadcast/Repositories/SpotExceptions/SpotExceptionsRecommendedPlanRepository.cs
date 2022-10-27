@@ -1,44 +1,36 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Logical;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.spotcableXML;
-using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
-using Services.Broadcast.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using static log4net.Appender.RollingFileAppender;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
 {
+    /// <summary></summary>
     public interface ISpotExceptionsRecommendedPlanRepository : IDataRepository
     {
         /// <summary>
-        /// Gets the recommended plans to do asynchronous.
+        /// Gets the recommended plan grouping to do asynchronous.
         /// </summary>
         /// <param name="weekStartDate">The week start date.</param>
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
-        Task<List<SpotExceptionsRecommendedPlanSpotsToDoDto>> GetRecommendedPlansToDoAsync(DateTime weekStartDate, DateTime weekEndDate);
+        Task<List<SpotExceptionsRecommendedPlanGroupingDto>> GetRecommendedPlanGroupingToDoAsync(DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
-        /// Gets the recommended plans done asynchronous.
+        /// Gets the recommended plan grouping done asynchronous.
         /// </summary>
         /// <param name="weekStartDate">The week start date.</param>
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
-        Task<List<SpotExceptionsRecommendedPlanSpotsDoneDto>> GetRecommendedPlansDoneAsync(DateTime weekStartDate, DateTime weekEndDate);
+        Task<List<SpotExceptionsRecommendedPlanGroupingDto>> GetRecommendedPlanGroupingDoneAsync(DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
         /// Gets the recommended plan spots to do.
@@ -47,16 +39,49 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="weekStartDate">The week start date.</param>
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
-        Task<List<SpotExceptionsRecommendedPlanSpotsToDoDto>> GetRecommendedPlanSpotsToDo(int planId, DateTime weekStartDate, DateTime weekEndDate);
+        Task<List<SpotExceptionsRecommendedPlanSpotsDto>> GetRecommendedPlanSpotsToDo(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
-        /// Gets the recommended plan spots done.
+        /// Gets the recommended plan spots queued.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns> </returns>
+        Task<List<SpotExceptionsRecommendedPlanSpotsDto>> GetRecommendedPlanSpotsQueued(int planId, DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the recommended plan spots synced.
         /// </summary>
         /// <param name="planId">The plan identifier.</param>
         /// <param name="weekStartDate">The week start date.</param>
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
-        Task<List<SpotExceptionsRecommendedPlanSpotsDoneDto>> GetRecommendedPlanSpotsDone(int planId, DateTime weekStartDate, DateTime weekEndDate);
+        Task<List<SpotExceptionsRecommendedPlanSpotsDto>> GetRecommendedPlanSpotsSynced(int planId, DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the recommended plan market filters asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<string>> GetRecommendedPlanMarketFiltersAsync(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the recommended plan legacy call letter filters asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<string>> GetRecommendedPlanLegacyCallLetterFiltersAsync(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the recommended plan inventory source filters asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<string>> GetRecommendedPlanInventorySourceFiltersAsync(DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
         /// Gets the recommended plan details to do by identifier.
@@ -151,72 +176,78 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
 
         /// <inheritdoc />
-        public Task<List<SpotExceptionsRecommendedPlanSpotsToDoDto>> GetRecommendedPlansToDoAsync(DateTime weekStartDate, DateTime weekEndDate)
+        public Task<List<SpotExceptionsRecommendedPlanGroupingDto>> GetRecommendedPlanGroupingToDoAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plans ToDo");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var recommendedPlanToDoEntities = context.spot_exceptions_recommended_plans
-                    .Where(recommendedPlanToDoDb => recommendedPlanToDoDb.program_air_time >= weekStartDate && recommendedPlanToDoDb.program_air_time <= weekEndDate)
-                    .Include(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plan_details)
-                    .Include(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
-                    .Include(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.campaign))
-                    .Include(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions))
-                    .Include(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
-                    .Include(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        recommendedPlanToDoDb => recommendedPlanToDoDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (recommendedPlanToDoDb, stationDb) => new { SpotExceptionsRecommendedPlan = recommendedPlanToDoDb, Station = stationDb.FirstOrDefault() })
-                    .ToList();
+                var planDetailsToDo = context.spot_exceptions_recommended_plan_details
+                    .Where(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plans.program_air_time >= weekStartDate
+                    && recommendedPlanToDoDb.spot_exceptions_recommended_plans.program_air_time <= weekEndDate).ToList();
 
-                var recommendedPlansDone = recommendedPlanToDoEntities.Select(recommendedPlanToDoEntity => _MapRecommendedPlanSpotsToDoToDto(recommendedPlanToDoEntity.SpotExceptionsRecommendedPlan)).ToList();
+                var planGroupingToDo = planDetailsToDo.GroupBy(x => new { x.recommended_plan_id })
+                    .Select(x =>
+                    {
+                        var first = x.First();
+                        var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
+                        return new SpotExceptionsRecommendedPlanGroupingDto
+                        {
+                            PlanId = x.Key.recommended_plan_id,
+                            AdvertiserMasterId = first.plan.campaign.advertiser_master_id,
+                            PlanName = first.plan.name,
+                            AffectedSpotsCount = x.Count(),
+                            Impressions = x.Sum(y => y.spot_delivered_impressions),
+                            FlightStartDate = recommendedPlanVersion.flight_start_date,
+                            FlightEndDate = recommendedPlanVersion.flight_end_date,
+                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
+                            AudienceName = first.audience_name
+                        };
+                    }).ToList();
 
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plans ToDo == Retrieved Count: {recommendedPlansDone.Count()}");
-                return recommendedPlansDone;
+                return planGroupingToDo;
             }));
         }
 
         /// <inheritdoc />
-        public Task<List<SpotExceptionsRecommendedPlanSpotsDoneDto>> GetRecommendedPlansDoneAsync(DateTime weekStartDate, DateTime weekEndDate)
+        public Task<List<SpotExceptionsRecommendedPlanGroupingDto>> GetRecommendedPlanGroupingDoneAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plans Done");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var recommendedPlanDoneEntities = context.spot_exceptions_recommended_plans_done
-                    .Where(recommendedPlanDoneDb => recommendedPlanDoneDb.program_air_time >= weekStartDate && recommendedPlanDoneDb.program_air_time <= weekEndDate)
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done)
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan))
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.campaign))
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions))
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .Include(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.spot_exceptions_recommended_plan_done_decisions))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsRecommendedPlanDoneDb => spotExceptionsRecommendedPlanDoneDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsRecommendedPlanDoneDb, stationDb) => new { SpotExceptionsRecommendedPlanDone = spotExceptionsRecommendedPlanDoneDb, Station = stationDb.FirstOrDefault() })
-                    .ToList();
+                var planDetailsDone = context.spot_exceptions_recommended_plan_details_done
+                    .Where(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plans_done.program_air_time >= weekStartDate
+                    && recommendedPlanDoneDb.spot_exceptions_recommended_plans_done.program_air_time <= weekEndDate).ToList();
 
-                var recommendedPlansDone = recommendedPlanDoneEntities.Select(recommendedPlanDoneEntity => _MapRecommendedPlanSpotsDoneToDto(recommendedPlanDoneEntity.SpotExceptionsRecommendedPlanDone)).ToList();
+                var planGroupingDone = planDetailsDone
+                    .GroupBy(x => new { x.recommended_plan_id })
+                    .Select(x =>
+                    {
+                        var first = x.First();
+                        var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
+                        return new SpotExceptionsRecommendedPlanGroupingDto
+                        {
+                            PlanId = x.Key.recommended_plan_id,
+                            AdvertiserMasterId = first.plan.campaign.advertiser_master_id,
+                            PlanName = first.plan.name,
+                            AffectedSpotsCount = x.Count(),
+                            Impressions = x.Sum(y => y.spot_delivered_impressions),
+                            FlightStartDate = recommendedPlanVersion.flight_start_date,
+                            FlightEndDate = recommendedPlanVersion.flight_end_date,
+                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
+                            AudienceName = first.audience_name
+                        };
+                    }).ToList();
 
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plans Done == Retrieved Count: {recommendedPlansDone.Count()}");
-                return recommendedPlansDone;
+                return planGroupingDone;
             }));
         }
 
         /// <inheritdoc />
-        public Task<List<SpotExceptionsRecommendedPlanSpotsToDoDto>> GetRecommendedPlanSpotsToDo(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        public Task<List<SpotExceptionsRecommendedPlanSpotsDto>> GetRecommendedPlanSpotsToDo(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
@@ -224,59 +255,226 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Spots ToDo");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var recommendedPlanSpotsToDoEntities = context.spot_exceptions_recommended_plans
-                    .Where(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.program_air_time >= weekStartDate && recommendedPlanSpotsToDoDb.program_air_time <= weekEndDate)
-                    .Include(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.spot_exceptions_recommended_plan_details).Where(p => p.spot_exceptions_recommended_plan_details.Any(x => x.recommended_plan_id == planId))
-                    .Include(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
-                    .Include(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.campaign))
-                    .Include(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions))
-                    .Include(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
-                    .Include(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (recommendedPlanSpotsToDoDb, stationDb) => new { SpotExceptionsRecommendedPlan = recommendedPlanSpotsToDoDb, Station = stationDb.FirstOrDefault() })
-                    .ToList();
+            var planDetailsToDo = context.spot_exceptions_recommended_plans
+                .Join
+                (
+                    context.spot_exceptions_recommended_plan_details,
+                    x => x.id, y => y.spot_exceptions_recommended_plan_id,
+                    (x, y) => new { plan = x, detail = y }
+                )
+                .Join(context.markets, x => x.plan.market_code, y => y.market_code, (x, y) => new { marketPlan = x, market = y})
+                .Join(context.spot_lengths, x => x.marketPlan.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y})
+                .Where(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.plan.program_air_time >= weekStartDate 
+                && recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.plan.program_air_time <= weekEndDate
+                && recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.detail.recommended_plan_id == planId)
+                .GroupJoin(
+                    context.stations,
+                    recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.plan.station_legacy_call_letters,
+                    stationDb => stationDb.legacy_call_letters,
+                    (recommendedPlanSpotsToDoDb, stationDb) => new { recommendedPlansToDo = recommendedPlanSpotsToDoDb, Station = stationDb.FirstOrDefault() })
+                .ToList();
 
-                var recommendedPlanSpotsToDo = recommendedPlanSpotsToDoEntities.Select(recommendedPlanSpotsToDoEntity => _MapRecommendedPlanSpotsToDoToDto(recommendedPlanSpotsToDoEntity.SpotExceptionsRecommendedPlan)).ToList();
+                var planSpotsToDo = planDetailsToDo.Select(x =>
+                {
+                    return new SpotExceptionsRecommendedPlanSpotsDto
+                    {
+                        Id = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.id,
+                        EstimateId = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.estimate_id,
+                        IsciName = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.house_isci,
+                        ProgramAirTime = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.program_air_time,
+                        RecommendedPlanName = x.recommendedPlansToDo.lengthPlan.marketPlan.detail.plan.name,
+                        PlanId = x.recommendedPlansToDo.lengthPlan.marketPlan.detail.recommended_plan_id,
+                        Impressions = x.recommendedPlansToDo.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        SpotLength = x.recommendedPlansToDo.spotLength.length,
+                        ProgramName = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.program_name,
+                        InventorySource = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.inventory_source,
+                        Affiliate = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.affiliate,
+                        MarketName = x.Station?.market?.geography_name,
+                        Station = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.station_legacy_call_letters
+                    };
+
+                }).ToList();
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Spots ToDo");
-                return recommendedPlanSpotsToDo;
+                return planSpotsToDo;
             }));
         }
 
         /// <inheritdoc />
-        public Task<List<SpotExceptionsRecommendedPlanSpotsDoneDto>> GetRecommendedPlanSpotsDone(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        public Task<List<SpotExceptionsRecommendedPlanSpotsDto>> GetRecommendedPlanSpotsQueued(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Spots Done");
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Spots Queued");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var recommendedPlanSpotsDoneEntities = context.spot_exceptions_recommended_plans_done
-                    .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.program_air_time >= weekStartDate && recommendedPlanSpotsDoneDb.program_air_time <= weekEndDate)
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done).Where(p => p.spot_exceptions_recommended_plan_details_done.Any(x => x.recommended_plan_id == planId))
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan))
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.campaign))
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions))
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .Include(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.spot_exceptions_recommended_plan_done_decisions))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (recommendedPlanSpotsDoneDb, stationDb) => new { SpotExceptionsRecommendedPlanDone = recommendedPlanSpotsDoneDb, Station = stationDb.FirstOrDefault() })
+                var planDetailsDone = context.spot_exceptions_recommended_plans_done
+                .Join
+                (
+                    context.spot_exceptions_recommended_plan_details_done,
+                    x => x.id, y => y.spot_exceptions_recommended_plan_done_id,
+                    (x, y) => new { plan = x, detail = y }
+                )
+                .Join(context.markets, x => x.plan.market_code, y => y.market_code, (x, y) => new { marketPlan = x, market = y })
+                .Join(context.spot_lengths, x => x.marketPlan.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y})
+                .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time >= weekStartDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time <= weekEndDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.recommended_plan_id == planId
+                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.spot_exceptions_recommended_plan_done_decisions.Select(x => x.synced_at).FirstOrDefault() == null)
+                .GroupJoin(
+                    context.stations,
+                    recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.station_legacy_call_letters,
+                    stationDb => stationDb.legacy_call_letters,
+                    (recommendedPlanSpotsDoneDb, stationDb) => new { recommendedPlansDone = recommendedPlanSpotsDoneDb, Station = stationDb.FirstOrDefault() })
+                .ToList();
+
+                var planSpotsDone = planDetailsDone.Select(x =>
+                {
+                    return new SpotExceptionsRecommendedPlanSpotsDto
+                    {
+                        Id = x.recommendedPlansDone.lengthPlan.marketPlan.plan.id,
+                        EstimateId = x.recommendedPlansDone.lengthPlan.marketPlan.plan.estimate_id,
+                        IsciName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.house_isci,
+                        ProgramAirTime = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_air_time,
+                        RecommendedPlanName = x.recommendedPlansDone.lengthPlan.marketPlan.detail.plan.name,
+                        PlanId = x.recommendedPlansDone.lengthPlan.marketPlan.detail.recommended_plan_id,
+                        Impressions = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        SpotLength = x.recommendedPlansDone.spotLength.length,
+                        ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
+                        InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,
+                        Affiliate = x.recommendedPlansDone.lengthPlan.marketPlan.plan.affiliate,
+                        MarketName = x.Station?.market?.geography_name,
+                        Station = x.recommendedPlansDone.lengthPlan.marketPlan.plan.station_legacy_call_letters
+                    };
+
+                }).ToList();
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Spots Queued");
+                return planSpotsDone;
+            }));
+        }
+
+        /// <inheritdoc />
+        public Task<List<SpotExceptionsRecommendedPlanSpotsDto>> GetRecommendedPlanSpotsSynced(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Spots Synced");
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var planDetailsDone = context.spot_exceptions_recommended_plans_done
+                .Join
+                (
+                    context.spot_exceptions_recommended_plan_details_done,
+                    x => x.id, y => y.spot_exceptions_recommended_plan_done_id,
+                    (x, y) => new { plan = x, detail = y }
+                )
+                .Join(context.markets, x => x.plan.market_code, y => y.market_code, (x, y) => new { marketPlan = x, market = y })
+                .Join(context.spot_lengths, x => x.marketPlan.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
+                .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time >= weekStartDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time <= weekEndDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.recommended_plan_id == planId
+                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.spot_exceptions_recommended_plan_done_decisions.Select(x => x.synced_at).FirstOrDefault() != null)
+                .GroupJoin(
+                    context.stations,
+                    recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.station_legacy_call_letters,
+                    stationDb => stationDb.legacy_call_letters,
+                    (recommendedPlanSpotsDoneDb, stationDb) => new { recommendedPlansDone = recommendedPlanSpotsDoneDb, Station = stationDb.FirstOrDefault() })
+                .ToList();
+
+                var planSpotsDone = planDetailsDone.Select(x =>
+                {
+                    return new SpotExceptionsRecommendedPlanSpotsDto
+                    {
+                        Id = x.recommendedPlansDone.lengthPlan.marketPlan.plan.id,
+                        EstimateId = x.recommendedPlansDone.lengthPlan.marketPlan.plan.estimate_id,
+                        IsciName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.house_isci,
+                        ProgramAirTime = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_air_time,
+                        PlanId = x.recommendedPlansDone.lengthPlan.marketPlan.detail.recommended_plan_id,
+                        RecommendedPlanName = x.recommendedPlansDone.lengthPlan.marketPlan.detail.plan.name,
+                        Impressions = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        SpotLength = x.recommendedPlansDone.spotLength.length,
+                        ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
+                        InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,
+                        Affiliate = x.recommendedPlansDone.lengthPlan.marketPlan.plan.affiliate,
+                        MarketName = x.Station?.market?.geography_name,
+                        Station = x.recommendedPlansDone.lengthPlan.marketPlan.plan.station_legacy_call_letters
+                    };
+
+                }).ToList();
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Spots Synced");
+                return planSpotsDone;
+            }));
+        }
+
+        /// <inheritdoc />
+        public Task<List<string>> GetRecommendedPlanMarketFiltersAsync(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var marketFilters = context.spot_exceptions_recommended_plans
+                    .Join(context.markets, x => x.market_code, y => y.market_code, (x, y) => new { plan = x, market = y })
+                    .Where(x => x.plan.program_air_time >= weekStartDate && x.plan.program_air_time <= weekEndDate)
+                    .Select(x => x.market.geography_name)
+                    .Union(context.spot_exceptions_recommended_plans_done
+                    .Join(context.markets, x => x.market_code, y => y.market_code, (x, y) => new { plan = x, market = y })
+                    .Where(x => x.plan.program_air_time >= weekStartDate && x.plan.program_air_time <= weekEndDate)
+                    .Select(x => x.market.geography_name))
                     .ToList();
 
-                var recommendedPlansDone = recommendedPlanSpotsDoneEntities.Select(recommendedPlanSpotsDoneEntity => _MapRecommendedPlanSpotsDoneToDto(recommendedPlanSpotsDoneEntity.SpotExceptionsRecommendedPlanDone)).ToList();
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+                return marketFilters;
+            }));
+        }
 
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Spots Done");
-                return recommendedPlansDone;
+        /// <inheritdoc />
+        public Task<List<string>> GetRecommendedPlanLegacyCallLetterFiltersAsync(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var legacyCallLetterFilters = context.spot_exceptions_recommended_plans
+                    .Where(x => x.program_air_time >= weekStartDate && x.program_air_time <= weekEndDate)
+                    .Select(x => x.station_legacy_call_letters)
+                    .Union(context.spot_exceptions_recommended_plans_done
+                    .Where(x => x.program_air_time >= weekStartDate && x.program_air_time <= weekEndDate)
+                    .Select(x => x.station_legacy_call_letters))
+                    .ToList();
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+                return legacyCallLetterFilters;
+            }));
+        }
+
+        /// <inheritdoc />
+        public Task<List<string>> GetRecommendedPlanInventorySourceFiltersAsync(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var inventorySourceFilters = context.spot_exceptions_recommended_plans
+                    .Where(x => x.program_air_time >= weekStartDate && x.program_air_time <= weekEndDate)
+                    .Select(x => x.inventory_source)
+                    .Union(context.spot_exceptions_recommended_plans_done
+                    .Where(x => x.program_air_time >= weekStartDate && x.program_air_time <= weekEndDate)
+                    .Select(x => x.inventory_source))
+                    .ToList();
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+                return inventorySourceFilters;
             }));
         }
 
@@ -293,12 +491,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions))
                     .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
                     .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (recommendedPlanDetailsToDoDb, stationDb) => new { SpotExceptionsRecommendedPlan = recommendedPlanDetailsToDoDb, Station = stationDb.FirstOrDefault() })
                     .SingleOrDefault();
 
                 if (recommendedPlanDetailsToDoEntity == null)
@@ -306,7 +498,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     return null;
                 }
 
-                var recommendedPlanDetailsToDo = _MapRecommendedPlanSpotsToDoToDto(recommendedPlanDetailsToDoEntity.SpotExceptionsRecommendedPlan);
+                var recommendedPlanDetailsToDo = _MapRecommendedPlanSpotsToDoToDto(recommendedPlanDetailsToDoEntity);
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Details ToDo");
                 return recommendedPlanDetailsToDo;
@@ -327,12 +519,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
                     .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
                     .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.spot_exceptions_recommended_plan_done_decisions))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsRecommendedPlanDb, stationDb) => new { SpotExceptionsRecommendedPlan = spotExceptionsRecommendedPlanDb, Station = stationDb.FirstOrDefault() })
                     .SingleOrDefault();
 
                 if (recommendedPlanDetailsDoneEntity == null)
@@ -340,7 +526,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     return null;
                 }
 
-                var recommendedPlanDetailsDone = _MapRecommendedPlanSpotsDoneToDto(recommendedPlanDetailsDoneEntity.SpotExceptionsRecommendedPlan);
+                var recommendedPlanDetailsDone = _MapRecommendedPlanSpotsDoneToDto(recommendedPlanDetailsDoneEntity);
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Details Done");
                 return recommendedPlanDetailsDone;
@@ -357,12 +543,10 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Advertisers ToDo");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                recommendedPlanAdvertiserMasterIdsPerWeek = context.spot_exceptions_recommended_plans
-                    .Where(recommendedPlanAdverisersToDoDb => recommendedPlanAdverisersToDoDb.program_air_time >= weekStartDate && recommendedPlanAdverisersToDoDb.program_air_time <= weekEndDate)
-                    .Include(recommendedPlanAdverisersToDoDb => recommendedPlanAdverisersToDoDb.spot_exceptions_recommended_plan_details)
-                    .Include(recommendedPlanAdverisersToDoDb => recommendedPlanAdverisersToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
-                    .Select(recommendedPlanAdverisersToDoDb => recommendedPlanAdverisersToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.campaign.advertiser_master_id ?? default).FirstOrDefault())
-                    .ToList();
+            recommendedPlanAdvertiserMasterIdsPerWeek = context.spot_exceptions_recommended_plan_details
+                .Where(recommendedPlanAdverisersToDoDb => recommendedPlanAdverisersToDoDb.spot_exceptions_recommended_plans.program_air_time >= weekStartDate && recommendedPlanAdverisersToDoDb.spot_exceptions_recommended_plans.program_air_time <= weekEndDate)
+                .Select(recommendedPlanAdverisersToDoDb => recommendedPlanAdverisersToDoDb.plan.campaign.advertiser_master_id ?? default).ToList();
+
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Advertisers ToDo == Retrieved Count: {recommendedPlanAdvertiserMasterIdsPerWeek.Count()}");
                 return recommendedPlanAdvertiserMasterIdsPerWeek;
@@ -377,12 +561,9 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Advertisers Done");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                recommendedPlanAdvertiserMasterIdsPerWeek = context.spot_exceptions_recommended_plans_done
-                    .Where(recommendedPlanAdverisersDoneDb => recommendedPlanAdverisersDoneDb.program_air_time >= weekStartDate && recommendedPlanAdverisersDoneDb.program_air_time <= weekEndDate)
-                    .Include(recommendedPlanAdverisersDoneDb => recommendedPlanAdverisersDoneDb.spot_exceptions_recommended_plan_details_done)
-                    .Include(recommendedPlanAdverisersDoneDb => recommendedPlanAdverisersDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan))
-                    .Select(recommendedPlanAdverisersDoneDb => recommendedPlanAdverisersDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.campaign).Select(p => p.advertiser_master_id ?? default).FirstOrDefault())
-                    .ToList();
+                recommendedPlanAdvertiserMasterIdsPerWeek = context.spot_exceptions_recommended_plan_details
+                .Where(recommendedPlanAdverisersDoneDb => recommendedPlanAdverisersDoneDb.spot_exceptions_recommended_plans.program_air_time >= weekStartDate && recommendedPlanAdverisersDoneDb.spot_exceptions_recommended_plans.program_air_time <= weekEndDate)
+                .Select(recommendedPlanAdverisersDoneDb => recommendedPlanAdverisersDoneDb.plan.campaign.advertiser_master_id ?? default).ToList();
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Advertisers Done == Retrieved Count: {recommendedPlanAdvertiserMasterIdsPerWeek.Count()}");
                 return recommendedPlanAdvertiserMasterIdsPerWeek;                
@@ -399,7 +580,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
                 var recommendedPlanStationsToDo = context.spot_exceptions_recommended_plans
-                                            .Where(rRecommendedPlanStationsToDoDb => rRecommendedPlanStationsToDoDb.program_air_time >= weekStartDate && rRecommendedPlanStationsToDoDb.program_air_time <= weekEndDate)
+                                            .Where(recommendedPlanStationsToDoDb => recommendedPlanStationsToDoDb.program_air_time >= weekStartDate && recommendedPlanStationsToDoDb.program_air_time <= weekEndDate)
                                             .Select(rps => rps.station_legacy_call_letters ?? "Unknown")
                                             .ToList();
 
@@ -647,7 +828,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         IngestedAt = recommendedPlanSpotDetailsToDoDb.ingested_at,
                         SpotUniqueHashExternal = recommendedPlanSpotDetailsToDoDb.spot_unique_hash_external,
                         ExecutionIdExternal = recommendedPlanSpotDetailsToDoDb.execution_id_external,
-                        RecommendedPlanDetail = new RecommendedPlanDetailDto
+                        RecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
                         {
                             Id = recommendedPlanSpotDetailsToDoDb.recommended_plan_id,
                             Name = recommendedPlan.name,
@@ -721,7 +902,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         IngestedAt = recommendedPlanSpotDetailsDoneDb.ingested_at,
                         SpotUniqueHashExternal = recommendedPlanSpotDetailsDoneDb.spot_unique_hash_external,
                         ExecutionIdExternal = recommendedPlanSpotDetailsDoneDb.execution_id_external,
-                        RecommendedPlanDetail = new RecommendedPlanDetailDto
+                        RecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
                         {
                             Id = recommendedPlanSpotDetailsDoneDb.recommended_plan_id,
                             Name = recommendedPlan.name,

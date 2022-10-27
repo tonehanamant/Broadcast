@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -59,182 +60,118 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public async void GetSpotExceptionsRecommendedPlans_BothExist()
+        public async void GetRecommendedPlanGroupingAsync_BothExist()
         {
             // Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            var recommendedPlansToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            var recommendedPlansDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            var recommendedPlansToDo = _GetRecommendedPlanGroupingToDoData();
+            var recommendedPlansDone = _GetRecommendedPlanGroupingDoneData();
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansDone));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
-
             // Act
-            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlansAsync(recommendedPlansRequest);
+            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanGroupingAsync(recommendedPlansRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Active.Count, 2);
-            Assert.AreEqual(result.Completed.Count, 2);
+            Assert.AreEqual(result.Active.Count, 4);
+            Assert.AreEqual(result.Completed.Count, 1);
         }
 
         [Test]
-        public async void GetSpotExceptionsRecommendedPlans_ToDoExistOnly()
+        public async void GetRecommendedPlanGroupingAsync_ToDoExistOnly()
         {
             // Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            var recommendedPlansToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            List<SpotExceptionsRecommendedPlanSpotsDoneDto> recommendedPlansDone = null;
+            var recommendedPlansToDo = _GetRecommendedPlanGroupingToDoData();
+            List<SpotExceptionsRecommendedPlanGroupingDto> recommendedPlansDone = null;
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansDone));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
-
             // Act
-            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlansAsync(recommendedPlansRequest);
+            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanGroupingAsync(recommendedPlansRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Active.Count, 2);
+            Assert.AreEqual(result.Active.Count, 4);
             Assert.AreEqual(result.Completed.Count, 0);
         }
 
         [Test]
-        public async void GetSpotExceptionsRecommendedPlans_DoneExistOnly()
+        public async void GetRecommendedPlanGroupingAsync_DoneExistOnly()
         {
             // Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            List<SpotExceptionsRecommendedPlanSpotsToDoDto> recommendedPlansToDo = null;
-            var recommendedPlansDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            List<SpotExceptionsRecommendedPlanGroupingDto> recommendedPlansToDo = null;
+            var recommendedPlansDone = _GetRecommendedPlanGroupingDoneData();
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansDone));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
-
             // Act
-            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlansAsync(recommendedPlansRequest);
+            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanGroupingAsync(recommendedPlansRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             Assert.AreEqual(result.Active.Count, 0);
-            Assert.AreEqual(result.Completed.Count, 2);
+            Assert.AreEqual(result.Completed.Count, 1);
         }
 
         [Test]
-        public async void GetSpotExceptionsRecommendedPlans_DoesNotExist()
+        public async void GetRecommendedPlanGroupingAsync_DoesNotExist()
         {
             // Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            List<SpotExceptionsRecommendedPlanSpotsToDoDto> recommendedPlansToDo = null;
-            List<SpotExceptionsRecommendedPlanSpotsDoneDto> recommendedPlansDone = null;
+            List<SpotExceptionsRecommendedPlanGroupingDto> recommendedPlansToDo = null;
+            List<SpotExceptionsRecommendedPlanGroupingDto> recommendedPlansDone = null;
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansDone));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
-
             // Act
-            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlansAsync(recommendedPlansRequest);
+            var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanGroupingAsync(recommendedPlansRequest);
 
             // Assert            
             Assert.AreEqual(result.Active.Count, 0);
@@ -242,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public void GetSpotExceptionsRecommendedPlans_ThrowsException()
+        public void GetRecommendedPlanGroupingAsync_ThrowsException()
         {
             // Arrange
             var ingestedAt = new DateTime(2010, 10, 12);
@@ -261,34 +198,31 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 Name = "Name2"
             };
 
-            var recommendedPlansToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            var recommendedPlansDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            var recommendedPlansToDo = _GetRecommendedPlanGroupingToDoData();
+            var recommendedPlansDone = _GetRecommendedPlanGroupingDoneData();
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlansToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanGroupingDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");
                 });
 
             // Act           
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsRecommendedPlanService.GetRecommendedPlansAsync(recommendedPlansRequest));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanGroupingAsync(recommendedPlansRequest));
 
             // Assert
-            Assert.AreEqual("Could not retrieve Spot Exceptions Recommended Plans", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Recommended Plan Groupings", result.Message);
         }
 
         [Test]
         public async void GetSpotExceptionsRecommendedPlanSpots_BothExist()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlanSpotsRequestDto recommendedPlanSpotRequest = new SpotExceptionsRecommendedPlanSpotsRequestDto
             {
                 PlanId = 332,
@@ -296,37 +230,24 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            var recommendedPlanSpotsToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            var recommendedPlanSpotsDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            var recommendedPlanSpotsToDo = _GetRecommendedPlanSpotsToDoData();
+            var recommendedPlanSpotsDone = _GetRecommendedPlanSpotsDoneData();
 
             _SpotExceptionsRecommendedPlanRepositoryMock
                 .Setup(x => x.GetRecommendedPlanSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlanSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanSpotsSynced(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsDone));
-
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
 
             //Act
             var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanSpotsAsync(recommendedPlanSpotRequest);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Active.Count, 2);
-            Assert.AreEqual(result.Queued.Count, 1);
+            Assert.AreEqual(result.Active.Count, 1);
+            Assert.AreEqual(result.Queued.Count, 0);
             Assert.AreEqual(result.Synced.Count, 1);
         }
 
@@ -334,9 +255,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public async void GetSpotExceptionsRecommendedPlanSpots_ToDoExistOnly()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlanSpotsRequestDto recommendedPlanSpotRequest = new SpotExceptionsRecommendedPlanSpotsRequestDto
             {
                 PlanId = 332,
@@ -344,36 +262,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            var recommendedPlanSpotsToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            List<SpotExceptionsRecommendedPlanSpotsDoneDto> recommendedPlanSpotsDone = null;
+            var recommendedPlanSpotsToDo = _GetRecommendedPlanSpotsToDoData();
+            List<SpotExceptionsRecommendedPlanSpotsDto> recommendedPlanSpotsDone = null;
 
             _SpotExceptionsRecommendedPlanRepositoryMock
                 .Setup(x => x.GetRecommendedPlanSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlanSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanSpotsQueued(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsDone));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(x => x.GetRecommendedPlanSpotsSynced(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(recommendedPlanSpotsDone));
 
             //Act
             var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanSpotsAsync(recommendedPlanSpotRequest);
 
             //Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Active.Count, 2);
+            Assert.AreEqual(result.Active.Count, 1);
             Assert.AreEqual(result.Queued.Count, 0);
             Assert.AreEqual(result.Synced.Count, 0);
         }
@@ -382,9 +291,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public async void GetSpotExceptionsRecommendedPlanSpots_DoneExistOnly()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlanSpotsRequestDto recommendedPlanSpotRequest = new SpotExceptionsRecommendedPlanSpotsRequestDto
             {
                 PlanId = 332,
@@ -392,29 +298,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            List<SpotExceptionsRecommendedPlanSpotsToDoDto> recommendedPlanSpotsToDo = null;
-            var recommendedPlanSpotsDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            List<SpotExceptionsRecommendedPlanSpotsDto> recommendedPlanSpotsToDo = null;
+            var recommendedPlanSpotsQueued = _GetRecommendedPlanSpotsDoneData();
+            List<SpotExceptionsRecommendedPlanSpotsDto> recommendedPlanSpotsSynced = null;
 
             _SpotExceptionsRecommendedPlanRepositoryMock
                 .Setup(x => x.GetRecommendedPlanSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlanSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(recommendedPlanSpotsDone));
+                .Setup(x => x.GetRecommendedPlanSpotsQueued(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(recommendedPlanSpotsQueued));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(x => x.GetRecommendedPlanSpotsSynced(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(recommendedPlanSpotsSynced));
 
             //Act
             var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanSpotsAsync(recommendedPlanSpotRequest);
@@ -423,16 +321,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
             Assert.AreEqual(result.Active.Count, 0);
             Assert.AreEqual(result.Queued.Count, 1);
-            Assert.AreEqual(result.Synced.Count, 1);
+            Assert.AreEqual(result.Synced.Count, 0);
         }
 
         [Test]
         public async void GetSpotExceptionsRecommendedPlanSpots_DoesNotExist()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlanSpotsRequestDto recommendedPlanSpotRequest = new SpotExceptionsRecommendedPlanSpotsRequestDto
             {
                 PlanId = 332,
@@ -440,29 +335,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            List<SpotExceptionsRecommendedPlanSpotsToDoDto> recommendedPlanSpotsToDo = null;
-            List<SpotExceptionsRecommendedPlanSpotsDoneDto> recommendedPlanSpotsDone = null;
+            List<SpotExceptionsRecommendedPlanSpotsDto> recommendedPlanSpotsToDo = null;
+            List<SpotExceptionsRecommendedPlanSpotsDto> recommendedPlanSpotsQueued = null;
+            List<SpotExceptionsRecommendedPlanSpotsDto> recommendedPlanSpotsSynced = null;
 
             _SpotExceptionsRecommendedPlanRepositoryMock
                 .Setup(x => x.GetRecommendedPlanSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlanSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(recommendedPlanSpotsDone));
+                .Setup(x => x.GetRecommendedPlanSpotsQueued(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(recommendedPlanSpotsQueued));
 
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-
-            _SpotLengthRepositoryMock.Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
-                .Returns(30);
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(x => x.GetRecommendedPlanSpotsSynced(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(recommendedPlanSpotsSynced));
 
             //Act
             var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanSpotsAsync(recommendedPlanSpotRequest);
@@ -474,483 +361,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Assert.AreEqual(result.Synced.Count, 0);
         }
 
-        //[Test]
-        //public void GetSpotExceptionsRecommendedPlanSpotsWithPacing_Exist()
-        //{
-        //    // Arrange
-        //    // Arrange
-        //    var ingestedDateTime = new DateTime(2010, 10, 12);
-        //    var ingestedBy = "Repository Test User";
-
-        //    RecomendedPlansRequestDto spotExceptionsRecommendedRequest = new RecomendedPlansRequestDto
-        //    {
-        //        PlanId = 215,
-        //        WeekStartDate = new DateTime(2021, 01, 04),
-        //        WeekEndDate = new DateTime(2021, 01, 10)
-        //    };
-        //    _SpotExceptionRepositoryMock
-        //        .Setup(s => s.GetSpotExceptionRecommendedPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-        //        .Returns(new List<SpotExceptionsRecommendedPlansDto>
-        //        {
-        //            new SpotExceptionsRecommendedPlansDto
-        //            {
-        //                Id = 1,
-        //                SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                AmbiguityCode = 1,
-        //                ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                EstimateId = 6840,
-        //                InventorySource = "Tegna",
-        //                HouseIsci = "840T42AY13H",
-        //                ClientIsci = "QMAY2913OS1H",
-        //                SpotLengthId = 3,
-        //                ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
-        //                StationLegacyCallLetters = "WBNS",
-        //                Affiliate = "CBS",
-        //                MarketCode = 135,
-        //                MarketRank = 33,
-        //                ProgramName = "CBS Mornings",
-        //                ProgramGenre = "INFORMATIONAL/NEWS",
-        //                IngestedBy = ingestedBy,
-        //                IngestedAt = ingestedDateTime,
-        //                IngestedMediaWeekId = 1,
-        //                SpotLength = new SpotLengthDto
-        //                {
-        //                    Id = 16,
-        //                    Length = 45
-        //                },
-        //                SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
-        //                {
-        //                    new SpotExceptionsRecommendedPlanDetailsDto
-        //                    {
-        //                        Id = 102,
-        //                        SpotExceptionsRecommendedPlanId = 1,
-        //                        RecommendedPlanId = 301,
-        //                        ExecutionTraceId = 73,
-        //                        Rate = 0.00m,
-        //                        AudienceName = "Women 25-54",
-        //                        ContractedImpressions = 100000,
-        //                        DeliveredImpressions = 50000,
-        //                        IsRecommendedPlan = false,
-        //                        PlanClearancePercentage = null,
-        //                        DaypartCode = "SYN",
-        //                        StartTime = 28800,
-        //                        EndTime = 7199,
-        //                        Monday = 1,
-        //                        Tuesday = 1,
-        //                        Wednesday = 1,
-        //                        Thursday = 1,
-        //                        Friday = 1,
-        //                        Saturday = 1,
-        //                        Sunday = 1,
-        //                        SpotDeliveredImpressions = 50,
-        //                        PlanTotalContractedImpressions = 1000,
-        //                        PlanTotalDeliveredImpressions = 50,
-        //                        IngestedMediaWeekId = 1,
-        //                        IngestedBy = ingestedBy,
-        //                        IngestedAt = ingestedDateTime,
-        //                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                        RecommendedPlanDetail = new RecommendedPlanDetailDto
-        //                        {
-        //                            Id = 301,
-        //                            Name = "2Q' 21 Reynolds Foil TDN and SYN Upfront",
-        //                            FlightStartDate = new DateTime(2019, 12, 1),
-        //                            FlightEndDate = new DateTime(2020, 2, 1),
-        //                            SpotLengths = new List<SpotLengthDto>
-        //                            {
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 16,
-        //                                    Length = 45
-        //                                }
-        //                            }
-        //                        },
-        //                        SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
-        //                        {
-        //                            Id = 202,
-        //                            SpotExceptionsRecommendedPlanDetailId = 102,
-        //                            UserName = "Test User",
-        //                            CreatedAt = new DateTime(2020,10,25)
-        //                        }
-        //                    },
-        //                    new SpotExceptionsRecommendedPlanDetailsDto
-        //                    {
-        //                        Id = 103,
-        //                        SpotExceptionsRecommendedPlanId = 1,
-        //                        RecommendedPlanId = 302,
-        //                        ExecutionTraceId = 75,
-        //                        Rate = 0.00m,
-        //                        AudienceName = "Women 25-54",
-        //                        ContractedImpressions = 100000,
-        //                        DeliveredImpressions = 50000,
-        //                        IsRecommendedPlan = true,
-        //                        PlanClearancePercentage = null,
-        //                        DaypartCode = "EM",
-        //                        StartTime = 18000,
-        //                        EndTime = 35999,
-        //                        Monday = 1,
-        //                        Tuesday = 1,
-        //                        Wednesday = 1,
-        //                        Thursday = 1,
-        //                        Friday = 1,
-        //                        Saturday = 1,
-        //                        Sunday = 1,
-        //                        SpotDeliveredImpressions = 50,
-        //                        PlanTotalContractedImpressions = 1000,
-        //                        PlanTotalDeliveredImpressions = 50,
-        //                        IngestedMediaWeekId = 1,
-        //                        IngestedBy = ingestedBy,
-        //                        IngestedAt = ingestedDateTime,
-        //                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                        RecommendedPlanDetail = new RecommendedPlanDetailDto
-        //                        {
-        //                            Id = 302,
-        //                            Name = "2Q' 21 Reynolds",
-        //                            FlightStartDate = new DateTime(2019, 12, 1),
-        //                            FlightEndDate = new DateTime(2020, 2, 1),
-        //                            SpotLengths = new List<SpotLengthDto>
-        //                            {
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 14,
-        //                                    Length = 15
-        //                                },
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 15,
-        //                                    Length = 30
-        //                                }
-        //                            }
-        //                        },
-        //                        SpotExceptionsRecommendedPlanDecision = null
-        //                    }
-        //                }
-        //            },
-        //            new SpotExceptionsRecommendedPlansDto
-        //            {
-        //                Id = 2,
-        //                SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                AmbiguityCode = 1,
-        //                ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                EstimateId = 6840,
-        //                InventorySource = "Tegna",
-        //                HouseIsci = "840T42AY13H",
-        //                ClientIsci = "QMAY2913OS1H",
-        //                SpotLengthId = 3,
-        //                ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
-        //                StationLegacyCallLetters = "WBNS",
-        //                Affiliate = "CBS",
-        //                MarketCode = 135,
-        //                MarketRank = 33,
-        //                ProgramName = "CBS Mornings",
-        //                ProgramGenre = "INFORMATIONAL/NEWS",
-        //                IngestedBy = ingestedBy,
-        //                IngestedAt = ingestedDateTime,
-        //                IngestedMediaWeekId = 1,
-        //                SpotLength = new SpotLengthDto
-        //                {
-        //                    Id = 16,
-        //                    Length = 45
-        //                },
-        //                SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
-        //                {
-        //                    new SpotExceptionsRecommendedPlanDetailsDto
-        //                    {
-        //                        Id = 104,
-        //                        SpotExceptionsRecommendedPlanId = 2,
-        //                        RecommendedPlanId = 302,
-        //                        ExecutionTraceId = 75,
-        //                        Rate = 0.00m,
-        //                        AudienceName = "Women 25-54",
-        //                        ContractedImpressions = 100000,
-        //                        DeliveredImpressions = 50000,
-        //                        IsRecommendedPlan = true,
-        //                        PlanClearancePercentage = null,
-        //                        DaypartCode = "EM",
-        //                        StartTime = 18000,
-        //                        EndTime = 35999,
-        //                        Monday = 1,
-        //                        Tuesday = 1,
-        //                        Wednesday = 1,
-        //                        Thursday = 1,
-        //                        Friday = 1,
-        //                        Saturday = 1,
-        //                        Sunday = 1,
-        //                        SpotDeliveredImpressions = 50,
-        //                        PlanTotalContractedImpressions = 1000,
-        //                        PlanTotalDeliveredImpressions = 50,
-        //                        IngestedMediaWeekId = 1,
-        //                        IngestedBy = ingestedBy,
-        //                        IngestedAt = ingestedDateTime,
-        //                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                        RecommendedPlanDetail = new RecommendedPlanDetailDto
-        //                        {
-        //                            Id = 302,
-        //                            Name = "2Q' 21 Reynolds",
-        //                            FlightStartDate = new DateTime(2019, 12, 1),
-        //                            FlightEndDate = new DateTime(2020, 2, 1),
-        //                            SpotLengths = new List<SpotLengthDto>
-        //                            {
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 14,
-        //                                    Length = 15
-        //                                },
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 15,
-        //                                    Length = 30
-        //                                }
-        //                            }
-        //                        },
-        //                        SpotExceptionsRecommendedPlanDecision = null
-        //                    }
-        //                }
-        //            },
-        //            new SpotExceptionsRecommendedPlansDto
-        //            {
-        //                Id = 3,
-        //                SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                AmbiguityCode = 1,
-        //                ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                EstimateId = 6840,
-        //                InventorySource = "Tegna",
-        //                HouseIsci = "840T42AY13H",
-        //                ClientIsci = "QMAY2913OS1H",
-        //                SpotLengthId = 3,
-        //                ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
-        //                StationLegacyCallLetters = "WBNS",
-        //                Affiliate = "CBS",
-        //                MarketCode = 135,
-        //                MarketRank = 33,
-        //                ProgramName = "CBS Mornings",
-        //                ProgramGenre = "INFORMATIONAL/NEWS",
-        //                IngestedBy = ingestedBy,
-        //                IngestedAt = ingestedDateTime,
-        //                IngestedMediaWeekId = 1,
-        //                SpotLength = new SpotLengthDto
-        //                {
-        //                    Id = 16,
-        //                    Length = 45
-        //                },
-        //                SpotExceptionsRecommendedPlanDetails = new List<SpotExceptionsRecommendedPlanDetailsDto>
-        //                {
-        //                    new SpotExceptionsRecommendedPlanDetailsDto
-        //                    {
-        //                        Id = 105,
-        //                        SpotExceptionsRecommendedPlanId = 3,
-        //                        RecommendedPlanId = 302,
-        //                        ExecutionTraceId = 75,
-        //                        Rate = 0.00m,
-        //                        AudienceName = "Women 25-54",
-        //                        ContractedImpressions = 100000,
-        //                        DeliveredImpressions = 50000,
-        //                        IsRecommendedPlan = true,
-        //                        PlanClearancePercentage = null,
-        //                        DaypartCode = "EM",
-        //                        StartTime = 18000,
-        //                        EndTime = 35999,
-        //                        Monday = 1,
-        //                        Tuesday = 1,
-        //                        Wednesday = 1,
-        //                        Thursday = 1,
-        //                        Friday = 1,
-        //                        Saturday = 1,
-        //                        Sunday = 1,
-        //                        SpotDeliveredImpressions = 50,
-        //                        PlanTotalContractedImpressions = 1000,
-        //                        PlanTotalDeliveredImpressions = 50,
-        //                        IngestedMediaWeekId = 1,
-        //                        IngestedBy = ingestedBy,
-        //                        IngestedAt = ingestedDateTime,
-        //                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                        RecommendedPlanDetail = new RecommendedPlanDetailDto
-        //                        {
-        //                            Id = 302,
-        //                            Name = "2Q' 21 Reynolds",
-        //                            FlightStartDate = new DateTime(2019, 12, 1),
-        //                            FlightEndDate = new DateTime(2020, 2, 1),
-        //                            SpotLengths = new List<SpotLengthDto>
-        //                            {
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 14,
-        //                                    Length = 15
-        //                                },
-        //                                new SpotLengthDto
-        //                                {
-        //                                    Id = 15,
-        //                                    Length = 30
-        //                                }
-        //                            }
-        //                        },
-        //                        SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
-        //                        {
-        //                            Id = 100,
-        //                            SpotExceptionsRecommendedPlanDetailId = 105,
-        //                            UserName = "Test User",
-        //                            CreatedAt = new DateTime(2020,10,25),
-        //                            SyncedAt = ingestedDateTime,
-        //                            SyncedBy = ingestedBy
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        });
-
-        //    var expectedResult = 1;
-
-        //    // Act
-        //    var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanSpots(spotExceptionsRecommendedRequest);
-
-        //    // Assert
-        //    Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        //    Assert.AreEqual(expectedResult, result.Active.Count);
-        //    Assert.AreEqual(expectedResult, result.Queued.Count);
-        //    Assert.AreEqual(expectedResult, result.Synced.Count);
-        //}
-
-        //[Test]
-        //public void GetSpotExceptionsRecommendedPlanSpotsWithPacing_DoesNotExist()
-        //{
-        //    // Arrange
-        //    var ingestedDateTime = new DateTime(2010, 10, 12);
-        //    var ingestedBy = "Repository Test User";
-        //    RecomendedPlansRequestDto spotExceptionsRecommendedRequest = new RecomendedPlansRequestDto
-        //    {
-        //        PlanId = 215,
-        //        WeekStartDate = new DateTime(2021, 01, 04),
-        //        WeekEndDate = new DateTime(2021, 01, 10)
-        //    };
-        //    _SpotExceptionRepositoryMock
-        //        .Setup(s => s.GetSpotExceptionRecommendedPlanSpots(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-        //        .Returns(new List<SpotExceptionsRecommendedPlansDto>
-        //        {
-        //            new SpotExceptionsRecommendedPlansDto
-        //            {
-        //                Id = 3,
-        //                SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                AmbiguityCode = 1,
-        //                ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                EstimateId = 6840,
-        //                InventorySource = "Tegna",
-        //                HouseIsci = "840T42AY13H",
-        //                ClientIsci = "QMAY2913OS1H",
-        //                SpotLengthId = 3,
-        //                ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
-        //                StationLegacyCallLetters = "WBNS",
-        //                Affiliate = "CBS",
-        //                MarketCode = 135,
-        //                MarketRank = 33,
-        //                ProgramName = "CBS Mornings",
-        //                ProgramGenre = "INFORMATIONAL/NEWS",
-        //                IngestedBy= ingestedBy,
-        //                IngestedAt= ingestedDateTime,
-        //                IngestedMediaWeekId = 1,
-        //                SpotLength = new SpotLengthDto
-        //                {
-        //                    Id = 15,
-        //                    Length = 30
-        //                },
-        //                SpotExceptionsRecommendedPlanDetails=new List<SpotExceptionsRecommendedPlanDetailsDto>
-        //                {
-        //                    new SpotExceptionsRecommendedPlanDetailsDto
-        //                    {
-        //                        RecommendedPlanId = 334,
-        //                        ExecutionTraceId = 73,
-        //                        Rate = 0.00m,
-        //                        AudienceName = "Women 25-54",
-        //                        ContractedImpressions = 100000,
-        //                        DeliveredImpressions = 50000,
-        //                        IsRecommendedPlan = false,
-        //                        PlanClearancePercentage = null,
-        //                        DaypartCode = "SYN",
-        //                        StartTime = 28800,
-        //                        EndTime = 7199,
-        //                        Monday = 1,
-        //                        Tuesday = 1,
-        //                        Wednesday = 1,
-        //                        Thursday = 1,
-        //                        Friday = 1,
-        //                        Saturday = 1,
-        //                        Sunday = 1,
-        //                        SpotDeliveredImpressions = 50,
-        //                        PlanTotalContractedImpressions = 1000,
-        //                        PlanTotalDeliveredImpressions = 50,
-        //                        IngestedMediaWeekId = 1,
-        //                        IngestedBy = ingestedBy,
-        //                        IngestedAt = ingestedDateTime,
-        //                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                        RecommendedPlanDetail = new RecommendedPlanDetailDto
-        //                        {
-        //                            Name = "4Q' 21 Reynolds Foil TDN and SYN Upfront"
-        //                        },
-        //                        SpotExceptionsRecommendedPlanDecision = new SpotExceptionsRecommendedPlanDecisionDto
-        //                        {
-        //                            UserName = ingestedBy,
-        //                            CreatedAt = ingestedDateTime,
-        //                            AcceptedAsInSpec = false
-        //                        }
-        //                    },
-        //                    new SpotExceptionsRecommendedPlanDetailsDto
-        //                    {
-        //                        RecommendedPlanId = 332,
-        //                        ExecutionTraceId = 75,
-        //                        Rate = 0.00m,
-        //                        AudienceName = "Women 25-54",
-        //                        ContractedImpressions = 100000,
-        //                        DeliveredImpressions = 50000,
-        //                        IsRecommendedPlan = true,
-        //                        PlanClearancePercentage = null,
-        //                        DaypartCode = "EM",
-        //                        StartTime = 18000,
-        //                        EndTime = 35999,
-        //                        Monday = 1,
-        //                        Tuesday = 1,
-        //                        Wednesday = 1,
-        //                        Thursday = 1,
-        //                        Friday = 1,
-        //                        Saturday = 1,
-        //                        Sunday = 1,
-        //                        SpotDeliveredImpressions = 50,
-        //                        PlanTotalContractedImpressions = 1000,
-        //                        PlanTotalDeliveredImpressions = 50,
-        //                        IngestedMediaWeekId = 1,
-        //                        IngestedBy = ingestedBy,
-        //                        IngestedAt = ingestedDateTime,
-        //                        SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-        //                        ExecutionIdExternal = "220609090855BRt8EHXqSy",
-        //                        RecommendedPlanDetail = new RecommendedPlanDetailDto
-        //                        {
-        //                            Name = "3Q' 21 Reynolds Foil TDN and SYN Upfront"
-        //                        },
-        //                        SpotExceptionsRecommendedPlanDecision = null
-        //                    }
-        //                }
-        //            }
-        //        });
-
-        //    var expectedResult = 1;
-
-        //    // Act
-        //    var result = _SpotExceptionService.GetSpotExceptionsRecommendedPlanSpots(spotExceptionsRecommendedRequest);
-
-        //    // Assert
-        //    Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        //    Assert.AreEqual(expectedResult, result.Queued.Count);
-        //}
-
         [Test]
         public void GetSpotExceptionsRecommendedPlanSpots_ThrowsException()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlanSpotsRequestDto recommendedPlanSpotRequest = new SpotExceptionsRecommendedPlanSpotsRequestDto
             {
                 PlanId = 332,
@@ -958,22 +372,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var advertiser = new AdvertiserDto
-            {
-                Id = 2,
-                MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                Name = "Name2"
-            };
-
-            var recommendedPlanSpotsToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            var recommendedPlanSpotsDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            var recommendedPlanSpotsToDo = _GetRecommendedPlanSpotsToDoData();
+            var recommendedPlanSpotsDone = _GetRecommendedPlanSpotsDoneData();
 
             _SpotExceptionsRecommendedPlanRepositoryMock
                 .Setup(x => x.GetRecommendedPlanSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(recommendedPlanSpotsToDo));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlanSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanSpotsQueued(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(recommendedPlanSpotsDone));
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(x => x.GetRecommendedPlanSpotsSynced(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");
@@ -990,8 +401,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public async void GetSpotExceptionsRecommendedPlanDetails_DoesNotExist()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
             var recommendedPlanId = 772;
 
             var advertiser = new AdvertiserDto
@@ -1382,31 +791,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public async void GetSpotExceptionsRecommendedPlanFilters_Exist()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlanFiltersRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var recommendedPlanFiltersToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            var ecommendedPlanFiltersDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            List<string> marketFilters = new List<string>() { "Columbus, OH", "Paducah-Cape Girard-Harsbg", "Seattle-Tacoma" };
+            List<string> legacyCallLettersFilters = new List<string>() { "KOMO", "WBNS", "WDKA" };
+            List<string> inventorysourceFilters = new List<string>() { "Ference POD", "Sinclair Corp - Day Syn 10a-4p", "Tegna" };
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(recommendedPlanFiltersToDo));
+                .Setup(x => x.GetRecommendedPlanMarketFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(marketFilters));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(ecommendedPlanFiltersDone));
+                .Setup(x => x.GetRecommendedPlanLegacyCallLetterFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(legacyCallLettersFilters));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .SetupSequence(x => x.GetMarketName(It.IsAny<int>()))
-                .Returns("Columbus, OH")
-                .Returns("Paducah-Cape Girard-Harsbg")
-                .Returns("Seattle-Tacoma");
+                .Setup(x => x.GetRecommendedPlanInventorySourceFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(inventorysourceFilters));
 
             // Act
             var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanFilters(recommendedPlanFiltersRequest);
@@ -1422,32 +827,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public async void GetSpotExceptionsRecommendedPlanFilters_DoesNotExist()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlanFiltersRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var recommendedPlanFiltersToDo = new List<SpotExceptionsRecommendedPlanSpotsToDoDto>();
-            var ecommendedPlanFiltersDone = new List<SpotExceptionsRecommendedPlanSpotsDoneDto>();
+            List<string> marketFilters = new List<string>();
+            List<string> legacyCallLettersFilters = new List<string>();
+            List<string> inventorysourceFilters = new List<string>();
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(recommendedPlanFiltersToDo));
+                .Setup(x => x.GetRecommendedPlanMarketFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(marketFilters));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(ecommendedPlanFiltersDone));
+                .Setup(x => x.GetRecommendedPlanLegacyCallLetterFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(legacyCallLettersFilters));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .SetupSequence(x => x.GetMarketName(It.IsAny<int>()))
-                .Returns("Columbus, OH")
-                .Returns("Paducah-Cape Girard-Harsbg")
-                .Returns("Seattle-Tacoma")
-                .Returns("Evansville");
+                .Setup(x => x.GetRecommendedPlanInventorySourceFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(inventorysourceFilters));
 
             // Act
             var result = await _SpotExceptionsRecommendedPlanService.GetRecommendedPlanFilters(recommendedPlanFiltersRequest);
@@ -1463,24 +863,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public void GetSpotExceptionsRecommendedPlanFilters_ThrowsException()
         {
             //Arrange
-            var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
-
             SpotExceptionsRecommendedPlansRequestDto recommendedPlanFiltersRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
                 WeekStartDate = new DateTime(2021, 01, 04),
                 WeekEndDate = new DateTime(2021, 01, 10)
             };
 
-            var recommendedPlanFiltersToDo = _GetRecommendedToDoData(ingestedBy, ingestedAt);
-            var ecommendedPlanFiltersDone = _GetRecommendedDoneData(ingestedBy, ingestedAt);
+            List<string> marketFilters = new List<string>() { "Columbus, OH", "Paducah-Cape Girard-Harsbg", "Seattle-Tacoma" };
+            List<string> legacyCallLettersFilters = new List<string>() { "KOMO", "WBNS", "WDKA" };
+            List<string> inventorysourceFilters = new List<string>() { "Ference POD", "Sinclair Corp - Day Syn 10a-4p", "Tegna" };
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansToDoAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(recommendedPlanFiltersToDo));
+                .Setup(x => x.GetRecommendedPlanMarketFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(marketFilters));
 
             _SpotExceptionsRecommendedPlanRepositoryMock
-                .Setup(x => x.GetRecommendedPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetRecommendedPlanLegacyCallLetterFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(legacyCallLettersFilters));
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(x => x.GetRecommendedPlanInventorySourceFiltersAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");
@@ -1493,295 +895,152 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Assert.AreEqual("Could not retrieve Spot Exceptions Recommended Plan Filters", result.Message);
         }
 
-
-        private List<SpotExceptionsRecommendedPlanSpotsToDoDto> _GetRecommendedToDoData(string ingestedBy, DateTime ingestedAt)
+        private List<SpotExceptionsRecommendedPlanGroupingDto> _GetRecommendedPlanGroupingToDoData()
         {
-            return new List<SpotExceptionsRecommendedPlanSpotsToDoDto>
+            return new List<SpotExceptionsRecommendedPlanGroupingDto>()
             {
-                new SpotExceptionsRecommendedPlanSpotsToDoDto
+                new SpotExceptionsRecommendedPlanGroupingDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                    AmbiguityCode = 1,
-                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                    EstimateId = 6840,
-                    InventorySource = "Tegna",
-                    HouseIsci = "840T42AY13H",
-                    ClientIsci = "QMAY2913OS1H",
-                    SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
-                    StationLegacyCallLetters = "WBNS",
-                    Affiliate = "CBS",
-                    MarketCode = 135,
-                    MarketRank = 33,
-                    ProgramName = "CBS Mornings",
-                    ProgramGenre = "INFORMATIONAL/NEWS",
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedAt,
-                    IngestedMediaWeekId = 1,
-                    SpotExceptionsRecommendedPlanDetailsToDo = new List<SpotExceptionsRecommendedPlanDetailsToDoDto>
+                    PlanId = 322,
+                    AdvertiserMasterId = new Guid("C56972B6-67F2-4986-A2BE-4B1F199A1420"),
+                    PlanName = "4Q'21 Dupixent Early Morning News",
+                    AffectedSpotsCount = 1,
+                    Impressions = 55,
+                    FlightStartDate = new DateTime(2021, 10, 4),
+                    FlightEndDate = new DateTime(2021, 12, 19),
+                    SpotLengths = new List<SpotLengthDto>
                     {
-                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                        new SpotLengthDto
                         {
-                            RecommendedPlanId = 332,
-                            ExecutionTraceId = 73,
-                            Rate = 0.00m,
-                            AudienceName = "Women 25-54",
-                            ContractedImpressions = 100000,
-                            DeliveredImpressions = 50000,
-                            IsRecommendedPlan = true,
-                            PlanClearancePercentage = null,
-                            DaypartCode = "SYN",
-                            StartTime = 28800,
-                            EndTime = 7199,
-                            Monday = 1,
-                            Tuesday = 1,
-                            Wednesday = 1,
-                            Thursday = 1,
-                            Friday = 1,
-                            Saturday = 1,
-                            Sunday = 1,
-                            SpotDeliveredImpressions = 50,
-                            PlanTotalContractedImpressions = 1000,
-                            PlanTotalDeliveredImpressions = 50,
-                            IngestedMediaWeekId = 1,
-                            IngestedBy = ingestedBy,
-                            IngestedAt = ingestedAt,
-                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
-                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                            RecommendedPlanDetail = new RecommendedPlanDetailDto
-                            {
-                                Name = "4Q'21 Macy's EM",
-                                AdvertiserMasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                                SpotLengths = new List<SpotLengthDto>
-                                {
-                                    new SpotLengthDto
-                                    {
-                                        Id = 3,
-                                        Length = 15
-                                    }
-                                }
-                            }
+                            Length = 15,
                         }
-                    }
+                    },
+                    AudienceName = "Women 25-54"
                 },
-                new SpotExceptionsRecommendedPlanSpotsToDoDto
+                new SpotExceptionsRecommendedPlanGroupingDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
-                    AmbiguityCode = 1,
-                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                    EstimateId = 6289,
-                    InventorySource = "Sinclair Corp - Day Syn 10a-4p",
-                    HouseIsci = "289IT2Y3P2H",
-                    ClientIsci = "QMAY2913OS1H",
-                    SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
-                    StationLegacyCallLetters = "KOMO",
-                    Affiliate = "ABC",
-                    MarketCode = 419,
-                    MarketRank = 11,
-                    ProgramName = "LIVE with Kelly and Ryan",
-                    ProgramGenre = "TALK",
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedAt,
-                    IngestedMediaWeekId = 1,
-                    SpotExceptionsRecommendedPlanDetailsToDo = new List<SpotExceptionsRecommendedPlanDetailsToDoDto>
+                    PlanId = 323,
+                    AdvertiserMasterId = new Guid("C56972B6-67F2-4986-A2BE-4B1F199A1420"),
+                    PlanName = "4Q'21 Dupixent Daytime",
+                    AffectedSpotsCount = 1,
+                    Impressions = 5,
+                    FlightStartDate = new DateTime(2021, 10, 4),
+                    FlightEndDate = new DateTime(2021, 12, 19),
+                    SpotLengths = new List<SpotLengthDto>
                     {
-                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                        new SpotLengthDto
                         {
-                            RecommendedPlanId = 334,
-                            ExecutionTraceId = 1923,
-                            Rate = 0.00m,
-                            AudienceName = "Women 25-54",
-                            ContractedImpressions = 100000,
-                            DeliveredImpressions = 50000,
-                            IsRecommendedPlan = true,
-                            PlanClearancePercentage = null,
-                            DaypartCode = "SYN",
-                            StartTime = 28800,
-                            EndTime = 7199,
-                            Monday = 1,
-                            Tuesday = 1,
-                            Wednesday = 1,
-                            Thursday = 1,
-                            Friday = 1,
-                            Saturday = 1,
-                            Sunday = 1,
-                            SpotDeliveredImpressions = 50,
-                            PlanTotalContractedImpressions = 1000,
-                            PlanTotalDeliveredImpressions = 50,
-                            IngestedMediaWeekId = 1,
-                            IngestedBy = ingestedBy,
-                            IngestedAt = ingestedAt,
-                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
-                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                            RecommendedPlanDetail = new RecommendedPlanDetailDto
-                            {
-                                Name = "4Q'21 Macy's SYN",
-                                AdvertiserMasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                                SpotLengths = new List<SpotLengthDto>
-                                {
-                                    new SpotLengthDto
-                                    {
-                                        Id = 3,
-                                        Length = 15
-                                    }
-                                }
-                            }
+                            Length = 15,
                         }
-                    }
+                    },
+                    AudienceName = "Women 25-54"
+                },
+                new SpotExceptionsRecommendedPlanGroupingDto
+                {
+                    PlanId = 332,
+                    AdvertiserMasterId = new Guid( "B67C3C7B-E4F9-42AD-8EA5-CF18C83C61C0" ),
+                    PlanName = "4Q'21 Macy's EM",
+                    AffectedSpotsCount = 6,
+                    Impressions = 217,
+                    FlightStartDate = new DateTime(2021, 10, 4),
+                    FlightEndDate = new DateTime(2021, 12, 19),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                },
+                new SpotExceptionsRecommendedPlanGroupingDto
+                {
+                    PlanId = 334,
+                    AdvertiserMasterId = new Guid( "C56972B6-67F2-4986-A2BE-4B1F199A1420" ),
+                    PlanName = "4Q'21 Macy's SYN",
+                    AffectedSpotsCount = 6,
+                    Impressions = 237,
+                    FlightStartDate = new DateTime(2021, 9, 28),
+                    FlightEndDate = new DateTime(2021, 12, 06),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
                 }
             };
         }
 
-        private List<SpotExceptionsRecommendedPlanSpotsDoneDto> _GetRecommendedDoneData(string ingestedBy, DateTime ingestedAt)
+        private List<SpotExceptionsRecommendedPlanGroupingDto> _GetRecommendedPlanGroupingDoneData()
         {
-            return new List<SpotExceptionsRecommendedPlanSpotsDoneDto>
+            return new List<SpotExceptionsRecommendedPlanGroupingDto>()
             {
-                new SpotExceptionsRecommendedPlanSpotsDoneDto
+                new SpotExceptionsRecommendedPlanGroupingDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
-                    AmbiguityCode = 1,
-                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                    EstimateId = 6616,
-                    InventorySource = "Ference POD",
-                    HouseIsci = "616MAY2913H",
-                    ClientIsci = "QMAY2913OS1H",
-                    SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 41, 57),
-                    StationLegacyCallLetters = "WDKA",
-                    Affiliate = "IND",
-                    MarketCode = 232,
-                    MarketRank = 3873,
-                    ProgramName = "Mike & Molly",
-                    ProgramGenre = "COMEDY",
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedAt,
-                    IngestedMediaWeekId = 1,
-                    SpotExceptionsRecommendedPlanDetailsDone = new List<SpotExceptionsRecommendedPlanDetailsDoneDto>
+                    PlanId = 334,
+                    AdvertiserMasterId = new Guid( "C56972B6-67F2-4986-A2BE-4B1F199A1420" ),
+                    PlanName = "4Q'21 Macy's SYN",
+                    AffectedSpotsCount = 1,
+                    Impressions = 10,
+                    FlightStartDate = new DateTime(2021, 9, 28),
+                    FlightEndDate = new DateTime(2021, 12, 06),
+                    SpotLengths = new List<SpotLengthDto>
                     {
-                        new SpotExceptionsRecommendedPlanDetailsDoneDto
+                        new SpotLengthDto
                         {
-                            RecommendedPlanId = 334,
-                            ExecutionTraceId = 624,
-                            Rate = 0.00m,
-                            AudienceName = "Women 25-54",
-                            ContractedImpressions = 100000,
-                            DeliveredImpressions = 50000,
-                            IsRecommendedPlan = true,
-                            PlanClearancePercentage = null,
-                            DaypartCode = "SYN",
-                            StartTime = 28800,
-                            EndTime = 7199,
-                            Monday = 1,
-                            Tuesday = 1,
-                            Wednesday = 1,
-                            Thursday = 1,
-                            Friday = 1,
-                            Saturday = 1,
-                            Sunday = 1,
-                            SpotDeliveredImpressions = 50,
-                            PlanTotalContractedImpressions = 1000,
-                            PlanTotalDeliveredImpressions = 50,
-                            IngestedMediaWeekId = 1,
-                            IngestedBy = ingestedBy,
-                            IngestedAt = ingestedAt,
-                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDA5MTAwMQ=F",
-                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                            SpotExceptionsRecommendedPlanDoneDecisions = new SpotExceptionsRecommendedPlanSpotDecisionsDoneDto
-                            {
-                                DecidedBy = ingestedBy,
-                                DecidedAt = ingestedAt,
-                                SyncedBy = null,
-                                SyncedAt = null
-                            },
-                            RecommendedPlanDetail = new RecommendedPlanDetailDto
-                            {
-                                Name = "4Q'21 Macy's SYN",
-                                AdvertiserMasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                                SpotLengths = new List<SpotLengthDto>
-                                {
-                                    new SpotLengthDto
-                                    {
-                                        Id = 3,
-                                        Length = 15
-                                    }
-                                }
-                            }
+                            Length = 15,
                         }
-                    }
-                },
-                new SpotExceptionsRecommendedPlanSpotsDoneDto
+                    },
+                    AudienceName = "Women 25-54"
+                }
+            };
+        }
+
+        private List<SpotExceptionsRecommendedPlanSpotsDto> _GetRecommendedPlanSpotsToDoData()
+        {
+            return new List<SpotExceptionsRecommendedPlanSpotsDto>
+            {
+                new SpotExceptionsRecommendedPlanSpotsDto
                 {
-                    SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
-                    AmbiguityCode = 1,
-                    ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                    EstimateId = 6289,
-                    InventorySource = "Sinclair Corp - Day Syn 10a-4p",
-                    HouseIsci = "289IT2Y3P2H",
-                    ClientIsci = "QMAY2913OS1H",
-                    SpotLengthId = 3,
-                    ProgramAirTime = new DateTime(2022, 04, 10, 09, 58, 55),
-                    StationLegacyCallLetters = "KOMO",
-                    Affiliate = "ABC",
-                    MarketCode = 419,
-                    MarketRank = 11,
-                    ProgramName = "LIVE with Kelly and Ryan",
-                    ProgramGenre = "TALK",
-                    IngestedBy = ingestedBy,
-                    IngestedAt = ingestedAt,
-                    IngestedMediaWeekId = 1,
-                    SpotExceptionsRecommendedPlanDetailsDone = new List<SpotExceptionsRecommendedPlanDetailsDoneDto>
-                    {
-                        new SpotExceptionsRecommendedPlanDetailsDoneDto
-                        {
-                            RecommendedPlanId = 332,
-                            ExecutionTraceId = 1824,
-                            Rate = 0.00m,
-                            AudienceName = "Women 25-54",
-                            ContractedImpressions = 100000,
-                            DeliveredImpressions = 50000,
-                            IsRecommendedPlan = true,
-                            PlanClearancePercentage = null,
-                            DaypartCode = "EM",
-                            StartTime = 18000,
-                            EndTime = 35999,
-                            Monday = 1,
-                            Tuesday = 1,
-                            Wednesday = 1,
-                            Thursday = 1,
-                            Friday = 1,
-                            Saturday = 1,
-                            Sunday = 1,
-                            SpotDeliveredImpressions = 50,
-                            PlanTotalContractedImpressions = 1000,
-                            PlanTotalDeliveredImpressions = 50,
-                            IngestedMediaWeekId = 1,
-                            IngestedBy = ingestedBy,
-                            IngestedAt = ingestedAt,
-                            SpotUniqueHashExternal = "TE9DQUwtMTE0MDI3MjQ2NQ=F",
-                            ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                            SpotExceptionsRecommendedPlanDoneDecisions = new SpotExceptionsRecommendedPlanSpotDecisionsDoneDto
-                            {
-                                DecidedBy = ingestedBy,
-                                DecidedAt = ingestedAt,
-                                SyncedBy = ingestedBy,
-                                SyncedAt = ingestedAt
-                            },
-                            RecommendedPlanDetail = new RecommendedPlanDetailDto
-                            {
-                                Name = "4Q'21 Macy's EM",
-                                AdvertiserMasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
-                                SpotLengths = new List<SpotLengthDto>
-                                {
-                                    new SpotLengthDto
-                                    {
-                                        Id = 3,
-                                        Length = 15
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    Id = 1,
+                    EstimateId = 2009,
+                    IsciName = "840T42AY13H",
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                    RecommendedPlanName = "4Q'21 Macy's EM",
+                    PlanId = 332,
+                    Impressions = 10000,
+                    SpotLength = 15,
+                    ProgramName = "CBS Mornings",
+                    InventorySource = "Tegna",
+                    Affiliate = "CBS",
+                    MarketName = "Columbus, OH",
+                    Station = "WBNS"
+                }
+            };
+        }
+
+        private List<SpotExceptionsRecommendedPlanSpotsDto> _GetRecommendedPlanSpotsDoneData()
+        {
+            return new List<SpotExceptionsRecommendedPlanSpotsDto>
+            {
+                new SpotExceptionsRecommendedPlanSpotsDto
+                {
+                    Id = 1,
+                    EstimateId = 6840,
+                    IsciName = "840T42AY13H",
+                    ProgramAirTime = new DateTime(2022, 04, 10, 08, 28, 28),
+                    RecommendedPlanName = "4Q'21 Macy's EM",
+                    PlanId = 332,
+                    Impressions = 10000,
+                    SpotLength = 15,
+                    ProgramName = "CBS Mornings",
+                    InventorySource = "Tegna",
+                    Affiliate = "CBS",
+                    MarketName = "Columbus, OH",
+                    Station = "WBNS"
                 }
             };
         }
@@ -1838,7 +1097,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                         IngestedAt = ingestedAt,
                         SpotUniqueHashExternal = "TE9DQUwtMTE0MDA3MDYxNg=F",
                         ExecutionIdExternal = "220609090855BRt8EHXqSy",
-                        RecommendedPlanDetail = new RecommendedPlanDetailDto
+                        RecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
                         {
                             Name = "4Q'21 Macy's EM",
                             AdvertiserMasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),
@@ -1915,7 +1174,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                             SyncedBy = null,
                             SyncedAt = null
                         },
-                        RecommendedPlanDetail = new RecommendedPlanDetailDto
+                        RecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto
                         {
                             Name = "4Q'21 Macy's SYN",
                             AdvertiserMasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"),

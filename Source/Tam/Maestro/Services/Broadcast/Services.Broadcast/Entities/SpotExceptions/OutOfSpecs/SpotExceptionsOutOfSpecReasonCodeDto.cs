@@ -1,7 +1,7 @@
-﻿namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
+﻿namespace Services.Broadcast.Entities.SpotExceptions
 {
     /// <summary></summary>
-    public class SpotExceptionsOutOfSpecReasonCodeResultDto
+    public class SpotExceptionsOutOfSpecReasonCodeDto
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -14,6 +14,12 @@
         /// </summary>
         /// <value>The reason code.</value>
         public int ReasonCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reason.
+        /// </summary>
+        /// <value>The reason.</value>
+        public string Reason { get; set; }
 
         /// <summary>
         /// Gets or sets the description.

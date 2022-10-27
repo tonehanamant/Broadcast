@@ -1,7 +1,5 @@
-﻿using Amazon.Runtime;
-using Common.Services.ApplicationServices;
+﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using EntityFrameworkMapping.Broadcast;
 using Microsoft.EntityFrameworkCore.Internal;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
@@ -10,12 +8,9 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.SpotExceptions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
-using Unity.Injection;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -26,7 +21,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// </summary>
         /// <param name="recommendedPlansRequest">The spot exceptions recommended plans request.</param>
         /// <returns></returns>
-        Task<SpotExceptionsRecommendedPlansResultsDto> GetRecommendedPlansAsync(SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest);
+        Task<SpotExceptionsRecommendedPlanGroupingResults> GetRecommendedPlanGroupingAsync(SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest);
 
         /// <summary>
         /// Gets the spot exceptions recommended plan spots asynchronous.
@@ -65,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <returns>
         ///   <br />
         /// </returns>
-        Task<RecommendedPlanFiltersResultDto> GetRecommendedPlanFilters(SpotExceptionsRecommendedPlansRequestDto recomendedPlanRequest);
+        Task<SpotExceptionsRecommendedPlanFiltersResultDto> GetRecommendedPlanFilters(SpotExceptionsRecommendedPlansRequestDto recomendedPlanRequest);
 
         /// <summary>
         /// Handles the save recommended plan decisions asynchronous.
@@ -79,7 +74,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
     public class SpotExceptionsRecommendedPlanService : BroadcastBaseClass, ISpotExceptionsRecommendedPlanService
     {
         private readonly ISpotExceptionsRecommendedPlanRepository _SpotExceptionsRecommendedPlanRepository;
-        private readonly ISpotLengthRepository _SpotLengthRepository;
 
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
@@ -94,85 +88,70 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionsRecommendedPlanRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionsRecommendedPlanRepository>();
-            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc />
-        public async Task<SpotExceptionsRecommendedPlansResultsDto> GetRecommendedPlansAsync(SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest)
+        public async Task<SpotExceptionsRecommendedPlanGroupingResults> GetRecommendedPlanGroupingAsync(SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest)
         {
             const string flightStartDateFormat = "MM/dd";
             const string flightEndDateFormat = "MM/dd/yyyy";
-            var recommendedPlans = new SpotExceptionsRecommendedPlansResultsDto();
+            var groupedPlans = new SpotExceptionsRecommendedPlanGroupingResults();
 
             try
             {
-                _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plans");
-                var recommendedPlanToDo = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlansToDoAsync(recommendedPlansRequest.WeekStartDate, recommendedPlansRequest.WeekEndDate);
-                var recommendedPlanDone = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlansDoneAsync(recommendedPlansRequest.WeekStartDate, recommendedPlansRequest.WeekEndDate);
+                _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Groupings");
+                var recommendedPlanGroupingToDo = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanGroupingToDoAsync(recommendedPlansRequest.WeekStartDate, recommendedPlansRequest.WeekEndDate);
+                var recommendedPlanGroupingDone = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanGroupingDoneAsync(recommendedPlansRequest.WeekStartDate, recommendedPlansRequest.WeekEndDate);
 
-                if (recommendedPlanToDo?.Any() ?? false)
+                if (recommendedPlanGroupingToDo?.Any() ?? false)
                 {
-                    recommendedPlans.Active = recommendedPlanToDo.GroupBy(recommendedPlan => new { recommendedPlan.SpotExceptionsRecommendedPlanDetailsToDo.First(y => y.IsRecommendedPlan).RecommendedPlanId })
-                        .Select(activeRecommendedPlan =>
+                    groupedPlans.Active = recommendedPlanGroupingToDo.Select(x =>
+                    {
+                        return new SpotExceptionsRecommendedPlanGroupingToDoResults
                         {
-                            var planDetails = activeRecommendedPlan.First();
-                            var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail.AdvertiserMasterId).First();
-                            var flightStartDate = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightStartDate).First();
-                            var flightEndDate = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightEndDate).First();
-                            var impressions = recommendedPlanToDo.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsToDo.Where(y => y.RecommendedPlanId == activeRecommendedPlan.Key.RecommendedPlanId)).Sum(p => p.SpotDeliveredImpressions) / 1000;
-                            var affectedSpotCount = recommendedPlanToDo.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsToDo.Where(y => y.RecommendedPlanId == activeRecommendedPlan.Key.RecommendedPlanId)).Count();
+                            PlanId = x.PlanId,
+                            AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
+                            PlanName = x.PlanName,
+                            AffectedSpotsCount = x.AffectedSpotsCount,
+                            Impressions = Math.Floor((double)(x.Impressions / 1000.00)),
+                            SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
+                            AudienceName = x.AudienceName,
+                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                        };
 
-                            return new SpotExceptionsRecommendedToDoPlansDto
-                            {
-                                PlanId = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
-                                AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
-                                PlanName = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
-                                AffectedSpotsCount = affectedSpotCount,
-                                Impressions = impressions,
-                                SpotLengthString = $":{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
-                                AudienceName = planDetails.SpotExceptionsRecommendedPlanDetailsToDo.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
-                                FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
-                            };
-                        }).ToList();
+                    }).ToList();
                 }
 
-                if (recommendedPlanDone?.Any() ?? false)
+                if (recommendedPlanGroupingDone?.Any() ?? false)
                 {
-                    recommendedPlans.Completed = recommendedPlanDone.GroupBy(recommendedPlan => new { recommendedPlan.SpotExceptionsRecommendedPlanDetailsDone.First(y => y.IsRecommendedPlan).RecommendedPlanId })
-                        .Select(completedRecommendedPlan =>
+                    groupedPlans.Completed = recommendedPlanGroupingDone.Select(x =>
+                    {
+                        return new SpotExceptionsRecommendedPlanGroupingDoneResults
                         {
-                            var planDetails = completedRecommendedPlan.First();
-                            var planAdvertiserMasterId = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail.AdvertiserMasterId).First();
-                            var flightStartDate = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightStartDate).First();
-                            var flightEndDate = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.FlightEndDate).First();
-                            var impressions = recommendedPlanDone.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsDone.Where(y => y.RecommendedPlanId == completedRecommendedPlan.Key.RecommendedPlanId)).Sum(p => p.SpotDeliveredImpressions) / 1000;
-                            var affectedSpotCount = recommendedPlanDone.SelectMany(x => x.SpotExceptionsRecommendedPlanDetailsDone.Where(y => y.RecommendedPlanId == completedRecommendedPlan.Key.RecommendedPlanId)).Count();
-                            
-                            return new SpotExceptionsRecommendedDonePlansDto
-                            {
-                                PlanId = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
-                                AdvertiserName = _GetAdvertiserName(planAdvertiserMasterId),
-                                PlanName = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
-                                AffectedSpotsCount = affectedSpotCount,
-                                Impressions = impressions,
-                                SpotLengthString = $":{_SpotLengthRepository.GetSpotLengthById(planDetails.SpotLengthId ?? 0)}" ?? null,
-                                AudienceName = planDetails.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.IsRecommendedPlan).Select(x => x.AudienceName).First(),
-                                FlightString = $"{Convert.ToDateTime(flightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(flightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(flightStartDate), Convert.ToDateTime(flightEndDate)).ToString() + " " + "Weeks"})",
-                            };
-                        }).ToList();
+                            PlanId = x.PlanId,
+                            AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
+                            PlanName = x.PlanName,
+                            AffectedSpotsCount = x.AffectedSpotsCount,
+                            Impressions = Math.Floor((double)(x.Impressions / 1000)),
+                            SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
+                            AudienceName = x.AudienceName,
+                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                        };
+
+                    }).ToList();
                 }
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plans");
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Groupings");
             }
             catch (CadentException ex)
             {
-                var msg = $"Could not retrieve Spot Exceptions Recommended Plans";
+                var msg = $"Could not retrieve Spot Exceptions Recommended Plan Groupings";
                 throw new CadentException(msg, ex);
             }
 
-            return recommendedPlans;
+            return groupedPlans;
         }
 
         /// <inheritdoc />
@@ -184,80 +163,80 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             {
                 _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Spots");
                 var recommendedPlanSpotsToDo = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanSpotsToDo(recomendedPlanSpotsRequest.PlanId, recomendedPlanSpotsRequest.WeekStartDate, recomendedPlanSpotsRequest.WeekEndDate);
+                var recommendedPlanSpotsQueued = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanSpotsQueued(recomendedPlanSpotsRequest.PlanId, recomendedPlanSpotsRequest.WeekStartDate, recomendedPlanSpotsRequest.WeekEndDate);
+                var recommendedPlanSpotsSynced = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanSpotsSynced(recomendedPlanSpotsRequest.PlanId, recomendedPlanSpotsRequest.WeekStartDate, recomendedPlanSpotsRequest.WeekEndDate);
 
                 if (recommendedPlanSpotsToDo?.Any() ?? false)
                 {
                     recommendedPlanSpots.Active = recommendedPlanSpotsToDo
                     .Select(activePlan =>
                     {
-                        var planDetails = activePlan.SpotExceptionsRecommendedPlanDetailsToDo;
-                        var activePlanDetails = recommendedPlanSpotsToDo.First();
                         return new SpotExceptionsRecommendedToDoPlanSpotsDto
                         {
                             Id = activePlan.Id,
                             EstimateId = activePlan.EstimateId,
-                            IsciName = activePlan.ClientIsci,
+                            IsciName = activePlan.IsciName,
                             ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
                             ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
-                            RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
-                            Impressions = planDetails.Select(x => x.SpotDeliveredImpressions).First() / 1000,
+                            PlanId = activePlan.PlanId,
+                            RecommendedPlan = activePlan.RecommendedPlanName,
+                            Impressions = Math.Floor((double)(activePlan.Impressions / 1000)),
+                            SpotLengthString = $":{activePlan.SpotLength}",
                             ProgramName = activePlan.ProgramName,
                             Affiliate = activePlan.Affiliate,
-                            PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
-                            Market = _GetMarketName(activePlan.MarketCode ?? 0),
-                            Station = activePlan.StationLegacyCallLetters,
+                            Market = activePlan.MarketName,
+                            Station = activePlan.Station,
                             InventorySource = activePlan.InventorySource
                         };
                     }).ToList();
                 }
 
-                var recommendedPlanSpotsDone = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanSpotsDone(recomendedPlanSpotsRequest.PlanId, recomendedPlanSpotsRequest.WeekStartDate, recomendedPlanSpotsRequest.WeekEndDate);
-
-                if (recommendedPlanSpotsDone?.Any() ?? false)
+                if (recommendedPlanSpotsQueued?.Any() ?? false)
                 {
-                    recommendedPlanSpots.Queued = recommendedPlanSpotsDone?.Where(d => d.SpotExceptionsRecommendedPlanDetailsDone.Any(s => s.SpotExceptionsRecommendedPlanDoneDecisions.SyncedAt == null))
-                    .Select(queuedPlan =>
+                    recommendedPlanSpots.Queued = recommendedPlanSpotsQueued
+                    .Select(gueuedPlan =>
                     {
-                        var planDetails = queuedPlan.SpotExceptionsRecommendedPlanDetailsDone;
-                        var queuedPlanDetails = recommendedPlanSpotsDone.First();
                         return new SpotExceptionsRecommendedDonePlanSpotsDto
                         {
-                            Id = queuedPlan.Id,
-                            EstimateId = queuedPlan.EstimateId,
-                            IsciName = queuedPlan.ClientIsci,
-                            ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
-                            RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).FirstOrDefault(),
-                            Impressions = planDetails.Select(x => x.SpotDeliveredImpressions).First() / 1000,
-                            ProgramName = queuedPlan.ProgramName,
-                            Affiliate = queuedPlan.Affiliate,
-                            PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).FirstOrDefault(),
-                            Market = _GetMarketName(queuedPlan.MarketCode ?? 0),
-                            Station = queuedPlan.StationLegacyCallLetters,
-                            InventorySource = queuedPlan.InventorySource
+                            Id = gueuedPlan.Id,
+                            EstimateId = gueuedPlan.EstimateId,
+                            IsciName = gueuedPlan.IsciName,
+                            ProgramAirDate = gueuedPlan.ProgramAirTime.ToShortDateString(),
+                            ProgramAirTime = gueuedPlan.ProgramAirTime.ToLongTimeString(),
+                            PlanId = gueuedPlan.PlanId,
+                            RecommendedPlan = gueuedPlan.RecommendedPlanName,
+                            Impressions = Math.Floor((double)(gueuedPlan.Impressions / 1000)),
+                            SpotLengthString = $":{gueuedPlan.SpotLength}",
+                            ProgramName = gueuedPlan.ProgramName,
+                            Affiliate = gueuedPlan.Affiliate,
+                            Market = gueuedPlan.MarketName,
+                            Station = gueuedPlan.Station,
+                            InventorySource = gueuedPlan.InventorySource
                         };
                     }).ToList();
+                }
 
-                    recommendedPlanSpots.Synced = recommendedPlanSpotsDone?.Where(d => d.SpotExceptionsRecommendedPlanDetailsDone.Any(s => s.SpotExceptionsRecommendedPlanDoneDecisions.SyncedAt != null))
+                if (recommendedPlanSpotsSynced?.Any() ?? false)
+                {
+                    recommendedPlanSpots.Synced = recommendedPlanSpotsSynced
                     .Select(syncedPlan =>
                     {
-                        var planDetails = syncedPlan.SpotExceptionsRecommendedPlanDetailsDone;
-                        var syncedPlanDetails = recommendedPlanSpotsDone.First();
                         return new SpotExceptionsRecommendedDonePlanSpotsDto
                         {
                             Id = syncedPlan.Id,
                             EstimateId = syncedPlan.EstimateId,
-                            IsciName = syncedPlan.ClientIsci,
+                            IsciName = syncedPlan.IsciName,
                             ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
                             ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
-                            RecommendedPlan = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanDetail).Select(y => y.Name).First(),
-                            Impressions = planDetails.Select(x => x.SpotDeliveredImpressions).First() / 1000,
+                            PlanId = syncedPlan.PlanId,
+                            RecommendedPlan = syncedPlan.RecommendedPlanName,
+                            Impressions = Math.Floor((double)(syncedPlan.Impressions / 1000)),
+                            SpotLengthString = $":{syncedPlan.SpotLength}",
                             ProgramName = syncedPlan.ProgramName,
                             Affiliate = syncedPlan.Affiliate,
-                            PlanId = planDetails.Where(x => x.IsRecommendedPlan).Select(x => x.RecommendedPlanId).First(),
-                            Market = _GetMarketName(syncedPlan.MarketCode ?? 0),
-                            Station = syncedPlan.StationLegacyCallLetters,
-                            InventorySource = syncedPlan.InventorySource,
+                            Market = syncedPlan.MarketName,
+                            Station = syncedPlan.Station,
+                            InventorySource = syncedPlan.InventorySource
                         };
                     }).ToList();
                 }
@@ -294,7 +273,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 }
                 if (recommendedPlanDetailsToDo != null)
                 {
-                    var recommendedPlanDetails = recommendedPlanDetailsToDo.SpotExceptionsRecommendedPlanDetailsToDo.First(x => x.IsRecommendedPlan);
+                    var recommendedPlanDetails = recommendedPlanDetailsToDo.SpotExceptionsRecommendedPlanDetailsToDo.First();
 
                     recommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
                     {
@@ -336,8 +315,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             WeeklyPacingUnselected = _calculateWeeklyPacingUnselected(recommendedPlanDetail.DeliveredImpressions, recommendedPlanDetail.ContractedImpressions),
                         }).ToList()
                     };
-                    if (recommendedPlanDetailsResult.Plans != null &&
-                        recommendedPlanDetailsResult.Plans.Any(x => x.IsSelected))
+                    if (recommendedPlanDetailsResult.Plans != null && recommendedPlanDetailsResult.Plans.Any(x => x.IsSelected))
                     {
                         foreach (var planDetail in recommendedPlanDetailsResult.Plans)
                         {
@@ -347,7 +325,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 }
                 else if(recommendedPlanDetailsDone != null)
                 {
-                    var recommendedPlanDetails = recommendedPlanDetailsDone.SpotExceptionsRecommendedPlanDetailsDone.First(x => x.IsRecommendedPlan);
+                    var recommendedPlanDetails = recommendedPlanDetailsDone.SpotExceptionsRecommendedPlanDetailsDone.First();
 
                     recommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
                     {
@@ -445,8 +423,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <inheritdoc />
         public async Task<List<string>> GetRecommendedPlanStationsAsync(SpotExceptionsRecommendedPlanStationsRequestDto recommendedPlanStationsRequest)
         {
-            SpotExceptionsRecommendedPlansRequestDto recommendedPlanStationsToDoRequest = new SpotExceptionsRecommendedPlansRequestDto();
-
             List<string> recommendedPlanStationsToDo;
             List<string> recommendedPlanStationsDone;
             List<string> stations;
@@ -470,35 +446,26 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<RecommendedPlanFiltersResultDto> GetRecommendedPlanFilters(SpotExceptionsRecommendedPlansRequestDto recommendedPlanFiltersRequest)
+        public async Task<SpotExceptionsRecommendedPlanFiltersResultDto> GetRecommendedPlanFilters(SpotExceptionsRecommendedPlansRequestDto recommendedPlanFiltersRequest)
         {
-            var recommendedPlanFiltersResult = new RecommendedPlanFiltersResultDto();
+            var recommendedPlanFiltersResult = new SpotExceptionsRecommendedPlanFiltersResultDto();
 
             _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters");
             try
             {
-                var recommendedSpotsToDoResult = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlansToDoAsync(recommendedPlanFiltersRequest.WeekStartDate, recommendedPlanFiltersRequest.WeekEndDate);
-                var marketCodesToDo = recommendedSpotsToDoResult.Select(x => x.MarketCode ?? 0).ToList();
-                var stationsToDo = recommendedSpotsToDoResult.Select(spotResults => spotResults.StationLegacyCallLetters ?? "Unknown").Distinct().ToList();
-                var inventorySourcesToDo = recommendedSpotsToDoResult.Select(spotResults => spotResults.InventorySource ?? "Unknown").Distinct().ToList();
+                var marketFilters = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanMarketFiltersAsync(recommendedPlanFiltersRequest.WeekStartDate, recommendedPlanFiltersRequest.WeekEndDate);
+                var legacyCallLetterFilters = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanLegacyCallLetterFiltersAsync(recommendedPlanFiltersRequest.WeekStartDate, recommendedPlanFiltersRequest.WeekEndDate);
+                var inventorySourceFilters = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanInventorySourceFiltersAsync(recommendedPlanFiltersRequest.WeekStartDate, recommendedPlanFiltersRequest.WeekEndDate);
 
-                var recommendedSpotsDoneResult = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlansDoneAsync(recommendedPlanFiltersRequest.WeekStartDate, recommendedPlanFiltersRequest.WeekEndDate);
-                var marketCodesDone = recommendedSpotsDoneResult.Select(x => x.MarketCode ?? 0).ToList();
-                var stationsDone = recommendedSpotsDoneResult.Select(spotResults => spotResults.StationLegacyCallLetters ?? "Unknown").Distinct().ToList();
-                var inventorySourcesDone = recommendedSpotsDoneResult.Select(spotResults => spotResults.InventorySource ?? "Unknown").Distinct().ToList();
-
-                if (recommendedSpotsToDoResult == null && recommendedSpotsDoneResult == null)
+                if (marketFilters == null && legacyCallLetterFilters == null && inventorySourceFilters == null)
                 {
                     return recommendedPlanFiltersResult;
                 }
+                recommendedPlanFiltersResult.Markets = marketFilters;
+                recommendedPlanFiltersResult.Stations = legacyCallLetterFilters;
+                recommendedPlanFiltersResult.InventorySources = inventorySourceFilters;
 
-                var marketCodes = marketCodesToDo.Concat(marketCodesDone).Distinct().ToList();
-                recommendedPlanFiltersResult.Markets = _GetMarketNames(marketCodes).OrderBy(market => market).ToList();
 
-                recommendedPlanFiltersResult.Stations = stationsToDo.Concat(stationsDone).Distinct().OrderBy(station => station).ToList();
-
-                recommendedPlanFiltersResult.InventorySources = inventorySourcesToDo.Concat(inventorySourcesDone).Distinct().OrderBy(inventorySource => inventorySource).ToList();
-                
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters");
             }
             catch (Exception ex)
@@ -607,31 +574,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return advertiserName;
         }
 
-        internal List<string> _GetAdvertiserNames(List<Guid> masterIds)
-        {
-            List<string> advertiserNames = new List<string>();
-            foreach (var masterId in masterIds)
-            {
-                var advertiserName = _AabEngine.GetAdvertiser(masterId)?.Name;
-                advertiserNames.Add(advertiserName ?? null);
-            }
-            return advertiserNames;
-        }
-
-        private List<string> _GetMarketNames(List<int> marketCodes)
-        {
-            var marketNames = new List<string>();
-            if (marketCodes != null)
-            {
-                foreach (var marketCode in marketCodes)
-                {
-                    var marketName = _SpotExceptionsRecommendedPlanRepository.GetMarketName(marketCode);
-                    marketNames.Add(marketName ?? "Unknown");
-                }
-            }
-            return marketNames;
-        }
-
         private int _GetTotalNumberOfWeeks(DateTime startDate, DateTime endDate)
         {
             if (endDate < startDate)
@@ -646,12 +588,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             var reminder = totalDays % 7;
             numberOfWeeks = reminder > 0 ? numberOfWeeks + 1 : numberOfWeeks;
             return numberOfWeeks;
-        }
-
-        private string _GetMarketName(int marketCode)
-        {
-            var marketName = _SpotExceptionsRecommendedPlanRepository.GetMarketName(marketCode);
-            return marketName;
         }
 
         private string _GetProductName(Guid? productId, Guid? masterId)

@@ -78,6 +78,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         public double? Impressions { get; set; }
 
         /// <summary>
+        /// Gets or sets the spot length string.
+        /// </summary>
+        /// <value>The spot length string.</value>
+        public string SpotLengthString { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the program.
         /// </summary>
         /// <value>The name of the program.</value>
@@ -159,6 +165,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// </summary>
         /// <value>The impressions.</value>
         public double? Impressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spot length string.
+        /// </summary>
+        /// <value>The spot length string.</value>
+        public string SpotLengthString { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the program.

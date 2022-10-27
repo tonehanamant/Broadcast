@@ -13,10 +13,6 @@ using System.Collections.Generic;
 using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
-using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities.Plan;
-using static log4net.Appender.RollingFileAppender;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -27,22 +23,63 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// </summary>
         /// <param name="spotExceptionsOutOfSpecsPlansRequest">The spot exceptions outof specs active plans request dto.</param>
         /// <returns></returns>
-        Task<SpotExceptionsOutOfSpecPlansResultDto> GetSpotExceptionsOutOfSpecsPlansAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecsPlansRequest);
+        Task<SpotExceptionsOutOfSpecGroupingResults> GetSpotExceptionsOutOfSpecGroupingAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecsPlansRequest);
 
-        Task<SpotExceptionsOutOfSpecPlanSpotsResultDto> GetSpotExceptionsOutOfSpecSpotsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
+        /// <summary>
+        /// Gets the spot exceptions out of spec spots asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
+        Task<SpotExceptionsOutOfSpecSpotsResultDto> GetSpotExceptionsOutOfSpecSpotsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec spots inventory sources asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
         Task<List<string>> GetSpotExceptionsOutOfSpecSpotsInventorySourcesAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec reason codes asynchronous.
+        /// </summary>
+        /// <returns></returns>
         Task<List<SpotExceptionsOutOfSpecReasonCodeResultDto>> GetSpotExceptionsOutOfSpecReasonCodesAsync();
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec markets asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
         Task<List<string>> GetSpotExceptionsOutOfSpecMarketsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec programs asynchronous.
+        /// </summary>
+        /// <param name="programNameQuery">The program name query.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         Task<List<SpotExceptionsOutOfSpecProgramsDto>> GetSpotExceptionsOutOfSpecProgramsAsync(string programNameQuery, string userName);
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec advertisers asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutofSpecAdvertisersRequest">The spot exceptions outof spec advertisers request.</param>
+        /// <returns></returns>
         Task<List<string>> GetSpotExceptionsOutOfSpecAdvertisersAsync(SpotExceptionsOutOfSpecAdvertisersRequestDto spotExceptionsOutofSpecAdvertisersRequest);
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec stations asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutofSpecsStationRequest">The spot exceptions outof specs station request.</param>
+        /// <returns></returns>
         Task<List<string>> GetSpotExceptionsOutOfSpecStationsAsync(SpotExceptionsOutofSpecsStationRequestDto spotExceptionsOutofSpecsStationRequest);
 
+        /// <summary>
+        /// Handles the save spot exceptions out of spec asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSaveRequest">The spot exceptions out of spec save request.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
         Task<bool> HandleSaveSpotExceptionsOutOfSpecAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest, string userName);
     }
 
@@ -77,63 +114,58 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<SpotExceptionsOutOfSpecPlansResultDto> GetSpotExceptionsOutOfSpecsPlansAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecsPlansReques)
+        public async Task<SpotExceptionsOutOfSpecGroupingResults> GetSpotExceptionsOutOfSpecGroupingAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecsPlansRequest)
         {
-            var outOfSpecPlans = new SpotExceptionsOutOfSpecPlansResultDto();
+            var outOfSpecPlans = new SpotExceptionsOutOfSpecGroupingResults();
 
             try
             {
-                var outOfSpecToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecToDoAsync(spotExceptionsOutOfSpecsPlansReques.WeekStartDate, spotExceptionsOutOfSpecsPlansReques.WeekEndDate);
+                _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Groupings");
+                var outOfSpecToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecGroupingToDoAsync(spotExceptionsOutOfSpecsPlansRequest.WeekStartDate, spotExceptionsOutOfSpecsPlansRequest.WeekEndDate);
+                var outOfSpecDone = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecGroupingDoneAsync(spotExceptionsOutOfSpecsPlansRequest.WeekStartDate, spotExceptionsOutOfSpecsPlansRequest.WeekEndDate);
 
                 if (outOfSpecToDo?.Any() ?? false)
                 {
-                    outOfSpecPlans.Active = outOfSpecToDo.GroupBy(recommendedPlan => recommendedPlan.RecommendedPlanId)
-                    .Select(recommendedPlan =>
+                    outOfSpecPlans.Active = outOfSpecToDo.Select(x =>
                     {
-                        var planDetails = recommendedPlan.First();
-                        var advertiserName = _GetAdvertiserName(planDetails.AdvertiserMasterId);
-                        return new SpotExceptionsOutOfSpecToDoPlansDto
+                        return new SpotExceptionsOutOfSpecGroupingToDoResults
                         {
-                            PlanId = planDetails.PlanId,
-                            AdvertiserName = advertiserName,
-                            PlanName = planDetails.RecommendedPlanName,
-                            AffectedSpotsCount = recommendedPlan.Count(),
-                            Impressions = recommendedPlan.Select(i => i.Impressions).Sum() / 1000,
+                            PlanId = x.PlanId,
+                            AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
+                            PlanName = x.PlanName,
+                            AffectedSpotsCount = x.AffectedSpotsCount,
+                            Impressions = x.Impressions / 1000,
                             SyncedTimestamp = null,
-                            SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                            AudienceName = planDetails.Audience?.Name,
-                            FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+                            SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
+                            AudienceName = x.AudienceName,
+                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
                     }).ToList();
                 }
-
-                var outOfSpecDone = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecDoneAsync(spotExceptionsOutOfSpecsPlansReques.WeekStartDate, spotExceptionsOutOfSpecsPlansReques.WeekEndDate);
 
                 if (outOfSpecDone?.Any() ?? false)
                 {
-                    outOfSpecPlans.Completed = outOfSpecDone.GroupBy(recommendedPlan => recommendedPlan.RecommendedPlanId)
-                    .Select(recommendedPlan =>
+                    outOfSpecPlans.Completed = outOfSpecDone.Select(x =>
                     {
-                        var planDetails = recommendedPlan.First();
-                        var advertiserName = _GetAdvertiserName(planDetails.AdvertiserMasterId);
-                        return new SpotExceptionsOutOfSpecDonePlansDto
+                        return new SpotExceptionsOutOfSpecGroupingDoneResults
                         {
-                            PlanId = planDetails.PlanId,
-                            AdvertiserName = advertiserName,
-                            PlanName = planDetails.RecommendedPlanName,
-                            AffectedSpotsCount = recommendedPlan.Count(),
-                            Impressions = recommendedPlan.Select(i => i.Impressions).Sum() / 1000,
+                            PlanId = x.PlanId,
+                            AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
+                            PlanName = x.PlanName,
+                            AffectedSpotsCount = x.AffectedSpotsCount,
+                            Impressions = x.Impressions / 1000,
                             SyncedTimestamp = null,
-                            SpotLengthString = planDetails.SpotLength != null ? $":{planDetails.SpotLength.Length}" : null,
-                            AudienceName = planDetails.Audience?.Name,
-                            FlightString = planDetails.FlightStartDate.HasValue && planDetails.FlightEndDate.HasValue ? $"{Convert.ToDateTime(planDetails.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(planDetails.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(planDetails.FlightStartDate), Convert.ToDateTime(planDetails.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+                            SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
+                            AudienceName = x.AudienceName,
+                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
                     }).ToList();
                 }
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Groupings");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Groupings";
                 throw new CadentException(msg, ex);
             }
 
@@ -141,9 +173,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<SpotExceptionsOutOfSpecPlanSpotsResultDto> GetSpotExceptionsOutOfSpecSpotsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        public async Task<SpotExceptionsOutOfSpecSpotsResultDto> GetSpotExceptionsOutOfSpecSpotsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
         {
-            var outOfSpecPlanSpots = new SpotExceptionsOutOfSpecPlanSpotsResultDto();
+            var outOfSpecPlanSpots = new SpotExceptionsOutOfSpecSpotsResultDto();
 
             try
             {
@@ -402,6 +434,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return outOfSpecStations;
         }
 
+        /// <inheritdoc />
         public async Task<bool> HandleSaveSpotExceptionsOutOfSpecAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest, string userName)
         {
             var decidedAt = _DateTimeEngine.GetCurrentMoment();

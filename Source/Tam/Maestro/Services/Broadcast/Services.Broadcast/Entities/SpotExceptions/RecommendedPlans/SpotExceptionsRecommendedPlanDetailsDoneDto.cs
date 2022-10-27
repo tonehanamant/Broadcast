@@ -5,7 +5,7 @@
         public SpotExceptionsRecommendedPlanDetailsDoneDto()
         {
             SpotExceptionsRecommendedPlanDoneDecisions = new SpotExceptionsRecommendedPlanSpotDecisionsDoneDto();
-            RecommendedPlanDetail = new RecommendedPlanDetailDto();
+            RecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto();
         }
 
         /// <summary>
@@ -198,6 +198,6 @@
         /// Gets or sets the recommended plan detail.
         /// </summary>
         /// <value>The recommended plan detail.</value>
-        public RecommendedPlanDetailDto RecommendedPlanDetail { get; set; }
+        public SpotExceptionsRecommendedPlanDetailsDto RecommendedPlanDetail { get; set; }
     }
 }

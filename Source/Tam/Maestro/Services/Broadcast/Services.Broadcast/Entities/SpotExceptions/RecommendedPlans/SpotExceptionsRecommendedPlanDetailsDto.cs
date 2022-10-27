@@ -3,9 +3,14 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
-    public class RecommendedPlanDetailDto
+    /// <summary></summary>
+    public class SpotExceptionsRecommendedPlanDetailsDto
     {
-        public RecommendedPlanDetailDto()
+        /// <summary>
+        /// Initializes a new instance of the 
+        /// <see cref="SpotExceptionsRecommendedPlanDetailsDto" /> class.
+        /// </summary>
+        public SpotExceptionsRecommendedPlanDetailsDto()
         {
             SpotLengths = new List<SpotLengthDto>();
         }

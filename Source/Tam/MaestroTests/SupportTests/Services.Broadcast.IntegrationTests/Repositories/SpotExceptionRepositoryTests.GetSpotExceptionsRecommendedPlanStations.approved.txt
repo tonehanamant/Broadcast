@@ -1,6 +1,0 @@
-[
-  "WBNS",
-  "WDKA",
-  "KOMO",
-  "Unknown"
-]

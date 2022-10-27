@@ -1,24 +1,16 @@
-﻿using ApprovalTests;
-using ApprovalTests.Reporters;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.Entities.SpotExceptions;
-using Services.Broadcast.Entities.Vpvh;
-using System;
-using System.IO;
-using Tam.Maestro.Common.DataLayer;
+﻿using NUnit.Framework;
+using Services.Broadcast.ApplicationServices.SpotExceptions;
 
 namespace Services.Broadcast.IntegrationTests.ApplicationServices
 {
     [TestFixture]
     public class SpotExceptionsServiceIntegrationTests
     {
-        private readonly ISpotExceptionService _SpotExceptionService;
+        private readonly ISpotExceptionsService _SpotExceptionsService;
 
         public SpotExceptionsServiceIntegrationTests()
         {
-            _SpotExceptionService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISpotExceptionService>();
+            _SpotExceptionsService = IntegrationTestApplicationServiceFactory.GetApplicationService<ISpotExceptionsService>();
         }
 
         //// This is temporary test : TODO: Shaun Cleanup

@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
     {
         public SpotExceptionsRecommendedPlanDetailsToDoDto()
         {
-            RecommendedPlanDetail = new RecommendedPlanDetailDto();
+            RecommendedPlanDetail = new SpotExceptionsRecommendedPlanDetailsDto();
         }
 
         /// <summary>
@@ -182,6 +182,6 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// Gets or sets the recommended plan detail.
         /// </summary>
         /// <value>The recommended plan detail.</value>
-        public RecommendedPlanDetailDto RecommendedPlanDetail { get; set; }
+        public SpotExceptionsRecommendedPlanDetailsDto RecommendedPlanDetail { get; set; }
     }
 }

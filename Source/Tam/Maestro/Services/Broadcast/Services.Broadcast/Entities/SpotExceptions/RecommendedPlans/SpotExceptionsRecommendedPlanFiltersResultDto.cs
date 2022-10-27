@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 
-/// <summary></summary>
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
     /// <summary></summary>
-    public class RecommendedPlanFiltersResultDto
+    public class SpotExceptionsRecommendedPlanFiltersResultDto
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RecommendedPlanFiltersResultDto" /> class.
+        /// Initializes a new instance of the <see cref="SpotExceptionsRecommendedPlanFiltersResultDto" /> class.
         /// </summary>
-        public RecommendedPlanFiltersResultDto()
+        public SpotExceptionsRecommendedPlanFiltersResultDto()
         {
             Markets = new List<string>();
             Stations = new List<string>();

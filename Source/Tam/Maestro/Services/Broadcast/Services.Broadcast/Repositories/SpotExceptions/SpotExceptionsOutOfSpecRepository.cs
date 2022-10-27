@@ -11,48 +11,165 @@ using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using System.Data.Entity;
 using Services.Broadcast.Entities.ProgramMapping;
-using System.Data.Entity.Migrations;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
 {
     public interface ISpotExceptionsOutOfSpecRepository : IDataRepository
     {
-        Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecToDoAsync(DateTime weekStartDate, DateTime weekEndDate);
 
-        Task<List<SpotExceptionsOutOfSpecsDoneDto>> GetOutOfSpecDoneAsync(DateTime weekStartDate, DateTime weekEndDate);
+        /// <summary>
+        /// Gets the out of spec grouping to do asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecGroupingToDoAsync(DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec grouping done asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecGroupingDoneAsync(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the out of spec spots to do asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecSpotsToDoAsync(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots done asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<SpotExceptionsOutOfSpecsDoneDto>> GetOutOfSpecSpotsDoneAsync(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots to do inventory sources asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsToDoInventorySourcesAsync(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots done inventory sources asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsDoneInventorySourcesAsync(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the spot exceptions out of spec reason codes asynchronous.
+        /// </summary>
+        /// <returns></returns>
         Task<List<SpotExceptionsOutOfSpecReasonCodeDto>> GetSpotExceptionsOutOfSpecReasonCodesAsync();
 
+        /// <summary>
+        /// Gets the out of spec spots to do markets asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsToDoMarketsAsync(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots done markets asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsDoneMarketsAsync(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Finds the program from programs asynchronous.
+        /// </summary>
+        /// <param name="programSearchString">The program search string.</param>
+        /// <returns></returns>
         Task<List<ProgramNameDto>> FindProgramFromProgramsAsync(string programSearchString);
 
+        /// <summary>
+        /// Finds the program from spot exception decisions asynchronous.
+        /// </summary>
+        /// <param name="programSearchString">The program search string.</param>
+        /// <returns></returns>
         Task<List<ProgramNameDto>> FindProgramFromSpotExceptionDecisionsAsync(string programSearchString);
 
+        /// <summary>
+        /// Gets the out of spec spots to do advertisers asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<Guid?>> GetOutOfSpecSpotsToDoAdvertisersAsync(DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots done advertisers asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<Guid?>> GetOutOfSpecSpotsDoneAdvertisersAsync(DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots to do stations asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsToDoStationsAsync(DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the out of spec spots done stations asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsDoneStationsAsync(DateTime weekStartDate, DateTime weekEndDate);
 
+        /// <summary>
+        /// Gets the spot exception out of spec by decision to do asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpec">The spot exceptions out of spec.</param>
+        /// <returns></returns>
         Task<SpotExceptionsOutOfSpecsToDoDto> GetSpotExceptionOutOfSpecByDecisionToDoAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec);
 
+        /// <summary>
+        /// Gets the spot exception out of spec by decision done asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpec">The spot exceptions out of spec.</param>
+        /// <returns></returns>
         Task<SpotExceptionsOutOfSpecsDoneDto> GetSpotExceptionOutOfSpecByDecisionDoneAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec);
 
+        /// <summary>
+        /// Saves the spot exceptions out of spec to do decisions asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpec">The spot exceptions out of spec.</param>
+        /// <param name="outOfSpecToDo">The out of spec to do.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="decidedAt">The decided at.</param>
+        /// <returns></returns>
         Task<bool> SaveSpotExceptionsOutOfSpecToDoDecisionsAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec, SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo, string userName, DateTime decidedAt);
 
+        /// <summary>
+        /// Saves the spot exceptions out of spec done decisions asynchronous.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecDoneDecision">The spot exceptions out of spec done decision.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="decidedAt">The decided at.</param>
+        /// <returns></returns>
         Task<bool> SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpecDoneDecision, string userName, DateTime decidedAt);
     }
 
@@ -65,65 +182,79 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         { }
 
-        public async Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecToDoAsync(DateTime weekStartDate, DateTime weekEndDate)
+        /// <inheritdoc />
+        public Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecGroupingToDoAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            return _InReadUncommitedTransaction(context =>
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var spotExceptionsOutOfSpecsToDoEntities = context.spot_exceptions_out_of_specs
-                    .Where(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecToDoDb.program_air_time <= weekEndDate)
-                    .Include(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.plan)
-                    .Include(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.plan.campaign)
-                    .Include(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.plan.plan_versions)
-                    .Include(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.spot_lengths)
-                    .Include(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.audience)
-                    .Include(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.spot_exceptions_out_of_spec_reason_codes)
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsOutOfSpecToDoDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecToDoDb, Station = stationDb.FirstOrDefault() })
-                    .ToList();
+                var outOfSpecDetailsToDo = context.spot_exceptions_out_of_specs
+                    .Where(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.program_air_time >= weekStartDate
+                    && spotExceptionsOutOfSpecToDoDb.program_air_time <= weekEndDate).ToList();
 
-                var spotExceptionsoutOfSpecToDoPosts = spotExceptionsOutOfSpecsToDoEntities.Select(spotExceptionsOutOfSpecToDoEntity => _MapOutOfSpecToDoToDto(spotExceptionsOutOfSpecToDoEntity.SpotExceptionsOutOfSpec, spotExceptionsOutOfSpecToDoEntity.Station)).ToList();
-                
-                return spotExceptionsoutOfSpecToDoPosts;
-            });
+                var outOfSpecGroupingToDo = outOfSpecDetailsToDo.GroupBy(x => new { x.recommended_plan_id })
+                    .Select(x =>
+                    {
+                        var first = x.First();
+                        var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
+                        var audience = first.audience;
+                        return new SpotExceptionsOutOfSpecGroupingDto
+                        {
+                            PlanId = x.Key.recommended_plan_id ?? default,
+                            AdvertiserMasterId = first.plan.campaign.advertiser_master_id,
+                            PlanName = first.plan.name,
+                            AffectedSpotsCount = x.Count(),
+                            Impressions = x.Sum(y => y.impressions),
+                            FlightStartDate = recommendedPlanVersion.flight_start_date,
+                            FlightEndDate = recommendedPlanVersion.flight_end_date,
+                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
+                            AudienceName = _GetAudienceName(audience)
+                        };
+                    }).ToList();
+
+                return outOfSpecGroupingToDo;
+            }));
         }
 
         /// <inheritdoc />
-        public async Task<List<SpotExceptionsOutOfSpecsDoneDto>> GetOutOfSpecDoneAsync(DateTime weekStartDate, DateTime weekEndDate)
+        public Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecGroupingDoneAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            return _InReadUncommitedTransaction(context =>
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var spotExceptionsOutOfSpecsDoneEntities = context.spot_exceptions_out_of_specs_done
-                    .Where(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDoneDb.program_air_time <= weekEndDate)
-                    .Include(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.plan)
-                    .Include(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.plan.campaign)
-                    .Include(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.plan.plan_versions)
-                    .Include(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.spot_lengths)
-                    .Include(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.audience)
-                    .Include(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.spot_exceptions_out_of_spec_reason_codes)
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsOutOfSpecDoneDb, stationDb) => new { SpotExceptionsOutOfSpecDone = spotExceptionsOutOfSpecDoneDb, Station = stationDb.FirstOrDefault() })
-                    .ToList();
+                var outOfSpecDetailsDone = context.spot_exceptions_out_of_specs_done
+                    .Where(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.program_air_time >= weekStartDate
+                    && spotExceptionsOutOfSpecDoneDb.program_air_time <= weekEndDate).ToList();
 
-                var spotExceptionsoutOfSpecDonePosts = spotExceptionsOutOfSpecsDoneEntities.Select(spotExceptionsOutOfSpecDoneEntity => _MapOutOfSpecDoneToDto(spotExceptionsOutOfSpecDoneEntity.SpotExceptionsOutOfSpecDone, spotExceptionsOutOfSpecDoneEntity.Station)).ToList();
-                
-                return spotExceptionsoutOfSpecDonePosts;
-            });
+                var outOfSpecGroupingDone = outOfSpecDetailsDone.GroupBy(x => new { x.recommended_plan_id })
+                    .Select(x =>
+                    {
+                        var first = x.First();
+                        var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
+                        var audience = first.audience;
+                        return new SpotExceptionsOutOfSpecGroupingDto
+                        {
+                            PlanId = x.Key.recommended_plan_id ?? default,
+                            AdvertiserMasterId = first.plan.campaign.advertiser_master_id,
+                            PlanName = first.plan.name,
+                            AffectedSpotsCount = x.Count(),
+                            Impressions = x.Sum(y => y.impressions),
+                            FlightStartDate = recommendedPlanVersion.flight_start_date,
+                            FlightEndDate = recommendedPlanVersion.flight_end_date,
+                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
+                            AudienceName = _GetAudienceName(audience)
+                        };
+                    }).ToList();
+
+                return outOfSpecGroupingDone;
+            }));
         }
 
+        /// <inheritdoc />
         public async Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecSpotsToDoAsync(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
@@ -155,6 +286,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<SpotExceptionsOutOfSpecsDoneDto>> GetOutOfSpecSpotsDoneAsync(int planId, DateTime startDate, DateTime endDate)
         {
             startDate = startDate.Date;
@@ -187,6 +319,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecSpotsToDoInventorySourcesAsync(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
@@ -212,6 +345,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecSpotsDoneInventorySourcesAsync(int planId, DateTime startDate, DateTime endDate)
         {
             startDate = startDate.Date;
@@ -256,6 +390,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecSpotsToDoMarketsAsync(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
@@ -281,6 +416,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecSpotsDoneMarketsAsync(int planId, DateTime startDate, DateTime endDate)
         {
             startDate = startDate.Date;
@@ -343,6 +479,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 });
         }
 
+        /// <inheritdoc />
         public async Task<List<Guid?>> GetOutOfSpecSpotsToDoAdvertisersAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
@@ -367,6 +504,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<Guid?>> GetOutOfSpecSpotsDoneAdvertisersAsync(DateTime startDate, DateTime endDate)
         {
             startDate = startDate.Date;
@@ -391,6 +529,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecSpotsToDoStationsAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
@@ -415,6 +554,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecSpotsDoneStationsAsync(DateTime startDate, DateTime endDate)
         {
             startDate = startDate.Date;
@@ -439,6 +579,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public async Task<SpotExceptionsOutOfSpecsToDoDto> GetSpotExceptionOutOfSpecByDecisionToDoAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec)
         {
             return _InReadUncommitedTransaction(context =>
@@ -467,6 +608,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             });
         }
 
+        /// <inheritdoc />
         public Task<SpotExceptionsOutOfSpecsDoneDto> GetSpotExceptionOutOfSpecByDecisionDoneAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec)
         {
             return Task.FromResult(_InReadUncommitedTransaction(context =>
@@ -527,7 +669,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             }));
         }
 
-
+        /// <inheritdoc />
         public Task<bool> SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpecDoneDecision, string userName, DateTime decidedAt)
         {
             return Task.FromResult(_InReadUncommitedTransaction(context =>
@@ -691,38 +833,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             return spotExceptionsOutOfSpec;
         }
 
-        private spot_exceptions_out_of_specs _MapOutOfSpecToDoToEntity(SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo)
-        {
-            var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs
-            {
-                id = outOfSpecToDo.Id,
-                spot_unique_hash_external = outOfSpecToDo.SpotUniqueHashExternal,
-                execution_id_external = outOfSpecToDo.ExecutionIdExternal,
-                reason_code_message = outOfSpecToDo.ReasonCodeMessage,
-                estimate_id = outOfSpecToDo.EstimateId,
-                isci_name = outOfSpecToDo.IsciName,
-                house_isci = outOfSpecToDo.HouseIsci,
-                recommended_plan_id = outOfSpecToDo.RecommendedPlanId,
-                program_name = outOfSpecToDo.ProgramName,
-                station_legacy_call_letters = outOfSpecToDo.StationLegacyCallLetters,
-                daypart_code = outOfSpecToDo.DaypartCode,
-                genre_name = outOfSpecToDo.GenreName,
-                spot_length_id = outOfSpecToDo.SpotLength.Id,
-                audience_id = outOfSpecToDo.Audience.Id,
-                program_air_time = outOfSpecToDo.ProgramAirTime,
-                ingested_by = outOfSpecToDo.IngestedBy,
-                ingested_at = outOfSpecToDo.IngestedAt,
-                ingested_media_week_id = outOfSpecToDo.IngestedMediaWeekId,
-                impressions = outOfSpecToDo.Impressions,
-                reason_code_id = outOfSpecToDo.SpotExceptionsOutOfSpecReasonCode.Id,
-                market_code = outOfSpecToDo.MarketCode,
-                market_rank = outOfSpecToDo.MarketRank,
-                comment = outOfSpecToDo.Comments,
-                inventory_source_name = outOfSpecToDo.InventorySourceName
-            };
-            return spotExceptionsOutOfSpec;
-        }
-
         private spot_exceptions_out_of_specs_done _MapOutOfSpecDoneToEntity(SpotExceptionsOutOfSpecsDoneDto outOfSpecDone)
         {
             var spotExceptionsOutOfSpec = new spot_exceptions_out_of_specs_done
@@ -784,6 +894,22 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 Name = audienceEntity.name
             };
             return audience;
+        }
+
+        private string _GetAudienceName(audience audienceEntity)
+        {
+            if (audienceEntity == null)
+            {
+                return null;
+            }
+
+            var audience = new AudienceDto
+            {
+                Id = audienceEntity.id,
+                Code = audienceEntity.code,
+                Name = audienceEntity.name
+            };
+            return audience.Name;
         }
 
         private SpotExceptionsOutOfSpecReasonCodeDto _MapSpotExceptionsOutOfSpecReasonCodeToDto(spot_exceptions_out_of_spec_reason_codes spotExceptionsOutOfSpecReasonCodesEntity)
