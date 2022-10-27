@@ -1380,7 +1380,7 @@ namespace Services.Broadcast.BusinessEngines
 
                 foreach (var breakdownItem in weeklyBreakdownInSameMediaWeek)
                 {
-                    var weekFraction = breakdownItem.PercentageOfWeek.Value / 100;
+                    var weekFraction = breakdownItem.PercentageOfWeek == null ? 0 : breakdownItem.PercentageOfWeek.Value / 100;
                     var impressions = Math.Floor(impressionsForWeek * weekFraction);
 
                     _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
@@ -1503,7 +1503,7 @@ namespace Services.Broadcast.BusinessEngines
             double impressions,
             bool roundRatings)
         {
-            decimal budgetPerOneImpression=0;
+            decimal budgetPerOneImpression = 0;
             double weeklyRatio = 0;
             if (totalImpressions > 0)
             {
