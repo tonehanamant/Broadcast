@@ -846,6 +846,18 @@
     <Compile Include="scx_generation_job_units.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="scx_generation_open_market_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="scx_generation_open_market_job_affiliates.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="scx_generation_open_market_job_dayparts.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="scx_generation_open_market_job_markets.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="shared_folder_files.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
