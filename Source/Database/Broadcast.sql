@@ -989,6 +989,17 @@ END
 GO
 /*************************************** END BP-5672 ***************************************/
 
+/*************************************** START BP-5662 ************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plans' AND COLUMN_NAME= 'nielsen_transmittal_code')
+BEGIN
+	ALTER TABLE plans
+		ADD nielsen_transmittal_code varchar(250) null
+END
+GO
+
+/*************************************** END BP-5662 ************************************/
+
 /*************************************** START BP-5847 ************************************/
 
 -- this is for the spot exceptions ingest lambda, not the broadcast app and so it doesn't need to be in the edmx.

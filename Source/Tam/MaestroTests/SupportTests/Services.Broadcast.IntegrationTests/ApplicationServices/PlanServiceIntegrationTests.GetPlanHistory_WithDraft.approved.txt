@@ -1,7 +1,7 @@
 ﻿[
   {
     "Budget": 100.0000,
-    "FlightEndDate": "2019-01-31T00:00:00",
+    "FlightEndDate": "2019-01-31T23:59:59",
     "FlightStartDate": "2019-01-01T00:00:00",
     "IsDraft": true,
     "IsModifiedBudget": false,
@@ -21,7 +21,7 @@
   },
   {
     "Budget": 100.0000,
-    "FlightEndDate": "2019-01-31T00:00:00",
+    "FlightEndDate": "2019-01-31T23:59:59",
     "FlightStartDate": "2019-01-01T00:00:00",
     "IsDraft": null,
     "IsModifiedBudget": false,

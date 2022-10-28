@@ -476,7 +476,7 @@
     6,
     7
   ],
-  "FlightEndDate": "2019-01-31T00:00:00",
+  "FlightEndDate": "2019-01-31T23:59:59",
   "FlightHiatusDays": [
     "2019-01-20T00:00:00",
     "2019-01-24T00:00:00"
@@ -503,6 +503,7 @@
   "ModifiedBy": "integration_test",
   "ModifiedDate": "2019-01-15T00:00:00",
   "Name": "New Plan",
+  "NielsenTransmittalCode": null,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

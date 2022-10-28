@@ -37,6 +37,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string unified_tactic_line_id { get; set; }
         public Nullable<System.DateTime> unified_campaign_last_sent_at { get; set; }
         public Nullable<System.DateTime> unified_campaign_last_received_at { get; set; }
+        public string nielsen_transmittal_code { get; set; }
     
         public virtual campaign campaign { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }

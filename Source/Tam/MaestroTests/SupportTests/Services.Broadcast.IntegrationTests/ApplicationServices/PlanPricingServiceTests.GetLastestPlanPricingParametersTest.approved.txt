@@ -2216,6 +2216,7 @@
   "ModifiedBy": "Sebastian Roibu",
   "ModifiedDate": "2020-06-19T01:02:14.207",
   "Name": "Plan in working",
+  "NielsenTransmittalCode": null,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

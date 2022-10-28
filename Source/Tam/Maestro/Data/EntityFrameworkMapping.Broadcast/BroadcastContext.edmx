@@ -1644,6 +1644,7 @@
           <Property Name="unified_tactic_line_id" Type="varchar" MaxLength="50" />
           <Property Name="unified_campaign_last_sent_at" Type="datetime2" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="datetime2" Precision="7" />
+          <Property Name="nielsen_transmittal_code" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -14581,6 +14582,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
           <NavigationProperty Name="spot_exceptions_out_of_specs_done" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs_done" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_details_done" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details_done" />
+          <Property Name="nielsen_transmittal_code" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -20986,6 +20988,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plans">
             <EntityTypeMapping TypeName="BroadcastModel.plan">
               <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="nielsen_transmittal_code" ColumnName="nielsen_transmittal_code" />
                 <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
                 <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />
                 <ScalarProperty Name="unified_tactic_line_id" ColumnName="unified_tactic_line_id" />

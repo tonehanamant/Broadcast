@@ -99,6 +99,7 @@
   "ModifiedBy": "Test User",
   "ModifiedDate": "2019-01-12T12:30:29",
   "Name": "New Plan",
+  "NielsenTransmittalCode": null,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

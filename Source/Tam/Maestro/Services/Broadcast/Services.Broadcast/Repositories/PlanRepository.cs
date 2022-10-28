@@ -786,8 +786,8 @@ namespace Services.Broadcast.Repositories
                 FluidityChildCategory = planVersion.fluidity_child_category,
                 UnifiedTacticLineId = entity.unified_tactic_line_id,
                 UnifiedCampaignLastSentAt = entity.unified_campaign_last_sent_at,
-                UnifiedCampaignLastReceivedAt = entity.unified_campaign_last_received_at
-                
+                UnifiedCampaignLastReceivedAt = entity.unified_campaign_last_received_at,
+                NielsenTransmittalCode = entity.nielsen_transmittal_code
             };
 
             if (dto.PricingParameters != null)
@@ -1036,6 +1036,7 @@ namespace Services.Broadcast.Repositories
             plan.unified_tactic_line_id = planDto.IsDraft == false ? planDto.UnifiedTacticLineId : plan.unified_tactic_line_id;
             plan.unified_campaign_last_sent_at = planDto.IsDraft == false ? planDto.UnifiedCampaignLastSentAt : plan.unified_campaign_last_sent_at;
             plan.unified_campaign_last_received_at = planDto.IsDraft == false ? planDto.UnifiedCampaignLastReceivedAt : plan.unified_campaign_last_received_at;
+            plan.nielsen_transmittal_code = planDto.NielsenTransmittalCode;
 
             _MapCreativeLengths(version, planDto, context);
             _MapPlanAudienceInfo(version, planDto);

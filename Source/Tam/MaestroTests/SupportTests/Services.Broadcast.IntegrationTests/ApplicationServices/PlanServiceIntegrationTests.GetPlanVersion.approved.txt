@@ -245,6 +245,7 @@
   "ModifiedBy": "IntegrationTestUser",
   "ModifiedDate": "2019-05-14T00:00:00",
   "Name": "New Plan",
+  "NielsenTransmittalCode": null,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": null,

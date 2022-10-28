@@ -2164,6 +2164,7 @@
   "ModifiedBy": "Sebastian Roibu",
   "ModifiedDate": "2020-06-19T02:21:37.64",
   "Name": "Plan Q1 2021 13 weeks 544",
+  "NielsenTransmittalCode": null,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,
   "PricingParameters": {

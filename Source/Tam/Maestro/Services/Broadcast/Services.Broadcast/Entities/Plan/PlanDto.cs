@@ -541,6 +541,7 @@ namespace Services.Broadcast.Entities.Plan
         public string UnifiedTacticLineId { get; set; }
         public DateTime? UnifiedCampaignLastSentAt { get; set; }
         public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
+        public string NielsenTransmittalCode { get; set; }
     }
 
     public class PlanDto_v2 : PlanDto

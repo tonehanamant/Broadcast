@@ -1143,7 +1143,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FluidityChildCategory = plan.FluidityChildCategory,
                 UnifiedTacticLineId = plan.UnifiedTacticLineId,
                 UnifiedCampaignLastSentAt = plan.UnifiedCampaignLastSentAt,
-                UnifiedCampaignLastReceivedAt = plan.UnifiedCampaignLastReceivedAt
+                UnifiedCampaignLastReceivedAt = plan.UnifiedCampaignLastReceivedAt,
+                NielsenTransmittalCode = plan.NielsenTransmittalCode
             };
 
             dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);
