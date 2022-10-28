@@ -296,8 +296,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
-            var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);
+            toSave   = _RemoveDuplicateFromPlanIscis(toSave);
+
+            List<PlanIsciDto> toSaveFiltered = new List<PlanIsciDto>();            
+            foreach (var mapping in toSave)
+            {
+                var planIscisCount = _PlanIsciRepository.GetPlanIscis(mapping.PlanId).Count(x => x.Isci == mapping.Isci &&
+                x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);
+                if (planIscisCount == 0)
+                {
+                    toSaveFiltered.Add(mapping);
+                }
+            }
+            var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSaveFiltered, createdBy, createdAt);
             return totalChangedCount;
+        }
+        private List<PlanIsciDto> _RemoveDuplicateFromPlanIscis(List<PlanIsciDto> planIscis)
+        {
+            var distinctPlanIsciList = planIscis
+                .GroupBy(x => new {x.PlanId,x.Isci,x.FlightStartDate,x.FlightEndDate })
+                .Select(x=> x.First()).Distinct()
+                .ToList();
+            return distinctPlanIsciList;
         }
 
         internal int _HandleModifiedIsciPlanMappings(List<IsciPlanModifiedMappingDto> modified, DateTime modifiedAt, string modifiedBy)
@@ -319,8 +339,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 toModifyItem.Id = m.PlanIsciMappingId;
                 toModifyItem.PlanId = isc.PlanId;
                 toModifyItem.Isci = isc.Isci;
-                toModifyItem.FlightStartDate = m.FlightStartDate;
-                toModifyItem.FlightEndDate = m.FlightEndDate;
+                toModifyItem.FlightStartDate = Convert.ToDateTime(m.FlightStartDate);
+                toModifyItem.FlightEndDate = Convert.ToDateTime(m.FlightEndDate);
                 toModifyItem.SpotLengthId = isc.SpotLengthId;
                 toModifyItem.StartTime = m.StartTime;
                 toModifyItem.EndTime = m.EndTime;
@@ -334,7 +354,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             return modifiedCount;
         }
-
+        private DateTime _SetFlightStartDate(DateTime? startDate)
+        {
+            DateTime flightDate = (startDate < DateTime.Now) ? DateTime.Now : Convert.ToDateTime(startDate);            
+            return flightDate;
+        }
         public bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy)
         {
             var createdAt = _DateTimeEngine.GetCurrentMoment();
@@ -356,26 +380,89 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         /// <summary>
         /// populate the ISCI-Plan and flights collection for save.
+        /// //If not in scope of the flight then don't copy the instructions, but still copy the iscis
+        ///then pick flight start and end date from the plan
         /// </summary>
         private List<PlanIsciDto> _PoplateListItemMappings(List<IsciPlanMappingDto> mappings)
         {
             var result = new List<PlanIsciDto>();
             mappings.ForEach(m =>
             {
-                foreach (var flight in m.IsciPlanMappingFlights)
+                PlanDto plan = new PlanDto();
+                plan = _PlanService.GetPlan(m.PlanId);
+                if(m.IsciPlanMappingFlights != null && m.IsciPlanMappingFlights.Count >0)
                 {
-                    PlanIsciDto itemToAdd = new PlanIsciDto();
-                    itemToAdd.PlanId = m.PlanId;
-                    itemToAdd.FlightStartDate = flight.FlightStartDate;
-                    itemToAdd.FlightEndDate = flight.FlightEndDate;
-                    itemToAdd.SpotLengthId = m.SpotLengthId;
-                    itemToAdd.Isci = m.Isci;
-                    itemToAdd.StartTime = flight.StartTime;
-                    itemToAdd.EndTime = flight.EndTime;
-                    result.Add(itemToAdd);
+                    foreach (var flight in m.IsciPlanMappingFlights)
+                    {
+                        var validateisi = _ValidateIsci(flight);
+                        if (validateisi)
+                        {
+                            PlanIsciDto itemToAdd = new PlanIsciDto();
+                            itemToAdd.PlanId = m.PlanId;
+                            if (!_IsBewteenTwoDates((DateTime)plan.FlightStartDate, (DateTime)plan.FlightEndDate, (DateTime)flight.FlightEndDate))
+                            {
+                                itemToAdd.FlightStartDate = _SetFlightStartDate(plan.FlightStartDate);
+                                itemToAdd.FlightEndDate = Convert.ToDateTime(plan.FlightEndDate);
+                            }
+                            else
+                            {
+                                itemToAdd.FlightStartDate = _SetFlightStartDate(flight.FlightStartDate);
+                                 itemToAdd.FlightEndDate = Convert.ToDateTime(flight.FlightEndDate);
+                            }
+                            itemToAdd.SpotLengthId = m.SpotLengthId;
+                            itemToAdd.Isci = m.Isci;
+                            itemToAdd.StartTime = flight.StartTime;
+                            itemToAdd.EndTime = flight.EndTime;
+                            result.Add(itemToAdd);
+                        }
+                    }
+                }                
+                else
+                {
+                    IsciPlanMappingFlightsDto flight = new IsciPlanMappingFlightsDto
+                    {
+                        FlightStartDate = plan.FlightStartDate,
+                        FlightEndDate = plan.FlightEndDate
+                    };
+                    var validateisi = _ValidateIsci(flight);
+                    if (validateisi)
+                    {
+                        PlanIsciDto itemToAdd = new PlanIsciDto();
+                        itemToAdd.PlanId = m.PlanId;
+                        itemToAdd.FlightStartDate = _SetFlightStartDate(plan.FlightStartDate);
+                        itemToAdd.FlightEndDate = Convert.ToDateTime(plan.FlightEndDate);
+                        itemToAdd.SpotLengthId = m.SpotLengthId;
+                        itemToAdd.Isci = m.Isci;
+                        itemToAdd.StartTime = flight.StartTime;
+                        itemToAdd.EndTime = flight.EndTime;
+                        result.Add(itemToAdd);
+                    }                    
                 }
             });
             return result;
+        }
+        private bool _IsBewteenTwoDates(DateTime startDate, DateTime endDate, DateTime target)
+        {
+            bool isFallBetween = false;           
+            if(target.Ticks >= startDate.Ticks && target.Ticks <= endDate.Ticks)
+            {
+                isFallBetween = true;
+            }
+            return isFallBetween;
+        }
+        /// <summary>
+        /// Validate the isci
+        /// If already exists then : ignore
+        /// If in past then don't copy  (oriented from NOW)
+        /// </summary>        
+        private bool _ValidateIsci(IsciPlanMappingFlightsDto flight)
+        {
+            bool isValid = true;                          
+            if ((flight.FlightStartDate < DateTime.Now && flight.FlightEndDate < DateTime.Now))
+            {
+                isValid = false;
+            }             
+            return isValid;
         }
         public PlanIsciMappingsDetailsDto GetPlanIsciMappingsDetails(int planId)
         {
