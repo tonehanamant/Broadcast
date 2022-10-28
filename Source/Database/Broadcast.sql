@@ -964,8 +964,12 @@ GO
 DECLARE @PopulatePrograms nvarchar(1000)
 SET @PopulatePrograms='TRUNCATE TABLE programs
 				INSERT INTO programs([name],show_type_id,genre_id) SELECT DISTINCT official_program_name,show_type_id,genre_id FROM program_name_mappings
-				ALTER TABLE dbo.program_name_mapings
-				DROP COLUMN genre_id'
+
+				ALTER TABLE dbo.program_name_mappings 
+					DROP CONSTRAINT FK_program_name_mappings_genres
+
+				ALTER TABLE dbo.program_name_mappings
+					DROP COLUMN genre_id'
 
 IF (COL_LENGTH('programs','genre_id') IS NOT NULL AND COL_LENGTH('program_name_mappings','genre_id') IS NOT NULL)
 BEGIN
