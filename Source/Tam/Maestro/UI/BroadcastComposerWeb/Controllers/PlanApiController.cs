@@ -93,6 +93,16 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlan_v2(planId));
         }
+        /// <summary>
+        /// Gets the plan with secondary audiences by id.
+        /// </summary>
+        /// <returns>PlanDto object</returns>
+        [HttpGet]
+        [Route("~/api/v3/Plan/{planId}")]
+        public BaseResponse<PlanDto_v3> GetPlanById_v3(int planId)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanService>().GetPlan_v3(planId));
+        }
 
         /// <summary>
         /// Checks if the plan has a draft and returns the draft id

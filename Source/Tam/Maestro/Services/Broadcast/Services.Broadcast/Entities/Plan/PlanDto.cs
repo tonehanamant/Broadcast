@@ -564,5 +564,28 @@ namespace Services.Broadcast.Entities.Plan
             }
             return result;
         }
+      
+    }
+
+    public class PlanDto_v3 : PlanDto
+    {
+        /// <summary>
+        /// The plan pricing parameters NSI and NTI.
+        /// </summary>
+        public new IList<PlanPricingParametersDto> PricingParameters { get; set; }
+        /// <summary>
+        /// Gets or sets the rawweekly breakdown weeks.
+        /// </summary>
+        /// <value>
+        /// The raw weekly breakdown weeks.
+        /// </value>
+        public List<WeeklyBreakdownWeek> SecondaryRawWeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
+        /// <summary>
+        /// Gets or sets the NetBudget.
+        /// </summary>
+        /// <value>
+        /// The NetBudget
+        /// </value>
+        public decimal? NetBudget { get; set; }
     }
 }

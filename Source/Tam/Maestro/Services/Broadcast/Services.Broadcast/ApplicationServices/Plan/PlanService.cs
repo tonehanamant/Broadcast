@@ -57,6 +57,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="versionId">Optional: version id. If nothing is passed, it will return the latest version</param>
         /// <returns></returns>
         PlanDto_v2 GetPlan_v2(int planId, int? versionId = null);
+        /// <summary>
+        /// Gets the plan with secondary audience weekly breakdown.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="versionId">Optional: version id. If nothing is passed, it will return the latest version</param>
+        /// <returns></returns>
+        PlanDto_v3 GetPlan_v3(int planId, int? versionId = null);
 
         /// <summary>
         /// Checks if a draft exist on the plan and returns the draft id
@@ -337,7 +344,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
         private readonly Lazy<bool> _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
         private Lazy<bool> _IsUnifiedCampaignEnabled;
-
+        public const decimal BudgetDivisor = 0.85m;
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
             , IPlanBudgetDeliveryCalculator planBudgetDeliveryCalculator
@@ -1076,6 +1083,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var plan_v2 = _MapPlanDtoToPlanDto_v2(plan, conversionRate);
             return plan_v2;
         }
+        public PlanDto_v3 GetPlan_v3(int planId, int? versionId = null)
+        {
+            var plan = GetPlan(planId, versionId);
+            double? hhImpression = plan.HHImpressions;           
+           var conversionRate = (!plan.Dayparts.IsNullOrEmpty()) ? _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts) : 1;            
+            var plan_v3 = _MapPlanDtoToPlanDto_v3(plan, conversionRate);
+            foreach( PlanAudienceDto audienace in plan.SecondaryAudiences)
+            {
+                double? secondaryImpressions = hhImpression * audienace.Vpvh;
+                plan_v3.SecondaryRawWeeklyBreakdownWeeks.AddRange(_WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan, secondaryImpressions));                                  
+            }
+           
+            return plan_v3;
+        }
 
         private PlanDto_v2 _MapPlanDtoToPlanDto_v2(PlanDto plan, double ntiToNsiConversionRate)
         {
@@ -1151,7 +1172,80 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return dto;
         }
+        private PlanDto_v3 _MapPlanDtoToPlanDto_v3(PlanDto plan, double ntiToNsiConversionRate)
+        {
+            var dto = new PlanDto_v3
+            {
+                Id = plan.Id,
+                CampaignId = plan.CampaignId,
+                CampaignName = plan.CampaignName,
+                Name = plan.Name,
+                CreativeLengths = plan.CreativeLengths,
+                Equivalized = plan.Equivalized,
+                Status = plan.Status,
+                ProductId = plan.ProductId,
+                ProductMasterId = plan.ProductMasterId,
+                FlightDays = plan.FlightDays,
+                FlightStartDate = plan.FlightStartDate,
+                FlightEndDate = plan.FlightEndDate,
+                FlightNotes = plan.FlightNotes,
+                FlightNotesInternal = plan.FlightNotesInternal,
+                AudienceId = plan.AudienceId,
+                AudienceType = plan.AudienceType,
+                HUTBookId = plan.HUTBookId,
+                ShareBookId = plan.ShareBookId,
+                PostingType = plan.PostingType,
+                FlightHiatusDays = plan.FlightHiatusDays,
+                Budget = plan.Budget,
+                NetBudget = plan.Budget / BudgetDivisor,
+                TargetImpressions = plan.TargetImpressions,
+                TargetCPM = plan.TargetCPM,
+                TargetRatingPoints = plan.TargetRatingPoints,
+                TargetCPP = plan.TargetCPP,
+                Currency = plan.Currency,
+                GoalBreakdownType = plan.GoalBreakdownType,
+                SecondaryAudiences = plan.SecondaryAudiences,
+                Dayparts = plan.Dayparts,
+                CustomDayparts = plan.CustomDayparts,
+                CoverageGoalPercent = plan.CoverageGoalPercent,
+                AvailableMarkets = plan.AvailableMarkets,
+                BlackoutMarkets = plan.BlackoutMarkets,
+                AvailableMarketsSovTotal = plan.AvailableMarketsSovTotal,
+                WeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks,
+                RawWeeklyBreakdownWeeks = plan.RawWeeklyBreakdownWeeks,
+                WeeklyBreakdownTotals = plan.WeeklyBreakdownTotals,
+                ModifiedBy = plan.ModifiedBy,
+                ModifiedDate = plan.ModifiedDate,
+                Vpvh = plan.Vpvh,
+                TargetUniverse = plan.TargetUniverse,
+                HHCPM = plan.HHCPM,
+                HHCPP = plan.HHCPP,
+                HHImpressions = plan.HHImpressions,
+                HHRatingPoints = plan.HHRatingPoints,
+                HHUniverse = plan.HHUniverse,
+                AvailableMarketsWithSovCount = plan.AvailableMarketsWithSovCount,
+                BlackoutMarketCount = plan.BlackoutMarketCount,
+                BlackoutMarketTotalUsCoveragePercent = plan.BlackoutMarketTotalUsCoveragePercent,
+                IsDraft = plan.IsDraft,
+                VersionNumber = plan.VersionNumber,
+                VersionId = plan.VersionId,
+                IsAduEnabled = plan.IsAduEnabled,
+                ImpressionsPerUnit = plan.ImpressionsPerUnit,
+                BuyingParameters = plan.BuyingParameters,
+                JobId = plan.JobId,
+                SpotAllocationModelMode = plan.SpotAllocationModelMode,
+                FluidityPercentage = plan.FluidityPercentage,
+                FluidityCategory = plan.FluidityCategory,
+                FluidityChildCategory = plan.FluidityChildCategory,
+                UnifiedTacticLineId = plan.UnifiedTacticLineId,
+                UnifiedCampaignLastSentAt = plan.UnifiedCampaignLastSentAt,
+                UnifiedCampaignLastReceivedAt = plan.UnifiedCampaignLastReceivedAt
+            };
 
+            dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);
+
+            return dto;
+        }
         private void _PopulateProprietaryInventoryData(List<InventoryProprietarySummary> proprietaryInventory)
         {
             Dictionary<int, InventoryProprietarySummary> data = _InventoryProprietarySummaryRepository
