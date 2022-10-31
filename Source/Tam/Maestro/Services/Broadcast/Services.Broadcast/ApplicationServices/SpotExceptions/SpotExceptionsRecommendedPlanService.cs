@@ -546,7 +546,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     SpotExceptionsId = spotExceptionsRecommendedPlan.Id,
                     SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.SelectedPlanId,
-                    SpotExceptionsRecommendedPlanDetailsDoneId = recommendedPlansDone.SpotExceptionsRecommendedPlanDetailsDone.Where(x => x.Id == spotExceptionsRecommendedPlan.Id && x.RecommendedPlanId == spotExceptionsRecommendedPlan.SelectedPlanId).Select(f => f.SpotExceptionsRecommendedPlanDoneDecisions.SpotExceptionsRecommendedPlanDetailsDoneId).First(),
+                    SpotExceptionsRecommendedPlanDetailsDoneId = recommendedPlansDone.Id,
                     DecidedBy = userName,
                     DecidedAt = _DateTimeEngine.GetCurrentMoment(),
                     SyncedAt = null,
