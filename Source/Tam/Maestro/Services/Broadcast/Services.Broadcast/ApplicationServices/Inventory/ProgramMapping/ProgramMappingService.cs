@@ -763,11 +763,10 @@ namespace Services.Broadcast.ApplicationServices
             var distinctMasterList = _RemoveDuplicateFromMasterList(masterList);
             var masterDbList = _ProgramMappingRepository.GetMasterPrograms();
             var uniqueList = new List<ProgramMappingsDto>();
-
                 foreach (var disctinctMaster in distinctMasterList)
                 {
-                    var disctinctMasterCount = masterDbList.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper());
-                    if (disctinctMasterCount > 0)
+                var disctinctMasterCount = masterDbList.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper() && x.GenreId == disctinctMaster.OfficialGenre.Id);
+                if (disctinctMasterCount > 0)
                     {
                         //do nothing
                     }
@@ -775,8 +774,7 @@ namespace Services.Broadcast.ApplicationServices
                     {
                         uniqueList.Add(disctinctMaster);
                     }
-                }
-                       
+                }                      
             _ProgramMappingRepository.UploadMasterProgramMappings(uniqueList, userName, createdDate);
         }
         private List<ProgramMappingsDto> _RemoveDuplicateFromMasterList(List<ProgramMappingsDto> masterList)

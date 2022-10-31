@@ -149,7 +149,6 @@ namespace Services.Broadcast.Converters
         {
             var csvFileReader = new CsvFileReader(FileHeaders, Delimiters, throwExceptions: false);
             var masterList = new List<ProgramMappingsDto>();
-
             using (csvFileReader.Initialize(stream))
             {
                 int LineIndex = 1;
@@ -167,11 +166,10 @@ namespace Services.Broadcast.Converters
                         {
                             //** This is going to remove in BP-5532 story **//
                             //** Start **//                            
-                            var officialGenre = _GenreCache.GetMaestroGenreByName(ProgramGenre);
+                            var officialGenre = _GenreCache.GetMaestroGenreByName(genre);
                             //** End **//
                             var sourceShowType = _ShowTypeCache.GetMasterShowTypeByName(csvFileReader.GetCellValue(ShowType));
                             var maestroShowType = _ShowTypeCache.GetMaestroShowTypeByMasterShowType(sourceShowType);
-
                             var programMapping = new ProgramMappingsDto
                             {
                                 Id = Convert.ToInt32(csvFileReader.GetCellValue(ProgramId)),
@@ -180,7 +178,6 @@ namespace Services.Broadcast.Converters
                                 OfficialGenre = officialGenre,
                                 OfficialShowType = maestroShowType
                             };
-
                             if (!string.IsNullOrWhiteSpace(programMapping.OfficialProgramName))
                                 masterList.Add(programMapping);
                         }
@@ -192,7 +189,6 @@ namespace Services.Broadcast.Converters
                     }
                 }
             }
-
             return masterList;
         }
         /// <summary>

@@ -283,7 +283,8 @@ namespace Services.Broadcast.Repositories
             return new MasterProgramsDto
             {
                 Name = masterProgram.name,
-                ShowTypeId = masterProgram.show_type_id
+                ShowTypeId = masterProgram.show_type_id,
+                GenreId = masterProgram.genre_id
             };
         }
         private void _MapToProgramsDto(ProgramMappingsDto programMappingDto, programs masterProgram)
