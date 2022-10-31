@@ -567,7 +567,7 @@ namespace Services.Broadcast.Entities.Plan
       
     }
 
-    public class PlanDto_v3 : PlanDto
+    public class PlanDto_v3 : PlanDto_v2
     {
         /// <summary>
         /// The plan pricing parameters NSI and NTI.
@@ -579,7 +579,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The raw weekly breakdown weeks.
         /// </value>
-        public List<WeeklyBreakdownWeek> SecondaryRawWeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
+        public Dictionary<int, List<WeeklyBreakdownWeek>> SecondaryRawWeeklyBreakdownWeeks = new Dictionary<int, List<WeeklyBreakdownWeek>>();
         /// <summary>
         /// Gets or sets the NetBudget.
         /// </summary>

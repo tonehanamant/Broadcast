@@ -1086,15 +1086,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanDto_v3 GetPlan_v3(int planId, int? versionId = null)
         {
             var plan = GetPlan(planId, versionId);
-            double? hhImpression = plan.HHImpressions;           
-           var conversionRate = (!plan.Dayparts.IsNullOrEmpty()) ? _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts) : 1;            
+            double? hhImpression = plan.HHImpressions;
+            var conversionRate = (!plan.Dayparts.IsNullOrEmpty()) ? _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts) : 1;
             var plan_v3 = _MapPlanDtoToPlanDto_v3(plan, conversionRate);
-            foreach( PlanAudienceDto audienace in plan.SecondaryAudiences)
+            foreach (PlanAudienceDto audienace in plan.SecondaryAudiences)
             {
                 double? secondaryImpressions = hhImpression * audienace.Vpvh;
-                plan_v3.SecondaryRawWeeklyBreakdownWeeks.AddRange(_WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan, secondaryImpressions));                                  
+                var secAudienceBreakdown = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan, secondaryImpressions);
+                plan_v3.SecondaryRawWeeklyBreakdownWeeks[audienace.AudienceId] = secAudienceBreakdown;
             }
-           
             return plan_v3;
         }
 
@@ -2386,16 +2386,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             return result;
         }
-       
+
         /// <inheritdoc/>
         public bool IsCurrentVersion(int planId, int versionId)
-        {            
+        {
             PlanDto plan = _PlanRepository.GetPlan(planId);
-            bool result= false;
+            bool result = false;
             if (plan.VersionId == versionId)
             {
                 result = true;
-            }                                       
+            }
             else
             {
                 throw new CadentException("The current plan that you are viewing has been updated. Please close the plan and reopen to view the most current information.");

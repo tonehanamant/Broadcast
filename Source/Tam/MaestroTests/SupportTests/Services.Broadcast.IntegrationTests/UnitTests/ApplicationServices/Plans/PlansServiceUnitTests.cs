@@ -6,12 +6,14 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventoryProprietary;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
@@ -21,11 +23,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Castle.Components.DictionaryAdapter;
-using Services.Broadcast.Exceptions;
-using Tam.Maestro.Services.ContractInterfaces;
-using Services.Broadcast.Clients;
 using System.Threading.Tasks;
+using Tam.Maestro.Services.ContractInterfaces;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plans
 {
@@ -62,7 +61,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
-        private Mock<ICampaignServiceApiClient> _CampaignServiceApiClient;
+        private Mock<ICampaignServiceApiClient> _CampaignServiceApiClient;        
 
         [SetUp]
         public void CreatePlanService()
@@ -94,7 +93,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
-            _CampaignServiceApiClient = new Mock<ICampaignServiceApiClient>();
+            _CampaignServiceApiClient = new Mock<ICampaignServiceApiClient>();            
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -1371,7 +1370,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(It.IsAny<PlanDto>()))
-                .Returns(new List<WeeklyBreakdownWeek>());
+                .Returns(new List<WeeklyBreakdownWeek>());          
 
             // Act
             var result = _PlanService.GetPlan_v3(1, 1);
@@ -2106,8 +2105,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 },
                 SecondaryAudiences = new List<PlanAudienceDto>
                 {
-                    new PlanAudienceDto {Vpvh= 0.027875},
-                    new PlanAudienceDto {Vpvh= 0.30575}
+                    new PlanAudienceDto {Vpvh= 0.027875,AudienceId=4},
+                    new PlanAudienceDto {Vpvh= 0.30575,AudienceId=5}
                 },
                 HHImpressions = 1000,
                 ModifiedBy = "Test User",
