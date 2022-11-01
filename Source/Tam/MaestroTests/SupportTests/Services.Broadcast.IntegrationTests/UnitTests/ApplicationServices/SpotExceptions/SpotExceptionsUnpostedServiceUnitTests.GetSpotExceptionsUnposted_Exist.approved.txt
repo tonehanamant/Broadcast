@@ -3,7 +3,7 @@
     {
       "AffectedSpotsCount": 1,
       "ClientIsci": "AB82VR589",
-      "ClientSpotLength": ":12",
+      "ClientSpotLength": ":30",
       "EstimateId": 191757,
       "HouseIsci": "YB82TXT2H",
       "ProgramAirDate": "1/10/2020"
@@ -11,7 +11,7 @@
     {
       "AffectedSpotsCount": 2,
       "ClientIsci": "AB82VR590",
-      "ClientSpotLength": ":13",
+      "ClientSpotLength": ":30",
       "EstimateId": 191758,
       "HouseIsci": "YB82TXT2H",
       "ProgramAirDate": "1/10/2020"

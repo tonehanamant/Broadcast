@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.Repositories;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -21,6 +22,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         const string flightEndDateFormat = "MM/dd/yyyy";
 
         private readonly ISpotExceptionsUnpostedRepository _SpotExceptionsUnpostedRepository;
+        private readonly ISpotLengthRepository _SpotLengthRepository;
 
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
@@ -31,6 +33,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionsUnpostedRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionsUnpostedRepository>();
+            _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _FeatureToggleHelper = featureToggleHelper;
         }
 
@@ -48,7 +51,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     HouseIsci = x.HouseIsci,
                     ClientIsci = x.ClientIsci,
-                    ClientSpotLength = ":" + x.ClientSpotLengthId.ToString(),
+                    ClientSpotLength = $":{_SpotLengthRepository.GetSpotLengthById(x.ClientSpotLengthId ?? 0)}" ?? null,
                     AffectedSpotsCount = x.Count,
                     ProgramAirDate = x.ProgramAirTime.ToShortDateString(),
                     EstimateId = x.EstimateID
@@ -64,7 +67,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve the Unposted No Plan from the Database";
                 throw new CadentException(msg, ex);
             }
 

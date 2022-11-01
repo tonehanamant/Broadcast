@@ -7,6 +7,7 @@ using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.Unposted;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.SpotExceptions;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         private SpotExceptionsUnpostedService _SpotExceptionsUnpostedService;
 
         private Mock<ISpotExceptionsUnpostedRepository> _SpotExceptionsUnpostedRepositoryMock;
+        private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
 
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
@@ -30,6 +32,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public void SetUp()
         {
             _SpotExceptionsUnpostedRepositoryMock = new Mock<ISpotExceptionsUnpostedRepository>();
+            _SpotLengthRepositoryMock = new Mock<ISpotLengthRepository>();
 
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
 
@@ -40,6 +43,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionsUnpostedRepository>())
                 .Returns(_SpotExceptionsUnpostedRepositoryMock.Object);
+
+            _DataRepositoryFactoryMock
+                .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
+                .Returns(_SpotLengthRepositoryMock.Object);
 
             _SpotExceptionsUnpostedService = new SpotExceptionsUnpostedService
                 (
@@ -69,6 +76,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _SpotExceptionsUnpostedRepositoryMock
                 .Setup(x => x.GetSpotExceptionUnpostedNoReelRosterAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(unpostedNoReelRoster));
+
+            _SpotLengthRepositoryMock
+                .Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
+                .Returns(30);
 
             // Act
             var result = await _SpotExceptionsUnpostedService.GetSpotExceptionsUnposted(spotExceptionsUnpostedRequest);
@@ -137,7 +148,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var result = Assert.Throws<CadentException>(async() => await _SpotExceptionsUnpostedService.GetSpotExceptionsUnposted(spotExceptionsUnpostedRequest));
 
             // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+            Assert.AreEqual("Could not retrieve the Unposted No Plan from the Database", result.Message);
         }
 
         private List<SpotExceptionsUnpostedNoPlanDto> GetSpotExceptionUnpostedNoPlan()
@@ -148,7 +159,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 {
                     HouseIsci = "YB82TXT2H",
                     ClientIsci = "AB82VR589",
-                    ClientSpotLengthId = 12,
+                    ClientSpotLengthId = 2,
                     Count = 1,
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     EstimateID = 191757,
@@ -160,7 +171,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 {
                     HouseIsci = "YB82TXT2H",
                     ClientIsci = "AB82VR590",
-                    ClientSpotLengthId = 13,
+                    ClientSpotLengthId = 3,
                     Count = 2,
                     ProgramAirTime = new DateTime(2020,1,10,23,45,00),
                     EstimateID = 191758,
