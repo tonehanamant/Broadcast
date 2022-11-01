@@ -19,6 +19,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int show_type_id { get; set; }
         public int genre_id { get; set; }
     
+        public virtual genre genre { get; set; }
         public virtual show_types show_types { get; set; }
     }
 }

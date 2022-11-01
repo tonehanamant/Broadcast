@@ -589,15 +589,16 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_done_decisions_spot_exceptions_recommended_plans_details_done" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.program_name_mappings" Width="1.5" PointX="26.25" PointY="58" />
-        <EntityTypeShape EntityType="BroadcastModel.program" Width="1.5" PointX="26.25" PointY="75.5" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_show_types" />
-        <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" Width="1.5" PointX="28.375" PointY="18" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" Width="1.5" PointX="18.25" PointY="34.375" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_markets" Width="1.5" PointX="3" PointY="10.875" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_jobs" Width="1.5" PointX="38.375" PointY="40" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" />
+        <EntityTypeShape EntityType="BroadcastModel.program" Width="1.5" PointX="35.25" PointY="55.125" />
+        <AssociationConnector Association="BroadcastModel.FK_programs_genres" />
+        <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

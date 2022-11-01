@@ -1069,6 +1069,14 @@ GO
 
 /*************************************** END BP-5685 ************************************/
 
+/*************************************** START BP-5536 ************************************/
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_programs_genres')
+BEGIN
+	ALTER TABLE [dbo].[programs]  WITH CHECK ADD  CONSTRAINT [FK_programs_genres] FOREIGN KEY([genre_id])REFERENCES [dbo].[genres] ([id])
+END
+GO
+/*************************************** END BP-5536 ************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
