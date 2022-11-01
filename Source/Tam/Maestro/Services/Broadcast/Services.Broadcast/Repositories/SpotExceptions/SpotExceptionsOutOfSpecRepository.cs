@@ -163,6 +163,8 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <returns></returns>
         Task<bool> SaveSpotExceptionsOutOfSpecToDoDecisionsAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec, SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo, string userName, DateTime decidedAt);
 
+        Task<bool> SaveOutOfSpecCommentsToDoAsync(SpotExceptionsOutOfSpecsToDoDto spotExceptionsOutOfSpec);
+
         /// <summary>
         /// Saves the spot exceptions out of spec done decisions asynchronous.
         /// </summary>
@@ -171,6 +173,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="decidedAt">The decided at.</param>
         /// <returns></returns>
         Task<bool> SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpecDoneDecision, string userName, DateTime decidedAt);
+        Task<bool> SaveOutOfSpecCommentsDoneAsync(SpotExceptionsOutOfSpecsDoneDto spotExceptionsOutOfSpec);
     }
 
     /// <inheritdoc />
@@ -217,7 +220,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 return outOfSpecGroupingToDo;
             }));
         }
-
+               
         /// <inheritdoc />
         public Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecGroupingDoneAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
@@ -662,10 +665,31 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 var outOfSpecToDelete = context.spot_exceptions_out_of_specs.First(x => x.id == spotExceptionsOutOfSpec.Id);
                 context.spot_exceptions_out_of_specs.Remove(outOfSpecToDelete);
 
-                isMoved = context.SaveChanges()>1;
+                isMoved = context.SaveChanges() > 1;
 
                 _LogInfo($"Finished: Moving Out Of Spec To Done");
                 return isMoved;
+            }));
+        }
+
+        /// <inheritdoc />
+        public Task<bool> SaveOutOfSpecCommentsToDoAsync(SpotExceptionsOutOfSpecsToDoDto spotExceptionsOutOfSpec)
+        {
+            bool isSaved = false;
+
+            _LogInfo($"Starting: Saving Out Of Spec Comments to ToDo");
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var result = context.spot_exceptions_out_of_specs
+                    .Where(x => x.id == spotExceptionsOutOfSpec.Id)
+                    .Single();
+
+                result.comment = spotExceptionsOutOfSpec.Comments;
+
+                isSaved = context.SaveChanges() > 1;
+                _LogInfo($"Finished: Saving Out Of Spec Comments to ToDo");
+
+                return isSaved;
             }));
         }
 
@@ -732,10 +756,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         alreadyRecordExists.synced_by = null;
                     }
                 }
-                else
-                {
-                    outOfSpecId.comment = spotExceptionsOutOfSpecDoneDecision.Comments;
-                }
 
                 bool isSpotExceptionsOutOfSpecDecisionSaved = false;
                 int recordCount = 0;
@@ -746,6 +766,27 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 }
 
                 return isSpotExceptionsOutOfSpecDecisionSaved;
+            }));
+        }
+
+        /// <inheritdoc />
+        public Task<bool> SaveOutOfSpecCommentsDoneAsync(SpotExceptionsOutOfSpecsDoneDto spotExceptionsOutOfSpec)
+        {
+            bool isSaved = false;
+
+            _LogInfo($"Starting: Saving Out Of Spec Comments to Done");
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var result = context.spot_exceptions_out_of_specs_done
+                    .Where(x => x.id == spotExceptionsOutOfSpec.Id)
+                    .Single();
+
+                result.comment = spotExceptionsOutOfSpec.Comments;
+
+                isSaved = context.SaveChanges() > 1;
+                _LogInfo($"Finished: Saving Out Of Spec Comments to Done");
+
+                return isSaved;
             }));
         }
 

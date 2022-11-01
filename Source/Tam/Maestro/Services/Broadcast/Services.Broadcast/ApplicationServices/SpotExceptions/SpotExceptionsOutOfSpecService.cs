@@ -455,11 +455,25 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
                     if (outOfSpecToDo != null)
                     {
-                        isSaved = await _SaveOutOfSpectDecisionsToDoAsync(spotExceptionsOutOfSpec, outOfSpecToDo, userName);
+                        if (spotExceptionsOutOfSpec.Comments == null)
+                        {
+                            isSaved = await _SaveOutOfSpecDecisionsToDoAsync(spotExceptionsOutOfSpec, outOfSpecToDo, userName);
+                        }
+                        else
+                        {
+                            isSaved = await _SaveOutOfSpecCommentsToDoAsync(spotExceptionsOutOfSpec);
+                        }
                     }
                     else
                     {
-                        isSaved = await _SaveOutOfSpecDecisionsDoneAsync(spotExceptionsOutOfSpec, outOfSpecDone, userName);
+                        if (spotExceptionsOutOfSpec.Comments == null)
+                        {
+                            isSaved = await _SaveOutOfSpecDecisionsDoneAsync(spotExceptionsOutOfSpec, outOfSpecDone, userName);
+                        }
+                        else
+                        {
+                            isSaved = await _SaveOutOfSpecCommentsDoneAsync(spotExceptionsOutOfSpec);
+                        }
                     }
                 }
             }
@@ -472,7 +486,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return isSaved;
         }
 
-        private async Task<bool> _SaveOutOfSpectDecisionsToDoAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec, SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo, string userName)
+        private async Task<bool> _SaveOutOfSpecDecisionsToDoAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec, SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo, string userName)
         {
             bool isMoved = false;
             var currentDate = _DateTimeEngine.GetCurrentMoment();
@@ -494,32 +508,84 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return isMoved;
         }
 
+        private async Task<bool> _SaveOutOfSpecCommentsToDoAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec)
+        {
+            bool isCommentSaved;
+
+            _LogInfo($"Starting: Saving Comments for the ToDo");
+            try
+            {
+                var spotExceptionsOutOfSpecToDo = new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = spotExceptionsOutOfSpec.Id,
+                    Comments = spotExceptionsOutOfSpec.Comments
+                };
+
+                isCommentSaved = await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsToDoAsync(spotExceptionsOutOfSpecToDo);
+                _LogInfo($"Starting: Saving Comments for the ToDo");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not save Comments for the ToDo";
+                throw new CadentException(msg, ex);
+            }
+
+            return isCommentSaved;
+        }
+
         private async Task<bool> _SaveOutOfSpecDecisionsDoneAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpecSaveRequest, SpotExceptionsOutOfSpecsDoneDto outOfSpecToDo, string userName)
         {
             bool isSpotExceptionsOutOfSpecDoneDecisionSaved;
             var currentDate = _DateTimeEngine.GetCurrentMoment();
 
+            _LogInfo($"Starting: Saving decisions for the Done");
             try
             {
                 var spotExceptionsOutOfSpecDoneDecision = new SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto
                 {
                     Id = outOfSpecToDo.Id,
                     AcceptAsInSpec = spotExceptionsOutOfSpecSaveRequest.AcceptAsInSpec,
-                    Comments = outOfSpecToDo.Comments,
                     ProgramName = outOfSpecToDo.ProgramName,
                     GenreName = outOfSpecToDo.GenreName,
                     DaypartCode = outOfSpecToDo.DaypartCode
                 };
 
                 isSpotExceptionsOutOfSpecDoneDecisionSaved = await _SpotExceptionsOutOfSpecRepository.SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(spotExceptionsOutOfSpecDoneDecision, userName, currentDate);
+                _LogInfo($"Starting: Saving decisions for the Done");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not save decisions for the Done";
                 throw new CadentException(msg, ex);
             }
 
             return isSpotExceptionsOutOfSpecDoneDecisionSaved;
+        }
+
+        private async Task<bool> _SaveOutOfSpecCommentsDoneAsync(SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto spotExceptionsOutOfSpec)
+        {
+            bool isCommentSaved;
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
+
+            _LogInfo($"Starting: Saving Comments for the Done");
+            try
+            {
+                var spotExceptionsOutOfSpecDone = new SpotExceptionsOutOfSpecsDoneDto
+                {
+                    Id = spotExceptionsOutOfSpec.Id,
+                    Comments = spotExceptionsOutOfSpec.Comments
+                };
+
+                isCommentSaved = await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsDoneAsync(spotExceptionsOutOfSpecDone);
+                _LogInfo($"Starting: Saving Comments for the Done");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not save Comments for the Done";
+                throw new CadentException(msg, ex);
+            }
+
+            return isCommentSaved;
         }
 
         private string _GetAdvertiserName(Guid? masterId)

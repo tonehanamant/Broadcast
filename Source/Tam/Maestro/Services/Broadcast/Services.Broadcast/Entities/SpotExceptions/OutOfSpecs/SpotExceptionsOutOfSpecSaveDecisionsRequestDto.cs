@@ -23,7 +23,9 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 
     public class SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto
     {
-        /// <summary>Gets or sets the identifier.</summary>
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
         /// <value>The identifier.</value>
         public int Id { get; set; }
 
