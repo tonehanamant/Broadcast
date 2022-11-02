@@ -187,7 +187,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     .Where(recommendedPlanToDoDb => recommendedPlanToDoDb.spot_exceptions_recommended_plans.program_air_time >= weekStartDate
                     && recommendedPlanToDoDb.spot_exceptions_recommended_plans.program_air_time <= weekEndDate).ToList();
 
-                var planGroupingToDo = planDetailsToDo.GroupBy(x => new { x.recommended_plan_id })
+                var planGroupingToDo = planDetailsToDo.Where(x => x.is_recommended_plan).GroupBy(x => new { x.recommended_plan_id })
                     .Select(x =>
                     {
                         var first = x.First();
@@ -222,8 +222,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     .Where(recommendedPlanDoneDb => recommendedPlanDoneDb.spot_exceptions_recommended_plans_done.program_air_time >= weekStartDate
                     && recommendedPlanDoneDb.spot_exceptions_recommended_plans_done.program_air_time <= weekEndDate).ToList();
 
-                var planGroupingDone = planDetailsDone
-                    .GroupBy(x => new { x.recommended_plan_id })
+                var planGroupingDone = planDetailsDone.Where(x => x.is_recommended_plan).GroupBy(x => new { x.recommended_plan_id })
                     .Select(x =>
                     {
                         var first = x.First();
