@@ -1197,7 +1197,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PostingType = plan.PostingType,
                 FlightHiatusDays = plan.FlightHiatusDays,
                 Budget = plan.Budget,
-                NetBudget = plan.Budget / BudgetDivisor,
+                NetBudget = plan.Budget * BudgetDivisor,
                 TargetImpressions = plan.TargetImpressions,
                 TargetCPM = plan.TargetCPM,
                 TargetRatingPoints = plan.TargetRatingPoints,

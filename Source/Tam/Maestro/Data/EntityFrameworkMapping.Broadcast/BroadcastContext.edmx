@@ -1644,6 +1644,7 @@
           <Property Name="unified_tactic_line_id" Type="varchar" MaxLength="50" />
           <Property Name="unified_campaign_last_sent_at" Type="datetime2" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="datetime2" Precision="7" />
+          <Property Name="nielsen_transmittal_code" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="post_file_demos">
           <Key>
@@ -2350,6 +2351,45 @@
           <Property Name="completed_at" Type="datetime" />
           <Property Name="requested_by" Type="varchar" MaxLength="63" Nullable="false" />
         </EntityType>
+        <EntityType Name="scx_generation_open_market_job_affiliates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="affiliate" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_dayparts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="int" Nullable="false" />
+          <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
+          <Property Name="start_date" Type="datetime" Nullable="false" />
+          <Property Name="end_date" Type="datetime" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="export_genre_type_id" Type="int" Nullable="false" />
+          <Property Name="affiliate" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="shared_folder_files_id" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_markets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="scx_generation_open_market_jobs">
           <Key>
             <PropertyRef Name="id" />
@@ -2361,6 +2401,8 @@
           <Property Name="queued_at" Type="datetime" Nullable="false" />
           <Property Name="completed_at" Type="datetime" />
           <Property Name="requested_by" Type="varchar" MaxLength="63" Nullable="false" />
+          <Property Name="export_genre_type_id" Type="int" Nullable="false" />
+          <Property Name="inventory_source_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="shared_folder_files">
           <Key>
@@ -5911,18 +5953,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_programs_genres">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="programs" Type="Self.programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="programs">
-              <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_programs_show_types">
           <End Role="show_types" Type="Self.show_types" Multiplicity="1" />
           <End Role="programs" Type="Self.programs" Multiplicity="*" />
@@ -6730,6 +6760,78 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="scx_generation_jobs">
               <PropertyRef Name="standard_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs">
+          <End Role="scx_generation_open_market_jobs" Type="Self.scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Role="scx_generation_open_market_job_affiliates" Type="Self.scx_generation_open_market_job_affiliates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_affiliates">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs">
+          <End Role="scx_generation_open_market_jobs" Type="Self.scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Role="scx_generation_open_market_job_dayparts" Type="Self.scx_generation_open_market_job_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_dayparts">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts">
+          <End Role="standard_dayparts" Type="Self.standard_dayparts" Multiplicity="1" />
+          <End Role="scx_generation_open_market_job_dayparts" Type="Self.scx_generation_open_market_job_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="standard_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_dayparts">
+              <PropertyRef Name="standard_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
+          <End Role="scx_generation_open_market_jobs" Type="Self.scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Role="scx_generation_open_market_job_files" Type="Self.scx_generation_open_market_job_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_files">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_markets_markets">
+          <End Role="markets" Type="Self.markets" Multiplicity="1" />
+          <End Role="scx_generation_open_market_job_markets" Type="Self.scx_generation_open_market_job_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markets">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_markets">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
+          <End Role="scx_generation_open_market_jobs" Type="Self.scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Role="scx_generation_open_market_job_markets" Type="Self.scx_generation_open_market_job_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_markets">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7901,6 +8003,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="scx_generation_job_files" EntityType="Self.scx_generation_job_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scx_generation_job_units" EntityType="Self.scx_generation_job_units" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scx_generation_jobs" EntityType="Self.scx_generation_jobs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scx_generation_open_market_job_affiliates" EntityType="Self.scx_generation_open_market_job_affiliates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scx_generation_open_market_job_dayparts" EntityType="Self.scx_generation_open_market_job_dayparts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scx_generation_open_market_job_files" EntityType="Self.scx_generation_open_market_job_files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="scx_generation_open_market_job_markets" EntityType="Self.scx_generation_open_market_job_markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="scx_generation_open_market_jobs" EntityType="Self.scx_generation_open_market_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shared_folder_files" EntityType="Self.shared_folder_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="show_type_mappings" EntityType="Self.show_type_mappings" Schema="dbo" store:Type="Tables" />
@@ -8827,10 +8933,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program_name_mappings" EntitySet="program_name_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK_programs_genres" Association="Self.FK_programs_genres">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="programs" EntitySet="programs" />
-          </AssociationSet>
           <AssociationSet Name="FK_programs_show_types" Association="Self.FK_programs_show_types">
             <End Role="show_types" EntitySet="show_types" />
             <End Role="programs" EntitySet="programs" />
@@ -9082,6 +9184,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_scx_generation_jobs_standard_dayparts" Association="Self.FK_scx_generation_jobs_standard_dayparts">
             <End Role="standard_dayparts" EntitySet="standard_dayparts" />
             <End Role="scx_generation_jobs" EntitySet="scx_generation_jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" Association="Self.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_affiliates" EntitySet="scx_generation_open_market_job_affiliates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" Association="Self.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_dayparts" EntitySet="scx_generation_open_market_job_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts" Association="Self.FK_scx_generation_open_market_job_dayparts_standard_dayparts">
+            <End Role="standard_dayparts" EntitySet="standard_dayparts" />
+            <End Role="scx_generation_open_market_job_dayparts" EntitySet="scx_generation_open_market_job_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" Association="Self.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_files" EntitySet="scx_generation_open_market_job_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_markets_markets" Association="Self.FK_scx_generation_open_market_job_markets_markets">
+            <End Role="markets" EntitySet="markets" />
+            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" Association="Self.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
           </AssociationSet>
           <AssociationSet Name="FK_show_type_mappings_show_types_maestro" Association="Self.FK_show_type_mappings_show_types_maestro">
             <End Role="show_types" EntitySet="show_types" />
@@ -10037,14 +10163,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="plan_version_flight_hiatus_days" EntityType="BroadcastModel.plan_version_flight_hiatus_days" />
           <EntitySet Name="plan_version_secondary_audiences" EntityType="BroadcastModel.plan_version_secondary_audiences" />
           <EntitySet Name="plan_version_summaries" EntityType="BroadcastModel.plan_version_summaries" />
-          <EntitySet Name="plans" EntityType="BroadcastModel.plan" />
           <AssociationSet Name="FK_plan_secondary_audiences_audiences" Association="BroadcastModel.FK_plan_secondary_audiences_audiences">
             <End Role="audience" EntitySet="audiences" />
             <End Role="plan_version_secondary_audiences" EntitySet="plan_version_secondary_audiences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_plans_campaigns" Association="BroadcastModel.FK_plans_campaigns">
-            <End Role="campaign" EntitySet="campaigns" />
-            <End Role="plan" EntitySet="plans" />
           </AssociationSet>
           <AssociationSet Name="FK_plan_available_markets_market_coverage_file" Association="BroadcastModel.FK_plan_available_markets_market_coverage_file">
             <End Role="market_coverage_files" EntitySet="market_coverage_files" />
@@ -10884,20 +11005,12 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
           </AssociationSet>
-          <AssociationSet Name="FK_plan_versions_plans" Association="BroadcastModel.FK_plan_versions_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_versions" EntitySet="plan_versions" />
-          </AssociationSet>
           <EntitySet Name="fluidity_categories" EntityType="BroadcastModel.fluidity_categories" />
           <AssociationSet Name="FK_plan_versions_fluidity_categories" Association="BroadcastModel.FK_plan_versions_fluidity_categories">
             <End Role="fluidity_categories" EntitySet="fluidity_categories" />
             <End Role="plan_versions" EntitySet="plan_versions" />
           </AssociationSet>
           <EntitySet Name="plan_iscis" EntityType="BroadcastModel.plan_iscis" />
-          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="plan_iscis" EntitySet="plan_iscis" />
-          </AssociationSet>
           <AssociationSet Name="FK_plan_iscis_spot_lengths" Association="BroadcastModel.FK_plan_iscis_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="plan_iscis" EntitySet="plan_iscis" />
@@ -10959,14 +11072,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="audience" EntitySet="audiences" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_plans" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
-          </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
             <End Role="spot_exceptions_out_of_spec_reason_codes" EntitySet="spot_exceptions_out_of_spec_reason_codes" />
             <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
@@ -10997,14 +11102,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="audience" EntitySet="audiences" />
             <End Role="spot_exceptions_out_of_specs_done" EntitySet="spot_exceptions_out_of_specs_done" />
           </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_out_of_specs_done_plans" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="spot_exceptions_out_of_specs_done" EntitySet="spot_exceptions_out_of_specs_done" />
-          </AssociationSet>
-          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_done_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans">
-            <End Role="plan" EntitySet="plans" />
-            <End Role="spot_exceptions_recommended_plan_details_done" EntitySet="spot_exceptions_recommended_plan_details_done" />
-          </AssociationSet>
           <AssociationSet Name="FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done" Association="BroadcastModel.FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done">
             <End Role="spot_exceptions_out_of_specs_done" EntitySet="spot_exceptions_out_of_specs_done" />
             <End Role="spot_exceptions_out_of_spec_done_decisions" EntitySet="spot_exceptions_out_of_spec_done_decisions" />
@@ -11034,18 +11131,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program_name_mappings" EntitySet="program_name_mappings" />
           </AssociationSet>
-          <EntitySet Name="scx_generation_open_market_job_affiliates" EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" />
-          <EntitySet Name="scx_generation_open_market_job_dayparts" EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" />
-          <EntitySet Name="scx_generation_open_market_job_markets" EntityType="BroadcastModel.scx_generation_open_market_job_markets" />
-          <EntitySet Name="scx_generation_open_market_jobs" EntityType="BroadcastModel.scx_generation_open_market_jobs" />
-          <AssociationSet Name="FK_scx_generation_open_market_job_markets_markets" Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts" Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts">
-            <End Role="standard_dayparts" EntitySet="standard_dayparts" />
-            <End Role="scx_generation_open_market_job_dayparts" EntitySet="scx_generation_open_market_job_dayparts" />
-          </AssociationSet>
           <EntitySet Name="programs" EntityType="BroadcastModel.program" />
           <AssociationSet Name="FK_programs_genres" Association="BroadcastModel.FK_programs_genres">
             <End Role="genre" EntitySet="genres" />
@@ -11054,6 +11139,64 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_programs_show_types" Association="BroadcastModel.FK_programs_show_types">
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program" EntitySet="programs" />
+          </AssociationSet>
+          <EntitySet Name="scx_generation_open_market_job_affiliates" EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" />
+          <EntitySet Name="scx_generation_open_market_job_dayparts" EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" />
+          <EntitySet Name="scx_generation_open_market_job_files" EntityType="BroadcastModel.scx_generation_open_market_job_files" />
+          <EntitySet Name="scx_generation_open_market_job_markets" EntityType="BroadcastModel.scx_generation_open_market_job_markets" />
+          <EntitySet Name="scx_generation_open_market_jobs" EntityType="BroadcastModel.scx_generation_open_market_jobs" />
+          <AssociationSet Name="FK_scx_generation_open_market_job_markets_markets" Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_affiliates" EntitySet="scx_generation_open_market_job_affiliates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_dayparts" EntitySet="scx_generation_open_market_job_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts" Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts">
+            <End Role="standard_dayparts" EntitySet="standard_dayparts" />
+            <End Role="scx_generation_open_market_job_dayparts" EntitySet="scx_generation_open_market_job_dayparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_files" EntitySet="scx_generation_open_market_job_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
+          </AssociationSet>
+          <EntitySet Name="plans" EntityType="BroadcastModel.plan" />
+          <AssociationSet Name="FK_plans_campaigns" Association="BroadcastModel.FK_plans_campaigns">
+            <End Role="campaign" EntitySet="campaigns" />
+            <End Role="plan" EntitySet="plans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_iscis_plans" Association="BroadcastModel.FK_plan_iscis_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_iscis" EntitySet="plan_iscis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_plan_versions_plans" Association="BroadcastModel.FK_plan_versions_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="plan_versions" EntitySet="plan_versions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_done_plans" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="spot_exceptions_out_of_specs_done" EntitySet="spot_exceptions_out_of_specs_done" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_out_of_specs_plans" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="spot_exceptions_out_of_specs" EntitySet="spot_exceptions_out_of_specs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_done_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="spot_exceptions_recommended_plan_details_done" EntitySet="spot_exceptions_recommended_plan_details_done" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans">
+            <End Role="plan" EntitySet="plans" />
+            <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -14339,7 +14482,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="proposals" Relationship="BroadcastModel.FK_proposals_campaigns" FromRole="campaign" ToRole="proposal" />
           <NavigationProperty Name="campaign_summaries" Relationship="BroadcastModel.FK_campaign_summaries_campaign" FromRole="campaign" ToRole="campaign_summaries" />
-          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
           <Property Name="agency_master_id" Type="Guid" />
           <Property Name="advertiser_master_id" Type="Guid" />
           <Property Name="unified_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -14348,6 +14490,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
           <NavigationProperty Name="campaign_plan_secondary_audiences" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" FromRole="campaign" ToRole="campaign_plan_secondary_audiences" />
           <Property Name="view_details_url" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
         </EntityType>
         <Association Name="FK_proposals_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
@@ -14518,32 +14661,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_summaries_plan_versions" FromRole="plan_version_summaries" ToRole="plan_versions" />
           <Property Name="fluidity_percentage" Type="Double" />
         </EntityType>
-        <EntityType Name="plan">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="campaign_id" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="265" FixedLength="false" Unicode="true" />
-          <Property Name="product_id" Type="Int32" />
-          <Property Name="latest_version_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
-          <Property Name="product_master_id" Type="Guid" />
-          <Property Name="spot_allocation_model_mode" Type="Int32" />
-          <Property Name="plan_mode" Type="Int32" Nullable="false" />
-          <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="deleted_at" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan" ToRole="plan_versions" />
-          <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
-          <Property Name="unified_tactic_line_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
-          <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
-          <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
-          <NavigationProperty Name="spot_exceptions_out_of_specs_done" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs_done" />
-          <NavigationProperty Name="spot_exceptions_recommended_plan_details_done" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details_done" />
-          <Property Name="nielsen_transmittal_code" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-        </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
           <End Type="BroadcastModel.plan_version_secondary_audiences" Role="plan_version_secondary_audiences" Multiplicity="*" />
@@ -14553,18 +14670,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="plan_version_secondary_audiences">
               <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_plans_campaigns">
-          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="campaign">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan">
-              <PropertyRef Name="campaign_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18234,8 +18339,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_secondary_audiences" Relationship="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" FromRole="plan_versions" ToRole="plan_version_secondary_audiences" />
           <NavigationProperty Name="plan_version_summaries" Relationship="BroadcastModel.FK_plan_version_summaries_plan_versions" FromRole="plan_versions" ToRole="plan_version_summaries" />
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan_versions" ToRole="plan" />
           <NavigationProperty Name="fluidity_categories" Relationship="BroadcastModel.FK_plan_versions_fluidity_categories" FromRole="plan_versions" ToRole="fluidity_categories" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan_versions" ToRole="plan" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -18491,18 +18596,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_plan_versions_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_versions">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="fluidity_categories">
           <Key>
             <PropertyRef Name="id" />
@@ -18541,23 +18634,11 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="modified_at" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="modified_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="spot_length_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_plan_iscis_spot_lengths" FromRole="plan_iscis" ToRole="spot_lengths" />
           <Property Name="start_time" Type="Int32" />
           <Property Name="end_time" Type="Int32" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan_iscis" ToRole="plan" />
         </EntityType>
-        <Association Name="FK_plan_iscis_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
-          <End Type="BroadcastModel.plan_iscis" Role="plan_iscis" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_iscis">
-              <PropertyRef Name="plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_plan_iscis_spot_lengths">
           <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="1" />
           <End Type="BroadcastModel.plan_iscis" Role="plan_iscis" Multiplicity="*" />
@@ -18766,9 +18847,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="inventory_source_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" FromRole="spot_exceptions_out_of_specs" ToRole="audience" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs" ToRole="spot_exceptions_out_of_spec_reason_codes" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_exceptions_out_of_specs" ToRole="spot_lengths" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="spot_exceptions_out_of_specs" ToRole="plan" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_details">
           <Key>
@@ -18802,8 +18883,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_recommended_plans" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="spot_exceptions_recommended_plans" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="spot_exceptions_recommended_plan_details" ToRole="plan" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plans">
           <Key>
@@ -18997,30 +19078,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs">
-              <PropertyRef Name="recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_recommended_plan_details_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_recommended_plan_details">
-              <PropertyRef Name="recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes">
           <End Type="BroadcastModel.spot_exceptions_out_of_spec_reason_codes" Role="spot_exceptions_out_of_spec_reason_codes" Multiplicity="1" />
           <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
@@ -19141,10 +19198,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="inventory_source_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="audience" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_audiences" FromRole="spot_exceptions_out_of_specs_done" ToRole="audience" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" FromRole="spot_exceptions_out_of_specs_done" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_done_decisions" Relationship="BroadcastModel.FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done" FromRole="spot_exceptions_out_of_specs_done" ToRole="spot_exceptions_out_of_spec_done_decisions" />
           <NavigationProperty Name="spot_exceptions_out_of_spec_reason_codes" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_exceptions_out_of_spec_reason_codes" FromRole="spot_exceptions_out_of_specs_done" ToRole="spot_exceptions_out_of_spec_reason_codes" />
           <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" FromRole="spot_exceptions_out_of_specs_done" ToRole="spot_lengths" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" FromRole="spot_exceptions_out_of_specs_done" ToRole="plan" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_details_done">
           <Key>
@@ -19178,9 +19235,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" FromRole="spot_exceptions_recommended_plan_details_done" ToRole="plan" />
           <NavigationProperty Name="spot_exceptions_recommended_plans_done" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_spot_exceptions_recommended_plans_done" FromRole="spot_exceptions_recommended_plan_details_done" ToRole="spot_exceptions_recommended_plans_done" />
           <NavigationProperty Name="spot_exceptions_recommended_plan_done_decisions" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_done_decisions_spot_exceptions_recommended_plans_details_done" FromRole="spot_exceptions_recommended_plan_details_done" ToRole="spot_exceptions_recommended_plan_done_decisions" />
+          <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" FromRole="spot_exceptions_recommended_plan_details_done" ToRole="plan" />
         </EntityType>
         <EntityType Name="spot_exceptions_recommended_plan_done_decisions">
           <Key>
@@ -19229,30 +19286,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="spot_exceptions_out_of_specs_done">
               <PropertyRef Name="audience_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_out_of_specs_done_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
-          <End Type="BroadcastModel.spot_exceptions_out_of_specs_done" Role="spot_exceptions_out_of_specs_done" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_out_of_specs_done">
-              <PropertyRef Name="recommended_plan_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_spot_exceptions_recommended_plan_details_done_plans">
-          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
-          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details_done" Role="spot_exceptions_recommended_plan_details_done" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="plan">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="spot_exceptions_recommended_plan_details_done">
-              <PropertyRef Name="recommended_plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19354,68 +19387,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="scx_generation_open_market_job_affiliates">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="scx_generation_open_market_job_dayparts">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" FromRole="scx_generation_open_market_job_dayparts" ToRole="standard_dayparts" />
-        </EntityType>
-        <EntityType Name="scx_generation_open_market_job_markets">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" FromRole="scx_generation_open_market_job_markets" ToRole="market" />
-        </EntityType>
-        <EntityType Name="scx_generation_open_market_jobs">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="status" Type="Int32" Nullable="false" />
-          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="completed_at" Type="DateTime" Precision="3" />
-          <Property Name="requested_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_scx_generation_open_market_job_markets_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
-          <End Type="BroadcastModel.scx_generation_open_market_job_markets" Role="scx_generation_open_market_job_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="market">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="scx_generation_open_market_job_markets">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts">
-          <End Type="BroadcastModel.standard_dayparts" Role="standard_dayparts" Multiplicity="1" />
-          <End Type="BroadcastModel.scx_generation_open_market_job_dayparts" Role="scx_generation_open_market_job_dayparts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="standard_dayparts">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="scx_generation_open_market_job_dayparts">
-              <PropertyRef Name="standard_daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="program">
           <Key>
             <PropertyRef Name="id" />
@@ -19448,6 +19419,251 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="program">
               <PropertyRef Name="show_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="scx_generation_open_market_job_affiliates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_affiliates" ToRole="scx_generation_open_market_jobs" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_dayparts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_dayparts" ToRole="scx_generation_open_market_jobs" />
+          <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" FromRole="scx_generation_open_market_job_dayparts" ToRole="standard_dayparts" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="export_genre_type_id" Type="Int32" Nullable="false" />
+          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="shared_folder_files_id" Type="Guid" />
+          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_files" ToRole="scx_generation_open_market_jobs" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_markets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
+          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" FromRole="scx_generation_open_market_job_markets" ToRole="market" />
+          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_markets" ToRole="scx_generation_open_market_jobs" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="status" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="completed_at" Type="DateTime" Precision="3" />
+          <Property Name="requested_by" Type="String" Nullable="false" MaxLength="63" FixedLength="false" Unicode="false" />
+          <Property Name="export_genre_type_id" Type="Int32" Nullable="false" />
+          <Property Name="inventory_source_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="scx_generation_open_market_job_affiliates" Relationship="BroadcastModel.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_jobs" ToRole="scx_generation_open_market_job_affiliates" />
+          <NavigationProperty Name="scx_generation_open_market_job_dayparts" Relationship="BroadcastModel.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_jobs" ToRole="scx_generation_open_market_job_dayparts" />
+          <NavigationProperty Name="scx_generation_open_market_job_files" Relationship="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_jobs" ToRole="scx_generation_open_market_job_files" />
+          <NavigationProperty Name="scx_generation_open_market_job_markets" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_jobs" ToRole="scx_generation_open_market_job_markets" />
+        </EntityType>
+        <Association Name="FK_scx_generation_open_market_job_markets_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_markets" Role="scx_generation_open_market_job_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_markets">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs">
+          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_affiliates" Role="scx_generation_open_market_job_affiliates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_affiliates">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs">
+          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_dayparts" Role="scx_generation_open_market_job_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_dayparts">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts">
+          <End Type="BroadcastModel.standard_dayparts" Role="standard_dayparts" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_dayparts" Role="scx_generation_open_market_job_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="standard_dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_dayparts">
+              <PropertyRef Name="standard_daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
+          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_files" Role="scx_generation_open_market_job_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_files">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
+          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_markets" Role="scx_generation_open_market_job_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_markets">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="plan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="campaign_id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="265" FixedLength="false" Unicode="true" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="latest_version_id" Type="Int32" Nullable="false" />
+          <Property Name="product_master_id" Type="Guid" />
+          <Property Name="spot_allocation_model_mode" Type="Int32" />
+          <Property Name="plan_mode" Type="Int32" Nullable="false" />
+          <Property Name="deleted_by" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="deleted_at" Type="DateTime" Precision="7" />
+          <Property Name="unified_tactic_line_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unified_campaign_last_sent_at" Type="DateTime" Precision="7" />
+          <Property Name="unified_campaign_last_received_at" Type="DateTime" Precision="7" />
+          <Property Name="nielsen_transmittal_code" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="campaign" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="plan" ToRole="campaign" />
+          <NavigationProperty Name="plan_iscis" Relationship="BroadcastModel.FK_plan_iscis_plans" FromRole="plan" ToRole="plan_iscis" />
+          <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan" ToRole="plan_versions" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs_done" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs_done" />
+          <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" FromRole="plan" ToRole="spot_exceptions_out_of_specs" />
+          <NavigationProperty Name="spot_exceptions_recommended_plan_details_done" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details_done" />
+          <NavigationProperty Name="spot_exceptions_recommended_plan_details" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" FromRole="plan" ToRole="spot_exceptions_recommended_plan_details" />
+        </EntityType>
+        <Association Name="FK_plans_campaigns">
+          <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1" />
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="campaign">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan">
+              <PropertyRef Name="campaign_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_iscis_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_iscis" Role="plan_iscis" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_iscis">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_plan_versions_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_versions" Role="plan_versions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_versions">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_done_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs_done" Role="spot_exceptions_out_of_specs_done" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs_done">
+              <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_out_of_specs_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_out_of_specs" Role="spot_exceptions_out_of_specs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_out_of_specs">
+              <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_recommended_plan_details_done_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details_done" Role="spot_exceptions_recommended_plan_details_done" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_recommended_plan_details_done">
+              <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_spot_exceptions_recommended_plan_details_plans">
+          <End Type="BroadcastModel.plan" Role="plan" Multiplicity="1" />
+          <End Type="BroadcastModel.spot_exceptions_recommended_plan_details" Role="spot_exceptions_recommended_plan_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="plan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_recommended_plan_details">
+              <PropertyRef Name="recommended_plan_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -20955,25 +21171,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="active_day_count" ColumnName="active_day_count" />
                 <ScalarProperty Name="hiatus_days_count" ColumnName="hiatus_days_count" />
                 <ScalarProperty Name="processing_status" ColumnName="processing_status" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="plans">
-            <EntityTypeMapping TypeName="BroadcastModel.plan">
-              <MappingFragment StoreEntitySet="plans">
-                <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
-                <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />
-                <ScalarProperty Name="unified_tactic_line_id" ColumnName="unified_tactic_line_id" />
-                <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
-                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
-                <ScalarProperty Name="plan_mode" ColumnName="plan_mode" />
-                <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
-                <ScalarProperty Name="product_master_id" ColumnName="product_master_id" />
-                <ScalarProperty Name="latest_version_id" ColumnName="latest_version_id" />
-                <ScalarProperty Name="product_id" ColumnName="product_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -22846,9 +23043,64 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="programs">
+            <EntityTypeMapping TypeName="BroadcastModel.program">
+              <MappingFragment StoreEntitySet="programs">
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+                <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scx_generation_open_market_job_affiliates">
+            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_affiliates">
+              <MappingFragment StoreEntitySet="scx_generation_open_market_job_affiliates">
+                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scx_generation_open_market_job_dayparts">
+            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_dayparts">
+              <MappingFragment StoreEntitySet="scx_generation_open_market_job_dayparts">
+                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
+                <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scx_generation_open_market_job_files">
+            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_files">
+              <MappingFragment StoreEntitySet="scx_generation_open_market_job_files">
+                <ScalarProperty Name="shared_folder_files_id" ColumnName="shared_folder_files_id" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="export_genre_type_id" ColumnName="export_genre_type_id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scx_generation_open_market_job_markets">
+            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_markets">
+              <MappingFragment StoreEntitySet="scx_generation_open_market_job_markets">
+                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="scx_generation_open_market_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_jobs">
               <MappingFragment StoreEntitySet="scx_generation_open_market_jobs">
+                <ScalarProperty Name="inventory_source_id" ColumnName="inventory_source_id" />
+                <ScalarProperty Name="export_genre_type_id" ColumnName="export_genre_type_id" />
                 <ScalarProperty Name="requested_by" ColumnName="requested_by" />
                 <ScalarProperty Name="completed_at" ColumnName="completed_at" />
                 <ScalarProperty Name="queued_at" ColumnName="queued_at" />
@@ -22859,12 +23111,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="programs">
-            <EntityTypeMapping TypeName="BroadcastModel.program">
-              <MappingFragment StoreEntitySet="programs">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="show_type_id" ColumnName="show_type_id" />
+          <EntitySetMapping Name="plans">
+            <EntityTypeMapping TypeName="BroadcastModel.plan">
+              <MappingFragment StoreEntitySet="plans">
+                <ScalarProperty Name="nielsen_transmittal_code" ColumnName="nielsen_transmittal_code" />
+                <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
+                <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />
+                <ScalarProperty Name="unified_tactic_line_id" ColumnName="unified_tactic_line_id" />
+                <ScalarProperty Name="deleted_at" ColumnName="deleted_at" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="plan_mode" ColumnName="plan_mode" />
+                <ScalarProperty Name="spot_allocation_model_mode" ColumnName="spot_allocation_model_mode" />
+                <ScalarProperty Name="product_master_id" ColumnName="product_master_id" />
+                <ScalarProperty Name="latest_version_id" ColumnName="latest_version_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

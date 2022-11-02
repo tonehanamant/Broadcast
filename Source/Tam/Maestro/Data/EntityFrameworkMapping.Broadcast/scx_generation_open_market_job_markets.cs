@@ -19,5 +19,6 @@ namespace EntityFrameworkMapping.Broadcast
         public int scx_generation_open_market_job_id { get; set; }
     
         public virtual market market { get; set; }
+        public virtual scx_generation_open_market_jobs scx_generation_open_market_jobs { get; set; }
     }
 }

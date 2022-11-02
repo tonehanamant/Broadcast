@@ -29,7 +29,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> start_time { get; set; }
         public Nullable<int> end_time { get; set; }
     
-        public virtual plan plan { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual plan plan { get; set; }
     }
 }

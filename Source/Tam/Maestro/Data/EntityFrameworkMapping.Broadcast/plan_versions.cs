@@ -89,7 +89,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
-        public virtual plan plan { get; set; }
         public virtual fluidity_categories fluidity_categories { get; set; }
+        public virtual plan plan { get; set; }
     }
 }

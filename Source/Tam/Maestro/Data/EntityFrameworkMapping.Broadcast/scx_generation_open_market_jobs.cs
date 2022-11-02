@@ -14,6 +14,14 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class scx_generation_open_market_jobs
     {
+        public scx_generation_open_market_jobs()
+        {
+            this.scx_generation_open_market_job_affiliates = new HashSet<scx_generation_open_market_job_affiliates>();
+            this.scx_generation_open_market_job_dayparts = new HashSet<scx_generation_open_market_job_dayparts>();
+            this.scx_generation_open_market_job_files = new HashSet<scx_generation_open_market_job_files>();
+            this.scx_generation_open_market_job_markets = new HashSet<scx_generation_open_market_job_markets>();
+        }
+    
         public int id { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
@@ -21,5 +29,12 @@ namespace EntityFrameworkMapping.Broadcast
         public System.DateTime queued_at { get; set; }
         public Nullable<System.DateTime> completed_at { get; set; }
         public string requested_by { get; set; }
+        public int export_genre_type_id { get; set; }
+        public int inventory_source_id { get; set; }
+    
+        public virtual ICollection<scx_generation_open_market_job_affiliates> scx_generation_open_market_job_affiliates { get; set; }
+        public virtual ICollection<scx_generation_open_market_job_dayparts> scx_generation_open_market_job_dayparts { get; set; }
+        public virtual ICollection<scx_generation_open_market_job_files> scx_generation_open_market_job_files { get; set; }
+        public virtual ICollection<scx_generation_open_market_job_markets> scx_generation_open_market_job_markets { get; set; }
     }
 }

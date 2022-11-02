@@ -99,7 +99,7 @@
   "ModifiedBy": "Test User",
   "ModifiedDate": "2019-01-12T12:30:29",
   "Name": "New Plan",
-  "NetBudget": 117.64705882352941176470588235,
+  "NetBudget": 85.00,
   "NielsenTransmittalCode": null,
   "PostingType": 2,
   "PricingBudgetCpmLever": 1,

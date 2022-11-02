@@ -18,6 +18,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int standard_daypart_id { get; set; }
         public int scx_generation_open_market_job_id { get; set; }
     
+        public virtual scx_generation_open_market_jobs scx_generation_open_market_jobs { get; set; }
         public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

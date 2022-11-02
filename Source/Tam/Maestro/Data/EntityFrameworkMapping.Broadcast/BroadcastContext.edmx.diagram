@@ -259,9 +259,7 @@
         <EntityTypeShape EntityType="BroadcastModel.plan_version_flight_hiatus_days" Width="1.5" PointX="19" PointY="58.125" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_secondary_audiences" Width="1.5" PointX="16.125" PointY="7.5" />
         <EntityTypeShape EntityType="BroadcastModel.plan_version_summaries" Width="1.5" PointX="14.625" PointY="59.875" />
-        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="3" PointY="33.875" />
         <AssociationConnector Association="BroadcastModel.FK_plan_secondary_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_plan_available_markets_market_coverage_file" />
         <AssociationConnector Association="BroadcastModel.FK_plan_blackout_markets_market_coverage_file" />
         <AssociationConnector Association="BroadcastModel.FK_plan_available_markets_markets" />
@@ -536,11 +534,9 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_secondary_audiences_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_summaries_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
         <EntityTypeShape EntityType="BroadcastModel.fluidity_categories" Width="1.5" PointX="32.375" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_fluidity_categories" />
         <EntityTypeShape EntityType="BroadcastModel.plan_iscis" Width="1.5" PointX="5.25" PointY="33.5" />
-        <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.schedule" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="BroadcastModel.FK_schedules_media_months" />
@@ -566,8 +562,6 @@
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_plan" Width="1.5" PointX="38.375" PointY="29.25" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_reel_roster" Width="1.5" PointX="38.375" PointY="19.25" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
@@ -580,8 +574,6 @@
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_done_decisions" Width="1.5" PointX="12.5" PointY="73.5" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans_done" Width="1.5" PointX="3" PointY="100.375" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
@@ -590,15 +582,28 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.program_name_mappings" Width="1.5" PointX="26.25" PointY="58" />
         <AssociationConnector Association="BroadcastModel.FK_program_name_mappings_show_types" />
-        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" Width="1.5" PointX="28.375" PointY="18" />
-        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" Width="1.5" PointX="18.25" PointY="34.375" />
-        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_markets" Width="1.5" PointX="3" PointY="10.875" />
-        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_jobs" Width="1.5" PointX="38.375" PointY="40" />
-        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" />
-        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" />
         <EntityTypeShape EntityType="BroadcastModel.program" Width="1.5" PointX="35.25" PointY="55.125" />
         <AssociationConnector Association="BroadcastModel.FK_programs_genres" />
         <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" Width="1.5" PointX="40.625" PointY="48.625" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" Width="1.5" PointX="40.625" PointY="40.125" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_files" Width="1.5" PointX="40.625" PointY="51.125" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_markets" Width="1.5" PointX="40.625" PointY="32.125" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_jobs" Width="1.5" PointX="38.375" PointY="44.25" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" />
+        <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="3" PointY="106.25" />
+        <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

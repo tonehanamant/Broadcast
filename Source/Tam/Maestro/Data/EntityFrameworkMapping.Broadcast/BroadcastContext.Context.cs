@@ -133,7 +133,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<plan_version_flight_hiatus_days> plan_version_flight_hiatus_days { get; set; }
         public virtual DbSet<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual DbSet<plan_version_summaries> plan_version_summaries { get; set; }
-        public virtual DbSet<plan> plans { get; set; }
         public virtual DbSet<plan_version_summary_quarters> plan_version_summary_quarters { get; set; }
         public virtual DbSet<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual DbSet<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
@@ -254,10 +253,12 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_recommended_plan_done_decisions> spot_exceptions_recommended_plan_done_decisions { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
+        public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<scx_generation_open_market_job_affiliates> scx_generation_open_market_job_affiliates { get; set; }
         public virtual DbSet<scx_generation_open_market_job_dayparts> scx_generation_open_market_job_dayparts { get; set; }
+        public virtual DbSet<scx_generation_open_market_job_files> scx_generation_open_market_job_files { get; set; }
         public virtual DbSet<scx_generation_open_market_job_markets> scx_generation_open_market_job_markets { get; set; }
         public virtual DbSet<scx_generation_open_market_jobs> scx_generation_open_market_jobs { get; set; }
-        public virtual DbSet<program> programs { get; set; }
+        public virtual DbSet<plan> plans { get; set; }
     }
 }

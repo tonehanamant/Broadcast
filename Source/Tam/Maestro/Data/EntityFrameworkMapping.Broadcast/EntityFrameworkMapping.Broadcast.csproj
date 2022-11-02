@@ -855,6 +855,9 @@
     <Compile Include="scx_generation_open_market_job_dayparts.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="scx_generation_open_market_job_files.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="scx_generation_open_market_job_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

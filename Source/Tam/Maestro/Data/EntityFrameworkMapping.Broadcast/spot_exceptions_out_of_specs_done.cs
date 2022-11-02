@@ -46,9 +46,9 @@ namespace EntityFrameworkMapping.Broadcast
         public int ingested_media_week_id { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual plan plan { get; set; }
         public virtual ICollection<spot_exceptions_out_of_spec_done_decisions> spot_exceptions_out_of_spec_done_decisions { get; set; }
         public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
+        public virtual plan plan { get; set; }
     }
 }
