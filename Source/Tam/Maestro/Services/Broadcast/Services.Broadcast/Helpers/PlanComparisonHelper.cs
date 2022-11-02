@@ -53,6 +53,7 @@ namespace Services.Broadcast.Helpers
             new ComparisonMinorProperty(typeof(PlanDto), "CustomDayparts"),
             new ComparisonMinorProperty(typeof(PlanDto), "PricingBudgetCpmLever"),
             new ComparisonMinorProperty(typeof(PlanDto), "BuyingBudgetCpmLever"),
+            new ComparisonMinorProperty(typeof(PlanDto), "NielsenTransmittalCode"),
 
             // ignored - not affecting pricing goals or inventory
             new ComparisonMinorProperty(typeof(WeeklyBreakdownWeek), "AduImpressions"),

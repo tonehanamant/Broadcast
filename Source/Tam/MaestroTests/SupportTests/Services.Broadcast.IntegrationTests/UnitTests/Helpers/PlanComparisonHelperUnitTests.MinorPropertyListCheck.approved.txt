@@ -136,6 +136,10 @@
     "PropertyName": "BuyingBudgetCpmLever"
   },
   {
+    "ClassTypeName": "PlanDto",
+    "PropertyName": "NielsenTransmittalCode"
+  },
+  {
     "ClassTypeName": "WeeklyBreakdownWeek",
     "PropertyName": "AduImpressions"
   },
