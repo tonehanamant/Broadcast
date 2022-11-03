@@ -116,10 +116,9 @@ namespace Services.Broadcast.ApplicationServices
         private const string SERIES_SHOW_TYPE = "Series";
         private const string UnmappedProgramReportFileName = "UnmappedProgramReport.xlsx";
         private const float MATCH_EXACT = 1;
-        private const float MATCH_NOT_FOUND = 0;
-        private Lazy<bool> _IsCentralizedProgramListEnabled;        
-        //This is going to remove in BP-5532 story
-        private const string ProgramGenre = "Various";
+        private const float MATCH_NOT_FOUND = 0;       
+        private Lazy<bool> _IsCentralizedProgramListEnabled;
+        private Lazy<bool> _IsProgramNameMatchBySimilarityV2;               
 
         public ProgramMappingService(
             IBackgroundJobClient backgroundJobClient,
@@ -147,6 +146,8 @@ namespace Services.Broadcast.ApplicationServices
             _DateTimeEngine = dateTimeEngine;            
             _IsCentralizedProgramListEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CENTRALIZED_PROGRAM_LIST));
+            _IsProgramNameMatchBySimilarityV2 = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PROGRAM_NAME_MATCH_BY_SIMILARITY_V2));
         }
 
         /// <inheritdoc />
@@ -404,7 +405,7 @@ namespace Services.Broadcast.ApplicationServices
             updatedProgramMappings = new List<ProgramMappingsDto>();
             foreach (var mapping in mappings)
                 {
-                    var genre = _GetGenre(ProgramGenre);
+                    var genre = _GetGenre(mapping.OfficialGenre);
                     if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
                     {
                         var showType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType);
@@ -510,7 +511,7 @@ namespace Services.Broadcast.ApplicationServices
             durationSw.Start();
 
             var programNames = _InventoryRepository.GetUnmappedPrograms().Where(p => p != null).ToList();
-
+           
             durationSw.Stop();
             _LogInfo($"Obtained unmapped programs with count {programNames.Count} in {durationSw.ElapsedMilliseconds} ms.");
 
@@ -547,8 +548,16 @@ namespace Services.Broadcast.ApplicationServices
             _MatchProgramByKeyword(result);
 
             _LogInfo("Attempting matching suggestions programs by similarity.");
-            _MatchBySimilarity(result, masterProgramList);
-
+            if(_IsProgramNameMatchBySimilarityV2.Value)
+            {
+                _LogInfo("Attempting matching suggestions programs by using MatchBySmilarity V2.");          
+                _MatchBySimilarity_Improvement(result, masterProgramList);
+            }
+            else
+            {
+                _LogInfo("Attempting matching suggestions programs by using MatchBySmilarity V1.");
+                _MatchBySimilarity(result, masterProgramList);
+            }
             _LogInfo("Finished compiling mapping suggestions.");
 
             return result;
@@ -580,6 +589,72 @@ namespace Services.Broadcast.ApplicationServices
                     }
                 }
             }
+        }
+
+        private void _MatchBySimilarity_Improvement(List<UnmappedProgram> programs, List<ProgramMappingsDto> masterProgramList)
+        {
+            var unmatchedPrograms = programs.Where(p => p.MatchConfidence != MATCH_EXACT);
+
+            _LogInfo($"Attempting similarity suggestions.  Checking {programs.Count} programs against a master list of {masterProgramList.Count} programs.; ");
+
+            if (!unmatchedPrograms.Any())
+                return;
+
+            var jaroWinkler = new JaroWinkler();
+
+            const double offset = 0.65;
+            const double scale = 0.35;
+            const int n_nearest = 8;
+
+            foreach (var unmatchedProgram in unmatchedPrograms)
+            {
+                // get a list of the scores for this item against all master programs.
+                var scores = masterProgramList.Select(mp =>
+                {
+                    var itemScore = jaroWinkler.Similarity(
+                      unmatchedProgram.ProgramName.ToLower(),
+                      mp.OfficialProgramName.ToLower());
+                    return new
+                    {
+                        name = mp.OfficialProgramName,
+                        score = itemScore,
+                    };
+                }).ToList();
+
+                // normalize the scores and order descending
+                var sortedNormalizedScores = scores.Select(s =>
+                {
+                    var normalizedScore = (s.score - offset) / scale;
+                    return new
+                    {
+                        name = s.name,
+                        score = s.score,
+                        normalizedScore = normalizedScore
+                    };
+                }).OrderByDescending(s => s.normalizedScore).ToList();
+
+                // we know this is the item we want so we will take it and then adjust it's score.
+                var finalScoreItem = sortedNormalizedScores[0];
+
+                // Calculate a score penalty considering the top n_nearest items
+                /* 
+                   We want to skip the first item and take the next (n_nearest - 1)
+                   so in an array : [1,2,3,4,5,6,7,8,9] we are taking only items 2,3,4,5,6,7,8
+                */
+                var penaltyItems = sortedNormalizedScores.Skip(1).Take(n_nearest - 1).ToList();
+                var penalty = 1 / (n_nearest - 1) *
+                  penaltyItems.Sum(s => Math.Pow(s.normalizedScore, n_nearest));
+
+                // We can now calculate the final score.
+                var finalScore = finalScoreItem.normalizedScore - penalty;
+
+                // and set it on the returned objects
+                unmatchedProgram.MatchConfidence = (float)finalScore;
+                unmatchedProgram.MatchedName = finalScoreItem.name;
+                unmatchedProgram.MatchType = ProgramMappingMatchTypeEnum.BySimilarity;
+            }
+            _LogInfo($"Completed similarity suggestions. Checked {programs.Count} " +
+                $"programs against a master list of {masterProgramList.Count} programs.; ");
         }
 
         private List<UnmappedProgram> _MatchAgainstMasterList(List<UnmappedProgram> programs, List<ProgramMappingsDto> masterProgramList)
@@ -635,8 +710,7 @@ namespace Services.Broadcast.ApplicationServices
                     .SingleOrDefault();
                 if (foundMapping != null)
                 {
-                    program.MatchedName = foundMapping.OfficialProgramName;
-                    program.Genre = foundMapping.OfficialGenre.Name;
+                    program.MatchedName = foundMapping.OfficialProgramName;                   
                     program.ShowType = foundMapping.OfficialShowType.Name;
                     program.MatchConfidence = MATCH_EXACT; //Exact match found
                     program.MatchType = ProgramMappingMatchTypeEnum.ByExistingMapping;
@@ -672,6 +746,9 @@ namespace Services.Broadcast.ApplicationServices
 
             var keywordMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.ByKeyword).ToList();
             var keywordReport = _GenerateExcelFile(keywordMatches, $"Unmapped_Keyword_{_GetCurrentDateOnReportFormat()}.xlsx");
+
+            var otherMatches = programs.Where(p => p.MatchType == ProgramMappingMatchTypeEnum.BySimilarity).ToList();
+            var otherReport = _GenerateExcelFile(otherMatches, $"Unmapped_Other_{_GetCurrentDateOnReportFormat()}.xlsx");
             // commenting out for BP - 5535.Genres moving to relational table.
             //We may bring them back after the refactor... but the long term will hopefully be in place before we even generate this file again
             //const string SPORTS = "Sports";
@@ -689,7 +766,7 @@ namespace Services.Broadcast.ApplicationServices
             // commenting out for BP - 5535.Genres moving to relational table.
             //We may bring them back after the refactor... but the long term will hopefully be in place before we even generate this file again
             //return _ZipReports(exactReport, keywordReport, sportsReport, newsReport, otherReport);
-            return _ZipReports(exactReport, keywordReport);
+            return _ZipReports(exactReport, keywordReport,otherReport);
         }
 
         private string _GetCurrentDateOnReportFormat() =>
@@ -778,15 +855,20 @@ namespace Services.Broadcast.ApplicationServices
             _ProgramMappingRepository.UploadMasterProgramMappings(uniqueList, userName, createdDate);
         }
         private List<ProgramMappingsDto> _RemoveDuplicateFromMasterList(List<ProgramMappingsDto> masterList)
-        {
-            var distinctMasterList = masterList
-                .GroupBy(x => new { x.OfficialGenre.Id, x.OfficialProgramName })
-                .Select(x => x.First())
-                .OrderBy(x => x.OfficialProgramName)
-                .ToList();
-
-            return distinctMasterList;
+        { 
+            List<ProgramMappingsDto> programMappings = new List<ProgramMappingsDto>();
+            foreach (var program in masterList)
+            {
+                if (programMappings.Count(a => a.OfficialGenre.Id == program.OfficialGenre.Id &&
+                 a.OfficialShowType.Id == program.OfficialShowType.Id &&
+                 a.OfficialProgramName.ToLower() == program.OfficialProgramName.ToLower()) == 0)
+                {
+                    programMappings.Add(program);
+                }
+            }
+            return programMappings;
         }
+      
         /// <summary>
         /// Upload the excel of program file this file reads and uploaded to the database with the required checks
         /// </summary>       

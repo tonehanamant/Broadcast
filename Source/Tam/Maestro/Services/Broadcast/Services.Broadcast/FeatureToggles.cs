@@ -55,5 +55,6 @@
         public static string PROGRAM_GENRE_RELATION_V_2 = "program-genre-relation-v-2";
 
         public static string ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC = "enable-spot-exceptions-notify-results-sync";
+        public static string ENABLE_PROGRAM_NAME_MATCH_BY_SIMILARITY_V2 = "enable-program-name-match-by-similarity-v2";
     }
 }

@@ -270,6 +270,20 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public void GetUnmappedProgramsTest()
         {
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PROGRAM_NAME_MATCH_BY_SIMILARITY_V2] = false;
+            var result = _ProgramMappingService.GetUnmappedPrograms();
+
+            // Take 100 programs only otherwise the result file is too big and the file comparer
+            // is not able to compare the results.
+            Approvals.Verify(IntegrationTestHelper.ConvertToJsonMoreRounding(result.Take(100)));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void GetUnmappedProgramsTest_ToggleOn()
+        {
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PROGRAM_NAME_MATCH_BY_SIMILARITY_V2] = true;
             var result = _ProgramMappingService.GetUnmappedPrograms();
 
             // Take 100 programs only otherwise the result file is too big and the file comparer

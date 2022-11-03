@@ -18,76 +18,76 @@
     "ShowType": "Series"
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.61667,
+    "Genre": null,
+    "MatchConfidence": -0.09524,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Prime Access Rotator",
     "ProgramName": "Prime Access Rotator",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.70803,
+    "Genre": null,
+    "MatchConfidence": 0.16581,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Saturday 2P Movie",
     "ProgramName": "Saturday Movie",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.6004,
+    "Genre": null,
+    "MatchConfidence": -0.14172,
     "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "WINK Sat AM News",
     "ProgramName": "WINK Sat AM News",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.61852,
+    "Genre": null,
+    "MatchConfidence": -0.08995,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "WINK News at 4p",
     "ProgramName": "WINK News",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.73117,
+    "Genre": null,
+    "MatchConfidence": 0.23191,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "HOI 19 News At 10",
     "ProgramName": "HOI 19 News",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.52222,
+    "Genre": null,
+    "MatchConfidence": -0.36508,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "Dr Oz",
     "ProgramName": "Dr Oz",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.81717,
+    "Genre": null,
+    "MatchConfidence": 0.47764,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "America's Heartland",
     "ProgramName": "America's Heartland",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.67857,
+    "Genre": null,
+    "MatchConfidence": 0.08163,
     "MatchedName": "Avengers",
     "MatchType": 4,
     "OriginalName": "ENGINE PWR/MUSCLE CAR",
     "ProgramName": "ENGINE PWR/MUSCLE CAR",
-    "ShowType": "Movie"
+    "ShowType": null
   },
   {
     "Genre": "News",
@@ -99,211 +99,211 @@
     "ShowType": "News"
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.61111,
+    "Genre": null,
+    "MatchConfidence": -0.11111,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "ABC Action News At 6P",
     "ProgramName": "ABC Action News",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.61,
+    "Genre": null,
+    "MatchConfidence": -0.11429,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "Access Hollywood ( During College Football Season)",
     "ProgramName": "Access Hollywood ( During College Football Season)",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.58485,
+    "Genre": null,
+    "MatchConfidence": -0.18615,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "WQAD NEWS 8 AT 5P",
     "ProgramName": "WQAD NEWS 8",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.73684,
+    "Genre": null,
+    "MatchConfidence": 0.24812,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "8 News Late Edition",
     "ProgramName": "8 News Late Edition",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.55556,
+    "Genre": null,
+    "MatchConfidence": -0.26984,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Program C",
     "ProgramName": "Program C",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.70098,
+    "Genre": null,
+    "MatchConfidence": 0.14566,
     "MatchedName": "Avengers",
     "MatchType": 4,
     "OriginalName": "11 ALIVE NEWS-6PM",
     "ProgramName": "11 ALIVE NEWS-6PM",
-    "ShowType": "Movie"
+    "ShowType": null
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.60582,
+    "Genre": null,
+    "MatchConfidence": -0.12623,
     "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "Hawaii Five-O-MeTV",
     "ProgramName": "Hawaii Five-O-MeTV",
-    "ShowType": "Documentary"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.67778,
+    "Genre": null,
+    "MatchConfidence": 0.07937,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "FOX 5 NEWS @ 5P",
     "ProgramName": "FOX 5 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.66667,
+    "Genre": null,
+    "MatchConfidence": 0.04762,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "EYEWITNESS NEWS-430-5A",
     "ProgramName": "EYEWITNESS NEWS-",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.63291,
+    "Genre": null,
+    "MatchConfidence": -0.04884,
     "MatchedName": "2 broke girls",
     "MatchType": 4,
     "OriginalName": "KARE 11 SUNRISE 6AM",
     "ProgramName": "KARE 11 SUNRISE",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.71515,
+    "Genre": null,
+    "MatchConfidence": 0.18615,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "LEX 18 NEWS AT 530P",
     "ProgramName": "LEX 18 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.84024,
+    "Genre": null,
+    "MatchConfidence": 0.54353,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "NEWSCHANNEL 8 @ 11PM",
     "ProgramName": "NEWSCHANNEL 8",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.52513,
+    "Genre": null,
+    "MatchConfidence": -0.35676,
     "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "KWWL Today In Iowa At 6",
     "ProgramName": "KWWL Today In Iowa",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.56236,
+    "Genre": null,
+    "MatchConfidence": -0.2504,
     "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "ABC 27 Nightside (During Football) (Sold M-F, Su)",
     "ProgramName": "ABC 27 Nightside (During Football) (Sold M-F, Su)",
-    "ShowType": "Documentary"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.71515,
+    "Genre": null,
+    "MatchConfidence": 0.18615,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "LEX 18 NEWS AT 6P SAT",
     "ProgramName": "LEX 18 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.72685,
+    "Genre": null,
+    "MatchConfidence": 0.21958,
     "MatchedName": "Avengers",
     "MatchType": 4,
     "OriginalName": "WAVY News at 8am",
     "ProgramName": "WAVY News",
-    "ShowType": "Movie"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.59048,
+    "Genre": null,
+    "MatchConfidence": -0.17007,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "THE TODAY SHOW",
     "ProgramName": "THE TODAY SHOW",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.72727,
+    "Genre": null,
+    "MatchConfidence": 0.22078,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "KING 5 NEWS ON KONG-8A",
     "ProgramName": "KING 5 NEWS ON KONG-8A",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.55556,
+    "Genre": null,
+    "MatchConfidence": -0.26984,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "COMBAT",
     "ProgramName": "COMBAT",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.75,
+    "Genre": null,
+    "MatchConfidence": 0.28571,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "12 News Saturday",
     "ProgramName": "12 News Saturday",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.49524,
+    "Genre": null,
+    "MatchConfidence": -0.44218,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "MOM/TMZ",
     "ProgramName": "MOM/TMZ",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.58889,
+    "Genre": null,
+    "MatchConfidence": -0.1746,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "TARHEEL TALK",
     "ProgramName": "TARHEEL TALK",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Comedy",
-    "MatchConfidence": 0.57607,
+    "Genre": null,
+    "MatchConfidence": -0.21123,
     "MatchedName": "Family Guy",
     "MatchType": 4,
     "OriginalName": "DAILY MAIL TV 2X",
     "ProgramName": "DAILY MAIL TV",
-    "ShowType": "Comedy"
+    "ShowType": null
   },
   {
     "Genre": "News",
@@ -315,588 +315,588 @@
     "ShowType": "News"
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.62315,
+    "Genre": null,
+    "MatchConfidence": -0.07672,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "WTTV4 MORNING NEWS",
     "ProgramName": "WTTV4 MORNING NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.61111,
+    "Genre": null,
+    "MatchConfidence": -0.11111,
     "MatchedName": "Breaking Bad",
     "MatchType": 4,
     "OriginalName": "BLACKISH 2X",
     "ProgramName": "BLACKISH",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.86501,
+    "Genre": null,
+    "MatchConfidence": 0.61433,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "NEWS 3 NEWS AT 7A",
     "ProgramName": "NEWS 3 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.58056,
+    "Genre": null,
+    "MatchConfidence": -0.19841,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "NBC NIGHTLY NEWS WKND",
     "ProgramName": "NBC NIGHTLY NEWS WEEKEND",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.88889,
+    "Genre": null,
+    "MatchConfidence": 0.68254,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "8 News at 5AM",
     "ProgramName": "8 News",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.55481,
+    "Genre": null,
+    "MatchConfidence": -0.27198,
     "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "ATLANTA & COMPANY",
     "ProgramName": "ATLANTA & COMPANY",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Comedy",
-    "MatchConfidence": 0.57778,
+    "Genre": null,
+    "MatchConfidence": -0.20635,
     "MatchedName": "The Simpsons",
     "MatchType": 4,
     "OriginalName": "PHL17: IN FOCUS",
     "ProgramName": "PHL17: IN FOCUS",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.62021,
+    "Genre": null,
+    "MatchConfidence": -0.0851,
     "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "FACE THE NATION 2",
     "ProgramName": "FACE THE NATION 2",
-    "ShowType": "Documentary"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.51667,
+    "Genre": null,
+    "MatchConfidence": -0.38095,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "Bonanza-MeTV",
     "ProgramName": "Bonanza-MeTV",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.73651,
+    "Genre": null,
+    "MatchConfidence": 0.24717,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "HEARTLAND NEWS SUN 5P",
     "ProgramName": "HEARTLAND NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.53333,
+    "Genre": null,
+    "MatchConfidence": -0.33333,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "TWO AND A HALF MEN 2X",
     "ProgramName": "TWO AND A HALF MEN",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.73333,
+    "Genre": null,
+    "MatchConfidence": 0.2381,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "ABC 27 News Saturday",
     "ProgramName": "ABC 27 News Saturday",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.57018,
+    "Genre": null,
+    "MatchConfidence": -0.22807,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WSLS 10 NEWS SUNDAY",
     "ProgramName": "WSLS 10 NEWS SUNDAY",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.65152,
+    "Genre": null,
+    "MatchConfidence": 0.00433,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "WUSA 9 NEWS AT 5PM",
     "ProgramName": "WUSA 9 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.55,
+    "Genre": null,
+    "MatchConfidence": -0.28571,
     "MatchedName": "Avengers",
     "MatchType": 4,
     "OriginalName": "MAURY",
     "ProgramName": "MAURY",
-    "ShowType": "Movie"
+    "ShowType": null
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.57631,
+    "Genre": null,
+    "MatchConfidence": -0.21054,
     "MatchedName": "2 broke girls",
     "MatchType": 4,
     "OriginalName": "PROVIDENCE/IMP JOKERS",
     "ProgramName": "PROVIDENCE/IMP JOKERS",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.55344,
+    "Genre": null,
+    "MatchConfidence": -0.27589,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "GMA SUNDAY",
     "ProgramName": "GMA SUNDAY",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.67778,
+    "Genre": null,
+    "MatchConfidence": 0.07937,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "SAT LOCAL NEWS AT 6PM",
     "ProgramName": "LOCAL NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.54614,
-    "MatchedName": "An American in Canada",
+    "Genre": null,
+    "MatchConfidence": -0.29673,
+    "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "DENNIS THE MENACE/HAZEL",
     "ProgramName": "DENNIS THE MENACE/HAZEL",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.59318,
+    "Genre": null,
+    "MatchConfidence": -0.16234,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "CBS 6 SUN MORNING NEWS",
     "ProgramName": "CBS 6 SUN MORNING NEWS",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.52297,
+    "Genre": null,
+    "MatchConfidence": -0.36293,
     "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "LAST CALL W/ DALY",
     "ProgramName": "LAST CALL WITH DALY",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.54358,
+    "Genre": null,
+    "MatchConfidence": -0.30406,
     "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "INSIDE EDITION/JEOPRDY",
     "ProgramName": "INSIDE EDITION/JEOPRDY",
-    "ShowType": "Documentary"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.58697,
+    "Genre": null,
+    "MatchConfidence": -0.18008,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "INSTANT REPLAY",
     "ProgramName": "INSTANT REPLAY",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.63596,
+    "Genre": null,
+    "MatchConfidence": -0.0401,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "IN DEPTH W GRAHAM B",
     "ProgramName": "IN DEPTH W GRAHAM B",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.69444,
+    "Genre": null,
+    "MatchConfidence": 0.12698,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WAVY News 10 at 11p",
     "ProgramName": "WAVY News 10",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.62103,
+    "Genre": null,
+    "MatchConfidence": -0.08277,
     "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "PA Live!",
     "ProgramName": "PA Live!",
-    "ShowType": "Documentary"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.7619,
+    "Genre": null,
+    "MatchConfidence": 0.31973,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "7 NEWS TODAY - 5A",
     "ProgramName": "7 NEWS TODAY -",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.7,
+    "Genre": null,
+    "MatchConfidence": 0.14286,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "TV 5 NEWS @ 9A",
     "ProgramName": "TV 5 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.54722,
+    "Genre": null,
+    "MatchConfidence": -0.29365,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "SOAPS / THE TALK",
     "ProgramName": "SOAPS / THE TALK",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.55,
+    "Genre": null,
+    "MatchConfidence": -0.28571,
     "MatchedName": "Avengers",
     "MatchType": 4,
     "OriginalName": "AgDay",
     "ProgramName": "AgDay",
-    "ShowType": "Movie"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.59722,
+    "Genre": null,
+    "MatchConfidence": -0.15079,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "MOM",
     "ProgramName": "MOM",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.65,
+    "Genre": null,
+    "MatchConfidence": 0.0,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WEEKEND NEWS AT FIVE",
     "ProgramName": "WEEKEND NEWS AT FIVE",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.73333,
+    "Genre": null,
+    "MatchConfidence": 0.2381,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "LEX18 NEWS AT 4P",
     "ProgramName": "LEX18 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Movie",
-    "MatchConfidence": 0.64542,
+    "Genre": null,
+    "MatchConfidence": -0.01307,
     "MatchedName": "Avengers",
     "MatchType": 4,
     "OriginalName": "COAST LIVE RE AIR",
     "ProgramName": "COAST LIVE RE AIR",
-    "ShowType": "Movie"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.65,
+    "Genre": null,
+    "MatchConfidence": 0.0,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "IN DEPTH SPORTS",
     "ProgramName": "IN DEPTH SPORTS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.82993,
+    "Genre": null,
+    "MatchConfidence": 0.51409,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "NEWS 4 TODAY 1",
     "ProgramName": "NEWS 4 TODAY 1",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Comedy",
-    "MatchConfidence": 0.55344,
+    "Genre": null,
+    "MatchConfidence": -0.27589,
     "MatchedName": "Family Guy",
     "MatchType": 4,
     "OriginalName": "Mama's Family-MeTV",
     "ProgramName": "Mama's Family-MeTV",
-    "ShowType": "Comedy"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.54722,
+    "Genre": null,
+    "MatchConfidence": -0.29365,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "Talk Of The Town",
     "ProgramName": "Talk Of The Town",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.66667,
+    "Genre": null,
+    "MatchConfidence": 0.04762,
     "MatchedName": "Breaking Bad",
     "MatchType": 4,
     "OriginalName": "GREAT DAY SA",
     "ProgramName": "GREAT DAY",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.62315,
+    "Genre": null,
+    "MatchConfidence": -0.07672,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "My Three Sons-MeTV",
     "ProgramName": "My Three Sons-MeTV",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.66667,
+    "Genre": null,
+    "MatchConfidence": 0.04762,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "Cops",
     "ProgramName": "Cops",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "Comedy",
-    "MatchConfidence": 0.56217,
+    "Genre": null,
+    "MatchConfidence": -0.25094,
     "MatchedName": "The Simpsons",
     "MatchType": 4,
     "OriginalName": "SUNDAY SPORTS ZONE",
     "ProgramName": "SUNDAY SPORTS ZONE",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.88889,
+    "Genre": null,
+    "MatchConfidence": 0.68254,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "2 NEWS AT 7PM",
     "ProgramName": "2 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.65351,
+    "Genre": null,
+    "MatchConfidence": 0.01003,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WAVY News 10 Sunday",
     "ProgramName": "WAVY News 10 Sunday",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.63056,
+    "Genre": null,
+    "MatchConfidence": -0.05556,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "P SMITH GARDENS",
     "ProgramName": "P SMITH GARDENS",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.65476,
+    "Genre": null,
+    "MatchConfidence": 0.01361,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "In Dept Sports",
     "ProgramName": "In Dept Sports",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.6004,
-    "MatchedName": "An American in Canada",
+    "Genre": null,
+    "MatchConfidence": -0.14172,
+    "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "EVENING MAGAZINE",
     "ProgramName": "EVENING MAGAZINE",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Comedy",
-    "MatchConfidence": 0.53376,
+    "Genre": null,
+    "MatchConfidence": -0.33211,
     "MatchedName": "The Simpsons",
     "MatchType": 4,
     "OriginalName": "CBS AUST NWS AT 6 SAT",
     "ProgramName": "CBS AUST NEWS",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.62462,
+    "Genre": null,
+    "MatchConfidence": -0.07251,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "BLACK SHEEP SQUADRON",
     "ProgramName": "BLACK SHEEP SQUADRON",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.7619,
+    "Genre": null,
+    "MatchConfidence": 0.31973,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "10 NEWS AT SIX",
     "ProgramName": "10 NEWS AT SIX",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.69444,
+    "Genre": null,
+    "MatchConfidence": 0.12698,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WAVY News 10 @ 7p",
     "ProgramName": "WAVY News 10",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.53689,
+    "Genre": null,
+    "MatchConfidence": -0.32318,
     "MatchedName": "2 broke girls",
     "MatchType": 4,
     "OriginalName": "CW15 Weekend Movies",
     "ProgramName": "CW15 Weekend Movies",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.5303,
+    "Genre": null,
+    "MatchConfidence": -0.34199,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WPSD Local 6 At Midday",
     "ProgramName": "WPSD Local 6 At Midday",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.55556,
+    "Genre": null,
+    "MatchConfidence": -0.26984,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "WPSD Local 6 @ 10PM",
     "ProgramName": "WPSD Local 6",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Comedy",
-    "MatchConfidence": 0.62929,
+    "Genre": null,
+    "MatchConfidence": -0.05916,
     "MatchedName": "The Simpsons",
     "MatchType": 4,
     "OriginalName": "SHOP SOUTH MISSISSIPPI",
     "ProgramName": "SHOP SOUTH MISSISSIPPI",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.60317,
+    "Genre": null,
+    "MatchConfidence": -0.13379,
     "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "GOOD MORN CAROLINA 9A",
     "ProgramName": "GOOD MORNING CAROLINA",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Series",
-    "MatchConfidence": 0.60246,
+    "Genre": null,
+    "MatchConfidence": -0.13584,
     "MatchedName": "2 broke girls",
     "MatchType": 4,
     "OriginalName": "A DIFFERENT WORLD",
     "ProgramName": "A DIFFERENT WORLD",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Sports",
-    "MatchConfidence": 0.5846,
+    "Genre": null,
+    "MatchConfidence": -0.18687,
     "MatchedName": "Champions League",
     "MatchType": 4,
     "OriginalName": "WANTED: DOA",
     "ProgramName": "WANTED: DOA",
-    "ShowType": "Sports"
+    "ShowType": null
   },
   {
-    "Genre": "Documentary",
-    "MatchConfidence": 0.57937,
+    "Genre": null,
+    "MatchConfidence": -0.20181,
     "MatchedName": "An Inconvenient Truth",
     "MatchType": 4,
     "OriginalName": "LIVING HEALTHY",
     "ProgramName": "LIVING HEALTHY",
-    "ShowType": "Documentary"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.60278,
+    "Genre": null,
+    "MatchConfidence": -0.13492,
     "MatchedName": "OTHER NEWS",
     "MatchType": 4,
     "OriginalName": "CLEVELAND19 NEWS @630P",
     "ProgramName": "CLEVELAND19 NEWS",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.73684,
+    "Genre": null,
+    "MatchConfidence": 0.24812,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "KMBC 9 NEWS ON KCWE",
     "ProgramName": "KMBC 9 NEWS ON KCWE",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.56421,
+    "Genre": null,
+    "MatchConfidence": -0.2451,
     "MatchedName": "An American in Canada",
     "MatchType": 4,
     "OriginalName": "YOUNG ICONS",
     "ProgramName": "YOUNG ICONS",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.51389,
+    "Genre": null,
+    "MatchConfidence": -0.38889,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "Star-FOX",
     "ProgramName": "Star-FOX",
-    "ShowType": "Series"
+    "ShowType": null
   },
   {
-    "Genre": "News",
-    "MatchConfidence": 0.91429,
+    "Genre": null,
+    "MatchConfidence": 0.7551,
     "MatchedName": "NEWS",
     "MatchType": 4,
     "OriginalName": "NEWS 13 AT 6PM",
     "ProgramName": "NEWS 13",
-    "ShowType": "News"
+    "ShowType": null
   },
   {
-    "Genre": "Drama",
-    "MatchConfidence": 0.58262,
+    "Genre": null,
+    "MatchConfidence": -0.19251,
     "MatchedName": "America Undercover",
     "MatchType": 4,
     "OriginalName": "WE ARE AUSTIN",
     "ProgramName": "WE ARE AUSTIN",
-    "ShowType": "Series"
+    "ShowType": null
   }
 ]

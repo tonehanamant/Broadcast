@@ -6,7 +6,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Various",
+      "Name": "Drama",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "America Undercover",
@@ -24,7 +24,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Various",
+      "Name": "Sports",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Good Morning NFL",
@@ -42,7 +42,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Various",
+      "Name": "Drama",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Breaking Bad",
@@ -60,7 +60,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Various",
+      "Name": "Action",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "The Boys",
@@ -78,7 +78,7 @@
     "ModifiedBy": null,
     "OfficialGenre": {
       "Id": 1,
-      "Name": "Various",
+      "Name": "Comedy",
       "ProgramSourceId": 1
     },
     "OfficialProgramName": "Community",

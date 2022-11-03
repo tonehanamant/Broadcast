@@ -213,7 +213,8 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var mappingEntities = context.programs                   
-                    .Include(x => x.show_types)
+                    .Include(x => x.show_types)   
+                    .Include(x=> x.genre)
                     .ToList();
 
                 var programMappings = mappingEntities.Select(_MapToDataTableDto).ToList();
@@ -235,7 +236,13 @@ namespace Services.Broadcast.Repositories
                 {
                     Id = programMappings.show_types.id,
                     Name = programMappings.show_types.name,
-                    ShowTypeSource = (ProgramSourceEnum)programMappings.show_types.program_source_id
+                    ShowTypeSource = (ProgramSourceEnum)programMappings.show_types.program_source_id,                    
+                },
+                OfficialGenre= new Genre
+                {
+                    Id =programMappings.genre.id,
+                    Name=programMappings.genre.name,
+                    ProgramSourceId= programMappings.genre.program_source_id,
                 }
             };
         }
