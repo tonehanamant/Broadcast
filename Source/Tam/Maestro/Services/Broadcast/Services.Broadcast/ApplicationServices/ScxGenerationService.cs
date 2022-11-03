@@ -42,6 +42,28 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="fileId">The file identifier.</param>
         /// <returns>Tuple : File Name, Content Stream, MIME Type Name</returns>
         Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId);
+        /// <summary>
+        /// Gets the Scx OpenMarket Generation Job in Queue.
+        /// </summary>
+        /// <param name="inventoryScxOpenMarketsDownloadRequest">Inventory Scx OpenMarket Download Request.</param>
+        /// <param name="userName">User Name.</param>
+        /// <param name="currentDate">Current date.</param>
+        /// <returns></returns>
+        int QueueScxOpenMarketsGenerationJob(InventoryScxOpenMarketsDownloadRequest inventoryScxOpenMarketsDownloadRequest, string userName, DateTime currentDate);
+        /// <summary>
+        /// Process Scx Open Market Job.
+        /// </summary>
+        /// <param name="jobId">The source identifier.</param>
+        /// <returns></returns>
+        void ProcessScxOpenMarketGenerationJob(int jobId);
+        /// <summary>
+        /// Process Scx Open Market Job.
+        /// </summary>
+        /// <param name="job">Job.</param>
+        /// <param name="currentDate">Job.</param>
+        /// <returns></returns>
+        void ProcessScxOpenMarketGenerationJob(ScxOpenMarketsGenerationJob job, DateTime currentDate);
+
     }
 
     public class ScxGenerationService :BroadcastBaseClass, IScxGenerationService
@@ -90,7 +112,7 @@ namespace Services.Broadcast.ApplicationServices
 
             var jobId = _ScxGenerationJobRepository.AddJob(job);
 
-			  _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
+            _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
 
 			  return jobId;
         }
@@ -254,6 +276,23 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        public int QueueScxOpenMarketsGenerationJob(InventoryScxOpenMarketsDownloadRequest inventoryScxOpenMarketsDownloadRequest, string userName, DateTime currentDate)
+        {
+            var job = new ScxOpenMarketsGenerationJob
+            {
+                InventoryScxOpenMarketsDownloadRequest = inventoryScxOpenMarketsDownloadRequest,
+                Status = BackgroundJobProcessingStatus.Queued,
+                QueuedAt = currentDate,
+                RequestedBy = userName
+            };
+
+            var jobId = _ScxGenerationJobRepository.AddOpenMarketJob(job);
+
+            _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxOpenMarketGenerationJob(jobId));
+
+            return jobId;
+        }
+
         private Tuple<string, Stream, string> _GetFileFromFileService(int fileId)
         {
             var fileName = _ScxGenerationJobRepository.GetScxFileName(fileId);
@@ -335,5 +374,125 @@ namespace Services.Broadcast.ApplicationServices
         }
 
         #endregion // #region Helpers
+        public void ProcessScxOpenMarketGenerationJob(int jobId)
+        {
+            var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+
+            ProcessScxOpenMarketGenerationJob(job, DateTime.Now);
+        }
+        public void ProcessScxOpenMarketGenerationJob(ScxOpenMarketsGenerationJob job, DateTime currentDate)
+        {
+            if (job.Status != BackgroundJobProcessingStatus.Queued)
+            {
+                throw new ApplicationException($"Job with id {job.Id} already has status {job.Status}");
+            }
+
+            job.Status = BackgroundJobProcessingStatus.Processing;
+            _ScxGenerationJobRepository.UpdateOpenMarketJob(job);
+
+            Exception caught = null;
+
+            using (var transaction = new TransactionScopeWrapper())
+            {
+                try
+                {
+                    var files = _ProprietaryInventoryService.GenerateScxOpenMarketFiles(job.InventoryScxOpenMarketsDownloadRequest);
+
+                    _SaveFilesForOpenMarket(files, job.RequestedBy, currentDate);
+                    _ScxGenerationJobRepository.SaveScxOpenMarketJobFiles(files, job);
+
+                    // Save to the original folder until the feature is released.
+                    // Delete this once the feature has been released.
+                    if (!_EnableSharedFileServiceConsolidation.Value)
+                    {
+                        _SaveToFolderForOpenInventoryScxFiles(files);
+                    }
+
+                    job.Complete(currentDate);
+                }
+                catch (Exception ex)
+                {
+                    job.Status = BackgroundJobProcessingStatus.Failed;
+                    caught = ex;
+                }
+
+                _ScxGenerationJobRepository.UpdateOpenMarketJob(job);
+
+                transaction.Complete();
+
+                if (caught != null)
+                {
+                    throw caught;
+                }
+            }
+        }
+
+        private void _SaveFiles(List<OpenMarketInventoryScxFile> files, string createdBy, DateTime createdAt)
+        {
+            var dropFolderPath = GetDropFolderPath();
+            const string fileMediaType = "application/xml";
+            foreach (var file in files)
+            {
+                // have to copy the stream until we migrate to the SharedFileServiceand stop saving to the FileService.
+                // Delete this once the feature has been released.
+                var scxStreamCopy = _GetStreamCopy(file.ScxStream);
+
+                var sharedFile = new SharedFolderFile
+                {
+                    FolderPath = dropFolderPath,
+                    FileNameWithExtension = file.FileName,
+                    FileMediaType = fileMediaType,
+                    FileUsage = SharedFolderFileUsage.InventoryScx,
+                    CreatedDate = createdAt,
+                    CreatedBy = createdBy,
+                    FileContent = scxStreamCopy
+                };
+
+                var savedId = _SharedFolderService.SaveFile(sharedFile);
+                file.SharedFolderFileId = savedId;
+            }
+        }
+        private void _SaveToFolderForOpenInventoryScxFiles(List<OpenMarketInventoryScxFile> scxFiles)
+        {
+            var dropFolderPath = GetDropFolderPath();
+            if (!_EnableSharedFileServiceConsolidation.Value)
+            {
+                _FileService.CreateDirectory(dropFolderPath);
+                foreach (var scxFile in scxFiles)
+                {
+                    var path = Path.Combine(
+                        dropFolderPath,
+                        scxFile.FileName);
+
+                    _FileService.Create(path, scxFile.ScxStream);
+                }
+            }
+        }
+
+        private void _SaveFilesForOpenMarket(List<OpenMarketInventoryScxFile> files, string createdBy, DateTime createdAt)
+        {
+            var dropFolderPath = GetDropFolderPath();
+            const string fileMediaType = "application/xml";
+            foreach (var file in files)
+            {
+                // have to copy the stream until we migrate to the SharedFileServiceand stop saving to the FileService.
+                // Delete this once the feature has been released.
+                var scxStreamCopy = _GetStreamCopy(file.ScxStream);
+
+                var sharedFile = new SharedFolderFile
+                {
+                    FolderPath = dropFolderPath,
+                    FileNameWithExtension = file.FileName,
+                    FileMediaType = fileMediaType,
+                    FileUsage = SharedFolderFileUsage.InventoryScx,
+                    CreatedDate = createdAt,
+                    CreatedBy = createdBy,
+                    FileContent = scxStreamCopy
+                };
+
+                var savedId = _SharedFolderService.SaveFile(sharedFile);
+                file.SharedFolderFileId = savedId;
+            }
+        }
     }
 }

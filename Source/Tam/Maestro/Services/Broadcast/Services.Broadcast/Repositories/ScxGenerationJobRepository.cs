@@ -3,6 +3,7 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Scx;
 using System;
 using System.Collections.Generic;
@@ -40,13 +41,34 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <param name="fileId">The file identifier.</param>
         Guid? GetSharedFolderFileIdForFile(int fileId);
+        /// <summary>
+        /// Adds job parameters to DB.
+        /// </summary>
+        /// <param name="job">Job.</param>
+        int AddOpenMarketJob(ScxOpenMarketsGenerationJob job);
+        /// <summary>
+        /// Get Job Parameters from DB.
+        /// </summary>
+        /// <param name="jobId">Job.</param>
+        ScxOpenMarketsGenerationJob GetOpenMarketsJobById(int jobId);
+        /// <summary>
+        /// Update status to DB.
+        /// </summary>
+        /// <param name="job">Job.</param>
+        void UpdateOpenMarketJob(ScxOpenMarketsGenerationJob job);
+        /// <summary>
+        /// save job parameters to file.
+        /// </summary>
+        /// <param name="files">file.</param>
+        /// <param name="job">Job.</param>
+        void SaveScxOpenMarketJobFiles(List<OpenMarketInventoryScxFile> files, ScxOpenMarketsGenerationJob job);
     }
 
     public class ScxGenerationJobRepository : BroadcastRepositoryBase, IScxGenerationJobRepository
     {
         public ScxGenerationJobRepository(
-            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory, 
-            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper) : 
+            IContextFactory<QueryHintBroadcastContext> pBroadcastContextFactory,
+            ITransactionHelper pTransactionHelper, IConfigurationSettingsHelper configurationSettingsHelper) :
             base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         {
         }
@@ -150,7 +172,7 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
-                    foreach(var file in files)
+                    foreach (var file in files)
                     {
                         context.scx_generation_job_files.Add(new scx_generation_job_files
                         {
@@ -184,24 +206,24 @@ namespace Services.Broadcast.Repositories
 
         private static List<ScxFileGenerationDetailDto> GetGenerationDetails(BroadcastContext context, int inventorySourceId)
         {
-            var details = (from j in context.scx_generation_jobs 
-                    join f in context.scx_generation_job_files on j.id equals f.scx_generation_job_id into fs
-                    from f in fs.DefaultIfEmpty()
-                    join d in context.standard_dayparts on f.standard_daypart_id equals d.id into ds
-                    from d in ds.DefaultIfEmpty()
-                    where j.inventory_source_id.Equals(inventorySourceId)
-                    select new ScxFileGenerationDetailDto
-                    {
-                        GenerationRequestDateTime = j.queued_at,
-                        GenerationRequestedByUsername = j.requested_by,
-                        FileId = f.id,
-                        Filename = f.file_name,
-                        UnitName = f.unit_name,
-                        DaypartCode = d.code,
-                        StartDateTime = f.start_date,
-                        EndDateTime = f.end_date,
-                        ProcessingStatusId = j.status
-                    })
+            var details = (from j in context.scx_generation_jobs
+                           join f in context.scx_generation_job_files on j.id equals f.scx_generation_job_id into fs
+                           from f in fs.DefaultIfEmpty()
+                           join d in context.standard_dayparts on f.standard_daypart_id equals d.id into ds
+                           from d in ds.DefaultIfEmpty()
+                           where j.inventory_source_id.Equals(inventorySourceId)
+                           select new ScxFileGenerationDetailDto
+                           {
+                               GenerationRequestDateTime = j.queued_at,
+                               GenerationRequestedByUsername = j.requested_by,
+                               FileId = f.id,
+                               Filename = f.file_name,
+                               UnitName = f.unit_name,
+                               DaypartCode = d.code,
+                               StartDateTime = f.start_date,
+                               EndDateTime = f.end_date,
+                               ProcessingStatusId = j.status
+                           })
                 .ToList();
             return details;
         }
@@ -211,13 +233,13 @@ namespace Services.Broadcast.Repositories
         /// <inheritdoc />
         public string GetScxFileName(int fileId)
         {
-             var fileName = _InReadUncommitedTransaction(context =>
-                {
-                    var file = context.scx_generation_job_files.Single(s => s.id == fileId, $"File with Id {fileId} not found.");
-                    return file.file_name;
-                }
-            );
-             return fileName;
+            var fileName = _InReadUncommitedTransaction(context =>
+               {
+                   var file = context.scx_generation_job_files.Single(s => s.id == fileId, $"File with Id {fileId} not found.");
+                   return file.file_name;
+               }
+           );
+            return fileName;
         }
 
         /// <inheritdoc />
@@ -232,5 +254,126 @@ namespace Services.Broadcast.Repositories
                 return entity.shared_folder_files_id;
             });
         }
+
+        public int AddOpenMarketJob(ScxOpenMarketsGenerationJob job)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var scxOpenMarketJob = new scx_generation_open_market_jobs
+                    {
+                        start_date = job.InventoryScxOpenMarketsDownloadRequest.StartDate,
+                        end_date = job.InventoryScxOpenMarketsDownloadRequest.EndDate,
+                        status = (int)job.Status,
+                        export_genre_type_id =(int)job.InventoryScxOpenMarketsDownloadRequest.GenreType,
+                        queued_at = job.QueuedAt,
+                        requested_by = job.RequestedBy,
+                        completed_at = job.CompletedAt,
+                        inventory_source_id = 1
+                    };
+                    context.scx_generation_open_market_jobs.Add(scxOpenMarketJob);
+                    context.SaveChanges();
+                    var scxOpenMarketJobId = scxOpenMarketJob.id;
+                    if (scxOpenMarketJobId > 0)
+                    {
+                        var scxOpenMarketJobDayparts = new scx_generation_open_market_job_dayparts
+                        {
+                            standard_daypart_id = job.InventoryScxOpenMarketsDownloadRequest.StandardDaypartId,
+                            scx_generation_open_market_job_id = scxOpenMarketJobId
+                        };
+                        context.scx_generation_open_market_job_dayparts.Add(scxOpenMarketJobDayparts);
+                        var scxOpenMarketJobMarkets = new scx_generation_open_market_job_markets
+                        {
+                            market_code = (short)job.InventoryScxOpenMarketsDownloadRequest.MarketCode,
+                            scx_generation_open_market_job_id = scxOpenMarketJobId
+                        };
+                        context.scx_generation_open_market_job_markets.Add(scxOpenMarketJobMarkets);
+                        foreach (var affiliate in job.InventoryScxOpenMarketsDownloadRequest.Affiliates)
+                        {
+                            var scxOpenMarketJobAffiliate = new scx_generation_open_market_job_affiliates
+                            {
+                                affiliate = affiliate,
+                                scx_generation_open_market_job_id = scxOpenMarketJobId
+                            };
+                            context.scx_generation_open_market_job_affiliates.Add(scxOpenMarketJobAffiliate);
+                        }
+
+                        context.SaveChanges();
+                    }
+                    return scxOpenMarketJobId;
+                });
+        }
+
+        public ScxOpenMarketsGenerationJob GetOpenMarketsJobById(int jobId)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var jobs = context.scx_generation_open_market_jobs
+                    .Include(s=>s.scx_generation_open_market_job_dayparts)
+                    .Include(s=>s.scx_generation_open_market_job_markets)
+                    .Include(s=>s.scx_generation_open_market_job_affiliates)
+                        .Where(j => j.id == jobId).Single(@"Unable to find job with id {jobId}");
+                    
+                    return _MapForOpenMarket(jobs);
+                });
+        }
+        private ScxOpenMarketsGenerationJob _MapForOpenMarket(scx_generation_open_market_jobs scxOpenMarketsJob)
+        {
+            return new ScxOpenMarketsGenerationJob
+            {
+                Id = scxOpenMarketsJob.id,
+                InventoryScxOpenMarketsDownloadRequest = new InventoryScxOpenMarketsDownloadRequest
+                {
+                    StartDate = scxOpenMarketsJob.start_date,
+                    EndDate = scxOpenMarketsJob.end_date,
+                    GenreType = (OpenMarketInventoryExportGenreTypeEnum)scxOpenMarketsJob.export_genre_type_id,
+                    StandardDaypartId = scxOpenMarketsJob.scx_generation_open_market_job_dayparts.Select(x=>x.standard_daypart_id).FirstOrDefault(),
+                    MarketCode = scxOpenMarketsJob.scx_generation_open_market_job_markets.Select(x=>x.market_code).FirstOrDefault(),
+                    Affiliates = scxOpenMarketsJob.scx_generation_open_market_job_affiliates.Select(x=>x.affiliate).ToList()
+                },
+                Status = (BackgroundJobProcessingStatus)scxOpenMarketsJob.status,
+                QueuedAt = scxOpenMarketsJob.queued_at,
+                CompletedAt = scxOpenMarketsJob.completed_at,
+                RequestedBy = scxOpenMarketsJob.requested_by
+            };
+        }
+        public void UpdateOpenMarketJob(ScxOpenMarketsGenerationJob job)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    var fileJob = context.scx_generation_open_market_jobs.Find(job.Id);
+                    fileJob.status = (int)job.Status;
+                    fileJob.completed_at = job.CompletedAt;
+
+                    context.SaveChanges();
+                });
+        }
+        public void SaveScxOpenMarketJobFiles(List<OpenMarketInventoryScxFile> files, ScxOpenMarketsGenerationJob job)
+        {
+            _InReadUncommitedTransaction(
+                context =>
+                {
+                    foreach (var file in files)
+                    {
+                        context.scx_generation_open_market_job_files.Add(new scx_generation_open_market_job_files
+                        {
+                            scx_generation_open_market_job_id = job.Id,
+                            file_name = file.FileName,
+                            standard_daypart_id = file.DaypartCodeId,
+                            start_date = file.StartDate,
+                            end_date = file.EndDate,
+                            shared_folder_files_id = file.SharedFolderFileId,
+                            market_code = (short)job.InventoryScxOpenMarketsDownloadRequest.MarketCode,
+                            export_genre_type_id = (int)job.InventoryScxOpenMarketsDownloadRequest.GenreType,
+                            affiliate = job.InventoryScxOpenMarketsDownloadRequest.Affiliates.FirstOrDefault()
+                        });
+                    }
+
+                    context.SaveChanges();
+                });
+        }
+       
     }
 }

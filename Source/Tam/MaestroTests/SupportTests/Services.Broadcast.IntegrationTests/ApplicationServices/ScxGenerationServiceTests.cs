@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
@@ -325,6 +326,102 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 ContractResolver = jsonResolver
             };
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void OpenMarketScxGenerationQueueJobTest()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryScxOpenMarketsDownloadRequest
+                {
+                    StandardDaypartId = 1,
+                    StartDate = new DateTime(2019, 3, 1),
+                    EndDate = new DateTime(2019, 3, 15),
+                    Affiliates = new List<string> { "ABC","NBC"},
+                    GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
+                    MarketCode = 390
+                };
+                
+                var jobId = _ScxGenerationService.QueueScxOpenMarketsGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));
+
+                var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(job, _GetJsonSettingsForOpenMarket()));
+            } 
+        }
+        private JsonSerializerSettings _GetJsonSettingsForOpenMarket()
+        {
+            var jsonResolver = new IgnorableSerializerContractResolver();
+
+            jsonResolver.Ignore(typeof(ScxOpenMarketsGenerationJob), "Id");
+
+            return new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ScxGenerationProcessJobTestForOpenMarket()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryScxOpenMarketsDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 03, 31),
+                    StartDate = new DateTime(2018, 12, 31),
+                    StandardDaypartId = 1,
+                    Affiliates = new List<string> { "ABC","NBC"},
+                    GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
+                    MarketCode = 390
+                };
+
+                var jobId = _ScxGenerationService.QueueScxOpenMarketsGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));
+
+                var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+
+                _ScxGenerationService.ProcessScxOpenMarketGenerationJob(job, new DateTime(2019, 7, 11));
+
+                var jobAfterProcessing = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(jobAfterProcessing, _GetJsonSettingsForOpenMarket()));
+            }
+        }
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ScxGenerationProcessJobFileResultTestForOpenMarket()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var request = new InventoryScxOpenMarketsDownloadRequest
+                {
+                    EndDate = new DateTime(2019, 03, 31),
+                    StartDate = new DateTime(2018, 12, 31),
+                    StandardDaypartId = 1,
+                    Affiliates = new List<string> { "ABC", "NBC" },
+                    GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
+                    MarketCode = 390
+                };
+
+                var jobId = _ScxGenerationService.QueueScxOpenMarketsGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));
+
+                var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+
+                _ScxGenerationService.ProcessScxOpenMarketGenerationJob(job, new DateTime(2019, 7, 11));
+
+                var jobAfterProcessing = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+
+                var paths = _FileService.Paths;
+                var streams = _FileService.Streams;
+
+                Assert.NotNull(paths.Count > 0);
+                Assert.NotNull(streams.Count > 0);
+            }
         }
     }
 }

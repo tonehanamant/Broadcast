@@ -2,6 +2,7 @@
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.StationInventory;
@@ -15,7 +16,7 @@ using static Services.Broadcast.Entities.Scx.ScxMarketDto.ScxStation.ScxProgram;
 
 namespace Services.Broadcast.Converters.Scx
 {
-    public class BarterScxDataPrep : BaseScxDataPrep, IInventoryScxDataPrep
+    public class BarterScxDataPrep : BaseScxDataPrep, IInventoryScxDataPrep, IOpenMarketInventoryScxDataPrep
     {
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
 
@@ -219,5 +220,53 @@ namespace Services.Broadcast.Converters.Scx
 
             return result;
         }
+
+        public List<OpenMarketScxData> GetInventoryScxOpenMarketData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate,int marketCode,List<int> exportGenreIds, List<string> affiliates)
+        {
+            var result = new List<OpenMarketScxData>();
+            var inventory = InventoryRepository.GetInventoryScxOpenMarketData(inventorySourceId, daypartCodeId, startDate, endDate, marketCode, exportGenreIds, affiliates);
+            var inventorySource = InventoryRepository.GetInventorySource(inventorySourceId);
+            var fileIds = inventory.SelectMany(x => x.Manifests).Select(x => x.InventoryFileId.Value).Distinct();
+            var fileHeaders = InventoryRepository.GetInventoryFileHeader(fileIds);
+            var allManifests = inventory.SelectMany(x => x.Manifests);
+            var dmaMarketNames = GetDmaMarketNames(allManifests);
+            var audienceIds = fileHeaders.Select(x => x.Value.Audience?.Id);
+            var audienceComponents = _BroadcastAudienceRepository.GetRatingAudiencesGroupedByMaestroAudience(audienceIds);
+
+            foreach (var groups in inventory.GroupBy(x => new { GroupName = x.Name, InventorySourceName = x.InventorySource.Name }))
+            {
+                var manifests = _FilterOutInvalidManifests(groups);
+
+                if (!manifests.Any())
+                    continue;
+
+                var demos = _GetDemos(audienceIds);
+                var demoRanksDictionary = demos.ToDictionary(x => x.Demo.Id, x => x.DemoRank);
+
+                var scxData = new OpenMarketScxData
+                {
+                    DaypartCode = manifests.First().DaypartCode,
+                    DaypartCodeId = daypartCodeId,
+                    MarketCode = marketCode,
+                    Affiliate = manifests.First().Station.Affiliation,
+                    InventorySource = inventorySource,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    AllSortedMediaWeeks = GetSortedMediaWeeks(startDate, endDate),
+                    Orders = _GetOrders(manifests, inventorySource, fileHeaders, dmaMarketNames, demoRanksDictionary, audienceComponents),
+                    Demos = demos
+                };
+
+                scxData.StartDate = scxData.AllSortedMediaWeeks.First().StartDate;
+                scxData.EndDate = scxData.AllSortedMediaWeeks.Last().EndDate;
+
+                result.Add(scxData);
+            }
+
+            CalculateTotalsForOpenMarket(result);
+
+            return result;
+        }
+
     }
 }

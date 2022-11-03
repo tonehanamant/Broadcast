@@ -555,11 +555,13 @@
     <Compile Include="Clients\GeneralLockingApiClientConfigKeys.cs" />
     <Compile Include="Clients\SpotExceptionsApiClient.cs" />
     <Compile Include="Clients\SpotExceptionsIngestApiConfigKeys.cs" />
+    <Compile Include="Converters\Scx\OpenMarketInventoryScxDataPrep.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataConverter.cs" />
     <Compile Include="Converters\Scx\PlanPricingScxDataPrep.cs" />
     <Compile Include="Entities\Campaign\CampaignPlanSecondaryAudiencesDto.cs" />
     <Compile Include="Entities\Campaign\CampaignWithDefaultsDto.cs" />
     <Compile Include="Entities\DTO\SpotExceptionsApi\ResultsSyncRequest.cs" />
+    <Compile Include="Entities\Enums\Inventory\OpenMarketInventoryExportGenreTypeEnum.cs" />
     <Compile Include="Entities\Isci\IsciTargetPlansDto.cs" />
     <Compile Include="Entities\Isci\SearchIsciRequestDto.cs" />
     <Compile Include="Entities\Isci\SearchPlanIscisDto.cs" />
@@ -639,6 +641,10 @@
     <Compile Include="Entities\RegisterRequestDto.cs" />
     <Compile Include="Entities\RegisterResponseDto.cs" />
     <Compile Include="Entities\RetrieveResponseDto.cs" />
+    <Compile Include="Entities\ScxOpenMarketsGenerationJob.cs" />
+    <Compile Include="Entities\Scx\InventoryScxOpenMarketsDownloadRequest.cs" />
+    <Compile Include="Entities\Scx\OpenMarketInventoryScxFile.cs" />
+    <Compile Include="Entities\Scx\OpenMarketScxData.cs" />
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />

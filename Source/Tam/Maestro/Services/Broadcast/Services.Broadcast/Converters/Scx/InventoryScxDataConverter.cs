@@ -24,9 +24,21 @@ namespace Services.Broadcast.Converters.Scx
         /// <param name="data">ScxData object to be converted</param>
         /// <returns>adx object</returns>
         adx CreateAdxObject(ScxData data);
+        /// <summary>
+        /// Converts a list of open market ScxData objects into a list of open maarket InventoryScxFile objects
+        /// </summary>
+        /// <param name="data">List of ScxData objects to convert</param>
+        /// <returns>List of open market InventoryScxFile objects</returns>
+        List<OpenMarketInventoryScxFile> ConvertOpenMrketInventoryData(List<OpenMarketScxData> data);
+        /// <summary>
+        /// Creates an adx object from the open market ScxData object
+        /// </summary>
+        /// <param name="data">ScxData object to be converted</param>
+        /// <returns>adx object</returns>
+        adx CreateAdxObjectForOpenMarket(OpenMarketScxData data);
     }
 
-    public class InventoryScxDataConverter : ScxBaseConverter, IInventoryScxDataConverter
+    public class InventoryScxDataConverter : ScxBaseConverter,IInventoryScxDataConverter
     {
         public InventoryScxDataConverter(IDaypartCache daypartCache, IDateTimeEngine dateTimeEngine) 
             : base(daypartCache, dateTimeEngine)
@@ -65,6 +77,40 @@ namespace Services.Broadcast.Converters.Scx
             }
 
             return scxFiles;
+        }
+
+        /// <inheritdoc />
+        public List<OpenMarketInventoryScxFile> ConvertOpenMrketInventoryData(List<OpenMarketScxData> data)
+        {
+            List<OpenMarketInventoryScxFile> scxFiles = new List<OpenMarketInventoryScxFile>();
+
+            foreach (var scxDataObject in data)
+            {
+                adx a = CreateAdxObjectForOpenMarket(scxDataObject);
+
+                if (a == null)
+                    return new List<OpenMarketInventoryScxFile>();
+
+                string xml = a.Serialize();
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
+                scxFiles.Add(new OpenMarketInventoryScxFile
+                {
+                    ScxStream = stream,
+                    InventorySource = scxDataObject.InventorySource,
+                    DaypartCodeId = scxDataObject.DaypartCodeId,
+                    StartDate = scxDataObject.StartDate,
+                    EndDate = scxDataObject.EndDate,
+                    MarketCode = scxDataObject.MarketCode,
+                    Affiliate = scxDataObject.Affiliate
+                });
+            }
+
+            return scxFiles;
+        }
+        /// <inheritdoc />
+        public adx CreateAdxObjectForOpenMarket(OpenMarketScxData data)
+        {
+            return CreateAdxObjectForOpenMarket(data, filterUnallocated: true);
         }
     }
 }

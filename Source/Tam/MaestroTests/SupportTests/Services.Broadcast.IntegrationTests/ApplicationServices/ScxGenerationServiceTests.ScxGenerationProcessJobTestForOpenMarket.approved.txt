@@ -1,0 +1,17 @@
+{
+  "CompletedAt": "2019-07-11T00:00:00",
+  "InventoryScxOpenMarketsDownloadRequest": {
+    "Affiliates": [
+      "ABC",
+      "NBC"
+    ],
+    "EndDate": "2019-03-31T00:00:00",
+    "GenreType": 1,
+    "MarketCode": 390,
+    "StandardDaypartId": 1,
+    "StartDate": "2018-12-31T00:00:00"
+  },
+  "QueuedAt": "2019-07-11T00:00:00",
+  "RequestedBy": "IntegrationTestUser",
+  "Status": 3
+}

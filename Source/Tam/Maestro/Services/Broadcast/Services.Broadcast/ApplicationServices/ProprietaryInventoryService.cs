@@ -45,6 +45,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="request">The generation request</param>
         /// <returns></returns>
         List<InventoryScxFile> GenerateScxFiles(InventoryScxDownloadRequest request);
+        /// <summary>
+        /// Generate a list of open market SCX files for a request
+        /// </summary>
+        /// <param name="request">The open market file generation request</param>
+        /// <returns></returns>
+        List<OpenMarketInventoryScxFile> GenerateScxOpenMarketFiles(InventoryScxOpenMarketsDownloadRequest request);
     }
 
     public class ProprietaryInventoryService : BroadcastBaseClass, IProprietaryInventoryService
@@ -70,6 +76,7 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IStationMappingService _IStationMappingService;
         private readonly ISharedFolderService _SharedFolderService;
+        private readonly IGenreRepository _GenreRepository;
 
         /// <summary>
         /// Spot lengths dictionary where key is the id and value is the duration
@@ -114,6 +121,7 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _IStationMappingService = stationMappingService;
             _SharedFolderService = sharedFolderService;
+            _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
 
             _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
         }
@@ -333,6 +341,17 @@ namespace Services.Broadcast.ApplicationServices
             var path = Path.Combine(_GetBroadcastAppFolder()
                 , BroadcastConstants.FolderNames.INVENTORY_UPLOAD);
             return path;
+        }
+        public List<OpenMarketInventoryScxFile> GenerateScxOpenMarketFiles(InventoryScxOpenMarketsDownloadRequest request)
+        {
+            const int inventorySourceIdOpenMarket = 1;
+            var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceIdOpenMarket);
+            var inventoryDataPrep = _InventoryScxDataPrepFactory.GetOpenMarketInventoryDataPrep(inventorySource.InventoryType);
+            var genres = _GenreRepository.GetAllMaestroGenres();
+            var exportGenreIds = GenreHelper.GetGenreIdsForOpenMarket(request.GenreType, genres);
+            var inventoryData = inventoryDataPrep.GetInventoryScxOpenMarketData(inventorySourceIdOpenMarket, request.StandardDaypartId, request.StartDate, request.EndDate,request.MarketCode, exportGenreIds, request.Affiliates);
+
+            return _InventoryScxDataConverter.ConvertOpenMrketInventoryData(inventoryData);
         }
     }
 }

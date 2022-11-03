@@ -21,5 +21,19 @@ namespace Services.Broadcast.Helpers
                 : genres.Where(g => g.Display.ToUpper().Equals(newsGenreName) == false).Select(g => g.Id).ToList();
             return result;
         }
+        /// <summary>
+        /// Gets the genre ids for open market.
+        /// </summary>
+        /// <param name="genreType">Type of the genre.</param>
+        /// <param name="genres">The genres.</param>
+        /// <returns></returns>
+        public static List<int> GetGenreIdsForOpenMarket(OpenMarketInventoryExportGenreTypeEnum genreType, List<LookupDto> genres)
+        {
+            const string newsGenreName = "NEWS";
+            var result = genreType == OpenMarketInventoryExportGenreTypeEnum.News
+                ? genres.Where(g => g.Display.ToUpper().Equals(newsGenreName)).Select(g => g.Id).ToList()
+                : genres.Where(g => g.Display.ToUpper().Equals(newsGenreName) == false).Select(g => g.Id).ToList();
+            return result;
+        }
     }
 }

@@ -463,5 +463,177 @@ namespace Services.Broadcast.Converters.Scx
             camp.key[2] = new key() { codeOwner = "Strata", codeDescription = "Zone Pops", id = "max" };
             camp.key[3] = new key() { codeOwner = "VIEW32", codeDescription = "CampaignName", id = string.Empty };
         }
+        #region for open market
+        protected adx CreateAdxObjectForOpenMarket(OpenMarketScxData data, bool filterUnallocated = true)
+        {
+            adx xp = new adx
+            {
+                document = new document()
+            };
+
+            _SetDocumentParts(xp);
+
+            var camp = new campaign();
+            xp.campaign = camp;
+
+            _SetScxKeysForOpenMarket(data, camp);
+            _SetScxDateRangeForOpenMarket(data, camp);
+            _SetScxCompanies(camp);
+            _SetScxAdvertiser(camp);
+            _SetScxProduct(camp);
+            _SetScxEstimate(camp);
+            _SetScxMakeGoodPolicy(camp);
+            _SetScxDemographicsForOpenMarket(data, camp);
+            _SetScxOrdersForOpenMarket(data, camp, filterUnallocated);
+
+            return xp;
+        }
+        private static void _SetScxKeysForOpenMarket(OpenMarketScxData data, campaign camp)
+        {
+            camp.key = new key[4];
+            camp.key[0] = new key() { codeOwner = "NCC", codeDescription = "CampaignID", id = string.Empty };
+            camp.key[1] = new key() { codeOwner = "Strata", codeDescription = "DMA Override", id = "0" };
+            camp.key[2] = new key() { codeOwner = "Strata", codeDescription = "Zone Pops", id = "max" };
+            camp.key[3] = new key() { codeOwner = "VIEW32", codeDescription = "CampaignName", id = string.Empty };
+        }
+        private static void _SetScxDateRangeForOpenMarket(OpenMarketScxData data, campaign camp)
+        {
+            camp.dateRange = new dateRange
+            {
+                startDate = data.StartDate,
+                endDate = data.EndDate
+            };
+        }
+        private void _SetScxDemographicsForOpenMarket(OpenMarketScxData data, campaign camp)
+        {
+            camp.demo = data.Demos.Select(demo => new demo
+            {
+                ageFrom = demo.Demo.RangeStart.Value.ToString(),
+                ageTo = demo.Demo.RangeEnd.Value.ToString(),
+                demoRank = demo.DemoRank,
+                group = _GetGroupFromAudience(demo)
+            }).ToArray();
+        }
+        private void _SetScxOrdersForOpenMarket(OpenMarketScxData data, campaign camp, bool filterUnallocated)
+        {
+            var orders = new List<order>();
+
+            foreach (var order in data.Orders)
+            {
+                var markets = filterUnallocated
+                    ? order.InventoryMarkets.Where(x => x.TotalSpots > 0)
+                    : order.InventoryMarkets;
+
+                foreach (var market in markets)
+                {
+                    var scxOrder = new order
+                    {
+                        comment = string.Empty,
+                        populations = new populations[0],
+                        totals = _GetTotals(market.TotalCost, market.TotalSpots)
+                    };
+
+                    _SetScxOrderKeys(scxOrder, market.MarketId);
+                    _SetMarket(scxOrder, market);
+                    _SetScxOrderSurvey(scxOrder, order);
+
+                    var stations = market.Stations;
+
+                    if (stations.Any())
+                    {
+                        scxOrder.systemOrder = stations
+                            .Where(x => x.TotalSpots > 0 && filterUnallocated || !filterUnallocated)
+                            .Select(station => _GetSystemOrdersForOpenMarket(data, station, filterUnallocated))
+                            .ToArray();
+                    }
+
+                    orders.Add(scxOrder);
+                }
+            }
+
+            camp.order = orders.ToArray();
+        }
+        private systemOrder _GetSystemOrdersForOpenMarket(OpenMarketScxData data, ScxStation station, bool filterUnallocated)
+        {
+            systemOrder sysOrder = new systemOrder
+            {
+                populations = new populations[0],
+                comment = "OK",
+                totals = _GetTotals(station.TotalCost, station.TotalSpots),
+                system = new system[]
+                {
+                    new system() { name = String.Empty, syscode = String.Empty }
+                }
+            };
+
+            _SetScxSystemOrderKeys(sysOrder);
+            _SetSystemOrderWeekInfo(sysOrder, data.AllSortedMediaWeeks);
+
+            var detLines = new List<detailLine>();
+            var programs = filterUnallocated
+                ? station.Programs.Where(x => x.TotalSpots > 0)
+                : station.Programs;
+
+            var detLineIndex = 0;
+
+            foreach (var program in programs)
+            {
+                detLineIndex++;
+                var detLine = new detailLine
+                {
+                    detailLineID = detLineIndex,
+                    program = program.ProgramName,
+                    length = $"PT{program.SpotLength}S",
+                    comment = " ",
+                    totals = _GetTotals(program.TotalCost, program.TotalSpots)
+                };
+
+                _SetDaypartInfo(detLine, program, data.DaypartCode);
+                _SetDetailLineNetworkInfo(detLine, station);
+                _SetDetailLineDemoValueForOpenMarket(detLine, data, program);
+                _SetDetailLineCost(detLine, program);
+                _SetSpotWeekQuantities(data.AllSortedMediaWeeks, program, detLine);
+
+                detLines.Add(detLine);
+            }
+
+            if (detLines.Any())
+                sysOrder.detailLine = detLines.ToArray();
+
+            return sysOrder;
+        }
+        private void _SetDetailLineDemoValueForOpenMarket(detailLine detLine, OpenMarketScxData data, ScxProgram program)
+        {
+            if (data.Demos == null)
+            {
+                detLine.demoValue = new demoValue[0];
+                return;
+            }
+
+            var result = new List<demoValue>();
+
+            foreach (var demo in data.Demos)
+            {
+                var demoValue = new demoValue
+                {
+                    demoRank = demo.DemoRank.ToString(),
+                    value = new demoValueValue[2]
+                };
+
+                var impressions = program.DemoValues.SingleOrDefault(x => x.DemoRank == demo.DemoRank)?.Impressions;
+                var impressionsDisplay = impressions.HasValue && impressions.Value > 0 ?
+                    string.Format("{0:####}", impressions.Value) :
+                    string.Empty;
+
+                // ratingDisplay = string.Format("{0:#0.00}", rating) - for future using
+                demoValue.value[0] = new demoValueValue() { type = demoValueValueType.Ratings, Value = string.Empty, typeSpecified = true };
+                demoValue.value[1] = new demoValueValue() { type = demoValueValueType.Impressions, Value = impressionsDisplay, typeSpecified = true };
+
+                result.Add(demoValue);
+            }
+
+            detLine.demoValue = result.ToArray();
+        }
+        #endregion
     }
 }

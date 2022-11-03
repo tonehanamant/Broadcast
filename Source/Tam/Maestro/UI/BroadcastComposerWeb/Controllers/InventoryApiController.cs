@@ -350,5 +350,26 @@ namespace BroadcastComposerWeb.Controllers
                 return errorResponse;
             }
         }
+
+        /// <summary>
+        /// Enqueues a job to generate the SCX files based on the parameters sent.
+        /// The SCX will be generated and saved in the folder location
+        /// </summary>
+        /// <returns>Success or failure to create a new job to generate the SCX files</returns>
+        [HttpGet]
+        [Route("ScxDownloadJob-OpenMarkets")]
+        [Authorize]
+        public BaseResponse ScxDownloadJobOpenMarkets([FromUri(Name = "")] InventoryScxOpenMarketsDownloadRequest request)
+        {
+            var fullName = _GetCurrentUserFullName();
+            _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>().QueueScxOpenMarketsGenerationJob(request, fullName, DateTime.Now);
+
+            return new BaseResponse
+            {
+                Success = true,
+                Message = "SCX file generation job for Open Market has been added to the queue successfully"
+            };
+        }
+
     }
 }

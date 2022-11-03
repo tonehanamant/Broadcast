@@ -101,5 +101,33 @@ namespace Services.Broadcast.Converters.Scx
                 order.TotalCost = order.InventoryMarkets.Sum(x => x.TotalCost);
             }
         }
+        protected void CalculateTotalsForOpenMarket(List<OpenMarketScxData> data)
+        {
+            var orders = data.SelectMany(x => x.Orders);
+
+            foreach (var order in orders)
+            {
+                foreach (var market in order.InventoryMarkets)
+                {
+                    foreach (var station in market.Stations)
+                    {
+                        foreach (var program in station.Programs)
+                        {
+                            program.TotalSpots = program.Weeks.Sum(x => x.Spots);
+                            program.TotalCost = program.SpotCost * program.TotalSpots;
+                        }
+
+                        station.TotalSpots = station.Programs.Sum(x => x.TotalSpots);
+                        station.TotalCost = station.Programs.Sum(x => x.TotalCost);
+                    }
+
+                    market.TotalSpots = market.Stations.Sum(x => x.TotalSpots);
+                    market.TotalCost = market.Stations.Sum(x => x.TotalCost);
+                }
+
+                order.TotalSpots = order.InventoryMarkets.Sum(x => x.TotalSpots);
+                order.TotalCost = order.InventoryMarkets.Sum(x => x.TotalCost);
+            }
+        }
     }
 }

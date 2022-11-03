@@ -10,6 +10,7 @@ namespace Services.Broadcast.Converters.Scx
     public interface IInventoryScxDataPrepFactory : IApplicationService
     {
         IInventoryScxDataPrep GetInventoryDataPrep(InventorySourceTypeEnum inventorySourceType);
+        IOpenMarketInventoryScxDataPrep GetOpenMarketInventoryDataPrep(InventorySourceTypeEnum inventorySourceType);
     }
 
     public class InventoryScxDataPrepFactory : IInventoryScxDataPrepFactory
@@ -41,6 +42,11 @@ namespace Services.Broadcast.Converters.Scx
             {
                 return new BarterScxDataPrep(_BroadcastDataRepositoryFactory, _SpotLengthEngine, _MediaMonthAndWeekCache, _BroadcastAudiencesCache);
             }
+        }
+
+        public IOpenMarketInventoryScxDataPrep GetOpenMarketInventoryDataPrep(InventorySourceTypeEnum inventorySourceType)
+        {
+                return new BarterScxDataPrep(_BroadcastDataRepositoryFactory, _SpotLengthEngine, _MediaMonthAndWeekCache, _BroadcastAudiencesCache);
         }
     }
 }

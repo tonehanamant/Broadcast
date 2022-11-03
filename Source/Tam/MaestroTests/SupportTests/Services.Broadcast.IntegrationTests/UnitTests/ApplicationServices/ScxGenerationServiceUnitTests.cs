@@ -9,6 +9,7 @@ using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
@@ -523,6 +524,106 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         {
             Assert.AreEqual(expectedStatus, entity.ProcessingStatus);
             Assert.AreEqual(expectedQuartersCount, entity.QuarterDetails.Count);
+        }
+        [Test]
+        public void ProcessScxGenerationJobEnqueuedForOpenMarket()
+        {
+            var testJob = new ScxOpenMarketsGenerationJob
+            {
+                Status = BackgroundJobProcessingStatus.Queued
+            };
+            const int jobId = 5;
+            _ScxGenerationJobRepository.Setup(x => x.AddOpenMarketJob(It.IsAny<ScxOpenMarketsGenerationJob>())).Returns(jobId);
+            var tc = _GetTestClass();
+            var testFiles = new Mock<List<OpenMarketInventoryScxFile>>();
+            _ProprietaryInventoryService.Setup(x => x.GenerateScxOpenMarketFiles(testJob.InventoryScxOpenMarketsDownloadRequest))
+                .Returns(testFiles.Object);
+
+            var inventoryScxDownloadRequest = new Mock<InventoryScxOpenMarketsDownloadRequest>();
+
+            tc.QueueScxOpenMarketsGenerationJob(inventoryScxDownloadRequest.Object, "UnitTestUser", DateTime.Now);
+
+            _BackgroundJobClient.Verify(x => x.Create(
+                It.Is<Job>(job => job.Method.Name == "ProcessScxOpenMarketGenerationJob" &&
+                                  job.Args[0].ToString().Equals(jobId.ToString(), StringComparison.OrdinalIgnoreCase)),
+                It.IsAny<EnqueuedState>()));
+        }
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ProcessScxGenerationJobUpdatesStatusForOpenmarket(bool enableSharedFileServiceConsolidation)
+        {
+            var savedFileGuid = new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5");
+
+            _FeatureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+                .Returns(enableSharedFileServiceConsolidation);
+
+            var updateJobCallCount = 0;
+            var testJob = new ScxOpenMarketsGenerationJob
+            {
+                Status = BackgroundJobProcessingStatus.Queued
+            };
+
+            _ScxGenerationJobRepository.Setup(x => x.UpdateOpenMarketJob(testJob))
+                .Callback(() => updateJobCallCount++);
+
+            var savedScxJobFiles = new List<List<OpenMarketInventoryScxFile>>();
+            _ScxGenerationJobRepository.Setup(s =>
+                    s.SaveScxOpenMarketJobFiles(It.IsAny<List<OpenMarketInventoryScxFile>>(), It.IsAny<ScxOpenMarketsGenerationJob>()))
+                .Callback<List<OpenMarketInventoryScxFile>, ScxOpenMarketsGenerationJob>((l, j) => savedScxJobFiles.Add(l));
+
+            var testScxFileStream = new MemoryStream();
+
+            var writer = new StreamWriter(testScxFileStream);
+            writer.Write("TestFileContent");
+            writer.Flush();
+            testScxFileStream.Seek(0, SeekOrigin.Begin);
+
+            var testFiles = new List<OpenMarketInventoryScxFile>
+            {
+                new OpenMarketInventoryScxFile
+                {
+                    DaypartCodeId = 1,
+                    InventorySource = new InventorySource { Id = 1, Name = "TestSource", IsActive = true, InventoryType = InventorySourceTypeEnum.OpenMarket },
+                    StartDate = new DateTime(2021,10,01),
+                    EndDate = new DateTime(2021,10,17),
+                    ScxStream = testScxFileStream,
+                    Affiliate =  "NBC",
+                    GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
+                    MarketCode = 390
+                }
+            };
+
+            _ProprietaryInventoryService.Setup(x => x.GenerateScxOpenMarketFiles(testJob.InventoryScxOpenMarketsDownloadRequest))
+                .Returns(testFiles);
+
+            var savedSharedFolderFiles = new List<SharedFolderFile>();
+            _SharedFolderService.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
+                .Callback<SharedFolderFile>((sf) => savedSharedFolderFiles.Add(sf))
+                .Returns(savedFileGuid);
+
+            var tc = _GetTestClass();
+
+            tc.ProcessScxOpenMarketGenerationJob(testJob, new DateTime(2019, 8, 23));
+
+            Assert.AreEqual(2, updateJobCallCount);
+            Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, testJob.Status);
+            Assert.AreEqual(1, savedSharedFolderFiles.Count);
+            Assert.AreEqual(1, savedScxJobFiles.Count);
+            Assert.IsTrue(savedScxJobFiles[0][0]?.SharedFolderFileId.HasValue ?? false);
+            Assert.AreEqual(savedFileGuid, savedScxJobFiles[0][0]?.SharedFolderFileId.Value);
+
+            if (enableSharedFileServiceConsolidation)
+            {
+                _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Never);
+                _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Never);
+            }
+            else
+            {
+                _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Once);
+                _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once);
+            }
         }
     }
 }

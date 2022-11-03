@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Enums.Inventory;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.StationInventory;
@@ -182,6 +183,18 @@ namespace Services.Broadcast.Repositories
         List<int> GetManuallyMappedPrograms(List<int> inventoryDaypartIds);
 
         List<StationInventoryManifestDaypart> GetOrphanedManifestDayparts(Action<string> logger);
+        /// <summary>
+        /// Get the Inventory Scx Open Market Data.
+        /// </summary>
+        /// <param name="inventorySourceId">The source identifier.</param>
+        /// <param name="daypartCodeId">daypart code id.</param>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="marketCode">market code.</param>
+        /// <param name="exportGenreIds">genre ids.</param>
+        /// <param name="affiliates">affiliates.</param>
+        /// <returns> Station Inventory Group Data</returns>
+        List<StationInventoryGroup> GetInventoryScxOpenMarketData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate,int marketCode, List<int> exportGenreIds, List<string> affiliates);
     }
 
     public class InventoryRepository : BroadcastRepositoryBase, IInventoryRepository
@@ -2034,5 +2047,50 @@ namespace Services.Broadcast.Repositories
                     return result;
                 });
         }
+
+        ///<inheritdoc/>
+        public List<StationInventoryGroup> GetInventoryScxOpenMarketData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate,int marketCode,List<int> exportGenreIds, List<string> affiliates)
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var groups = context.station_inventory_group
+                        .SelectMany(x => x.station_inventory_manifest)
+                        .SelectMany(x => x.station_inventory_manifest_weeks)
+                        .Where(x => x.start_date <= endDate && x.end_date >= startDate) //filter by start/end date
+                        .SelectMany(x => x.station_inventory_manifest.station_inventory_manifest_dayparts)
+                        .Where(x => exportGenreIds.Contains(x.station_inventory_manifest_daypart_genres.FirstOrDefault().genre_id))//filter by Genre
+                        .Where(x => affiliates.Contains(x.station_inventory_manifest.station.affiliation))//Filter by affiliation
+                        .Where(x => x.station_inventory_manifest.station.market.market_code == marketCode)//Filter by market code
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_source_id == inventorySourceId)   //filter by source
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_proprietary_header.FirstOrDefault().standard_daypart_id == daypartCodeId) //filter by daypart code
+                        .Where(x => x.station_inventory_manifest.inventory_files.inventory_file_ratings_jobs.FirstOrDefault().status == (int)BackgroundJobProcessingStatus.Succeeded) // take only weeks with ratings calculated
+                        .GroupBy(x => x.station_inventory_manifest.station_inventory_group_id)
+                        .Select(x => x.FirstOrDefault().station_inventory_manifest.station_inventory_group)
+                        .Include(x => x.station_inventory_manifest)
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_audiences))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_weeks.Select(w => w.media_weeks)))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_rates))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.station))
+                        .Include(x => x.inventory_sources)
+                        .ToList()
+                        .Select(_MapToInventoryGroup)
+                        .ToList();
+
+                    foreach (var group in groups)
+                    {
+                        foreach (var manifest in group.Manifests)
+                        {
+                            manifest.ManifestWeeks = manifest.ManifestWeeks.Where(w => w.StartDate <= endDate && w.EndDate >= startDate).ToList();
+                        }
+
+                        group.Manifests = group.Manifests.Where(m => m.ManifestWeeks.Any()).ToList();
+                    }
+                    return groups;
+                });
+        }
+
     }
 }
