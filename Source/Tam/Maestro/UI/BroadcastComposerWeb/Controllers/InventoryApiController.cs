@@ -371,5 +371,14 @@ namespace BroadcastComposerWeb.Controllers
             };
         }
 
+
+        [HttpGet]
+        [Route("ScxOpenMarketFileGenerationHistory")]
+        public BaseResponse<List<ScxOpenMarketFileGenerationDetail>> GetOpenMarketScxFileGenerationHistory()
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory
+                .GetApplicationService<IScxGenerationService>()
+                .GetOpenMarketScxFileGenerationHistory());
+        }
     }
 }

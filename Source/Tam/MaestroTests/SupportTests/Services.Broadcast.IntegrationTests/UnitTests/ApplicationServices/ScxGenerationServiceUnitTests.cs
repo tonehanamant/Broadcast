@@ -495,6 +495,22 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             return detail;
         }
 
+        private ScxOpenMarketFileGenerationDetailDto GetPopulatedOpenMarketDetailRaw()
+        {
+            var detail = new ScxOpenMarketFileGenerationDetailDto
+            {
+                GenerationRequestDateTime = new DateTime(2017, 10, 17, 19, 30, 3),
+                GenerationRequestedByUsername = "SomeGuy",
+                FileId = 12,
+                Affilates = "NBC",
+                DaypartCode = "EMN",
+                StartDateTime = new DateTime(2017, 10, 17, 19, 30, 3),
+                EndDateTime = new DateTime(2017, 11, 17, 19, 30, 3),
+                ProcessingStatusId = 1
+            };
+            return detail;
+        }
+
         private ScxFileGenerationDetailDto GetPopulatedDetail(DateTime startDate, DateTime endDate, int processingStatusId)
         {
             var raw = new ScxFileGenerationDetailDto
@@ -624,6 +640,80 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Once);
                 _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once);
             }
+        }
+
+        [Test]
+        public void GetScxFileGenerationHistoryForOpenMarketWithData()
+        {
+            var getHistoryCalls = new List<int>();
+            var getHistoryReturn = new List<ScxOpenMarketFileGenerationDetailDto>
+            {
+                GetPopulatedOpenMarketDetailRaw(),
+                GetPopulatedOpenMarketDetailRaw(),
+                GetPopulatedOpenMarketDetailRaw()
+            };
+            _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileGenerationDetails(It.IsAny<int>()))
+                .Callback<int>((s) => getHistoryCalls.Add(s))
+                .Returns(getHistoryReturn);
+            var tc = _GetTestClass();
+
+            var result = tc.GetOpenMarketScxFileGenerationHistory();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(1, getHistoryCalls.Count);
+            Assert.AreEqual(3, getHistoryReturn.Count);
+        }
+
+        [Test]
+        public void GetScxFileGenerationHistoryForOpenMarketWithNoData()
+        {
+            var getHistoryCalls = new List<int>();
+            var getHistoryReturn = new List<ScxOpenMarketFileGenerationDetailDto>();
+            _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileGenerationDetails(It.IsAny<int>()))
+                .Callback<int>((s) => getHistoryCalls.Add(s))
+                .Returns(getHistoryReturn);
+            var tc = _GetTestClass();
+
+            var result = tc.GetOpenMarketScxFileGenerationHistory();
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, getHistoryCalls.Count);
+            Assert.AreEqual(0, result.Count());
+        }
+
+        [Test]
+        public void GetScxFileGenerationHistoryForOpenMarketWithException()
+        {
+            var getHistoryCalls = new List<int>();
+            var getHistoryReturn = new List<ScxOpenMarketFileGenerationDetailDto>
+            {
+                new ScxOpenMarketFileGenerationDetailDto(),
+                new ScxOpenMarketFileGenerationDetailDto(),
+                new ScxOpenMarketFileGenerationDetailDto()
+            };
+            _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileGenerationDetails(It.IsAny<int>()))
+                .Callback<int>((s) =>
+                {
+                    getHistoryCalls.Add(s);
+                    throw new Exception("Exception from GetScxFileGenerationHistory.");
+                })
+                .Returns(getHistoryReturn);
+
+            var tc = _GetTestClass();
+            Exception caught = null;
+
+            try
+            {
+                tc.GetOpenMarketScxFileGenerationHistory();
+            }
+            catch (Exception e)
+            {
+                caught = e;
+            }
+
+            Assert.IsNotNull(caught);
+            Assert.AreEqual(1, getHistoryCalls.Count);
         }
     }
 }

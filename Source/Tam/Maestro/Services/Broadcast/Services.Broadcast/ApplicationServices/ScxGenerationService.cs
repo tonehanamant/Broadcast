@@ -64,6 +64,12 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns></returns>
         void ProcessScxOpenMarketGenerationJob(ScxOpenMarketsGenerationJob job, DateTime currentDate);
 
+
+        /// <summary>
+        /// Gets the open market History Details
+        /// </summary>
+        /// <returns>Open market History</returns>
+        List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory();
     }
 
     public class ScxGenerationService :BroadcastBaseClass, IScxGenerationService
@@ -373,6 +379,47 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
+        public List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory()
+        {
+            const int sourceId = 1;
+            var detailDtos = _ScxGenerationJobRepository.GetOpenMarketScxFileGenerationDetails(sourceId);
+            var result = TransformFromDtoToOpenMarketEntities(detailDtos);
+            return result;
+        }
+
+        private List<ScxOpenMarketFileGenerationDetail> TransformFromDtoToOpenMarketEntities(List<ScxOpenMarketFileGenerationDetailDto> dtos)
+        {
+            var entities = dtos.Select<ScxOpenMarketFileGenerationDetailDto, ScxOpenMarketFileGenerationDetail>(d =>
+            {
+                var entity = TransformFromDtoToOpenMarketEntity(d);
+                return entity;
+            })
+                .OrderByDescending(s => s.GenerationRequestDateTime)
+                .ToList();
+
+            return entities;
+        }
+
+        private ScxOpenMarketFileGenerationDetail TransformFromDtoToOpenMarketEntity(ScxOpenMarketFileGenerationDetailDto scxOpenMarketFileGenerationDetail)
+        {
+            var processingStatus = EnumHelper.GetEnum<BackgroundJobProcessingStatus>(scxOpenMarketFileGenerationDetail.ProcessingStatusId);
+            var quarters = new List<QuarterDetailDto>();
+            if (scxOpenMarketFileGenerationDetail.StartDateTime.HasValue && scxOpenMarketFileGenerationDetail.EndDateTime.HasValue)
+                quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(scxOpenMarketFileGenerationDetail.StartDateTime.Value, scxOpenMarketFileGenerationDetail.EndDateTime.Value);
+
+            var item = new ScxOpenMarketFileGenerationDetail
+            {
+                GenerationRequestDateTime = scxOpenMarketFileGenerationDetail.GenerationRequestDateTime,
+                GenerationRequestedByUsername = scxOpenMarketFileGenerationDetail.GenerationRequestedByUsername,
+                Affiliates = scxOpenMarketFileGenerationDetail.Affilates,
+                DaypartCode = scxOpenMarketFileGenerationDetail.DaypartCode,
+                QuarterDetails = quarters,
+                ProcessingStatus = processingStatus,
+                FileId = scxOpenMarketFileGenerationDetail.FileId,
+                FileName = scxOpenMarketFileGenerationDetail.Filename
+            };
+            return item;
+        }
         #endregion // #region Helpers
         public void ProcessScxOpenMarketGenerationJob(int jobId)
         {
