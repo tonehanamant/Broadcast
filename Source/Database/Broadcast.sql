@@ -1016,59 +1016,6 @@ END
 GO
 /*************************************** END BP-5847 ************************************/
 
-/*************************************** START BP-5685 ************************************/
-IF OBJECT_ID('scx_generation_open_market_jobs') IS NULL
-BEGIN
-CREATE TABLE dbo.scx_generation_open_market_jobs
-    (
-    [id] [int] identity(1,1) not null primary key,        
-    [start_date] [datetime] not null,
-    [end_date] [datetime] not null,
-    [status] [int] not null,
-    [queued_at] [datetime] not null,
-    [completed_at] [datetime] null,
-    [requested_by] [varchar](63) not null
-    )
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_job_dayparts') IS NULL
-BEGIN
-CREATE TABLE dbo.scx_generation_open_market_job_dayparts
-    (
-    [id] [int] identity(1,1) not null primary key,        
-    [standard_daypart_id] [int] not null,
-    [scx_generation_open_market_job_id] [int] not null
-    )
-ALTER TABLE scx_generation_open_market_job_dayparts ADD CONSTRAINT FK_scx_generation_open_market_job_dayparts_standard_dayparts FOREIGN KEY(standard_daypart_id) REFERENCES standard_dayparts(id)
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_job_markets') IS NULL
-BEGIN
-CREATE TABLE dbo.scx_generation_open_market_job_markets
-    (
-    [id] [int] identity(1,1) not null primary key,        
-    [market_code] [smallint] not null,
-    [scx_generation_open_market_job_id] [int] not null
-    )
-ALTER TABLE scx_generation_open_market_job_markets ADD CONSTRAINT FK_scx_generation_open_market_job_markets_markets FOREIGN KEY(market_code) REFERENCES markets(market_code)
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_job_affiliates') IS NULL
-BEGIN
-CREATE TABLE dbo.scx_generation_open_market_job_affiliates
-    (
-    [id] [int] identity(1,1) not null primary key,        
-    [affiliate] [varchar](7) not null,
-    [scx_generation_open_market_job_id] [int] not null
-    )
-END
-GO
-
-/*************************************** END BP-5685 ************************************/
-
 /*************************************** START BP-5536 ************************************/
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_programs_genres')
 BEGIN
@@ -1078,36 +1025,6 @@ GO
 /*************************************** END BP-5536 ************************************/
 
 /*************************************** START BP-5685 ************************************/
-
-IF OBJECT_ID('scx_generation_open_market_job_dayparts') IS NOT NULL
-BEGIN
-DROP TABLE scx_generation_open_market_job_dayparts
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_job_markets') IS NOT NULL
-BEGIN
-DROP TABLE scx_generation_open_market_job_markets
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_job_affiliates') IS NOT NULL
-BEGIN
-DROP TABLE scx_generation_open_market_job_affiliates
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_job_files') IS NOT NULL
-BEGIN
-DROP TABLE scx_generation_open_market_job_files
-END
-GO
-
-IF OBJECT_ID('scx_generation_open_market_jobs') IS NOT NULL
-BEGIN
-DROP TABLE scx_generation_open_market_jobs
-END
-GO
 
 IF OBJECT_ID('scx_generation_open_market_jobs') IS NULL
 BEGIN
@@ -1187,6 +1104,23 @@ CREATE TABLE dbo.scx_generation_open_market_job_files
 ALTER TABLE scx_generation_open_market_job_files ADD CONSTRAINT FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs 
 FOREIGN KEY(scx_generation_open_market_job_id) REFERENCES scx_generation_open_market_jobs(id)
 END
+GO
+
+IF NOT EXISTS (SELECT *
+               FROM   information_schema.columns
+               WHERE  table_name = 'scx_generation_open_market_jobs'
+                      AND column_name = 'export_genre_type_id')
+  BEGIN
+      DROP TABLE scx_generation_open_market_job_dayparts
+
+      DROP TABLE scx_generation_open_market_job_markets
+
+      DROP TABLE scx_generation_open_market_job_affiliates
+
+      DROP TABLE scx_generation_open_market_job_files
+
+      DROP TABLE scx_generation_open_market_jobs
+  END
 GO
 
 /*************************************** END BP-5685 ************************************/
