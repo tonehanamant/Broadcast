@@ -11,23 +11,29 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// </summary>
         public SpotExceptionsOutOfSpecSaveDecisionsRequestDto()
         {
-            Decisions = new List<SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto>();
+            Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>();
         }
 
         /// <summary>
         /// Gets or sets the decisions.
         /// </summary>
         /// <value>The decisions.</value>
-        public List<SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto> Decisions { get; set; }
+        public List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto> Decisions { get; set; }
     }
 
-    public class SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto
+    public class SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
     {
         /// <summary>
-        /// Gets or sets the identifier.
+        /// Gets or sets the todo identifier.
         /// </summary>
-        /// <value>The identifier.</value>
-        public int Id { get; set; }
+        /// <value>The todo identifier.</value>
+        public int? todoId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the done identifier.
+        /// </summary>
+        /// <value>The done identifier.</value>
+        public int? doneId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [accept as in spec].

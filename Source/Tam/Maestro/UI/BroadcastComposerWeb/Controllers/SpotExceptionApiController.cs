@@ -239,6 +239,7 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <param name="spotExceptionsOutOfSpecSaveRequest">The spot exceptions out of spec save request.</param>
         /// <returns></returns>
+        //[Authorize]
         [HttpPost]
         [Route("out-of-spec-saves")]
         public async Task<BaseResponse<bool>> SaveOutofSpecDecisionsPlans(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest)

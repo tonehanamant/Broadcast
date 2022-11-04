@@ -119,16 +119,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 UserName = "Test User"
             };
 
-            var spotExceptionsOutOfSpecDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto>
+            var spotExceptionsOutOfSpecDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
             {
-                new SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto
+                new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
                 {
-                    Id = 21,
+                    todoId = 21,
                     AcceptAsInSpec = true
                 },
-                new SpotExceptionsOutOfSpecDoneDecisionsToSaveRequestDto
+                new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
                 {
-                    Id = 22,
+                    doneId = 22,
                     AcceptAsInSpec = true
                 }
             };
