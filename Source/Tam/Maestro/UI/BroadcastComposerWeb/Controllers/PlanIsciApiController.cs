@@ -70,6 +70,21 @@ namespace BroadcastComposerWeb.Controllers
                     () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().SaveIsciMappings(isciPlanProductsMapping, createdBy));
         }
 
+        /// <summary>
+        /// Endpoint to copy isci Mappings.
+        /// </summary>
+        /// <returns>True or False</returns>
+        [HttpPost]
+        [Route("plan-iscis-copy")]
+        [Authorize]
+        public BaseResponse<bool> CopyIsciMappings(IsciPlanMappingsSaveRequestDto isciPlanProductsMapping)
+        {
+            var createdBy = _GetCurrentUserFullName();
+            return
+                _ConvertToBaseResponse(
+                    () => _ApplicationServiceFactory.GetApplicationService<IPlanIsciService>().CopyIsciMappings(isciPlanProductsMapping, createdBy));
+        }
+
         [HttpGet]
         [Route("plan-iscis-details")]
         public BaseResponse<PlanIsciMappingsDetailsDto> GetPlanIsciMappingsDetails(int planId)

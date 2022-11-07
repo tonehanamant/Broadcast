@@ -140,8 +140,9 @@ namespace Services.Broadcast.Repositories
         /// Get the isci plans basis of plan ID
         /// </summary>
         /// <param name="advertiserMasterId">advertiserMasterId</param>
+        /// <param name="sourcePlanId">Input plan id</param>
         /// <returns>Plan Iscis</returns>
-        List<plan> GetTargetIsciPlans(Guid? advertiserMasterId);
+        List<plan> GetTargetIsciPlans(Guid? advertiserMasterId, int sourcePlanId);
     }
 
     /// <summary>
@@ -582,13 +583,13 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        public List<plan> GetTargetIsciPlans(Guid? advertiserMasterId)
+        public List<plan> GetTargetIsciPlans(Guid? advertiserMasterId, int sourcePlanId)
         {
             return _InReadUncommitedTransaction(context =>
             {
 
                 var planEntities = (from plans in context.plans
-                                    where (plans.campaign.advertiser_master_id == advertiserMasterId && plans.plan_iscis.Count != 0)
+                                    where (plans.campaign.advertiser_master_id == advertiserMasterId && plans.id!= sourcePlanId && plans.plan_iscis.Count != 0)
                                     select plans)
                                     .Include(x => x.campaign)
                                     .Include(x => x.plan_versions)

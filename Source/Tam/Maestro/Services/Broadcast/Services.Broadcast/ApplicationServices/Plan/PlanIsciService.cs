@@ -41,6 +41,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// /// <param name="createdBy">Created By</param>
         /// <returns>true or false</returns>
         bool SaveIsciMappings(IsciPlanMappingsSaveRequestDto saveRequest, string createdBy);
+        /// <summary>
+        /// copy Isci mapping
+        /// </summary>
+        /// <param name="copyRequest">The object which contains save parameters</param>
+        /// /// <param name="createdBy">Created By</param>
+        /// <returns>true or false</returns>
+        bool CopyIsciMappings(IsciPlanMappingsSaveRequestDto copyRequest, string createdBy);
 
         PlanIsciMappingsDetailsDto GetPlanIsciMappingsDetails(int planId);
 
@@ -296,9 +303,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
-            toSave   = _RemoveDuplicateFromPlanIscis(toSave);
+            var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSave, createdBy, createdAt);
+            return totalChangedCount;
+        }
 
-            List<PlanIsciDto> toSaveFiltered = new List<PlanIsciDto>();            
+        private int _HandleCopyIsciPlanMapping(List<IsciPlanMappingDto> mappings, string createdBy, DateTime createdAt)
+        {
+            if (!mappings.Any())
+            {
+                return 0;
+            }
+
+            List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
+            toSave = _RemoveDuplicateFromPlanIscis(toSave);
+
+            List<PlanIsciDto> toSaveFiltered = new List<PlanIsciDto>();
             foreach (var mapping in toSave)
             {
                 var planIscisCount = _PlanIsciRepository.GetPlanIscis(mapping.PlanId).Count(x => x.Isci == mapping.Isci &&
@@ -311,6 +330,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var totalChangedCount = _PlanIsciRepository.SaveIsciPlanMappings(toSaveFiltered, createdBy, createdAt);
             return totalChangedCount;
         }
+
         private List<PlanIsciDto> _RemoveDuplicateFromPlanIscis(List<PlanIsciDto> planIscis)
         {
             var distinctPlanIsciList = planIscis
@@ -372,6 +392,24 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LogInfo($"{addedCount} IsciPlanMappings were added.");
 
             var modifiedCount = _HandleModifiedIsciPlanMappings(saveRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
+
+            _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
+
+            return true;
+        }
+        public bool CopyIsciMappings(IsciPlanMappingsSaveRequestDto copyRequest, string createdBy)
+        {
+            var createdAt = _DateTimeEngine.GetCurrentMoment();
+            var deletedAt = _DateTimeEngine.GetCurrentMoment();
+            var modifiedAt = _DateTimeEngine.GetCurrentMoment();
+
+            var isciPlanMappingsDeletedCount = _HandleDeleteIsciPlanMapping(copyRequest.IsciPlanMappingsDeleted, createdBy, deletedAt);
+            _LogInfo($"{isciPlanMappingsDeletedCount} IsciPlanMappings are deleted.");
+
+            var addedCount = _HandleCopyIsciPlanMapping(copyRequest.IsciPlanMappings, createdBy, createdAt);
+            _LogInfo($"{addedCount} IsciPlanMappings were added.");
+
+            var modifiedCount = _HandleModifiedIsciPlanMappings(copyRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
 
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
 
@@ -677,30 +715,25 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var result = new IsciTargetPlansDto();
             var plan = _PlanService.GetPlan(sourcePlanId);
             var campaign = _CampaignService.GetCampaignById(plan.CampaignId);
-            var planIscis = _PlanIsciRepository.GetTargetIsciPlans(campaign.AdvertiserMasterId);
+            var planIscis = _PlanIsciRepository.GetTargetIsciPlans(campaign.AdvertiserMasterId,sourcePlanId);
             foreach (var singlePlan in planIscis)
             {
-                var isciplan = singlePlan.plan_versions.Where(x => x.flight_end_date >= dateTime & x.id == singlePlan.latest_version_id).ToList();
-                if (isciplan.Any())
+                var isciplan = singlePlan.plan_versions.SingleOrDefault(x => x.flight_end_date >= dateTime && x.id == singlePlan.latest_version_id);
+                if(isciplan!=null)
                 {
-                    result = new IsciTargetPlansDto
+                    var dayparts = isciplan.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList();
+                    var spotLengthString = _GetSpotLengthsString(isciplan.plan.plan_iscis.Select(y => y.spot_length_id).FirstOrDefault());
+                    var flightString = $"{isciplan.flight_start_date.ToString(flightStartDateFormat)}-{isciplan.flight_end_date.ToString(flightEndDateFormat)}";
+                    var targetPlan= new TargetPlans
                     {
-                        Plans = isciplan.Select(x =>
-                        {
-                                var dayparts = x.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList();
-                                var spotLengthString = _GetSpotLengthsString(x.plan.plan_iscis.Select(y => y.spot_length_id).FirstOrDefault());
-                                var flightString = $"{x.flight_start_date.ToString(flightStartDateFormat)}-{x.flight_end_date.ToString(flightEndDateFormat)}";
-                                return new TargetPlans
-                                {
-                                    Id = x.plan_id,
-                                    SpotLengthString = spotLengthString,
-                                    DemoString = x.audience.code,
-                                    Title = x.plan.name,
-                                    DaypartsString = string.Join(", ", dayparts),
-                                    FlightString = flightString
-                                };
-                        }).ToList()
+                        Id = isciplan.plan_id,
+                        SpotLengthString = spotLengthString,
+                        DemoString = isciplan.audience.code,
+                        Title = isciplan.plan.name,
+                        DaypartsString = string.Join(", ", dayparts),
+                        FlightString = flightString
                     };
+                    result.Plans.Add(targetPlan);
                 }
             }
             return result;
