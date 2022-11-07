@@ -25,8 +25,14 @@ namespace Services.Broadcast.Repositories
         /// <returns></returns>
         List<ProgramMappingsDto> GetProgramMappings();
 
+        /// <summary>
+        /// Creates new program mappings.
+        /// </summary>
         void CreateProgramMappings(IEnumerable<ProgramMappingsDto> newProgramMappings, string createdBy, DateTime createdAt);
 
+        /// <summary>
+        /// Updates existing program mappings.
+        /// </summary>
         void UpdateProgramMappings(IEnumerable<ProgramMappingsDto> programMappings, string updatedBy, DateTime updatedAt);
 
         /// <summary>
@@ -35,8 +41,19 @@ namespace Services.Broadcast.Repositories
         /// <returns>List Of Master Programs</returns>
         List<ProgramMappingsDto> GetProgramsAndGeneresFromDataTable();
 
+        /// <summary>
+        /// Uploads the master program mappings.
+        /// </summary>
         void UploadMasterProgramMappings(IEnumerable<ProgramMappingsDto> newProgramMappings, string createdBy, DateTime createdAt);
 
+        /// <summary>
+        /// Updates existing the master program mappings.
+        /// </summary>
+        void UpdateMasterProgramMappings(IEnumerable<ProgramMappingsDto> masterPrograms, string createdBy, DateTime createdAt);
+
+        /// <summary>
+        /// Gets the master programs. (From the programs table)
+        /// </summary>
         List<MasterProgramsDto> GetMasterPrograms();
     }
 
@@ -48,6 +65,7 @@ namespace Services.Broadcast.Repositories
         {
         }
 
+        /// <inheritdoc />
         public List<ProgramMappingsDto> GetProgramMappingsByOriginalProgramNames(IEnumerable<string> originalProgramNames)
         {
             var chunks = originalProgramNames.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
@@ -96,6 +114,7 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        /// <inheritdoc />
         public void UpdateProgramMappings(IEnumerable<ProgramMappingsDto> programMappings, string updatedBy, DateTime updatedAt)
         {
             var chunks = programMappings.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
@@ -133,32 +152,6 @@ namespace Services.Broadcast.Repositories
 
                     command.ExecuteNonQuery();
                 });
-
-
-                // Plan B
-                /*
-                var mappingById = chunk.ToDictionary(x => x.Id, x => x);
-                var mappingIds = chunk.Select(x => x.Id).ToList();
-
-                _InReadUncommitedTransaction(context =>
-                {
-                    var dbMappings = context.program_name_mappings.Where(x => mappingIds.Contains(x.id)).ToList();
-
-                    foreach (var dbMapping in dbMappings)
-                    {
-                        var programMapping = mappingById[dbMapping.id];
-
-                        dbMapping.official_program_name = programMapping.OfficialProgramName;
-                        dbMapping.genre_id = programMapping.OfficialGenre.Id;
-                        dbMapping.show_type_id = programMapping.OfficialShowType.Id;
-
-                        dbMapping.modified_by = updatedBy;
-                        dbMapping.modified_at = updatedAt;
-                    }
-
-                    context.SaveChanges();
-                });
-                */
             }
         }
 
@@ -270,6 +263,29 @@ namespace Services.Broadcast.Repositories
             }
         }
 
+        /// <inheritdoc />
+        public void UpdateMasterProgramMappings(IEnumerable<ProgramMappingsDto> masterPrograms, string createdBy, DateTime createdAt)
+        {
+            var chunks = masterPrograms.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
+            foreach (var chunk in chunks)
+            {
+                var programIdDict = chunk.ToDictionary(s => s.Id);
+                var ids = programIdDict.Keys.ToList();
+
+                _InReadUncommitedTransaction(context =>
+                {
+                    var found = context.programs.Where(p => ids.Contains(p.id)).ToList();
+                    found.ForEach(p =>
+                    {
+                        p.genre_id = programIdDict[p.id].OfficialGenre.Id;
+                        p.show_type_id = programIdDict[p.id].OfficialShowType.Id;
+                    });
+                    context.SaveChanges();
+                });
+            }
+        }
+
+        /// <inheritdoc />
         public List<MasterProgramsDto> GetMasterPrograms()
         {
             return _InReadUncommitedTransaction(context =>

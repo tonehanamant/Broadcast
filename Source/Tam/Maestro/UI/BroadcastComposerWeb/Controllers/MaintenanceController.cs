@@ -1040,8 +1040,22 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        /* SDE 11/7/2022 BP-5955
+         * Removing UploadProgramsFromBroadcastOps because we don't want to do UploadProgramsFromBroadcastOps anymore.
+         * We may want to bring UploadProgramsFromBroadcastOps back in the future.
+         * 
+         * UploadProgramsFromBroadcastOps loads a static RedBee Schedule into the programs table.  
+         * We know now that we want to orient off the Business's Programs-Genre Excel file which is loaded by the UploadProgramList below.
+         *          
+         * So we are hiding UploadProgramsFromBroadcastOps for now and enabling only UploadProgramList.
+         * 
+         * In the future we are looking at maybe scraping the RedBee Programs Schedule for a list of new programs.
+         * The static RedBee Schedule file is a static snapshot of that feed.
+         * 
+         * If we do the feed we may we want to bring this back.
+
         [HttpPost]
-        [Route("UploadProgramsFromBroadcastOps")]
+        [Route("UploadProgramsFromRedBeeScheduleFile")]
         public ActionResult UploadProgramsFromBroadcastOps(HttpPostedFileBase file)
         {
             if (file != null && file.ContentLength > 0)
@@ -1069,6 +1083,8 @@ namespace BroadcastComposerWeb.Controllers
             TempData["TabId"] = "reference_data";
             return RedirectToAction("Index");
         }
+
+        */
 
         [HttpPost]
         [Route("UploadProgramList")]

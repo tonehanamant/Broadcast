@@ -18,7 +18,7 @@ namespace Services.Broadcast.Converters
         /// <summary>
         /// Read the program list file and return the program list
         /// </summary>
-        List<ProgramMappingsDto> UploadMasterPrograms(Stream stream);
+        List<ProgramMappingsDto> ParseProgramGenresExcelFile(Stream stream);
     }
 
     public class MasterProgramListImporter : BroadcastBaseClass, IMasterProgramListImporter
@@ -42,8 +42,6 @@ namespace Services.Broadcast.Converters
         private const string EventLocation = "event_location";
         private const string WwtvTitle = "WWTV_Title";
         private const string ProgramShowType = "Miscellaneous";
-        // This is going to remove in BP-5532 story
-        private const string ProgramGenre = "Various";   
 
         private readonly List<string> FileHeaders = new List<string>
         {
@@ -196,35 +194,47 @@ namespace Services.Broadcast.Converters
         /// </summary>
         /// <param name="stream">Filestream</param>
         /// <returns>Return the program list</returns>
-        public List<ProgramMappingsDto> UploadMasterPrograms(Stream stream)
+        public List<ProgramMappingsDto> ParseProgramGenresExcelFile(Stream stream)
         {
-            var excelProgramList = _ReadProgramFile(stream);
-            var masterList = new List<ProgramMappingsDto>();                        
-            foreach (var program in excelProgramList)
+            var givenPrograms = _ReadProgramFile(stream);
+            var programsList = new List<ProgramMappingsDto>();
+
+            // for now we use the same show type for everything
+            var sourceShowType = _ShowTypeCache.GetMaestroShowTypeByName(ProgramShowType);
+
+            foreach (var givenProgram in givenPrograms)
             {
-                    // This is going to remove in BP-5532 story
-                    Genre officialGenre = _GenreCache.GetMaestroGenreByName(ProgramGenre);                    
-                    var sourceShowType = _ShowTypeCache.GetMaestroShowTypeByName(ProgramShowType);
-                    var programMapping = new ProgramMappingsDto
+                Genre officialGenre = null;
+
+                try
+                {
+                    officialGenre = _GenreCache.GetMaestroGenreByName(givenProgram.OfficialGenre);
+                }
+                catch (Exception ex)
+                {
+                    _LogError($"Error resolving given genre '{givenProgram.OfficialGenre}'.", ex);
+                }
+
+                if (officialGenre != null)
+                {
+                    var program = new ProgramMappingsDto
                     {
-                        OfficialProgramName = program.OfficialProgramName,
-                        // This is going to remove in BP-5532 story
+                        OfficialProgramName = givenProgram.OfficialProgramName,
                         OfficialGenre = officialGenre,
                         OfficialShowType = sourceShowType
                     };
 
-                    if (!string.IsNullOrWhiteSpace(programMapping.OfficialProgramName) && officialGenre != null)
-                    {
-                        masterList.Add(programMapping);
-                    }
-                    else
-                    {
-                        _LogInfo(String.Format("Program name {0} could not be proceed as An unknown" +
-                            " {1} genre {2} was discovered: ", program.OfficialProgramName, "Maestro", program.OfficialGenre));
-                    }
+                    programsList.Add(program);
+                }
+                else
+                {
+                    _LogInfo(String.Format("Program name {0} could not be proceed as An unknown" +
+                        " {1} genre {2} was discovered: ", givenProgram.OfficialProgramName, "Maestro", givenProgram.OfficialGenre));
+                }
             }
-            return masterList;
+            return programsList;
         }
+
         private List<ProgramListFileRequestDto> _ReadProgramFile(Stream stream)
         {
             var package = new ExcelPackage(stream);

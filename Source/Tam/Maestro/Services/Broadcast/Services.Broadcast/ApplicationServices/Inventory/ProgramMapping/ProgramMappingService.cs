@@ -80,7 +80,19 @@ namespace Services.Broadcast.ApplicationServices
         ReportOutput ExportUnmappedPrograms();
 
         /// <summary>
-        /// Loads the Master file.
+        /// 
+        /// ** DO NOT USE 11/7/2022
+        /// 
+        /// Loads the Static RedBee Schedule File into the 'programs' Table.
+        ///     We don't want to do this anymore.
+        /// 
+        /// We know now that we want to orient off the Business's Programs-Genre Excel file which is loaded by the UploadPrograms below.
+        /// 
+        /// In the future we are looking at maybe scraping the RedBee Programs Schedule for a list of new programs.
+        /// The static RedBee Schedule file is a static snapshot of that feed.
+        ///
+        /// If we do the feed we may we want to bring this back.
+        /// 
         /// </summary>
         /// <param name="fileStream">The file stream.</param>
         /// <param name="fileName">The file name.</param>
@@ -88,6 +100,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="createdDate">The created date.</param>
         /// <returns>The background jobs Id</returns>
         void UploadProgramsFromBroadcastOps(Stream fileStream, string fileName, string userName, DateTime createdDate);
+
         /// <summary>
         /// Loads the Master file.
         /// </summary>
@@ -874,27 +887,71 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>       
         public void UploadPrograms(Stream fileStream, string fileName, string userName, DateTime createdDate)
         {
-            var programs = _MasterProgramListImporter.UploadMasterPrograms(fileStream);             
+            _LogInfo("Beginning to load programs from the Business's Programs Genre File.");
 
-            var filteredPrograms = _RemoveDuplicateFromMasterList(programs);
+            _LogInfo("Beginning to parse the file...");
+            var rawPrograms = _MasterProgramListImporter.ParseProgramGenresExcelFile(fileStream);
+            _LogInfo($"Completed parsing the file.  '{rawPrograms.Count}' records parsed.");
 
-            var masterPrograms = _ProgramMappingRepository.GetMasterPrograms();
-
-            var filteredProgramList = new List<ProgramMappingsDto>();
-            
-                foreach (var disctinctMaster in filteredPrograms)
+            // remove dups
+            _LogInfo($"Beginning to dedup '{rawPrograms.Count}' records.");
+            var deDuppedPrograms = new List<ProgramMappingsDto>();
+            foreach (var rawProgram in rawPrograms)
+            {
+                // only have to check by name
+                if (!deDuppedPrograms.Any(a => a.OfficialProgramName.Equals(rawProgram.OfficialProgramName, StringComparison.OrdinalIgnoreCase)))
                 {
-                    var disctinctMasterCount = masterPrograms.Count(x => x.Name.ToUpper() == disctinctMaster.OfficialProgramName.ToUpper());
-                    if (disctinctMasterCount > 0)
-                    {
-                        //do nothing                    
-                    }
-                    else
-                    {
-                        filteredProgramList.Add(disctinctMaster);
-                    }
-                }           
-            _ProgramMappingRepository.UploadMasterProgramMappings(filteredProgramList, userName, createdDate);
+                    deDuppedPrograms.Add(rawProgram);
+                }
+            }
+            _LogInfo($"Completed the dedup of '{rawPrograms.Count}' records down to '{deDuppedPrograms.Count}' records.");
+
+            // Handle Updates
+            var toInsert = new List<ProgramMappingsDto>();
+            var toUpdate = new List<ProgramMappingsDto>();
+
+            // this is hopefully not too large a list.
+            _LogInfo($"Beggining to split programs into insert, update, ignore...");
+
+            _LogInfo($"Beggining to get the full list of programs...");
+            var existingPrograms = _ProgramMappingRepository.GetMasterPrograms();
+            _LogInfo($"Got the full list of programs.  Count: {existingPrograms.Count}");
+
+            foreach (var candidateProgram in deDuppedPrograms)
+            {
+                // find if one exists
+                var found = existingPrograms.SingleOrDefault(x => x.Name.Equals(candidateProgram.OfficialProgramName, StringComparison.OrdinalIgnoreCase));
+
+                if (found == null)
+                {
+                    toInsert.Add(candidateProgram);
+                }
+                else if(found.ShowTypeId != candidateProgram.OfficialShowType.Id
+                        || found.GenreId != candidateProgram.OfficialGenre.Id)
+                {
+                    candidateProgram.Id = found.id;
+                    toUpdate.Add(candidateProgram);
+                }
+
+                // else do nothing because it already exists
+            }
+            
+            _LogInfo($"Completed to splitting programs into insert({toInsert.Count}), update({toUpdate.Count}), ignoreof total({deDuppedPrograms.Count})...");
+
+            // save
+            _LogInfo($"Beginning insert of '{toInsert.Count}' records...");
+            if (toInsert.Any())
+            {
+                _ProgramMappingRepository.UploadMasterProgramMappings(toInsert, userName, createdDate);
+            }
+
+            _LogInfo($"Beginning update of '{toUpdate.Count}' records...");
+            if (toUpdate.Any())
+            {
+                _ProgramMappingRepository.UpdateMasterProgramMappings(toUpdate, userName, createdDate);
+            }
+
+            _LogInfo("Completed loading programs from the Business's Programs Genre File.");
         }
     }
 }

@@ -952,7 +952,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);          
 
             // Master list
-            _MasterListImporterMock.Setup(m => m.UploadMasterPrograms(fileStream)).Returns(new List<ProgramMappingsDto>
+            _MasterListImporterMock.Setup(m => m.ParseProgramGenresExcelFile(fileStream)).Returns(new List<ProgramMappingsDto>
             {
                 new ProgramMappingsDto
                 {
@@ -1031,7 +1031,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _SharedFolderServiceMock.Setup(s => s.GetFile(It.IsAny<Guid>())).Returns(sharedFolderFile);
 
             // Master list
-            _MasterListImporterMock.Setup(m => m.UploadMasterPrograms(fileStream)).Returns(new List<ProgramMappingsDto>
+            _MasterListImporterMock.Setup(m => m.ParseProgramGenresExcelFile(fileStream)).Returns(new List<ProgramMappingsDto>
             {
                 new ProgramMappingsDto
                 {
