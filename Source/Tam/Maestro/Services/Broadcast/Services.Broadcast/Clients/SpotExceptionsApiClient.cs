@@ -56,10 +56,8 @@ namespace Services.Broadcast.Clients
         {
             var apiBaseUrl = _GetApiBaseUrl();
             var applicationId = _GetApplicationId();
-            var apiGwId = _GetApiGwId();
 
             var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);
-            client.DefaultRequestHeaders.Add("x-apigw-api-id", apiGwId);
 
             client.Timeout = new TimeSpan(2, 0, 0);
 
@@ -75,12 +73,6 @@ namespace Services.Broadcast.Clients
         private string _GetApplicationId()
         {
             var result = _ConfigurationSettingsHelper.GetConfigValue<string>(SpotExceptionsIngestApiConfigKeys.ApplicationId);
-            return result;
-        }
-
-        private string _GetApiGwId()
-        {
-            var result = _ConfigurationSettingsHelper.GetConfigValue<string>(SpotExceptionsIngestApiConfigKeys.ApiGwId);
             return result;
         }
     }
