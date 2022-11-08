@@ -448,11 +448,11 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _LogInfo($"Starting: Saving Decisions to Out of Spec");
             try
             {
-                if(spotExceptionsOutOfSpecSaveRequest.Decisions.All(x => x.todoId != null))
+                if(spotExceptionsOutOfSpecSaveRequest.Decisions.All(x => x.TodoId != null))
                 {
                     isSaved = await _SaveOutOfSpecToDoDecisionsAsync(spotExceptionsOutOfSpecSaveRequest, userName);
                 }
-                else if (spotExceptionsOutOfSpecSaveRequest.Decisions.All(x => x.doneId != null))
+                else if (spotExceptionsOutOfSpecSaveRequest.Decisions.All(x => x.DoneId != null))
                 {
                     isSaved = await _SaveOutOfSpecDoneDecisionsAsync(spotExceptionsOutOfSpecSaveRequest, userName);
                 }
@@ -538,7 +538,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     var spot = new SpotExceptionsOutOfSpecsToDoDto
                     {
-                        Id = spotExceptionsOutOfSpec.todoId ?? default,
+                        Id = spotExceptionsOutOfSpec.TodoId ?? default,
                         Comments = spotExceptionsOutOfSpec.Comments
                     };
 
@@ -569,7 +569,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     spotExceptionsOutOfSpecSaveRequest.Decisions.ForEach(async outOfSpecRequest =>
                     {
-                        var todoOutOfSpec = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpot(outOfSpecRequest.todoId);
+                        var todoOutOfSpec = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpot(outOfSpecRequest.TodoId);
                         var doneOutOfSpecToAdd = _MapOutOfSpecDoneToDto(todoOutOfSpec);
 
                         _SpotExceptionsOutOfSpecRepository.AddOutOfSpecToDone(doneOutOfSpecToAdd, outOfSpecRequest, userName, currentDate);
@@ -641,7 +641,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     var spot = new SpotExceptionsOutOfSpecsDoneDto
                     {
-                        Id = spotExceptionsOutOfSpec.doneId ?? default,
+                        Id = spotExceptionsOutOfSpec.DoneId ?? default,
                         Comments = spotExceptionsOutOfSpec.Comments
                     };
                     spotExceptionsOutOfSpecDone.Add(spot);
@@ -672,7 +672,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     var spotExceptionsOutOfSpecDoneDecision = new SpotExceptionsOutOfSpecDoneDecisionsDto
                     {
-                        Id = spotExceptionsOutOfSpec.doneId ?? default,
+                        Id = spotExceptionsOutOfSpec.DoneId ?? default,
                         AcceptedAsInSpec = spotExceptionsOutOfSpec.AcceptAsInSpec,
                         ProgramName = spotExceptionsOutOfSpec.ProgramName,
                         GenreName = spotExceptionsOutOfSpec.GenreName,

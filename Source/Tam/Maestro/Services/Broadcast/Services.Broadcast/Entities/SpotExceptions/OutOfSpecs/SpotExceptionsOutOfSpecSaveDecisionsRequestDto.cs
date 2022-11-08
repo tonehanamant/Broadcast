@@ -27,13 +27,13 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// Gets or sets the todo identifier.
         /// </summary>
         /// <value>The todo identifier.</value>
-        public int? todoId { get; set; }
+        public int? TodoId { get; set; }
 
         /// <summary>
         /// Gets or sets the done identifier.
         /// </summary>
         /// <value>The done identifier.</value>
-        public int? doneId { get; set; }
+        public int? DoneId { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [accept as in spec].

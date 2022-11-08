@@ -123,12 +123,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             {
                 new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
                 {
-                    todoId = 21,
+                    TodoId = 21,
                     AcceptAsInSpec = true
                 },
                 new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
                 {
-                    doneId = 22,
+                    DoneId = 22,
                     AcceptAsInSpec = true
                 }
             };
