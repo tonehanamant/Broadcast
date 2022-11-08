@@ -1125,6 +1125,26 @@ END
 GO
 /*************************************** END BP-5878 ***************************************/
 
+/*************************************** START BP-5966 ************************************/
+
+-- cleanup program name exceptions
+DELETE FROM program_name_exceptions WHERE created_by LIKE 'BP-4864%' 
+
+-- ensure all keywords are in exceptions so mappings will be accepted
+INSERT INTO program_name_exceptions (custom_program_name, genre_id, show_type_id, created_by, created_at)
+	SELECT k.[program_name], k.genre_id, k.show_type_id
+		, 'BP-5966_ReleaseNewProgramsListAndMappings'
+		, SYSDATETIME()
+	FROM program_name_mapping_keywords k
+	LEFT OUTER JOIN program_name_exceptions e
+		ON k.[program_name] = e.custom_program_name
+	WHERE e.id IS NULL
+
+GO
+
+/*************************************** END BP-5966 ************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

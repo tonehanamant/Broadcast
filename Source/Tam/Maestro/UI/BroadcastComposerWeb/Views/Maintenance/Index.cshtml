@@ -214,6 +214,7 @@
         <button class="tablinks" id="data-maintenance-tab" onclick="openTab('data_maintenance')">Data Maintenance</button>
         <button class="tablinks" id="aab-maintenance-tab" onclick="openTab('aab_maintenance')">AAb Maintenance</button>
         <button class="tablinks" id="migrations-tab" onclick="openTab('migrations')">Migrations</button>
+        <button class="tablinks" id="programs-tab" onclick="openTab('programs')">Programs and Mappings</button>
     </div>
     @if (ViewBag.Message != null)
     {
@@ -613,125 +614,7 @@
                 <textarea class="input" rows="5" id="divCleanupJSON">@ViewBag.TextareaMessage</textarea>
             </div>
         </div>
-        <div class="form">
-            <h1 class="heading">Program Name Mappings</h1>
-            @using (Html.BeginForm("ImportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h1 class="heading">Import program mappings</h1>
-                    Import program mappings into the program mappings table and reprocess inventory to update with new mappings.
-                    <div class="input-container">
-                        <label class="label" for="file">Filename:</label>
-                        <input class="input" type="file" name="file" id="file" />
-                    </div>
-                    <input class="button" type="submit" value="Submit" id="txt Import Program Mappings" />
-                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-                </div>
-            }
-            @using (Html.BeginForm("ExportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h1 class="heading">Export program mappings</h1>
-                    Export the program mappings from the program mappings table.
-                    <input class="button" type="submit" value="Submit" id="txt Export Program Mappings" />
-                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-                </div>
-            }
-            @using (Html.BeginForm("ExportUnmappedProgramNames", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h1 class="heading">Export unmapped program names</h1>
-                    Export all the unmapped program names in the system's inventory.
-                    <input class="button" type="submit" value="Submit" id="txt Export-Unmapped-Program-names" />
-                    <textarea class="input" rows="1" id="divJSON">@ViewBag.Message</textarea>
-                </div>
-            }
-
-            @using (Html.BeginForm("ImportMasterList", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h1 class="heading">Import Master List</h1>
-                    Upload a new master list of standard program names.
-                    <div class="input-container">
-                        <label class="label" for="file">Filename:</label>
-                        <input class="input" type="file" name="file" id="file" />
-                    </div>
-                    <input class="button" type="submit" value="Submit" id="import-master-list" />
-                    <textarea class="input" rows="5">@ViewBag.Message</textarea>
-                </div>
-            }
-
-            @using (Html.BeginForm("ExportUnmappedPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h1 class="heading">Export unmapped programs</h1>
-                    Generate reports for unmapped programs with categorized mapping suggestions.
-                    <input class="button" type="submit" value="Submit" id="txt-Export-Unmapped-Programs" />
-                    <textarea class="input" rows="1" id="divJSON">@ViewBag.Message</textarea>
-                </div>
-            }
-            @*@using (Html.BeginForm("UploadProgramsFromRedBeeScheduleFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form">
-                <h1 class="heading">Ingest Programs from a RedBee Schedule File (txt).</h1>
-                Ingest what was once the Master List file from RedBee.
-                <div class="input-container">
-                    <label class="label" for="file">Filename:</label>
-                    <input class="input" type="file" name="file" id="file" />
-                </div>
-                <input class="button" type="submit" value="Submit" id="ingest-master-list" />
-                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-            </div>
-        }*@
-            @using (Html.BeginForm("UploadProgramList", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-
-                if (TempData["ProgramMessage"] != null)
-                {
-                    ViewBag.Message = TempData["ProgramMessage"];
-                }
-
-                <div class="form">
-                    <h1 class="heading">Ingest Broadcast Business Team's Programs-Genres File (xlsx)</h1>
-                    Ingest the Programs into the programs table.
-                    <div class="input-container">
-                        <label class="label" for="file">Filename:</label>
-                        <input class="input" type="file" name="file" id="file" />
-                    </div>
-                    <input class="button" type="submit" value="Submit" id="ingest-master-list" />
-                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
-                </div>
-            }
-        </div>
-        <div class="form">
-            <h2 class="heading">Repair Inventory Programs</h2>
-            @using (Html.BeginForm("QueueRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h4 class="heading4">Queue Repair Inventory Programs Job (Background Service)</h4>
-                    <input class="button" type="submit" value="Queue Job" id="submit" />
-                </div>
-            }
-
-            @using (Html.BeginForm("CancelQueuedRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h4 class="heading4">Cancel Queued Repair Inventory Programs Job (Background Service)</h4>
-                    <div class="input-container-row">
-                        <input class="input" type="text" name="HangfireJobId" />
-                        <input class="button" type="submit" value="Cancel Job" id="submit" />
-                    </div>
-                </div>
-            }
-
-            @using (Html.BeginForm("ExecuteRepairInventoryPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <div class="form">
-                    <h4 class="heading4">Execute Repair Inventory Programs Job (Wait for Completion)</h4>
-                    <input class="button" type="submit" value="Execute" id="submit" />
-                </div>
-            }
-        </div>
+        
         <div class="form">
             @using (Html.BeginForm("UploadVpvhFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -864,87 +747,264 @@
                 </div>
             }
         </div>
-    </div>
-    <div id="migrations" class="tabcontent">
-        <h1 class="heading">Migrations</h1>
+    </div>    
+
+    <div id="programs" class="tabcontent">
+        <h1 class="heading">Program and Mappings</h1>
+
         <div class="form">
-            @using (Html.BeginForm("GenresDefaultExclusion", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            <h1 class="heading">Programs</h1>
+
+            @using (Html.BeginForm("UploadProgramList", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
+
+                if (TempData["ProgramMessage"] != null)
+                {
+                    ViewBag.Message = TempData["ProgramMessage"];
+                }
+
+        <div class="form">
+            <h1 class="heading">Ingest Broadcast Business Team's Programs-Genres File (xlsx)</h1>
+            Ingest the Programs into the programs table.
+            <div class="input-container">
+                <label class="label" for="file">Filename:</label>
+                <input class="input" type="file" name="file" id="file" />
+            </div>
+            <input class="button" type="submit" value="Submit" id="ingest-master-list" />
+            <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
+
+            <div>
+                <span class="label">Result:</span>
+                <label class="label" id="result_ingest_biz_ops_programs">@ViewBag.Message</label>
+            </div>
+
+        </div>
+            }
+
+            @using (Html.BeginForm("ClearProgramList", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+                if (TempData["ProgramMessage"] != null)
+                {
+                    ViewBag.Message = TempData["ProgramMessage"];
+                }
+
+        <div class="form">
+            <h4 class="heading">Delete Programs Data</h4>
+            <div class="input-container">
+                <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'r1f2m3p4')</label>
+                <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
+            </div>
+            <input class="button" type="submit" value="Delete Data" id="submit" />
+
+            <div>
+                <span class="label">Result:</span>
+                <label class="label" id="result_delete_programs_list">@ViewBag.Message</label>
+            </div>
+        </div>
+            }
+
+            @*
+        // SDE Removing this because we only want to load from the Business Team's Programs-Genres File.  We may bring this back though.
+        @using (Html.BeginForm("UploadProgramsFromRedBeeScheduleFile", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form">
+                <h1 class="heading">Ingest Programs from a RedBee Schedule File (txt).</h1>
+                Ingest what was once the Master List file from RedBee.
                 <div class="input-container">
-                    <h4 class="heading">BP-4425 : Add Genre Exclusions for Daypart.</h4>
-                    <input class="button" type="submit" value="Genre Exclusions" id="txtGenreExclusions" />
+                    <label class="label" for="file">Filename:</label>
+                    <input class="input" type="file" name="file" id="file" />
+                </div>
+                <input class="button" type="submit" value="Submit" id="ingest-master-list" />
+                <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
+            </div>
+        }
+
+        // SDE Removing this because we only want to load from the Business Team's Programs-Genres File.  We may bring this back though.
+        @using (Html.BeginForm("ImportMasterList", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form">
+                <h1 class="heading">Import Master List</h1>
+                Upload a new master list of standard program names.
+                <div class="input-container">
+                    <label class="label" for="file">Filename:</label>
+                    <input class="input" type="file" name="file" id="file" />
+                </div>
+                <input class="button" type="submit" value="Submit" id="import-master-list" />
+                <textarea class="input" rows="5">@ViewBag.Message</textarea>
+            </div>
+        }*@
+        </div>
+
+        <div class="form">
+            <h1 class="heading">Program Name Mappings</h1>
+            @using (Html.BeginForm("ImportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Import program mappings</h1>
+                    Import program mappings into the program mappings table and reprocess inventory to update with new mappings.
+                    <div class="input-container">
+                        <label class="label" for="file">Filename:</label>
+                        <input class="input" type="file" name="file" id="file" />
+                    </div>
+                    <input class="button" type="submit" value="Submit" id="txt Import Program Mappings" />
+                    <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>
+                </div>
+            }
+            @using (Html.BeginForm("ExportProgramMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+        <div class="form">
+            <h1 class="heading">Export program mappings</h1>
+            Export the program mappings from the program mappings table.
+            <input class="button" type="submit" value="Submit" id="txt Export Program Mappings" />
+            <textarea class="input" rows="5" id="divJSON">@ViewBag.Message</textarea>            
+        </div>
+            }
+            @using (Html.BeginForm("ExportUnmappedProgramNames", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h1 class="heading">Export unmapped program names</h1>
+                    Export all the unmapped program names in the system's inventory.
+                    Reports on the inventory that has not been enriched with a program.
+                    <input class="button" type="submit" value="Submit" id="txt Export-Unmapped-Program-names" />
+                    <textarea class="input" rows="1" id="divJSON">@ViewBag.Message</textarea>
                 </div>
             }
 
-            @using (Html.BeginForm("PerformInventoryErrorFileMigrationToAttachmentService", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("ExportUnmappedPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <div class="input-container">
-                    <h4 class="heading">Inventory Error Files</h4>
-                    Migrate the Inventory Error files to the Attachment Service.
-                    <input class="button" type="submit" value="Migrate" id="btnMigrationInventoryErrorFiles" />
+                <div class="form">
+                    <h1 class="heading">Export unmapped programs</h1>
+                    Generate reports for unmapped programs with categorized mapping suggestions.
+                    <input class="button" type="submit" value="Submit" id="txt-Export-Unmapped-Programs" />
+                    <textarea class="input" rows="1" id="divJSON">@ViewBag.Message</textarea>
+                </div>
+            }
+
+            @using (Html.BeginForm("CleanupOrphanedProgramNameMappings", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+        <div class="form">
+            <h1 class="heading">Cleanup Orphaned Program Name Mappings. (Wait for Completion)</h1>
+            These are Mapping records that do not map to a Program or Program Name Exception.
+            <input class="button" type="submit" value="Execute" id="submit" />
+            <div>
+                <span class="label">Result:</span>
+                <label class="label" id="result_cleanup_orphaned_program_name_mappings">@ViewBag.Message</label>
+            </div>
+        </div>
+            }
+        </div>
+        <div class="form">
+            <h2 class="heading">Repair Inventory Programs</h2>
+            @using (Html.BeginForm("QueueRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading4">Queue Repair Inventory Programs Job (Background Service)</h4>
+                    <input class="button" type="submit" value="Queue Job" id="submit" />
+                </div>
+            }
+
+            @using (Html.BeginForm("CancelQueuedRepairInventoryProgramsJob", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading4">Cancel Queued Repair Inventory Programs Job (Background Service)</h4>
+                    <div class="input-container-row">
+                        <input class="input" type="text" name="HangfireJobId" />
+                        <input class="button" type="submit" value="Cancel Job" id="submit" />
+                    </div>
+                </div>
+            }
+
+            @using (Html.BeginForm("ExecuteRepairInventoryPrograms", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form">
+                    <h4 class="heading4">Execute Repair Inventory Programs Job (Wait for Completion)</h4>
+                    <input class="button" type="submit" value="Execute" id="submit" />
                 </div>
             }
         </div>
     </div>
 
-    <div id="spot_exceptions_sync" class="tabcontent">
-        <h1 class="heading">Spot Exceptions Sync</h1>
-        <h3 class="heading">Ingest</h3>
-        <div class="form">
+        <div id="migrations" class="tabcontent">
+            <h1 class="heading">Migrations</h1>
             <div class="form">
-                @using (Html.BeginForm("SpotExceptionSyncIngestWeek", "Maintenance", FormMethod.Post))
-                {
-                <div class="input-container">
-                    <h4 class="heading">Trigger Ingest for the Week</h4>
-                    Triggers an ingest for the previous week as the scheduled process would do.
-                    <div class="col-sm">
-                        <label class="label" for="chkRunInBackground">Run In Background</label>
-                        <input data-val="true"  class="input" type="checkbox" name="chkRunInBackground" checked="checked" value="true" />
-                        <input class="button" type="submit" value="Ingest" />
-                    </div>
-                </div>
-                }
-                @using (Html.BeginForm("SpotExceptionSyncIngestDateRange", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("GenresDefaultExclusion", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="input-container">
-                        <h4 class="heading">Trigger Ingest for a Date Range</h4>
-                        Triggers an ingest for the given Date Range (yyyy-mm-dd).
-                        <div class="row">
-                            <div class="col-sm">
-                                <label class="label" for="txtSESStartDate">Start Date:</label>
-                                <input class="input" type="text" name="txtSESStartDate" />
-                            </div>
-                            <div class="col-sm">
-                                <label class="label" for="txtSESEndDate">End Date:</label>
-                                <input class="input" type="text" name="txtSESEndDate" />
-                            </div>                            
-                            <label class="label" for="chkRunInBackground">Run In Background</label>
-                            <input data-val="true" class="input" type="checkbox" name="chkRunInBackground" checked="checked" value="true" />
-                            <input class="button" type="submit" value="Ingest" />
-                        </div>
+                        <h4 class="heading">BP-4425 : Add Genre Exclusions for Daypart.</h4>
+                        <input class="button" type="submit" value="Genre Exclusions" id="txtGenreExclusions" />
                     </div>
                 }
-                @using (Html.BeginForm("SpotExceptionSyncIngestForceJobToError", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+                @using (Html.BeginForm("PerformInventoryErrorFileMigrationToAttachmentService", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="input-container">
-                        <h4 class="heading">Force Ingest Job to Error Status</h4>
-                        Forces the given job to Error in case it's been left in a Processing status.
-                        <div class="row">
-                            <div class="col-sm">
-                                <label class="label" for="txtSESIngestJobId">Inget Job Id:</label>
-                                <input class="input" type="text" name="txtSESIngestJobId" />
-                            </div>
-                            <input class="button" type="submit" value="Ingest" />
-                        </div>
+                        <h4 class="heading">Inventory Error Files</h4>
+                        Migrate the Inventory Error files to the Attachment Service.
+                        <input class="button" type="submit" value="Migrate" id="btnMigrationInventoryErrorFiles" />
                     </div>
                 }
             </div>
         </div>
-        <h4 class="heading">Results Sync</h4>
-        <div class="form">
-            TBD
+
+        <div id="spot_exceptions_sync" class="tabcontent">
+            <h1 class="heading">Spot Exceptions Sync</h1>
+            <h3 class="heading">Ingest</h3>
+            <div class="form">
+                <div class="form">
+                    @using (Html.BeginForm("SpotExceptionSyncIngestWeek", "Maintenance", FormMethod.Post))
+                    {
+                        <div class="input-container">
+                            <h4 class="heading">Trigger Ingest for the Week</h4>
+                            Triggers an ingest for the previous week as the scheduled process would do.
+                            <div class="col-sm">
+                                <label class="label" for="chkRunInBackground">Run In Background</label>
+                                <input data-val="true" class="input" type="checkbox" name="chkRunInBackground" checked="checked" value="true" />
+                                <input class="button" type="submit" value="Ingest" />
+                            </div>
+                        </div>
+                    }
+                    @using (Html.BeginForm("SpotExceptionSyncIngestDateRange", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="input-container">
+                            <h4 class="heading">Trigger Ingest for a Date Range</h4>
+                            Triggers an ingest for the given Date Range (yyyy-mm-dd).
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label class="label" for="txtSESStartDate">Start Date:</label>
+                                    <input class="input" type="text" name="txtSESStartDate" />
+                                </div>
+                                <div class="col-sm">
+                                    <label class="label" for="txtSESEndDate">End Date:</label>
+                                    <input class="input" type="text" name="txtSESEndDate" />
+                                </div>
+                                <label class="label" for="chkRunInBackground">Run In Background</label>
+                                <input data-val="true" class="input" type="checkbox" name="chkRunInBackground" checked="checked" value="true" />
+                                <input class="button" type="submit" value="Ingest" />
+                            </div>
+                        </div>
+                    }
+                    @using (Html.BeginForm("SpotExceptionSyncIngestForceJobToError", "Maintenance", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="input-container">
+                            <h4 class="heading">Force Ingest Job to Error Status</h4>
+                            Forces the given job to Error in case it's been left in a Processing status.
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label class="label" for="txtSESIngestJobId">Inget Job Id:</label>
+                                    <input class="input" type="text" name="txtSESIngestJobId" />
+                                </div>
+                                <input class="button" type="submit" value="Ingest" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <h4 class="heading">Results Sync</h4>
+            <div class="form">
+                TBD
+            </div>
         </div>
-    </div>
 
 </content>
     <script>

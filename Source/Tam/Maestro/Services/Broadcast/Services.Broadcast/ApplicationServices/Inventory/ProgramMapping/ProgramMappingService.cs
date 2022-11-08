@@ -109,6 +109,17 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="userName">Name of the user.</param>
         /// <param name="createdDate">The created date.</param>      
         void UploadPrograms(Stream fileStream, string fileName, string userName, DateTime createdDate);
+
+        /// <summary>
+        /// Deletes the program_name_mapping records that do not exist in the programs program_name_exceptions tables.
+        /// </summary>
+        /// <returns>The number of records deleted.</returns>
+        int CleanupOrphanedProgramNameMappings();
+
+        /// <summary>
+        /// Deletes the programs.
+        /// </summary>
+        int DeletePrograms();
     }
 
     public class ProgramMappingService : BroadcastBaseClass, IProgramMappingService
@@ -952,6 +963,30 @@ namespace Services.Broadcast.ApplicationServices
             }
 
             _LogInfo("Completed loading programs from the Business's Programs Genre File.");
+        }
+
+        /// <inheritDoc />
+        public int CleanupOrphanedProgramNameMappings()
+        {
+            _LogInfo("Attempting cleanup of orphaned program name mapping records...");
+
+            var result = _ProgramMappingRepository.CleanupOrphanedProgramNameMappings();
+
+            _LogInfo($"Deleted '{result}' orphaned program name mapping records.");
+
+            return result;
+        }
+
+        /// <inheritDoc />
+        public int DeletePrograms()
+        {
+            _LogInfo("Deleting the Programs data.");
+
+            var result = _ProgramMappingRepository.DeletePrograms();
+
+            _LogInfo($"Deleted '{result}' records of Programs data.");
+
+            return result;
         }
     }
 }

@@ -2008,18 +2008,20 @@ namespace Services.Broadcast.Repositories
 	        return  _InReadUncommitedTransaction(
 		        context =>
 		        {
-			        var sqlQuery = "SELECT DISTINCT d.id"
-				        + " FROM station_inventory_manifest_dayparts d"
-				        + " JOIN station_inventory_manifest_weeks w ON d.station_inventory_manifest_id = w.station_inventory_manifest_id"
-				        + " JOIN program_name_mappings m ON m.inventory_program_name = d.program_name"
-                        + " JOIN show_types st ON st.id = m.show_type_id"
-                        + " LEFT OUTER JOIN station_inventory_manifest_daypart_programs p ON p.id = d.primary_program_id"
-                        + " WHERE p.id is null " 
-                        + " OR (p.id IS NOT NULL AND p.name <> m.official_program_name)"
-                        + " OR (p.id IS NOT NULL AND p.maestro_genre_id <> m.genre_id)"
-                        + " OR (p.id IS NOT NULL AND p.show_type <> st.name)"
-                        + " ORDER BY d.id;";
-                    
+                    var sqlQuery = "SELECT x.id FROM (" +
+                    // This inventory doesn't have an enriched program
+                    "SELECT DISTINCT d.id FROM station_inventory_manifest_dayparts d " +
+                    "JOIN station_inventory_manifest_weeks w ON d.station_inventory_manifest_id = w.station_inventory_manifest_id " +
+                    "WHERE d.primary_program_id IS NULL" +
+                    " UNION " +
+                    // This inventory has an enriched program that no longer has a program_name_mapping 
+                    "SELECT DISTINCT d.id FROM station_inventory_manifest_dayparts d " +
+                    "JOIN station_inventory_manifest_weeks w ON d.station_inventory_manifest_id = w.station_inventory_manifest_id " +
+                    "JOIN station_inventory_manifest_daypart_programs p ON d.primary_program_id = p.id " +
+                    "LEFT OUTER JOIN program_name_mappings m ON m.inventory_program_name = d.[program_name] " +
+                    "WHERE m.id IS NULL" +
+                    ") x ORDER BY id;";
+
                     var manifestDaypartIds = context.Database.SqlQuery<int>(sqlQuery).ToList();
                     var chunks = manifestDaypartIds.GetChunks(BroadcastConstants.DefaultDatabaseQueryChunkSize);
                     var result = new List<StationInventoryManifestDaypart>();
@@ -2034,10 +2036,9 @@ namespace Services.Broadcast.Repositories
 
                         var entities = context.station_inventory_manifest_dayparts
                             .Include(s => s.daypart)
-                            .Include(s => s.station_inventory_manifest_daypart_genres)
+                            .Include(s => s.daypart.timespan)
                             .Include(s => s.station_inventory_manifest_daypart_programs)
                             .Where(s => chunk.Contains(s.id))
-                            .ToList()
                             .Select(_MapToManifestDaypart)
                             .ToList();
 

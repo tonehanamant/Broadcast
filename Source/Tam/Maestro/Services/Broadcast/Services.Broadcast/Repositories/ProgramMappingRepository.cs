@@ -55,6 +55,17 @@ namespace Services.Broadcast.Repositories
         /// Gets the master programs. (From the programs table)
         /// </summary>
         List<MasterProgramsDto> GetMasterPrograms();
+
+        /// <summary>
+        /// Deletes the program_name_mapping records that do not exist in the programs program_name_exceptions tables.
+        /// </summary>
+        /// <returns>The number of records deleted.</returns>
+        int CleanupOrphanedProgramNameMappings();
+
+        /// <summary>
+        /// Deletes the programs.
+        /// </summary>
+        int DeletePrograms();
     }
 
     public class ProgramMappingRepository : BroadcastRepositoryBase, IProgramMappingRepository
@@ -294,6 +305,50 @@ namespace Services.Broadcast.Repositories
 
                 var masterPrograms = masterEntities.Select(_MapToMasterProgramsDto).ToList();
                 return masterPrograms;
+            });
+        }
+
+        /// <inheritdoc />
+        public int CleanupOrphanedProgramNameMappings()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var toDelete = (from m in context.program_name_mappings
+                                   join pt in context.programs
+                                    on m.official_program_name equals pt.name into ptm
+                                   from ptmResult in ptm.DefaultIfEmpty()
+                                   join et in context.program_name_exceptions
+                                    on m.official_program_name equals et.custom_program_name into etm
+                                   from etmResult in etm.DefaultIfEmpty()
+                                   where ptmResult == null
+                                    && etmResult == null
+                                   select m
+                                  ).ToList();
+
+                var toDeleteCount = toDelete.Count;
+                if(toDeleteCount > 0)
+                {
+                    context.program_name_mappings.RemoveRange(toDelete);
+                    context.SaveChanges();
+                }
+                return toDeleteCount;
+            });
+        }
+
+        /// <inheritdoc />
+        public int DeletePrograms()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var toDelete = context.programs.ToList();
+                var toDeleteCount = toDelete.Count;
+                if (toDeleteCount > 0)
+                {
+                    context.programs.RemoveRange(toDelete);
+                    context.SaveChanges();
+                }
+
+                return toDeleteCount;
             });
         }
 

@@ -1000,6 +1000,53 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         [HttpPost]
+        public ActionResult CleanupOrphanedProgramNameMappings()
+        {
+            try
+            {
+                var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                var result = service.CleanupOrphanedProgramNameMappings();
+
+                ViewBag.Message = $"Cleaned up '{result}' orphaned program name mappings records.";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+            TempData["Message"] = ViewBag.Message;
+            TempData["TabId"] = "programs";
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ClearProgramList(string protectionKey)
+        {
+            try
+            {
+                if (protectionKey == "r1f2m3p4")
+                {
+                    var service = _ApplicationServiceFactory.GetApplicationService<IProgramMappingService>();
+                    var result = service.DeletePrograms();
+                    ViewBag.Message = $"Deleted '{result}' programs from the table.";
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid protection key";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+
+            TempData["Message"] = ViewBag.Message;
+            TempData["TabId"] = "programs";
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         [Route("ImportMasterList")]
         public ActionResult ImportMasterList(HttpPostedFileBase file)
         {
@@ -1114,6 +1161,7 @@ namespace BroadcastComposerWeb.Controllers
             TempData["TabId"] = "reference_data";
             return RedirectToAction("Index");
         }
+
         [HttpPost]
         public ActionResult TestPricingRequestLogBucket()
         {
