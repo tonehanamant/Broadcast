@@ -1,11 +1,11 @@
-﻿using Common.Services.Repositories;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
@@ -132,31 +132,33 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         Task<List<string>> GetRecommendedPlanStationsDoneAsync(DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
-        /// Gets the recommended plan details to do by identifier.
+        /// Gets the recommended plan spot.
         /// </summary>
-        /// <param name="planId">The plan identifier.</param>
-        /// <param name="recommendedPlanId">The recommended plan identifier.</param>
-        /// <returns>
-        /// </returns>
-        Task<SpotExceptionsRecommendedPlanSpotsToDoDto> GetRecommendedPlanDetailsToDoByRecommendedPlanId(int planId, int recommendedPlanId);
+        /// <param name="todoId">The todo identifier.</param>
+        /// <returns> </returns>
+        Task<SpotExceptionsRecommendedPlanSpotsToDoDto> GetRecommendedPlanSpot(int? todoId);
 
         /// <summary>
-        /// Gets the recommended plan details done by recommended plan identifier.
+        /// Adds the recommended plan to done.
         /// </summary>
-        /// <param name="planId">The plan identifier.</param>
+        /// <param name="doneRecommendedPlanToAdd">The done recommended plan to add.</param>
         /// <param name="recommendedPlanId">The recommended plan identifier.</param>
-        /// <returns></returns>
-        Task<SpotExceptionsRecommendedPlanSpotsDoneDto> GetRecommendedPlanDetailsDoneByRecommendedPlanId(int planId, int recommendedPlanId);
+        void AddRecommendedPlanToDone(SpotExceptionsRecommendedPlanSpotsDoneDto doneRecommendedPlanToAdd, int recommendedPlanId);
 
-        Task<bool> SaveRecommendedPlanToDoDecisionsAsync(SpotExceptionsRecommendedPlanSaveDto planToSave, SpotExceptionsRecommendedPlanSpotsToDoDto recommendedPlansToDo, string userName, DateTime decided_at);
+        /// <summary>
+        /// Deletes the recommended plan from to do.
+        /// </summary>
+        /// <param name="todoRecommendedPlan">The todo recommended plan.</param>
+        void DeleteRecommendedPlanFromToDo(int todoRecommendedPlan);
 
         /// <summary>
         /// Saves the recommended plan done decisions asynchronous.
         /// </summary>
-        /// <param name="recommendedPlanDoneDecision">The recommended plan done decision.</param>
-        /// <returns>
-        /// </returns>
-        Task<bool> SaveRecommendedPlanDoneDecisionsAsync(SpotExceptionsRecommendedPlanSpotDecisionsDoneDto recommendedPlanDoneDecision);
+        /// <param name="recommendedPlanDecisionsSaveRequest">The recommended plan decisions save request.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="decidedAt">The decided at.</param>
+        /// <returns></returns>
+        Task<bool> SaveRecommendedPlanDoneDecisionsAsync(List<SpotExceptionsRecommendedPlanSpotDecisionsDoneDto> recommendedPlanDecisionsSaveRequest, string userName, DateTime decidedAt);
 
         /// <summary>
         /// Gets the name of the market.
@@ -608,151 +610,171 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         }
 
         /// <inheritdoc />
-        public Task<SpotExceptionsRecommendedPlanSpotsToDoDto> GetRecommendedPlanDetailsToDoByRecommendedPlanId(int planId, int recommendedPlanId)
+        public Task<SpotExceptionsRecommendedPlanSpotsToDoDto> GetRecommendedPlanSpot(int? todoId)
         {
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Details ToDo");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var recommendedPlanDetailsToDoEntity = context.spot_exceptions_recommended_plans
-                    .Where(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.id == planId)
-                    .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details)
-                    .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan))
-                    .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions))
-                    .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
-                    .Include(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.spot_exceptions_recommended_plan_details.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (recommendedPlanDetailsToDoDb, stationDb) => new { SpotExceptionsRecommendedPlan = recommendedPlanDetailsToDoDb, Station = stationDb.FirstOrDefault() })
-                    .SingleOrDefault();
+                var foundRecommendedPlanTodo = context.spot_exceptions_recommended_plans
+                    .Single(x => x.id == todoId, "Invalid Exception Id");
 
-                if (recommendedPlanDetailsToDoEntity == null)
+                if (foundRecommendedPlanTodo == null)
                 {
                     return null;
                 }
 
-                var recommendedPlanDetailsToDo = _MapRecommendedPlanSpotsToDoToDto(recommendedPlanDetailsToDoEntity.SpotExceptionsRecommendedPlan);
+                var recommendedPlanToDo = _MapRecommendedPlanSpotsToDoToDto(foundRecommendedPlanTodo);
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Details ToDo");
-                return recommendedPlanDetailsToDo;
+                return recommendedPlanToDo;
             }));
         }
 
         /// <inheritdoc />
-        public Task<SpotExceptionsRecommendedPlanSpotsDoneDto> GetRecommendedPlanDetailsDoneByRecommendedPlanId(int planId, int recommendedPlanId)
+        public void AddRecommendedPlanToDone(SpotExceptionsRecommendedPlanSpotsDoneDto doneRecommendedPlanToAdd, int recommendedPlanId)
         {
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Details Done");
-            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            _InReadUncommitedTransaction(context =>
             {
-                var recommendedPlanDetailsDoneEntity = context.spot_exceptions_recommended_plans_done
-                    .Where(recommendedPlanDetailsToDoDb => recommendedPlanDetailsToDoDb.id == planId)
-                    .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done)
-                    .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan))
-                    .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions))
-                    .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths)))
-                    .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.plan).Select(p => p.plan_versions.Select(pv => pv.plan_version_creative_lengths.Select(pvcl => pvcl.spot_lengths))))
-                    .Include(recommendedPlanDetailsDoneDb => recommendedPlanDetailsDoneDb.spot_exceptions_recommended_plan_details_done.Select(serpd => serpd.spot_exceptions_recommended_plan_done_decisions))
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsRecommendedPlanDb, stationDb) => new { SpotExceptionsRecommendedPlan = spotExceptionsRecommendedPlanDb, Station = stationDb.FirstOrDefault() })
-                    .SingleOrDefault();
-
-                if (recommendedPlanDetailsDoneEntity == null)
+                var recommendedPlanDoneEntity = new spot_exceptions_recommended_plans_done()
                 {
-                    return null;
-                }
-
-                var recommendedPlanDetailsDone = _MapRecommendedPlanSpotsDoneToDto(recommendedPlanDetailsDoneEntity.SpotExceptionsRecommendedPlan);
-
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Details Done");
-                return recommendedPlanDetailsDone;
-            }));
-        }
-
-        /// <inheritdoc />
-        public Task<bool> SaveRecommendedPlanToDoDecisionsAsync(SpotExceptionsRecommendedPlanSaveDto planToSave, SpotExceptionsRecommendedPlanSpotsToDoDto recommendedPlansToDo, string userName, DateTime currentDate)
-        {
-            bool isMoved = false;
-
-            _LogInfo($"Starting: Moving Spot Exceptions Recommended Plan To Done");
-            return Task.FromResult(_InReadUncommitedTransaction(context =>
-            {
-                var recommendedPlanDoneDecisions = _MapRecommendedPlanDoneToDto(recommendedPlansToDo);
-                var doneEntitiesToAdd = _MapRecommendedPlanSpotsDoneToEntity(recommendedPlanDoneDecisions);
-
-                foreach(var entity in doneEntitiesToAdd.spot_exceptions_recommended_plan_details_done)
-                {
-                    entity.spot_exceptions_recommended_plan_done_decisions.Add(new spot_exceptions_recommended_plan_done_decisions()
+                    spot_unique_hash_external = doneRecommendedPlanToAdd.SpotUniqueHashExternal,
+                    ambiguity_code = doneRecommendedPlanToAdd.AmbiguityCode,
+                    execution_id_external = doneRecommendedPlanToAdd.ExecutionIdExternal,
+                    estimate_id = doneRecommendedPlanToAdd.EstimateId,
+                    inventory_source = doneRecommendedPlanToAdd.InventorySource,
+                    house_isci = doneRecommendedPlanToAdd.HouseIsci,
+                    client_isci = doneRecommendedPlanToAdd.ClientIsci,
+                    spot_length_id = doneRecommendedPlanToAdd.SpotLengthId,
+                    program_air_time = doneRecommendedPlanToAdd.ProgramAirTime,
+                    station_legacy_call_letters = doneRecommendedPlanToAdd.StationLegacyCallLetters,
+                    affiliate = doneRecommendedPlanToAdd.Affiliate,
+                    market_code = doneRecommendedPlanToAdd.MarketCode,
+                    market_rank = doneRecommendedPlanToAdd.MarketRank,
+                    program_name = doneRecommendedPlanToAdd.ProgramName,
+                    program_genre = doneRecommendedPlanToAdd.ProgramGenre,
+                    ingested_by = doneRecommendedPlanToAdd.IngestedBy,
+                    ingested_at = doneRecommendedPlanToAdd.IngestedAt,
+                    ingested_media_week_id = doneRecommendedPlanToAdd.IngestedMediaWeekId,
+                    spot_exceptions_recommended_plan_details_done = doneRecommendedPlanToAdd.SpotExceptionsRecommendedPlanDetailsDone.Select(recommendedPlanDetailDoneDb =>
                     {
-                        decided_by = userName,
-                        decided_at = currentDate,
-                        synced_by = null,
-                        synced_at = null
-                    });
+                        var recommendedPlanDetailDone = new spot_exceptions_recommended_plan_details_done
+                        {
+                            recommended_plan_id = recommendedPlanDetailDoneDb.RecommendedPlanId,
+                            execution_trace_id = recommendedPlanDetailDoneDb.ExecutionTraceId,
+                            rate = recommendedPlanDetailDoneDb.Rate,
+                            audience_name = recommendedPlanDetailDoneDb.AudienceName,
+                            contracted_impressions = recommendedPlanDetailDoneDb.ContractedImpressions,
+                            delivered_impressions = recommendedPlanDetailDoneDb.DeliveredImpressions,
+                            is_recommended_plan = recommendedPlanDetailDoneDb.IsRecommendedPlan,
+                            plan_clearance_percentage = recommendedPlanDetailDoneDb.PlanClearancePercentage,
+                            daypart_code = recommendedPlanDetailDoneDb.DaypartCode,
+                            start_time = recommendedPlanDetailDoneDb.StartTime,
+                            end_time = recommendedPlanDetailDoneDb.EndTime,
+                            monday = recommendedPlanDetailDoneDb.Monday,
+                            tuesday = recommendedPlanDetailDoneDb.Tuesday,
+                            wednesday = recommendedPlanDetailDoneDb.Wednesday,
+                            thursday = recommendedPlanDetailDoneDb.Thursday,
+                            friday = recommendedPlanDetailDoneDb.Friday,
+                            saturday = recommendedPlanDetailDoneDb.Saturday,
+                            sunday = recommendedPlanDetailDoneDb.Sunday,
+                            spot_delivered_impressions = recommendedPlanDetailDoneDb.SpotDeliveredImpressions,
+                            plan_total_contracted_impressions = recommendedPlanDetailDoneDb.PlanTotalContractedImpressions,
+                            plan_total_delivered_impressions = recommendedPlanDetailDoneDb.PlanTotalDeliveredImpressions,
+                            ingested_media_week_id = recommendedPlanDetailDoneDb.IngestedMediaWeekId,
+                            ingested_by = recommendedPlanDetailDoneDb.IngestedBy,
+                            ingested_at = recommendedPlanDetailDoneDb.IngestedAt,
+                            spot_unique_hash_external = recommendedPlanDetailDoneDb.SpotUniqueHashExternal,
+                            execution_id_external = recommendedPlanDetailDoneDb.ExecutionIdExternal                  
+                        };
 
-                    context.spot_exceptions_recommended_plan_details_done.AddOrUpdate(entity);
-                }
-                context.spot_exceptions_recommended_plans_done.Add(doneEntitiesToAdd);
+                        if (recommendedPlanDetailDoneDb.RecommendedPlanId == recommendedPlanId)
+                        {
+                            recommendedPlanDetailDone.spot_exceptions_recommended_plan_done_decisions =
+                            new List<spot_exceptions_recommended_plan_done_decisions>
+                            {
+                                new spot_exceptions_recommended_plan_done_decisions
+                                {
+                                    spot_exceptions_recommended_plan_details_done_id = recommendedPlanDetailDoneDb.Id,
+                                    decided_at = recommendedPlanDetailDoneDb.SpotExceptionsRecommendedPlanDoneDecisions.DecidedAt,
+                                    decided_by = recommendedPlanDetailDoneDb.SpotExceptionsRecommendedPlanDoneDecisions.DecidedBy
+                                }
+                            };
+                        }
 
-                var todoEntitiesToRemove = context.spot_exceptions_recommended_plans.Where(x => x.id == recommendedPlansToDo.Id).First();
-                context.spot_exceptions_recommended_plans.Remove(todoEntitiesToRemove);
+                        return recommendedPlanDetailDone;
+                    }).ToList()
+                };
+
+                
+                context.spot_exceptions_recommended_plans_done.Add(recommendedPlanDoneEntity);
+
 
                 context.SaveChanges();
-                isMoved = true;
-
-                _LogInfo($"Finished: Moving Spot Exceptions Recommended Plan To Done");
-                return isMoved;
-            }));
+            });
         }
 
         /// <inheritdoc />
-        public Task<bool> SaveRecommendedPlanDoneDecisionsAsync(SpotExceptionsRecommendedPlanSpotDecisionsDoneDto recommendedPlanDoneDecision)
+        public void DeleteRecommendedPlanFromToDo(int todoRecommendedPlan)
         {
-            _LogInfo($"Starting: Adding Recommended Plan Decision");
+            _InReadUncommitedTransaction(context =>
+            {
+                var foundRecommendedPlanTodo = context.spot_exceptions_recommended_plans
+                    .Where(x => x.id == todoRecommendedPlan)
+                    .Single();
+
+                context.spot_exceptions_recommended_plans.Remove(foundRecommendedPlanTodo);
+
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc />
+        public Task<bool> SaveRecommendedPlanDoneDecisionsAsync(List<SpotExceptionsRecommendedPlanSpotDecisionsDoneDto> spotExceptionsRecommendedPlanDoneDecision, string userName, DateTime decidedAt)
+        {
+            bool isSaved = false;
+
+            _LogInfo($"Starting: Adding Recommended Plan Decision to Done");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                bool isSpotExceptionsRecommendedPlanDecisionSaved = false;
-                var spotExceptionsRecommendedPlanDoneDetails = context.spot_exceptions_recommended_plan_details_done
-                    .Where(x => x.spot_exceptions_recommended_plan_done_id == recommendedPlanDoneDecision.SpotExceptionsRecommendedPlanDetailsDoneId).ToList();
-
-                if (spotExceptionsRecommendedPlanDoneDetails != null && spotExceptionsRecommendedPlanDoneDetails.Count() > 0)
+                spotExceptionsRecommendedPlanDoneDecision.ForEach(decision =>
                 {
-                    recommendedPlanDoneDecision.SpotExceptionsRecommendedPlanDetailsDoneId = spotExceptionsRecommendedPlanDoneDetails
-                       .FirstOrDefault(x => x.spot_exceptions_recommended_plan_done_id == recommendedPlanDoneDecision.SpotExceptionsId
-                       && x.recommended_plan_id == recommendedPlanDoneDecision.SpotExceptionsRecommendedPlanId).id;
+                    var details = context.spot_exceptions_recommended_plan_details_done
+                        .Where(x => x.spot_exceptions_recommended_plan_done_id == decision.SpotExceptionsId).ToList();
 
-                    List<int> planDetailIds = spotExceptionsRecommendedPlanDoneDetails.Select(x => x.id).ToList();
+                    decision.SpotExceptionsRecommendedPlanDetailsDoneId = details
+                       .FirstOrDefault(x => x.spot_exceptions_recommended_plan_done_id == decision.SpotExceptionsId
+                       && x.recommended_plan_id == decision.SpotExceptionsRecommendedPlanId).id;
 
-                    var existSpotExceptionsRecommendedPlanDoneDecision = context.spot_exceptions_recommended_plan_done_decisions.
-                    Where(x => planDetailIds.Contains(x.spot_exceptions_recommended_plan_details_done_id)).FirstOrDefault();
+                    List<int> planDetailIds = details.Select(x => x.id).ToList();
 
-                    if (existSpotExceptionsRecommendedPlanDoneDecision == null)
+                    var foundDecision = context.spot_exceptions_recommended_plan_done_decisions
+                        .Where(x => planDetailIds.Contains(x.spot_exceptions_recommended_plan_details_done_id)).FirstOrDefault();
+
+                    if (foundDecision == null)
                     {
                         context.spot_exceptions_recommended_plan_done_decisions.Add(new spot_exceptions_recommended_plan_done_decisions
                         {
-                            spot_exceptions_recommended_plan_details_done_id = recommendedPlanDoneDecision.SpotExceptionsRecommendedPlanDetailsDoneId,
-                            decided_by = recommendedPlanDoneDecision.DecidedBy,
-                            decided_at = recommendedPlanDoneDecision.DecidedAt,
-                            synced_by = recommendedPlanDoneDecision.SyncedBy,
-                            synced_at = recommendedPlanDoneDecision.SyncedAt
+                            spot_exceptions_recommended_plan_details_done_id = decision.SpotExceptionsRecommendedPlanDetailsDoneId,
+                            decided_by = userName,
+                            decided_at = decidedAt,
+                            synced_by = null,
+                            synced_at = null
                         });
                     }
                     else
                     {
-                        existSpotExceptionsRecommendedPlanDoneDecision.spot_exceptions_recommended_plan_details_done_id = recommendedPlanDoneDecision.SpotExceptionsRecommendedPlanDetailsDoneId;
-                        existSpotExceptionsRecommendedPlanDoneDecision.decided_by = recommendedPlanDoneDecision.DecidedBy;
-                        existSpotExceptionsRecommendedPlanDoneDecision.decided_at = recommendedPlanDoneDecision.DecidedAt;
-                        existSpotExceptionsRecommendedPlanDoneDecision.synced_by = recommendedPlanDoneDecision.SyncedBy;
-                        existSpotExceptionsRecommendedPlanDoneDecision.synced_at = recommendedPlanDoneDecision.SyncedAt;
+                        foundDecision.spot_exceptions_recommended_plan_details_done_id = decision.SpotExceptionsRecommendedPlanDetailsDoneId;
+                        foundDecision.decided_by = userName;
+                        foundDecision.decided_at = decidedAt;
+                        foundDecision.synced_at = null;
+                        foundDecision.synced_by = null;
                     }
-                    isSpotExceptionsRecommendedPlanDecisionSaved = context.SaveChanges() > 0;
-                }
-                return isSpotExceptionsRecommendedPlanDecisionSaved;
+                    isSaved = context.SaveChanges() > 0;
+                });
+
+                isSaved = context.SaveChanges() > 0;
+                _LogInfo($"Finished: Saving Out Of Spec Decisions to Done");
+
+                return isSaved;
             }));
         }
 
@@ -925,125 +947,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 }).ToList()
             };
             return recommendedPlanSpotsDone;
-        }
-
-        private spot_exceptions_recommended_plans_done _MapRecommendedPlanSpotsDoneToEntity(SpotExceptionsRecommendedPlanSpotsDoneDto recommendedPlanSpotsDone)
-        {
-            var recommendedPlanSpotsDoneEntity = new spot_exceptions_recommended_plans_done
-            {
-                spot_unique_hash_external = recommendedPlanSpotsDone.SpotUniqueHashExternal,
-                ambiguity_code = recommendedPlanSpotsDone.AmbiguityCode,
-                execution_id_external = recommendedPlanSpotsDone.ExecutionIdExternal,
-                estimate_id = recommendedPlanSpotsDone.EstimateId,
-                inventory_source = recommendedPlanSpotsDone.InventorySource,
-                house_isci = recommendedPlanSpotsDone.HouseIsci,
-                client_isci = recommendedPlanSpotsDone.ClientIsci,
-                spot_length_id = recommendedPlanSpotsDone.SpotLengthId,
-                program_air_time = recommendedPlanSpotsDone.ProgramAirTime,
-                station_legacy_call_letters = recommendedPlanSpotsDone.StationLegacyCallLetters,
-                affiliate = recommendedPlanSpotsDone.Affiliate,
-                market_code = recommendedPlanSpotsDone.MarketCode,
-                market_rank = recommendedPlanSpotsDone.MarketRank,
-                program_name = recommendedPlanSpotsDone.ProgramName,
-                program_genre = recommendedPlanSpotsDone.ProgramGenre,
-                ingested_by = recommendedPlanSpotsDone.IngestedBy,
-                ingested_at = recommendedPlanSpotsDone.IngestedAt,
-                spot_exceptions_recommended_plan_details_done = recommendedPlanSpotsDone.SpotExceptionsRecommendedPlanDetailsDone.Select(recommendedPlanDetailsDone =>
-                {
-                    var recommendedPlanSpotDetailsDone = new spot_exceptions_recommended_plan_details_done
-                    {
-                        spot_exceptions_recommended_plan_done_id = recommendedPlanDetailsDone.SpotExceptionsRecommendedPlanId,
-                        recommended_plan_id = recommendedPlanDetailsDone.RecommendedPlanId,
-                        execution_trace_id = recommendedPlanDetailsDone.ExecutionTraceId,
-                        rate = recommendedPlanDetailsDone.Rate,
-                        audience_name = recommendedPlanDetailsDone.AudienceName,
-                        contracted_impressions = recommendedPlanDetailsDone.ContractedImpressions,
-                        delivered_impressions = recommendedPlanDetailsDone.DeliveredImpressions,
-                        is_recommended_plan = recommendedPlanDetailsDone.IsRecommendedPlan,
-                        plan_clearance_percentage = recommendedPlanDetailsDone.PlanClearancePercentage,
-                        daypart_code = recommendedPlanDetailsDone.DaypartCode,
-                        start_time = recommendedPlanDetailsDone.StartTime,
-                        end_time = recommendedPlanDetailsDone.EndTime,
-                        monday = recommendedPlanDetailsDone.Monday,
-                        tuesday = recommendedPlanDetailsDone.Tuesday,
-                        wednesday = recommendedPlanDetailsDone.Wednesday,
-                        thursday = recommendedPlanDetailsDone.Thursday,
-                        saturday = recommendedPlanDetailsDone.Saturday,
-                        sunday = recommendedPlanDetailsDone.Sunday,
-                        spot_delivered_impressions = recommendedPlanDetailsDone.SpotDeliveredImpressions,
-                        plan_total_contracted_impressions = recommendedPlanDetailsDone.PlanTotalContractedImpressions,
-                        plan_total_delivered_impressions = recommendedPlanDetailsDone.PlanTotalDeliveredImpressions,
-                        ingested_media_week_id = recommendedPlanDetailsDone.IngestedMediaWeekId,
-                        ingested_by = recommendedPlanDetailsDone.IngestedBy,
-                        ingested_at = recommendedPlanDetailsDone.IngestedAt,
-                        spot_unique_hash_external = recommendedPlanDetailsDone.SpotUniqueHashExternal,
-                        execution_id_external = recommendedPlanDetailsDone.ExecutionIdExternal
-                    };
-                    return recommendedPlanSpotDetailsDone;
-                }).ToList()
-            };
-            return recommendedPlanSpotsDoneEntity;
-        }
-
-        private SpotExceptionsRecommendedPlanSpotsDoneDto _MapRecommendedPlanDoneToDto(SpotExceptionsRecommendedPlanSpotsToDoDto recommendedPlanSpotsToDoEntity)
-        {
-            var recommendedPlanDoneEntity = new SpotExceptionsRecommendedPlanSpotsDoneDto
-            {
-                SpotUniqueHashExternal = recommendedPlanSpotsToDoEntity.SpotUniqueHashExternal,
-                AmbiguityCode = recommendedPlanSpotsToDoEntity.AmbiguityCode,
-                ExecutionIdExternal = recommendedPlanSpotsToDoEntity.ExecutionIdExternal,
-                EstimateId = recommendedPlanSpotsToDoEntity.EstimateId,
-                InventorySource = recommendedPlanSpotsToDoEntity.InventorySource,
-                HouseIsci = recommendedPlanSpotsToDoEntity.HouseIsci,
-                ClientIsci = recommendedPlanSpotsToDoEntity.ClientIsci,
-                SpotLengthId = recommendedPlanSpotsToDoEntity.SpotLengthId,
-                ProgramAirTime = recommendedPlanSpotsToDoEntity.ProgramAirTime,
-                StationLegacyCallLetters = recommendedPlanSpotsToDoEntity.StationLegacyCallLetters,
-                Affiliate = recommendedPlanSpotsToDoEntity.Affiliate,
-                MarketCode = recommendedPlanSpotsToDoEntity.MarketCode,
-                MarketRank = recommendedPlanSpotsToDoEntity.MarketRank,
-                ProgramName = recommendedPlanSpotsToDoEntity.ProgramName,
-                ProgramGenre = recommendedPlanSpotsToDoEntity.ProgramGenre,
-                IngestedBy = recommendedPlanSpotsToDoEntity.IngestedBy,
-                IngestedAt = recommendedPlanSpotsToDoEntity.IngestedAt,
-                IngestedMediaWeekId = recommendedPlanSpotsToDoEntity.IngestedMediaWeekId,
-                SpotLength = recommendedPlanSpotsToDoEntity.SpotLength,
-                SpotExceptionsRecommendedPlanDetailsDone = recommendedPlanSpotsToDoEntity.SpotExceptionsRecommendedPlanDetailsToDo.Select(recommendedPlanDetailToDoDb =>
-                {
-                    var recommendedPlanDetailDone = new SpotExceptionsRecommendedPlanDetailsDoneDto
-                    {
-                        SpotExceptionsRecommendedPlanId = recommendedPlanDetailToDoDb.SpotExceptionsRecommendedPlanId,
-                        RecommendedPlanId = recommendedPlanDetailToDoDb.RecommendedPlanId,
-                        ExecutionTraceId = recommendedPlanDetailToDoDb.ExecutionTraceId,
-                        Rate = recommendedPlanDetailToDoDb.Rate,
-                        AudienceName = recommendedPlanDetailToDoDb.AudienceName,
-                        ContractedImpressions = recommendedPlanDetailToDoDb.ContractedImpressions,
-                        DeliveredImpressions = recommendedPlanDetailToDoDb.DeliveredImpressions,
-                        IsRecommendedPlan = recommendedPlanDetailToDoDb.IsRecommendedPlan,
-                        PlanClearancePercentage = recommendedPlanDetailToDoDb.PlanClearancePercentage,
-                        DaypartCode = recommendedPlanDetailToDoDb.DaypartCode,
-                        StartTime = recommendedPlanDetailToDoDb.StartTime,
-                        EndTime = recommendedPlanDetailToDoDb.EndTime,
-                        Monday = recommendedPlanDetailToDoDb.Monday,
-                        Tuesday = recommendedPlanDetailToDoDb.Tuesday,
-                        Wednesday = recommendedPlanDetailToDoDb.Wednesday,
-                        Thursday = recommendedPlanDetailToDoDb.Thursday,
-                        Friday = recommendedPlanDetailToDoDb.Friday,
-                        Saturday = recommendedPlanDetailToDoDb.Saturday,
-                        Sunday = recommendedPlanDetailToDoDb.Sunday,
-                        SpotDeliveredImpressions = recommendedPlanDetailToDoDb.SpotDeliveredImpressions,
-                        PlanTotalContractedImpressions = recommendedPlanDetailToDoDb.PlanTotalContractedImpressions,
-                        PlanTotalDeliveredImpressions = recommendedPlanDetailToDoDb.PlanTotalDeliveredImpressions,
-                        IngestedMediaWeekId = recommendedPlanDetailToDoDb.IngestedMediaWeekId,
-                        IngestedBy = recommendedPlanDetailToDoDb.IngestedBy,
-                        IngestedAt = recommendedPlanDetailToDoDb.IngestedAt,
-                        SpotUniqueHashExternal = recommendedPlanDetailToDoDb.SpotUniqueHashExternal,
-                        ExecutionIdExternal = recommendedPlanDetailToDoDb.ExecutionIdExternal,
-                    };
-                    return recommendedPlanDetailDone;
-                }).ToList()
-            };
-            return recommendedPlanDoneEntity;
         }
 
         private SpotLengthDto _MapSpotLengthToDto(spot_lengths spotLengthEntity)

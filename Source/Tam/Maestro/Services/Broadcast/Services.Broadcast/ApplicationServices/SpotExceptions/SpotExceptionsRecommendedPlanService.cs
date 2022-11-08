@@ -5,12 +5,12 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.SpotExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -266,7 +266,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Details");
                 var recommendedPlanDetailsToDo = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanDetailsToDoById(detailsId);
                 var recommendedPlanDetailsDone = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanDetailsDoneById(detailsId);
-                
+
                 if (recommendedPlanDetailsToDo == null && recommendedPlanDetailsDone == null)
                 {
                     return recommendedPlanDetailsResult;
@@ -376,7 +376,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         }
                     }
                 }
-                                
+
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Details");
             }
             catch (CadentException ex)
@@ -465,7 +465,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 recommendedPlanFiltersResult.Stations = legacyCallLetterFilters;
                 recommendedPlanFiltersResult.InventorySources = inventorySourceFilters;
 
-
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters");
             }
             catch (Exception ex)
@@ -477,91 +476,168 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return recommendedPlanFiltersResult;
         }
 
-        /// <inheritdoc />
         public async Task<bool> HandleSaveRecommendedPlanDecisionsAsync(SpotExceptionsRecommendedPlanSaveDecisionsRequestDto recommendedPlanDecisionsSaveRequest, string userName)
         {
-            bool isSaved = false;
+            var isSaved = false;
 
-            _LogInfo($"Starting: Handle the saving of the Spot Exceptions Decisions");
+            _LogInfo($"Starting: Saving Decisions to Recommended Plan");
             try
             {
-                foreach (var recommendedPlans in recommendedPlanDecisionsSaveRequest.SpotExceptionsRecommendedPlans)
+                if (recommendedPlanDecisionsSaveRequest.SpotExceptionsRecommendedPlans.All(x => x.TodoId != null))
                 {
-                    var recommendedPlansToDo = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanDetailsToDoByRecommendedPlanId(recommendedPlans.Id, recommendedPlans.SelectedPlanId);
-                    var recommendedPlansDone = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanDetailsDoneByRecommendedPlanId(recommendedPlans.Id, recommendedPlans.SelectedPlanId);
-
-                    if (recommendedPlansToDo == null && recommendedPlansDone == null)
-                    {
-                        return false;
-                    }
-
-                    if (recommendedPlansToDo != null)
-                    {
-                        isSaved = await _SaveRecommendedPlanDecisionsToDoAsync(recommendedPlans, recommendedPlansToDo, userName);
-                    }
-                    else
-                    {
-                        isSaved = await _SaveRecommendedPlanDecisionsDoneAsync(recommendedPlans, recommendedPlansDone, userName);
-                    }
+                    isSaved = await _SaveRecommendedPlanToDoDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
                 }
-                _LogInfo($"Finished: Handle the saving of the Spot Exceptions Decisions");
+                else if (recommendedPlanDecisionsSaveRequest.SpotExceptionsRecommendedPlans.All(x => x.DoneId != null))
+                {
+                    isSaved = await _SaveRecommendedPlanDecisionsDoneAsync(recommendedPlanDecisionsSaveRequest, userName);
+                }
+                else
+                {
+                    isSaved = false;
+                }
+
+                _LogInfo($"Finished: Saving Decisions to Recommended Plan");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not save the Decisions";
+                var msg = $"Could not save Decisions to Recommended Plan";
                 throw new CadentException(msg, ex);
             }
 
             return isSaved;
         }
 
-        private async Task<bool> _SaveRecommendedPlanDecisionsToDoAsync(SpotExceptionsRecommendedPlanSaveDto planToSave, SpotExceptionsRecommendedPlanSpotsToDoDto recommendedPlansToDo, string userName)
+        public async Task<bool> _SaveRecommendedPlanToDoDecisionsAsync(SpotExceptionsRecommendedPlanSaveDecisionsRequestDto recommendedPlanDecisionsSaveRequest, string userName)
         {
-            bool isMoved = false;
+            var isSaved = false;
             var currentDate = _DateTimeEngine.GetCurrentMoment();
 
             _LogInfo($"Starting: Moving the Spot Exception Plan by Decision to Done");
             try
             {
-                isMoved = await _SpotExceptionsRecommendedPlanRepository.SaveRecommendedPlanToDoDecisionsAsync(planToSave, recommendedPlansToDo, userName, currentDate);
+                using (var transaction = new TransactionScopeWrapper())
+                {
+                    recommendedPlanDecisionsSaveRequest.SpotExceptionsRecommendedPlans.ForEach(async recommendedPlan =>
+                    {
+                        var todoRecommendedPlan = await _SpotExceptionsRecommendedPlanRepository.GetRecommendedPlanSpot(recommendedPlan.TodoId);
+                        var doneRecommendedPlanToAdd = _MapRecommendedPlanDoneToDto(todoRecommendedPlan);
 
+                        foreach (var entity in doneRecommendedPlanToAdd.SpotExceptionsRecommendedPlanDetailsDone)
+                        {
+                            if (entity.RecommendedPlanId == recommendedPlan.SelectedPlanId)
+                            {
+                                entity.SpotExceptionsRecommendedPlanDoneDecisions.DecidedBy = userName;
+                                entity.SpotExceptionsRecommendedPlanDoneDecisions.DecidedAt = currentDate;
+                            }
+                        }
 
+                        _SpotExceptionsRecommendedPlanRepository.AddRecommendedPlanToDone(doneRecommendedPlanToAdd, recommendedPlan.SelectedPlanId);
+                        _SpotExceptionsRecommendedPlanRepository.DeleteRecommendedPlanFromToDo(todoRecommendedPlan.Id);
+                    });
+                    transaction.Complete();
+                    isSaved = true;
+                }
                 _LogInfo($"Finished: Moving the Spot Exception Plan by Decision to Done");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not move Spot Exception Recommended Plan to Done";
+                var msg = $"Could not move the Spot Exception Plan by Decision to Done";
                 throw new CadentException(msg, ex);
             }
 
-            return isMoved;
+            return isSaved;
         }
 
-        private async Task<bool> _SaveRecommendedPlanDecisionsDoneAsync(SpotExceptionsRecommendedPlanSaveDto spotExceptionsRecommendedPlan, SpotExceptionsRecommendedPlanSpotsDoneDto recommendedPlansDone, string userName)
+        private async Task<bool> _SaveRecommendedPlanDecisionsDoneAsync(SpotExceptionsRecommendedPlanSaveDecisionsRequestDto recommendedPlanDecisionsSaveRequest, string userName)
         {
-            bool isrecommendedPlanDecisionSaved;
+            bool isSaved;
+            var spotExceptionsRecommendedPlanDone = new List<SpotExceptionsRecommendedPlanSpotDecisionsDoneDto>();
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
+
+            _LogInfo($"Starting: Saving decisions for the Done");
             try
             {
-                var recommendedPlanDoneDecision = new SpotExceptionsRecommendedPlanSpotDecisionsDoneDto
+                foreach (var spotExceptionsRecommendedPlan in recommendedPlanDecisionsSaveRequest.SpotExceptionsRecommendedPlans)
                 {
-                    SpotExceptionsId = spotExceptionsRecommendedPlan.Id,
-                    SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.SelectedPlanId,
-                    SpotExceptionsRecommendedPlanDetailsDoneId = recommendedPlansDone.Id,
-                    DecidedBy = userName,
-                    DecidedAt = _DateTimeEngine.GetCurrentMoment(),
-                    SyncedAt = null,
-                    SyncedBy = null
-                };
+                    var spotExceptionsRecommendedPlanSpotDoneDecision = new SpotExceptionsRecommendedPlanSpotDecisionsDoneDto
+                    {
+                        SpotExceptionsId = spotExceptionsRecommendedPlan.DoneId ?? default,
+                        SpotExceptionsRecommendedPlanId = spotExceptionsRecommendedPlan.SelectedPlanId
+                    };
+                    spotExceptionsRecommendedPlanDone.Add(spotExceptionsRecommendedPlanSpotDoneDecision);
+                }
 
-                isrecommendedPlanDecisionSaved = await _SpotExceptionsRecommendedPlanRepository.SaveRecommendedPlanDoneDecisionsAsync(recommendedPlanDoneDecision);
+                isSaved = await _SpotExceptionsRecommendedPlanRepository.SaveRecommendedPlanDoneDecisionsAsync(spotExceptionsRecommendedPlanDone, userName, currentDate);
+                 _LogInfo($"Finished: Saving decisions for the Done");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not save decisions for the Done";
                 throw new CadentException(msg, ex);
             }
 
-            return isrecommendedPlanDecisionSaved;
+            return isSaved;
+        }
+
+        private SpotExceptionsRecommendedPlanSpotsDoneDto _MapRecommendedPlanDoneToDto(SpotExceptionsRecommendedPlanSpotsToDoDto recommendedPlanSpotsToDoEntity)
+        {
+            var recommendedPlanDoneEntity = new SpotExceptionsRecommendedPlanSpotsDoneDto
+            {
+                SpotUniqueHashExternal = recommendedPlanSpotsToDoEntity.SpotUniqueHashExternal,
+                AmbiguityCode = recommendedPlanSpotsToDoEntity.AmbiguityCode,
+                ExecutionIdExternal = recommendedPlanSpotsToDoEntity.ExecutionIdExternal,
+                EstimateId = recommendedPlanSpotsToDoEntity.EstimateId,
+                InventorySource = recommendedPlanSpotsToDoEntity.InventorySource,
+                HouseIsci = recommendedPlanSpotsToDoEntity.HouseIsci,
+                ClientIsci = recommendedPlanSpotsToDoEntity.ClientIsci,
+                SpotLengthId = recommendedPlanSpotsToDoEntity.SpotLengthId,
+                ProgramAirTime = recommendedPlanSpotsToDoEntity.ProgramAirTime,
+                StationLegacyCallLetters = recommendedPlanSpotsToDoEntity.StationLegacyCallLetters,
+                Affiliate = recommendedPlanSpotsToDoEntity.Affiliate,
+                MarketCode = recommendedPlanSpotsToDoEntity.MarketCode,
+                MarketRank = recommendedPlanSpotsToDoEntity.MarketRank,
+                ProgramName = recommendedPlanSpotsToDoEntity.ProgramName,
+                ProgramGenre = recommendedPlanSpotsToDoEntity.ProgramGenre,
+                IngestedBy = recommendedPlanSpotsToDoEntity.IngestedBy,
+                IngestedAt = recommendedPlanSpotsToDoEntity.IngestedAt,
+                IngestedMediaWeekId = recommendedPlanSpotsToDoEntity.IngestedMediaWeekId,
+                SpotLength = recommendedPlanSpotsToDoEntity.SpotLength,
+                SpotExceptionsRecommendedPlanDetailsDone = recommendedPlanSpotsToDoEntity.SpotExceptionsRecommendedPlanDetailsToDo.Select(recommendedPlanDetailToDoDb =>
+                {
+                    var recommendedPlanDetailDone = new SpotExceptionsRecommendedPlanDetailsDoneDto
+                    {
+                        SpotExceptionsRecommendedPlanId = recommendedPlanDetailToDoDb.SpotExceptionsRecommendedPlanId,
+                        RecommendedPlanId = recommendedPlanDetailToDoDb.RecommendedPlanId,
+                        ExecutionTraceId = recommendedPlanDetailToDoDb.ExecutionTraceId,
+                        Rate = recommendedPlanDetailToDoDb.Rate,
+                        AudienceName = recommendedPlanDetailToDoDb.AudienceName,
+                        ContractedImpressions = recommendedPlanDetailToDoDb.ContractedImpressions,
+                        DeliveredImpressions = recommendedPlanDetailToDoDb.DeliveredImpressions,
+                        IsRecommendedPlan = recommendedPlanDetailToDoDb.IsRecommendedPlan,
+                        PlanClearancePercentage = recommendedPlanDetailToDoDb.PlanClearancePercentage,
+                        DaypartCode = recommendedPlanDetailToDoDb.DaypartCode,
+                        StartTime = recommendedPlanDetailToDoDb.StartTime,
+                        EndTime = recommendedPlanDetailToDoDb.EndTime,
+                        Monday = recommendedPlanDetailToDoDb.Monday,
+                        Tuesday = recommendedPlanDetailToDoDb.Tuesday,
+                        Wednesday = recommendedPlanDetailToDoDb.Wednesday,
+                        Thursday = recommendedPlanDetailToDoDb.Thursday,
+                        Friday = recommendedPlanDetailToDoDb.Friday,
+                        Saturday = recommendedPlanDetailToDoDb.Saturday,
+                        Sunday = recommendedPlanDetailToDoDb.Sunday,
+                        SpotDeliveredImpressions = recommendedPlanDetailToDoDb.SpotDeliveredImpressions,
+                        PlanTotalContractedImpressions = recommendedPlanDetailToDoDb.PlanTotalContractedImpressions,
+                        PlanTotalDeliveredImpressions = recommendedPlanDetailToDoDb.PlanTotalDeliveredImpressions,
+                        IngestedMediaWeekId = recommendedPlanDetailToDoDb.IngestedMediaWeekId,
+                        IngestedBy = recommendedPlanDetailToDoDb.IngestedBy,
+                        IngestedAt = recommendedPlanDetailToDoDb.IngestedAt,
+                        SpotUniqueHashExternal = recommendedPlanDetailToDoDb.SpotUniqueHashExternal,
+                        ExecutionIdExternal = recommendedPlanDetailToDoDb.ExecutionIdExternal
+                    };
+                    return recommendedPlanDetailDone;
+                }).ToList()
+            };
+            return recommendedPlanDoneEntity;
         }
 
         private string _GetAdvertiserName(Guid? masterId)

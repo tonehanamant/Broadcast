@@ -21,9 +21,17 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
     public class SpotExceptionsRecommendedPlanSaveDto
     {
         /// <summary>
-        ///  Gets or sets the SpotExceptionsRecommendedPlans identifier.
+        /// Gets or sets the todo identifier.
         /// </summary>
-        public int Id { get; set; }
+        /// <value>The todo identifier.</value>
+        public int? TodoId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the done identifier.
+        /// </summary>
+        /// <value>The done identifier.</value>
+        public int? DoneId { get; set; }
+
         /// <summary>
         /// Gets or sets the recommended_plan_id for the SpotExceptionsRecommendedPlans
         /// </summary>
@@ -42,7 +50,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// <summary>
         /// Gets or sets the SpotExceptionsRecommendedPlanDetails Id 
         /// </summary>
-        public int SpotExceptionsRecommendedPlanDetailsId { get; set; }      
+        public int SpotExceptionsRecommendedPlanDetailsId { get; set; }
 
     }
 }

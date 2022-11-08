@@ -17,6 +17,9 @@ using Amazon.Runtime;
 using System.Web.WebPages;
 using System.Management.Automation;
 using System.Text.RegularExpressions;
+using Tam.Maestro.Common.DataLayer;
+using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -556,24 +559,74 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         private async Task<bool> _SaveOutOfSpecDecisionsToDoAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest, string userName)
         {
-            bool isMoved = false;
+            bool isSaved;
             var currentDate = _DateTimeEngine.GetCurrentMoment();
 
             _LogInfo($"Starting: Moving the Spot Exception Plan by Decision to Done");
             try
             {
-                isMoved = await _SpotExceptionsOutOfSpecRepository.SaveSpotExceptionsOutOfSpecToDoDecisionsAsync(spotExceptionsOutOfSpecSaveRequest, userName, currentDate);
+                using (var transaction = new TransactionScopeWrapper())
+                {
+                    spotExceptionsOutOfSpecSaveRequest.Decisions.ForEach(async outOfSpecRequest =>
+                    {
+                        var todoOutOfSpec = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpot(outOfSpecRequest.todoId);
+                        var doneOutOfSpecToAdd = _MapOutOfSpecDoneToDto(todoOutOfSpec);
 
+                        _SpotExceptionsOutOfSpecRepository.AddOutOfSpecToDone(doneOutOfSpecToAdd, outOfSpecRequest, userName, currentDate);
+                        _SpotExceptionsOutOfSpecRepository.DeleteOutOfSpecFromToDo(todoOutOfSpec.Id);
+                    });
+                    transaction.Complete();
+                    isSaved = true;
+                }
 
                 _LogInfo($"Finished: Moving the Spot Exception Plan by Decision to Done");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not move Spot Exception Recommended Plan to Done";
+                var msg = $"Could not move Spot Exception Plan by Decision to Done";
                 throw new CadentException(msg, ex);
             }
 
-            return isMoved;
+            return isSaved;
+        }
+
+        private SpotExceptionsOutOfSpecsDoneDto _MapOutOfSpecDoneToDto(SpotExceptionsOutOfSpecsToDoDto outOfSpecToDo)
+        {
+            var spotExceptionsOutOfSpec = new SpotExceptionsOutOfSpecsDoneDto
+            {
+                SpotUniqueHashExternal = outOfSpecToDo.SpotUniqueHashExternal,
+                ExecutionIdExternal = outOfSpecToDo.ExecutionIdExternal,
+                ReasonCodeMessage = outOfSpecToDo.ReasonCodeMessage,
+                EstimateId = outOfSpecToDo.EstimateId,
+                IsciName = outOfSpecToDo.IsciName,
+                HouseIsci = outOfSpecToDo.HouseIsci,
+                RecommendedPlanId = outOfSpecToDo.RecommendedPlanId,
+                RecommendedPlanName = outOfSpecToDo.RecommendedPlanName,
+                ProgramName = outOfSpecToDo.ProgramName,
+                StationLegacyCallLetters = outOfSpecToDo.StationLegacyCallLetters,
+                DaypartCode = outOfSpecToDo.DaypartCode,
+                GenreName = outOfSpecToDo.GenreName,
+                Affiliate = outOfSpecToDo.Affiliate,
+                Market = outOfSpecToDo.Market,
+                SpotLength = outOfSpecToDo.SpotLength,
+                Audience = outOfSpecToDo.Audience,
+                ProgramAirTime = outOfSpecToDo.ProgramAirTime,
+                IngestedBy = outOfSpecToDo.IngestedBy,
+                IngestedAt = outOfSpecToDo.IngestedAt,
+                IngestedMediaWeekId = outOfSpecToDo.IngestedMediaWeekId,
+                Impressions = outOfSpecToDo.Impressions,
+                PlanId = outOfSpecToDo.PlanId,
+                FlightStartDate = outOfSpecToDo.FlightStartDate,
+                FlightEndDate = outOfSpecToDo.FlightEndDate,
+                AdvertiserMasterId = outOfSpecToDo.AdvertiserMasterId,
+                Product = outOfSpecToDo.Product,
+                SpotExceptionsOutOfSpecReasonCode = outOfSpecToDo.SpotExceptionsOutOfSpecReasonCode,
+                MarketCode = outOfSpecToDo.MarketCode,
+                MarketRank = outOfSpecToDo.MarketRank,
+                Comments = outOfSpecToDo.Comments,
+                InventorySourceName = outOfSpecToDo.InventorySourceName
+            };
+            return spotExceptionsOutOfSpec;
         }
 
         private async Task<bool> _SaveOutOfSpecCommentsDoneAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest)
