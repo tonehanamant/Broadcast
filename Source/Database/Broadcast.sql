@@ -979,20 +979,6 @@ GO
 
 /*************************************** END BP-5532 ***************************************/
 
-/*************************************** START BP-5672 ************************************/
-
-IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
-where CONSTRAINT_NAME = 'FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans' 
-AND DELETE_RULE ='CASCADE')
-BEGIN
-	ALTER TABLE [dbo].[spot_exceptions_recommended_plan_details] DROP CONSTRAINT [FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans]
-
-	ALTER TABLE [dbo].[spot_exceptions_recommended_plan_details]  WITH CHECK ADD  CONSTRAINT [FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans] FOREIGN KEY([spot_exceptions_recommended_plan_id])
-	REFERENCES [dbo].[spot_exceptions_recommended_plans] ([id]) ON DELETE CASCADE
-END
-GO
-/*************************************** END BP-5672 ***************************************/
-
 /*************************************** START BP-5662 ************************************/
 
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'plans' AND COLUMN_NAME= 'nielsen_transmittal_code')
@@ -1124,6 +1110,20 @@ IF NOT EXISTS (SELECT *
 GO
 
 /*************************************** END BP-5685 ************************************/
+
+/*************************************** START BP-5878 ************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS 
+where CONSTRAINT_NAME = 'FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans' 
+AND DELETE_RULE ='CASCADE')
+BEGIN
+	ALTER TABLE spot_exceptions_recommended_plan_details DROP CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans
+
+	ALTER TABLE spot_exceptions_recommended_plan_details  WITH CHECK ADD  CONSTRAINT FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans FOREIGN KEY(spot_exceptions_recommended_plan_id)
+	REFERENCES spot_exceptions_recommended_plans (id) ON DELETE CASCADE
+END
+GO
+/*************************************** END BP-5878 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
