@@ -1050,12 +1050,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, 2)]
-        [TestCase(true, 0)]
-        public void PlanStatusTransitionTriggersPlanSaveAndCampaignAggregation(bool v2IsEnabled, int expectedCallCount)
+        [TestCase(0)]
+        public void PlanStatusTransitionTriggersPlanSaveAndCampaignAggregation(int expectedCallCount)
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = v2IsEnabled;
 
             var savePlanCalls = new List<DateTime>();
             _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
@@ -1098,13 +1096,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, 0)]
-        [TestCase(true, 2)]
-        public void PlanStatusTransitionV2TriggersPlanSaveAndCampaignAggregation(bool v2IsEnabled, int expectedCallCount)
+        [TestCase(2)]
+        public void PlanStatusTransitionV2TriggersPlanSaveAndCampaignAggregation(int expectedCallCount)
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = v2IsEnabled;
-
             var savePlanCalls = new List<DateTime>();
             _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => savePlanCalls.Add(DateTime.Now));
@@ -1380,39 +1375,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        public void PlanStatusTransitionFailsOnLockedPlans()
-        {
-            // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = false;
-
-            var planToReturn = _GetNewPlan();
-            planToReturn.Id = 1;
-            planToReturn.CampaignId = 1;
-            planToReturn.Status = PlanStatusEnum.Live;
-            _PlanRepositoryMock
-                .Setup(s => s.GetPlansForAutomaticTransition(It.IsAny<DateTime>()))
-                .Returns(new List<PlanDto> { planToReturn });
-
-            const string expectedMessage = "The chosen plan has been locked by IntegrationUser";
-            _BroadcastLockingManagerApplicationServiceMock
-                .Setup(x => x.LockObject(It.IsAny<string>())).Returns(new LockResponse
-                {
-                    Success = false,
-                    LockedUserName = "IntegrationUser"
-                });
-
-            // Act
-            var exception = Assert.Throws<Exception>(() => _PlanService.AutomaticStatusTransitionsJobEntryPoint());
-
-            // Assert
-            }
-
-        [Test]
         public void PlanStatusTransitionV2FailsOnLockedPlans()
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = true;
-
             var planToReturn = _GetNewPlan();
             planToReturn.Id = 1;
             planToReturn.CampaignId = 1;
@@ -4554,12 +4519,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, true, 2)]
-        [TestCase(true, true, 0)]
-        public void AutomaticStatusTransitions_WithToggleToKeepBuyingResults(bool v2IsEnabled, bool buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled, int expectedCallCount)
+        [TestCase(true, 0)]
+        [TestCase(true, 0)]
+        public void AutomaticStatusTransitions_WithToggleToKeepBuyingResults(bool buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled, int expectedCallCount)
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2] = v2IsEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS] = buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
             var savePlanCalls = new List<DateTime>();
             _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))

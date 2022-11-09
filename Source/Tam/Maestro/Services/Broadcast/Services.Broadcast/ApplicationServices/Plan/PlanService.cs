@@ -1701,32 +1701,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
         [AutomaticRetry(Attempts = 0, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void AutomaticStatusTransitionsJobEntryPoint()
         {
-            var isV2Enabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2);
-            if (isV2Enabled)
-            {
-                _LogInfo("Automatic Status Tranitions Job V2 is enabled.  V1 is stopping.");
-                return;
-            }
-
-            _LogInfo("Automatic Status Tranitions Job V2 is disabled.  V1 is running.");
-
-            var transitionDate = DateTime.Today;
-            var updatedBy = "automated status update";
-            var updatedDate = DateTime.Now;
-            AutomaticStatusTransitions(transitionDate, updatedBy, updatedDate, false);
+            _LogInfo("Automatic Status Tranitions Job V2 is enabled.  V1 is stopping.");
+            return;
         }
 
         // attribute has to be on the class instead of the interface because this is a recurring job.
         [AutomaticRetry(Attempts = 0, DelaysInSeconds = new int[] { 5 * 60 }, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
         public void AutomaticStatusTransitionsJobEntryPointV2()
         {
-            var isV2Enabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AUTO_PLAN_STATUS_TRANSITON_V2);
-            if (!isV2Enabled)
-            {
-                _LogInfo("Automatic Status Tranitions Job V2 is disabled.  V2 is stopping.");
-                return;
-            }
-
             _LogInfo("Automatic Status Tranitions Job V2 is enabled.  V2 is running.");
 
             var transitionDate = DateTime.Today;
