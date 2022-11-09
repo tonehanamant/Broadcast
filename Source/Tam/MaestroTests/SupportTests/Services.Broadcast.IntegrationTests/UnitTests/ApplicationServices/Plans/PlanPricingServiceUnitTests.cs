@@ -90,7 +90,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
@@ -11202,15 +11201,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, false, 1)]
-        [TestCase(false, true, 2)]
-        [TestCase(true, false, 3)]
-        [TestCase(true, true, 6)]
-        public void PricingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled, int expectedResult)
+        [TestCase(false, 1)]
+        [TestCase(true, 3)]
+        public void PricingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, int expectedResult)
         {
             var service = _GetService();
             // Act
-            var count = service.PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+            var count = service.PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
             // Assert     
             Assert.AreEqual(count, expectedResult);
         }
@@ -11319,13 +11316,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(1, false, false)]
-        [TestCase(1, true, false)]
-        [TestCase(1, true, true)]
-        [TestCase(2, true, false)]
-        [TestCase(2, true, true)]
-        [TestCase(6, true, true)]
-        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount, bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        [TestCase(1, false)]
+        [TestCase(1, true)]
+        [TestCase(2, true)]
+        [TestCase(6, true)]
+        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount, bool isPricingEfficiencyModelEnabled)
         {
             // Arrange
             var candidateResults = new List<CurrentPricingExecutionResultDto>();
@@ -11381,10 +11376,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var results = service.FillInMissingPricingResultsWithEmptyResults(candidateResults, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+            var results = service.FillInMissingPricingResultsWithEmptyResults(candidateResults, isPricingEfficiencyModelEnabled);
 
             // Assert
-            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            if (!isPricingEfficiencyModelEnabled)
             {
                 Assert.AreEqual(1, results.Count());
                 return;

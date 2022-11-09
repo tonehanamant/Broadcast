@@ -90,7 +90,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE, isPostingTypeToggleEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);

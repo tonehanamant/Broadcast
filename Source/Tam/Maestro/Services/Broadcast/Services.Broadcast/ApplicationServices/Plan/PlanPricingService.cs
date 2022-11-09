@@ -737,17 +737,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
-            var isPostingTypeToggleEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_POSTING_TYPE_TOGGLE);
 
             var jobCompletedWithinLastFiveMinutes = _DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var expectedResultCount = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled, isPostingTypeToggleEnabled);
+                var expectedResultCount = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
                 result = ValidatePricingExecutionResult(result, expectedResultCount);
             }
             else
             {
-                var filledInResults = FillInMissingPricingResultsWithEmptyResults(result.Results, isPostingTypeToggleEnabled, isPricingEfficiencyModelEnabled);
+                var filledInResults = FillInMissingPricingResultsWithEmptyResults(result.Results, isPricingEfficiencyModelEnabled);
                 result.Results = filledInResults;
             }
 
@@ -775,15 +774,14 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal List<CurrentPricingExecutionResultDto> FillInMissingPricingResultsWithEmptyResults(List<CurrentPricingExecutionResultDto> candidateResults,
-            bool isPostingTypeToggleEnabled, bool isPricingEfficiencyModelEnabled)
+        internal List<CurrentPricingExecutionResultDto> FillInMissingPricingResultsWithEmptyResults(List<CurrentPricingExecutionResultDto> candidateResults, bool isPricingEfficiencyModelEnabled)
         {
             // We only have to worry about the three use cases
             // 1) Neither toggle is enabled
             // 2) isPostingTypeToggleEnabled is enabled and isPricingEfficiencyModelEnabled is not enabled
             // 3) Both are enabled.
             var results = candidateResults.DeepCloneUsingSerialization();
-            if (!isPostingTypeToggleEnabled && !isPricingEfficiencyModelEnabled)
+            if (!isPricingEfficiencyModelEnabled)
             {
                 return results;
             }
@@ -830,19 +828,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled, bool isPostingTypeToggleEnabled)
+        internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled)
         {
             int expectedResult = 0;
 
-            if (!isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            if (!isPricingEfficiencyModelEnabled)
             {
                 expectedResult = 1;
             }
-            else if (!isPricingEfficiencyModelEnabled && isPostingTypeToggleEnabled)
+            else if (!isPricingEfficiencyModelEnabled)
             {
                 expectedResult = 2;
             }
-            else if (isPricingEfficiencyModelEnabled && !isPostingTypeToggleEnabled)
+            else if (isPricingEfficiencyModelEnabled)
             {
                 expectedResult = 3;
             }
