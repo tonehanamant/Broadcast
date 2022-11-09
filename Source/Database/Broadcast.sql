@@ -1144,6 +1144,24 @@ GO
 
 /*************************************** END BP-5966 ************************************/
 
+/*************************************** START BP-5110 ************************************/
+
+DELETE FROM spot_exceptions_recommended_plan_details WHERE ingested_by = 'Mock Data';
+DELETE FROM spot_exceptions_recommended_plans WHERE ingested_by = 'Mock Data';
+
+DELETE FROM spot_exceptions_recommended_plan_done_decisions WHERE decided_by = 'Mock Data';
+DELETE FROM spot_exceptions_recommended_plan_details_done WHERE ingested_by = 'Mock Data';
+DELETE FROM spot_exceptions_recommended_plans_done WHERE ingested_by = 'Mock Data';
+
+DELETE FROM spot_exceptions_out_of_specs WHERE ingested_by = 'Mock Data';
+DELETE FROM spot_exceptions_out_of_spec_done_decisions WHERE decided_by = 'Mock Data';
+DELETE FROM spot_exceptions_out_of_specs_done WHERE ingested_by = 'Mock Data';
+
+DELETE FROM spot_exceptions_unposted_no_plan WHERE ingested_by = 'Mock Data';
+DELETE FROM spot_exceptions_unposted_no_reel_roster WHERE ingested_by = 'Mock Data';
+
+GO
+/*************************************** END BP-5110 ************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

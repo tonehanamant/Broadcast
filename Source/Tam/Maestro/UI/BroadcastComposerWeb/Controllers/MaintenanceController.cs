@@ -846,26 +846,7 @@ namespace BroadcastComposerWeb.Controllers
             var service = _ApplicationServiceFactory.GetApplicationService<IReelIsciIngestService>();
             service.Queue(username);
             return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public ActionResult AddOrClearSpotExceptionsData(string addMockData, string clearMockData, string clearAllData)
-        {
-            var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsService>();
-            if (!string.IsNullOrEmpty(addMockData))
-            {
-                service.AddSpotExceptionData();
-            }
-            if (!string.IsNullOrEmpty(clearMockData))
-            {
-                service.ClearSpotExceptionMockData();
-            }
-            if (!string.IsNullOrEmpty(clearAllData))
-            {
-                service.ClearSpotExceptionAllData();
-            }
-            return RedirectToAction("Index");
-        }
+        }        
 
         [HttpGet]
         public ActionResult ExportVpvh()
@@ -1258,7 +1239,7 @@ namespace BroadcastComposerWeb.Controllers
 
         #endregion // #region Aab Utilities
 
-        #region Spot Exceptions Sync
+        #region Spot Exceptions
 
         [HttpPost]
         public async Task<ActionResult> SpotExceptionSyncIngestWeek(bool chkRunInBackground = false)
@@ -1340,6 +1321,33 @@ namespace BroadcastComposerWeb.Controllers
 
             TempData["TabId"] = "spot_exceptions_sync";
             TempData["Message"] = result;
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult ClearSpotExceptionsData(string protectionKey)
+        {
+            try
+            {
+                if (protectionKey == "r1f2m3p4")
+                {
+                    var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsService>();
+                    service.ClearSpotExceptionAllData();
+                    ViewBag.Message = "Spot Exceptions Data has been cleared.";
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid protection key";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+
+            TempData["Message"] = ViewBag.Message;
+            TempData["TabId"] = "spot_exceptions_sync";
 
             return RedirectToAction("Index");
         }
