@@ -87,12 +87,18 @@ namespace Services.Broadcast.Repositories
                 {
                     return _InReadUncommitedTransaction(context =>
                     {
-                        return context.program_name_mappings                          
-                            .Include(x => x.show_types)
-                            .Where(x => chunk.Contains(x.inventory_program_name))
-                            .ToList()
-                            .Select(_MapToDto)
+                        var mappingEntities = (from m in context.program_name_mappings.Include(x => x.show_types)
+                                               join p in context.programs.Include(x => x.genre)
+                                                on m.official_program_name equals p.name
+                                               where chunk.Contains(m.inventory_program_name)
+                                               select new
+                                               {
+                                                   mapping = m,
+                                                   program = p
+                                               })
                             .ToList();
+                        var programMappings = mappingEntities.Select(x => _MapToDto(x.mapping, x.program)).ToList();
+                        return programMappings;
                     });
                 })
                 .ToList();
@@ -171,16 +177,22 @@ namespace Services.Broadcast.Repositories
         {
             return _InReadUncommitedTransaction(context =>
             {
-                var mappingEntities = context.program_name_mappings                    
-                    .Include(x => x.show_types)
-                    .ToList();
+                var mappingEntities = (from m in context.program_name_mappings.Include(x => x.show_types)
+                                       join p in context.programs.Include(x => x.genre)
+                                        on m.official_program_name equals p.name
+                            select new
+                            {
+                                mapping = m,
+                                program = p
+                            })
+                            .ToList();
 
-                var programMappings = mappingEntities.Select(_MapToDto).ToList();
+                var programMappings = mappingEntities.Select(x=> _MapToDto(x.mapping, x.program)).ToList();
                 return programMappings;
             });
         }
 
-        private ProgramMappingsDto _MapToDto(program_name_mappings program_name_mappings)
+        private ProgramMappingsDto _MapToDto(program_name_mappings program_name_mappings, program program)
         {
             if(program_name_mappings == null)
             {
@@ -190,12 +202,18 @@ namespace Services.Broadcast.Repositories
             {
                 Id = program_name_mappings.id,
                 OriginalProgramName = program_name_mappings.inventory_program_name,
-                OfficialProgramName = program_name_mappings.official_program_name,                
+                OfficialProgramName = program_name_mappings.official_program_name,
                 OfficialShowType = new ShowTypeDto
                 {
                     Id = program_name_mappings.show_types.id,
                     Name = program_name_mappings.show_types.name,
                     ShowTypeSource = (ProgramSourceEnum)program_name_mappings.show_types.program_source_id
+                },
+                OfficialGenre = new Genre
+                {
+                    Id = program.genre.id,
+                    Name = program.genre.name,
+                    ProgramSourceId = program.genre.program_source_id
                 },
                 CreatedBy = program_name_mappings.created_by,
                 CreatedAt = program_name_mappings.created_at,

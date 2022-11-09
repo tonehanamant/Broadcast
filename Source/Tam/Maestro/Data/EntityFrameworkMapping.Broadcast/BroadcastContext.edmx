@@ -5953,6 +5953,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_programs_genres">
+          <End Role="genres" Type="Self.genres" Multiplicity="1" />
+          <End Role="programs" Type="Self.programs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="genres">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="programs">
+              <PropertyRef Name="genre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_programs_show_types">
           <End Role="show_types" Type="Self.show_types" Multiplicity="1" />
           <End Role="programs" Type="Self.programs" Multiplicity="*" />
@@ -7004,7 +7016,9 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans">
-          <End Role="spot_exceptions_recommended_plans" Type="Self.spot_exceptions_recommended_plans" Multiplicity="1" />
+          <End Role="spot_exceptions_recommended_plans" Type="Self.spot_exceptions_recommended_plans" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="spot_exceptions_recommended_plan_details" Type="Self.spot_exceptions_recommended_plan_details" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="spot_exceptions_recommended_plans">
@@ -8932,6 +8946,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_program_name_mappings_show_types" Association="Self.FK_program_name_mappings_show_types">
             <End Role="show_types" EntitySet="show_types" />
             <End Role="program_name_mappings" EntitySet="program_name_mappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_programs_genres" Association="Self.FK_programs_genres">
+            <End Role="genres" EntitySet="genres" />
+            <End Role="programs" EntitySet="programs" />
           </AssociationSet>
           <AssociationSet Name="FK_programs_show_types" Association="Self.FK_programs_show_types">
             <End Role="show_types" EntitySet="show_types" />
