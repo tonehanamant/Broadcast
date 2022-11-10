@@ -47,6 +47,52 @@ namespace Services.Broadcast.IntegrationTests.Repositories
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        public void GetInventoryProgramMappings()
+        {
+            List<ProgramMappingsDto> programMappings = new List<ProgramMappingsDto>();
+            string createdBy = "testUser";
+            var createdAt = new DateTime(2022, 11, 08, 8, 32, 12);
+            var newProgramMappings = new List<ProgramMappingsDto>
+            {
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Parasite",
+                    OfficialProgramName = "Parasite",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("Entertainment"),
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Movie")
+                },
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Jojo Rabbit",
+                    OfficialProgramName = "Jojo Rabbit",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("Entertainment"),
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Movie")
+                },
+                new ProgramMappingsDto
+                {
+                     OriginalProgramName = "Harley Quinn: Birds of Prey",
+                    OfficialProgramName = "Harley Quinn: Birds of Prey",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("Entertainment"),
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Movie")
+                },
+                new ProgramMappingsDto
+                {
+                    OriginalProgramName = "Joker",
+                    OfficialProgramName = "Joker",
+                    OfficialGenre = _GenreCache.GetMaestroGenreByName("Entertainment"),
+                    OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName("Movie")
+                }
+            };
+            using (new TransactionScopeWrapper())
+            {
+              _ProgramMappingRepository.UploadMasterProgramMappings(newProgramMappings, createdBy, createdAt);  
+              programMappings = _ProgramMappingRepository.GetInventoryProgramMappings();             
+            }
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(programMappings, _GetJsonSettings()));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         public void UpdateProgramMapping()
         {
             var username = "testUser";

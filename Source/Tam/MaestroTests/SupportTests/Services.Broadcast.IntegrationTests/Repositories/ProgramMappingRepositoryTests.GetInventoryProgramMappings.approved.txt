@@ -1,0 +1,74 @@
+[
+  {
+    "CreatedAt": "2021-09-28T18:03:11.49",
+    "CreatedBy": "system",
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 15,
+      "Name": "Entertainment",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Parasite",
+    "OfficialShowType": {
+      "Id": 3,
+      "Name": "Movie",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Parasite"
+  },
+  {
+    "CreatedAt": "2021-09-28T18:03:11.49",
+    "CreatedBy": "system",
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 15,
+      "Name": "Entertainment",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Jojo Rabbit",
+    "OfficialShowType": {
+      "Id": 3,
+      "Name": "Movie",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Jojo Rabbit"
+  },
+  {
+    "CreatedAt": "2021-09-28T18:03:11.49",
+    "CreatedBy": "system",
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 15,
+      "Name": "Entertainment",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Harley Quinn: Birds of Prey",
+    "OfficialShowType": {
+      "Id": 2,
+      "Name": "Miscellaneous",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Harley Quinn: Birds of Prey"
+  },
+  {
+    "CreatedAt": "2021-09-28T18:03:11.49",
+    "CreatedBy": "system",
+    "ModifiedAt": null,
+    "ModifiedBy": null,
+    "OfficialGenre": {
+      "Id": 15,
+      "Name": "Entertainment",
+      "ProgramSourceId": 1
+    },
+    "OfficialProgramName": "Joker",
+    "OfficialShowType": {
+      "Id": 2,
+      "Name": "Miscellaneous",
+      "ShowTypeSource": 1
+    },
+    "OriginalProgramName": "Joker"
+  }
+]

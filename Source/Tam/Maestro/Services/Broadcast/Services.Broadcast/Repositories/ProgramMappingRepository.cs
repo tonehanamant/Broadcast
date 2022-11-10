@@ -24,6 +24,10 @@ namespace Services.Broadcast.Repositories
         /// </summary>
         /// <returns></returns>
         List<ProgramMappingsDto> GetProgramMappings();
+        /// <summary>
+        /// Get all the program mappings.
+        /// </summary>       
+        List<ProgramMappingsDto> GetInventoryProgramMappings();
 
         /// <summary>
         /// Creates new program mappings.
@@ -221,6 +225,44 @@ namespace Services.Broadcast.Repositories
                 ModifiedAt = program_name_mappings.modified_at
             };
         }
+
+        public List<ProgramMappingsDto> GetInventoryProgramMappings()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {                
+                var mappingEntities = (from m in context.program_name_mappings
+                                       join p in context.programs on m.official_program_name.ToLower() equals
+                                       p.name.ToLower()
+                                       join g in context.genres on p.genre_id equals g.id
+                                       join st in context.show_types on m.show_type_id equals st.id
+                                       select new ProgramMappingsDto
+                                       {
+                                           Id = m.id,
+                                           OriginalProgramName = m.inventory_program_name,
+                                           OfficialProgramName = m.official_program_name,
+                                           OfficialShowType = new ShowTypeDto
+                                           {
+                                               Id = m.show_type_id,
+                                               Name = m.show_types.name,
+                                               ShowTypeSource = (ProgramSourceEnum)m.show_types.program_source_id
+                                           },
+                                           OfficialGenre = new Genre
+                                           {
+                                               Id = p.genre.id,
+                                               Name = p.genre.name,
+                                               ProgramSourceId = p.genre.program_source_id
+                                           },
+                                           CreatedBy = m.created_by,
+                                           CreatedAt = m.created_at,
+                                           ModifiedBy = m.modified_by,
+                                           ModifiedAt = m.modified_at
+                                       })
+                                      .ToList();
+                return mappingEntities;
+
+
+            });
+        }     
 
         private void _MapFromDto(ProgramMappingsDto programMappingDto, program_name_mappings programMapping)
         {

@@ -99,6 +99,32 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines.Inventor
                 .Setup(x => x.UpdatePrimaryProgramsForManifestDayparts(It.IsAny<List<int>>()))
                 .Callback<List<int>>(dayparts => daypartsUpdatedWithPrimaryProgram.Add(dayparts));
 
+            _ProgramMappingRepositoryMock.Setup(x => x.GetInventoryProgramMappings())
+                .Returns(new List<ProgramMappingsDto>
+                {
+                    new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Id=4, Name = "Sports" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Movie"},
+                     OfficialProgramName = "Wonder Woman 1984",
+                     OriginalProgramName = "Wonder Woman 1984"
+                },
+                new ProgramMappingsDto
+                {
+                     OfficialGenre = new Genre{ Id =5, Name = "Drama" },
+                     OfficialShowType = new ShowTypeDto{ Name = "Series"},
+                     OfficialProgramName = "Breaking Bad",
+                     OriginalProgramName ="Breaking Bad"
+                },                
+                new ProgramMappingsDto
+                {
+                    OfficialGenre = new Genre{Id= 5, Name = "Drama"},
+                    OfficialShowType = new ShowTypeDto{Name = "Event"},
+                    OfficialProgramName = "America Undercover",
+                    OriginalProgramName = "America Undercover"
+                }
+                });
+
             var engine = _GetInventoryProgramsProcessingEngine();
             engine.UT_CurrentDateTime = new DateTime(2020, 03, 06, 14,22, 35);
 

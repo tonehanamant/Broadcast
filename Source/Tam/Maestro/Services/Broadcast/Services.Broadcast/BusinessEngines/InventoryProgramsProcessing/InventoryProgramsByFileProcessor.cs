@@ -58,8 +58,8 @@ namespace Services.Broadcast.BusinessEngines.InventoryProgramsProcessing
 
         protected override void SetPrimaryProgramFromProgramMappings(List<StationInventoryManifest> manifests, Action<string> logger)
         {
-            var programMappings = _ProgramMappingRepository.GetProgramMappings();
-            var programMappingByInventoryProgramName = programMappings.ToDictionary(x => x.OriginalProgramName, x => x, StringComparer.OrdinalIgnoreCase);
+            var programMappings = _ProgramMappingRepository.GetInventoryProgramMappings();
+            var programMappingByInventoryProgramName = programMappings.ToDictionary(x => x.OriginalProgramName, x => x, StringComparer.OrdinalIgnoreCase);            
             var batchSize = _GetSaveBatchSize();
             var manifestDayparts = manifests.SelectMany(x => x.ManifestDayparts);
             var manifestDaypartsCount = manifestDayparts.Count();
