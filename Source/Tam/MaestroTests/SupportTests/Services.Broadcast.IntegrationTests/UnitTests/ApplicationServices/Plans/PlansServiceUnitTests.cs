@@ -4519,12 +4519,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(true, 0)]
-        [TestCase(true, 0)]
-        public void AutomaticStatusTransitions_WithToggleToKeepBuyingResults(bool buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled, int expectedCallCount)
+        [TestCase(0)]
+        [TestCase(0)]
+        public void AutomaticStatusTransitions_WithToggleToKeepBuyingResults(int expectedCallCount)
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS] = buyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
             var savePlanCalls = new List<DateTime>();
             _PlanRepositoryMock.Setup(s => s.SavePlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))
                 .Callback(() => savePlanCalls.Add(DateTime.Now));

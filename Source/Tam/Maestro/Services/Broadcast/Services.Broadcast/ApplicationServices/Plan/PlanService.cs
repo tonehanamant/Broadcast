@@ -342,7 +342,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
         private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
-        private readonly Lazy<bool> _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled;
         private Lazy<bool> _IsUnifiedCampaignEnabled;
         public const decimal BudgetDivisor = 0.85m;
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -401,8 +400,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsBroadcastEnableFluidityExternalIntegrationEnabled = new Lazy<bool>(() =>
                 _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_EXTERNAL_INTEGRATION));
             _CampaignServiceApiClient = campaignServiceApiClient;
-            _IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled = new Lazy<bool>(() =>
-               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_BUYING_AUTO_PLAN_STATUS_TRANSITION_PROMOTES_BUYING_RESULTS));
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
@@ -1741,10 +1738,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _SetPlanVersionNumber(plan);
                     _PlanRepository.SavePlan(plan, updatedBy, updatedDate);
                     _PlanRepository.UpdatePlanPricingVersionId(plan.VersionId, oldPlanVersionId);
-                    if (_IsBuyingAutoPlanStatusTransitionPromotesBuyingResultsEnabled.Value)
-                    {
-                        _PlanRepository.UpdatePlanBuyingVersionId(plan.VersionId, oldPlanVersionId);
-                    }
+                    _PlanRepository.UpdatePlanBuyingVersionId(plan.VersionId, oldPlanVersionId);
                     _DispatchPlanAggregation(plan, aggregatePlanSynchronously);
                     _CampaignAggregationJobTrigger.TriggerJob(plan.CampaignId, updatedBy);
                 }
