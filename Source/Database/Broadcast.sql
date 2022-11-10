@@ -1242,6 +1242,41 @@ END
 GO
 /*************************************** END BP-5966 - Part 2 ************************************/
 
+/*************************************** START BP-5992 ************************************/
+
+IF OBJECT_ID('tempdb..#GenresToLoad') IS NOT NULL
+BEGIN 
+	DROP TABLE #GenresToLoad
+END
+
+CREATE TABLE #GenresToLoad
+(
+	[name] VARCHAR(50)
+)
+
+INSERT INTO #GenresToLoad ([name]) VALUES ('CRIME/INFORMATIONAL')
+INSERT INTO #GenresToLoad ([name]) VALUES ('DOCUMENTARY/INFORMATIONAL')
+INSERT INTO #GenresToLoad ([name]) VALUES ('ENTERTAINMENT/NEWS')
+INSERT INTO #GenresToLoad ([name]) VALUES ('INFORMATIONAL/SPECIAL')
+INSERT INTO #GenresToLoad ([name]) VALUES ('LIFESTYLE/NEWS')
+INSERT INTO #GenresToLoad ([name]) VALUES ('NEWS/SPECIAL')
+INSERT INTO #GenresToLoad ([name]) VALUES ('REALITY TALK')
+INSERT INTO #GenresToLoad ([name]) VALUES ('SPECIAL/SPORTS')
+
+INSERT INTO genres ([name], program_source_id, created_by, created_date, modified_by, modified_date)
+	SELECT l.[name]
+		, 1 -- maestro program source id
+		, 'BP-5992: Programs File Load: Resolve unknown genres', SYSDATETIME()
+		, 'BP-5992: Programs File Load: Resolve unknown genres', SYSDATETIME()
+	FROM #GenresToLoad l
+	LEFT OUTER JOIN genres g
+		ON l.name = g.name
+	WHERE g.id is null
+
+GO
+
+/*************************************** END BP-5992 ************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

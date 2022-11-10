@@ -83,9 +83,8 @@ namespace Services.Broadcast.Repositories
 	        return _InReadUncommitedTransaction(
 		        context =>
 		        {
-                    
-                  var result = (from p in context.program_name_mappings
-                                  join pg in context.programs on p.id equals pg.id
+                    var result = (from p in context.program_name_mappings
+                                  join pg in context.programs on p.official_program_name equals pg.name
                                   where p.official_program_name.ToLower().Contains(programSearchString.ToLower()                                 
                                   )                        
                                   select new ProgramNameMappingDto
