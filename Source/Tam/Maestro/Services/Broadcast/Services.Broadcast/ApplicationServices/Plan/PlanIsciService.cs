@@ -307,6 +307,29 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return totalChangedCount;
         }
 
+        /// <summary>
+        /// populate the ISCI-Plan and flights collection for save.
+        /// </summary>
+        private List<PlanIsciDto> _PoplateListItemMappings(List<IsciPlanMappingDto> mappings)
+        {
+            var result = new List<PlanIsciDto>();
+            mappings.ForEach(m =>
+            {
+                foreach (var flight in m.IsciPlanMappingFlights)
+                {
+                    PlanIsciDto itemToAdd = new PlanIsciDto();
+                    itemToAdd.PlanId = m.PlanId;
+                    itemToAdd.FlightStartDate = flight.FlightStartDate.Value;
+                    itemToAdd.FlightEndDate = flight.FlightEndDate.Value;
+                    itemToAdd.SpotLengthId = m.SpotLengthId;
+                    itemToAdd.Isci = m.Isci;
+                    itemToAdd.StartTime = flight.StartTime;
+                    itemToAdd.EndTime = flight.EndTime;
+                    result.Add(itemToAdd);
+                }
+            });
+            return result;
+        }
         private int _HandleCopyIsciPlanMapping(List<IsciPlanMappingDto> mappings, string createdBy, DateTime createdAt)
         {
             if (!mappings.Any())
@@ -314,7 +337,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return 0;
             }
 
-            List<PlanIsciDto> toSave = _PoplateListItemMappings(mappings);
+            List<PlanIsciDto> toSave = _PoplateListItemMappingsOnCopy(mappings);
             toSave = _RemoveDuplicateFromPlanIscis(toSave);
 
             List<PlanIsciDto> toSaveFiltered = new List<PlanIsciDto>();
@@ -421,7 +444,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// //If not in scope of the flight then don't copy the instructions, but still copy the iscis
         ///then pick flight start and end date from the plan
         /// </summary>
-        private List<PlanIsciDto> _PoplateListItemMappings(List<IsciPlanMappingDto> mappings)
+        private List<PlanIsciDto> _PoplateListItemMappingsOnCopy(List<IsciPlanMappingDto> mappings)
         {
             var result = new List<PlanIsciDto>();
             mappings.ForEach(m =>

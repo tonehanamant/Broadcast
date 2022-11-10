@@ -94,6 +94,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
     {
         const string flightStartDateFormat = "MM/dd";
         const string flightEndDateFormat = "MM/dd/yyyy";
+        const int fourHundred = 400;
 
         private readonly ISpotExceptionsOutOfSpecRepository _SpotExceptionsOutOfSpecRepository;
         private readonly IPlanRepository _PlanRepository;
@@ -102,6 +103,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly IAabEngine _AabEngine;
         private readonly IGenreCache _GenreCache;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
+        private readonly Lazy<bool> _IsSpotExceptionEnabled;
 
         public SpotExceptionsOutOfSpecService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -118,6 +120,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _AabEngine = aabEngine;
             _GenreCache = genreCache;
             _FeatureToggleHelper = featureToggleHelper;
+            _IsSpotExceptionEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS));
         }
 
         /// <inheritdoc />
@@ -183,7 +186,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         public async Task<SpotExceptionsOutOfSpecSpotsResultDto> GetSpotExceptionsOutOfSpecSpotsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
         {
             var outOfSpecPlanSpots = new SpotExceptionsOutOfSpecSpotsResultDto();
-
+            int marketRank = 0;
             try
             {
                 var outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoAsync(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
@@ -196,13 +199,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     outOfSpecPlanSpots.Active = outOfSpecSpotsToDo
                     .Select(activePlan =>
                     {
+                        marketRank = activePlan.MarketRank == null ? 0 : activePlan.MarketRank.Value;
                         return new SpotExceptionsOutOfSpecPlanSpotsDto
                         {
                             Id = activePlan.Id,
                             EstimateId = activePlan.EstimateId,
                             Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
-                            MarketRank = activePlan.MarketRank,
-                            DMA = activePlan.DMA,
+                            MarketRank = activePlan.MarketRank,                            
+                            DMA = _IsSpotExceptionEnabled.Value? marketRank + fourHundred: activePlan.DMA,
                             Market = activePlan.Market,
                             Station = activePlan.StationLegacyCallLetters,
                             TimeZone = activePlan.TimeZone,
@@ -233,13 +237,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     outOfSpecPlanSpots.Queued = outOfSpecSpotsDone.Where(syncedSpot => syncedSpot.SpotExceptionsOutOfSpecDoneDecision.SyncedAt == null)
                     .Select(queuedPlan =>
                     {
+                        marketRank = queuedPlan.MarketRank == null ? 0 : queuedPlan.MarketRank.Value;
                         return new SpotExceptionsOutOfSpecDonePlanSpotsDto
                         {
                             Id = queuedPlan.Id,
                             EstimateId = queuedPlan.EstimateId,
                             Reason = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             MarketRank = queuedPlan.MarketRank,
-                            DMA = queuedPlan.DMA,
+                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : queuedPlan.DMA,
                             Market = queuedPlan.Market,
                             Station = queuedPlan.StationLegacyCallLetters,
                             TimeZone = queuedPlan.TimeZone,
@@ -264,13 +269,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     outOfSpecPlanSpots.Synced = outOfSpecSpotsDone.Where(syncedSpot => syncedSpot.SpotExceptionsOutOfSpecDoneDecision.SyncedAt != null)
                     .Select(syncedPlan =>
                     {
+                        marketRank = syncedPlan.MarketRank == null ? 0 : syncedPlan.MarketRank.Value;
                         return new SpotExceptionsOutOfSpecDonePlanSpotsDto
                         {
                             Id = syncedPlan.Id,
                             EstimateId = syncedPlan.EstimateId,
                             Reason = syncedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             MarketRank = syncedPlan.MarketRank,
-                            DMA = syncedPlan.DMA,
+                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : syncedPlan.DMA,
                             Market = syncedPlan.Market,
                             Station = syncedPlan.StationLegacyCallLetters,
                             TimeZone = syncedPlan.TimeZone,
