@@ -110,7 +110,7 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlanSaveRequest">The spot exceptions recommended plan save request.</param>
         /// <returns></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("recommended-plans-save")]
         public async Task<BaseResponse<bool>> SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveDecisionsRequestDto spotExceptionsRecommendedPlanSaveRequest)

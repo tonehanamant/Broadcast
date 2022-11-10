@@ -152,22 +152,25 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="todoId">The todo identifier.</param>
         /// <returns>
         /// </returns>
-        Task<SpotExceptionsOutOfSpecsToDoDto> GetOutOfSpecSpot(int? todoId);
+        Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecSpotsToDoByIds(List<int?> todoId);
 
         /// <summary>
         /// Adds the out of spec to done.
         /// </summary>
-        /// <param name="doneOutOfSpecToAdd">The done out of spec to add.</param>
-        /// <param name="outOfSpecRequest">The out of spec request.</param>
-        /// <param name="decidedBy">The decided by.</param>
-        /// <param name="decidedAt">The decided at.</param>
-        void AddOutOfSpecToDone(SpotExceptionsOutOfSpecsDoneDto doneOutOfSpecToAdd, SpotExceptionsOutOfSpecDecisionsToSaveRequestDto outOfSpecRequest, string decidedBy, DateTime decidedAt);
+        /// <param name="doneOutOfSpecsToAdd">The done out of spec to add.</param>
+        void AddOutOfSpecToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd);
 
         /// <summary>
-        /// Deletes the recommended plan from to do.
+        /// Adds the out of spec edited to done.
         /// </summary>
-        /// <param name="todoOutOfSpecPlan">The todo out of spec plan.</param>
-        void DeleteOutOfSpecFromToDo(int todoOutOfSpecPlan);
+        /// <param name="doneOutOfSpecsToAdd">The done out of specs to add.</param>
+        void AddOutOfSpecEditedToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd);
+
+        /// <summary>
+        /// Deletes the out of specs from to do.
+        /// </summary>
+        /// <param name="existingOutOfSpecsToDo">The existing out of specs to do.</param>
+        void DeleteOutOfSpecsFromToDo(List<int> existingOutOfSpecsToDo);
 
         /// <summary>
         /// Saves the out of spec comments done asynchronous.
@@ -616,12 +619,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         }
 
         /// <inheritdoc />
-        public Task<SpotExceptionsOutOfSpecsToDoDto> GetOutOfSpecSpot(int? todoId)
+        public Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecSpotsToDoByIds(List<int?> todoId)
         {
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                var foundOutOfSpecTodo = context.spot_exceptions_out_of_specs
-                    .Where(x => x.id == todoId)
+                var foundOutOfSpecTodoEntities = context.spot_exceptions_out_of_specs
+                    .Where(x => todoId.Contains(x.id))
                     .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan)
                     .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.campaign)
                     .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.plan_versions)
@@ -635,9 +638,9 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.station_legacy_call_letters,
                         stationDb => stationDb.legacy_call_letters,
                         (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsoutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
-                    .Single();
+                    .ToList();
 
-                var OutOfSpecToDo = _MapOutOfSpecToDoToDto(foundOutOfSpecTodo.SpotExceptionsoutOfSpec, foundOutOfSpecTodo.Station);
+                var OutOfSpecToDo = foundOutOfSpecTodoEntities.Select(foundOutOfSpecTodoEntity => _MapOutOfSpecToDoToDto(foundOutOfSpecTodoEntity.SpotExceptionsoutOfSpec, foundOutOfSpecTodoEntity.Station)).ToList();
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Details ToDo");
                 return OutOfSpecToDo;
@@ -645,11 +648,11 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         }
 
         /// <inheritdoc />
-        public void AddOutOfSpecToDone(SpotExceptionsOutOfSpecsDoneDto doneOutOfSpecToAdd, SpotExceptionsOutOfSpecDecisionsToSaveRequestDto outOfSpecRequest, string decidedBy, DateTime decidedAt)
+        public void AddOutOfSpecToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd)
         {
             _InReadUncommitedTransaction(context =>
             {
-                var outOfSpecDoneEntity = new spot_exceptions_out_of_specs_done()
+                var outOfSpecDoneEntities = doneOutOfSpecsToAdd.Select(doneOutOfSpecToAdd => new spot_exceptions_out_of_specs_done
                 {
                     spot_unique_hash_external = doneOutOfSpecToAdd.SpotUniqueHashExternal,
                     execution_id_external = doneOutOfSpecToAdd.ExecutionIdExternal,
@@ -673,55 +676,86 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     market_code = doneOutOfSpecToAdd.MarketCode,
                     market_rank = doneOutOfSpecToAdd.MarketRank,
                     comment = doneOutOfSpecToAdd.Comments,
-                    inventory_source_name = doneOutOfSpecToAdd.InventorySourceName
-                };
-
-                if (!(string.IsNullOrEmpty(outOfSpecRequest.ProgramName) && string.IsNullOrEmpty(outOfSpecRequest.GenreName) && string.IsNullOrEmpty(outOfSpecRequest.DaypartCode)))
-                {
-                    outOfSpecDoneEntity.spot_exceptions_out_of_spec_done_decisions = new List<spot_exceptions_out_of_spec_done_decisions>
+                    inventory_source_name = doneOutOfSpecToAdd.InventorySourceName,
+                    spot_exceptions_out_of_spec_done_decisions = new List<spot_exceptions_out_of_spec_done_decisions>
                     {
                         new spot_exceptions_out_of_spec_done_decisions
                         {
-                            spot_exceptions_out_of_spec_done_id = doneOutOfSpecToAdd.Id,
-                            accepted_as_in_spec = outOfSpecRequest.AcceptAsInSpec,
-                            decision_notes  = outOfSpecRequest.AcceptAsInSpec ? "In" : "Out",
-                            program_name = outOfSpecRequest.ProgramName,
-                            genre_name = outOfSpecRequest.GenreName,
-                            daypart_code = outOfSpecRequest.DaypartCode,
-                            decided_by = decidedBy,
-                            decided_at = decidedAt
+                            accepted_as_in_spec = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec,
+                            decision_notes = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec ? "In" : "Out",
+                            decided_by = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedBy,
+                            decided_at = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedAt
                         }
-                    };
-                }
-                else
-                {
-                    outOfSpecDoneEntity.spot_exceptions_out_of_spec_done_decisions = new List<spot_exceptions_out_of_spec_done_decisions>
-                    {
-                        new spot_exceptions_out_of_spec_done_decisions
-                        {
-                            spot_exceptions_out_of_spec_done_id = doneOutOfSpecToAdd.Id,
-                            accepted_as_in_spec = outOfSpecRequest.AcceptAsInSpec,
-                            decided_by = decidedBy,
-                            decided_at = decidedAt
-                        }
-                    };
-                }
+                    }
 
-                context.spot_exceptions_out_of_specs_done.Add(outOfSpecDoneEntity);
+                }).ToList();
+
+                context.spot_exceptions_out_of_specs_done.AddRange(outOfSpecDoneEntities);
                 context.SaveChanges();
             });
         }
 
         /// <inheritdoc />
-        public void DeleteOutOfSpecFromToDo(int todoOutOfSpecPlan)
+        public void AddOutOfSpecEditedToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var outOfSpecDoneEntities = doneOutOfSpecsToAdd.Select(doneOutOfSpecToAdd => new spot_exceptions_out_of_specs_done
+                {
+                    spot_unique_hash_external = doneOutOfSpecToAdd.SpotUniqueHashExternal,
+                    execution_id_external = doneOutOfSpecToAdd.ExecutionIdExternal,
+                    reason_code_message = doneOutOfSpecToAdd.ReasonCodeMessage,
+                    estimate_id = doneOutOfSpecToAdd.EstimateId,
+                    isci_name = doneOutOfSpecToAdd.IsciName,
+                    house_isci = doneOutOfSpecToAdd.HouseIsci,
+                    recommended_plan_id = doneOutOfSpecToAdd.RecommendedPlanId,
+                    program_name = doneOutOfSpecToAdd.ProgramName,
+                    station_legacy_call_letters = doneOutOfSpecToAdd.StationLegacyCallLetters,
+                    daypart_code = doneOutOfSpecToAdd.DaypartCode,
+                    genre_name = doneOutOfSpecToAdd.GenreName,
+                    spot_length_id = doneOutOfSpecToAdd.SpotLengthId,
+                    audience_id = doneOutOfSpecToAdd.AudienceId,
+                    program_air_time = doneOutOfSpecToAdd.ProgramAirTime,
+                    reason_code_id = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
+                    ingested_by = doneOutOfSpecToAdd.IngestedBy,
+                    ingested_at = doneOutOfSpecToAdd.IngestedAt,
+                    ingested_media_week_id = doneOutOfSpecToAdd.IngestedMediaWeekId,
+                    impressions = doneOutOfSpecToAdd.Impressions,
+                    market_code = doneOutOfSpecToAdd.MarketCode,
+                    market_rank = doneOutOfSpecToAdd.MarketRank,
+                    comment = doneOutOfSpecToAdd.Comments,
+                    inventory_source_name = doneOutOfSpecToAdd.InventorySourceName,
+                    spot_exceptions_out_of_spec_done_decisions = new List<spot_exceptions_out_of_spec_done_decisions>
+                    {
+                        new spot_exceptions_out_of_spec_done_decisions
+                        {
+                            accepted_as_in_spec = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec,
+                            decision_notes = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec ? "In" : "Out",
+                            program_name = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.ProgramName,
+                            genre_name = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.GenreName,
+                            daypart_code = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DaypartCode,
+                            decided_by = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedBy,
+                            decided_at = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedAt
+                        }
+                    }
+
+                }).ToList();
+
+                context.spot_exceptions_out_of_specs_done.AddRange(outOfSpecDoneEntities);
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc />
+        public void DeleteOutOfSpecsFromToDo(List<int> existingOutOfSpecsToDo)
         {
             _InReadUncommitedTransaction(context =>
             {
                 var foundTodoOutOfSpecPlan = context.spot_exceptions_out_of_specs
-                    .Where(x => x.id == todoOutOfSpecPlan)
-                    .Single();
+                    .Where(x => existingOutOfSpecsToDo.Contains(x.id))
+                    .ToList();
 
-                context.spot_exceptions_out_of_specs.Remove(foundTodoOutOfSpecPlan);
+                context.spot_exceptions_out_of_specs.RemoveRange(foundTodoOutOfSpecPlan);
 
                 context.SaveChanges();
             });
@@ -757,26 +791,28 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             _LogInfo($"Starting: Saving Out Of Spec Decisions to Done");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
-                spotExceptionsOutOfSpecDoneDecisions.ForEach(decision =>
+                var decisionIds = spotExceptionsOutOfSpecDoneDecisions.Select(x => x.Id).ToList();
+                var foundDecisions = context.spot_exceptions_out_of_spec_done_decisions.Where(x => decisionIds.Contains(x.spot_exceptions_out_of_spec_done_id)).ToList();
+                foundDecisions.ForEach(decision =>
                 {
-                    var foundDecision = context.spot_exceptions_out_of_spec_done_decisions.Single(x => x.spot_exceptions_out_of_spec_done_id == decision.Id);
+                   var request = spotExceptionsOutOfSpecDoneDecisions.Where(x => x.Id == decision.spot_exceptions_out_of_spec_done_id).Single();
 
-                    if (!(string.IsNullOrEmpty(decision.ProgramName) && string.IsNullOrEmpty(decision.GenreName) && string.IsNullOrEmpty(decision.DaypartCode)))
+                    if (!(string.IsNullOrEmpty(request.ProgramName) && string.IsNullOrEmpty(request.GenreName) && string.IsNullOrEmpty(request.DaypartCode)))
                     {
-                        foundDecision.accepted_as_in_spec = decision.AcceptedAsInSpec;
-                        foundDecision.decision_notes = decision.AcceptedAsInSpec ? "In" : "Out";
-                        foundDecision.decided_by = userName;
-                        foundDecision.decided_at = decidedAt;
-                        foundDecision.program_name = decision.ProgramName;
-                        foundDecision.genre_name = decision.GenreName;
-                        foundDecision.daypart_code = decision.DaypartCode;
+                        decision.accepted_as_in_spec = request.AcceptedAsInSpec;
+                        decision.decision_notes = request.AcceptedAsInSpec ? "In" : "Out";
+                        decision.decided_by = userName;
+                        decision.decided_at = decidedAt;
+                        decision.program_name = request.ProgramName;
+                        decision.genre_name = request.GenreName;
+                        decision.daypart_code = request.DaypartCode;
                     }
                     else
                     {
-                        foundDecision.accepted_as_in_spec = decision.AcceptedAsInSpec;
-                        foundDecision.decision_notes = decision.AcceptedAsInSpec ? "In" : "Out";
-                        foundDecision.decided_by = userName;
-                        foundDecision.decided_at = decidedAt;
+                        decision.accepted_as_in_spec = request.AcceptedAsInSpec;
+                        decision.decision_notes = request.AcceptedAsInSpec ? "In" : "Out";
+                        decision.decided_by = userName;
+                        decision.decided_at = decidedAt;
                     }
                 });
 
