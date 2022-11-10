@@ -1163,6 +1163,85 @@ DELETE FROM spot_exceptions_unposted_no_reel_roster WHERE ingested_by = 'Mock Da
 GO
 /*************************************** END BP-5110 ************************************/
 
+
+/*************************************** START BP-5966 - Part 2 ************************************/
+
+GO
+
+IF EXISTS (SELECT 1 FROM sys.objects WHERE type = 'P' AND OBJECT_ID = OBJECT_ID('usp_UpdateProgramNameMappings'))
+BEGIN 
+	DROP PROCEDURE usp_UpdateProgramNameMappings	
+END
+
+GO
+
+IF EXISTS (SELECT TYPE_ID('ProgramMappingUpdateRequests'))
+BEGIN 
+	DROP TYPE ProgramMappingUpdateRequests
+END
+
+GO
+
+CREATE TYPE [dbo].[ProgramMappingUpdateRequests] AS TABLE(
+	[program_name_mapping_id] [int] NOT NULL,
+	[official_program_name] [nvarchar](500) NOT NULL,
+	[show_type_id] [int] NOT NULL,
+	PRIMARY KEY CLUSTERED 
+(
+	[program_name_mapping_id] ASC
+)WITH (IGNORE_DUP_KEY = OFF)
+)
+GO
+
+CREATE PROCEDURE [dbo].[usp_UpdateProgramNameMappings]
+	@update_requests ProgramMappingUpdateRequests READONLY,
+    @modified_by varchar(63),
+	@modified_at datetime
+AS
+
+/*
+DECLARE
+	@modified_by varchar(63)='db_queries_tester1',
+	@modified_at datetime='2020-6-20',
+	@update_requests ProgramMappingUpdateRequests
+
+INSERT INTO @update_requests SELECT 49,'Program A v3',10
+INSERT INTO @update_requests SELECT 51,'Program B v3',10
+INSERT INTO @update_requests SELECT 52,'Program C v2',5
+
+EXEC [dbo].[usp_UpdateProgramNameMappings] @update_requests, @modified_by, @modified_at
+*/
+
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON
+
+	BEGIN TRAN
+	BEGIN TRY
+        update mapping
+		set 
+		mapping.official_program_name = request.official_program_name,		
+		mapping.show_type_id = request.show_type_id,
+		mapping.modified_at = @modified_at,
+		mapping.modified_by = @modified_by
+		from program_name_mappings as mapping
+		join @update_requests as request on mapping.id = request.program_name_mapping_id
+        COMMIT TRAN
+    END TRY
+    BEGIN CATCH
+        IF (@@TRANCOUNT > 0)
+		BEGIN
+		  ROLLBACK TRAN;
+		END;
+
+		THROW
+    END CATCH
+END
+
+GO
+/*************************************** END BP-5966 - Part 2 ************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

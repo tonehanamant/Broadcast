@@ -150,13 +150,11 @@ namespace Services.Broadcast.Repositories
                     var update_requests = new DataTable();
                     update_requests.Columns.Add("program_name_mapping_id");
                     update_requests.Columns.Add("official_program_name");
-                    update_requests.Columns.Add("genre_id");
                     update_requests.Columns.Add("show_type_id");
 
                     chunk.ForEach(x => update_requests.Rows.Add(
                         x.Id,
                         x.OfficialProgramName,
-                        x.OfficialGenre.Id,
                         x.OfficialShowType.Id));
 
                     var update_requests_param = new SqlParameter("update_requests", SqlDbType.Structured) { Value = update_requests, TypeName = "ProgramMappingUpdateRequests" };

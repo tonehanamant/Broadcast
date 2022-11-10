@@ -10,7 +10,11 @@
         "Id": 1,
         "ModifiedAt": null,
         "ModifiedBy": null,
-        "OfficialGenre": null,
+        "OfficialGenre": {
+          "Id": 2,
+          "Name": "Religious",
+          "ProgramSourceId": 0
+        },
         "OfficialProgramName": "10 NEWS",
         "OfficialShowType": {
           "Id": 1,

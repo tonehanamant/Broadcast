@@ -429,7 +429,6 @@ namespace Services.Broadcast.ApplicationServices
             updatedProgramMappings = new List<ProgramMappingsDto>();
             foreach (var mapping in mappings)
                 {
-                    var genre = _GetGenre(mapping.OfficialGenre);
                     if (existingProgramMappingByOriginalProgramName.TryGetValue(mapping.OriginalProgramName, out var existingMapping))
                     {
                         var showType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType);
@@ -438,7 +437,6 @@ namespace Services.Broadcast.ApplicationServices
                             existingMapping.OfficialShowType.Name != showType.Name)
                         {
                             existingMapping.OfficialProgramName = mapping.OfficialProgramName;
-                            existingMapping.OfficialGenre = genre;
                             existingMapping.OfficialShowType = showType;
                             updatedProgramMappings.Add(existingMapping);
                         }
@@ -449,40 +447,12 @@ namespace Services.Broadcast.ApplicationServices
                         {
                             OriginalProgramName = mapping.OriginalProgramName,
                             OfficialProgramName = mapping.OfficialProgramName,
-                            OfficialGenre = genre,
                             OfficialShowType = _ShowTypeCache.GetMaestroShowTypeByName(mapping.OfficialShowType)
                         };
 
                         newProgramMappings.Add(newProgramMapping);
                     }
                 }           
-        }
-
-        private Genre _GetGenre(string genreName)
-        {
-            Genre genre;
-
-            try
-            {
-                genre = _GenreCache.GetMaestroGenreByName(genreName);
-            }
-            catch
-            {
-                var genreDto = _GenreCache.GetSourceGenreLookupDtoByName(genreName, ProgramSourceEnum.Master);
-
-                genre = _GenreCache.GetMaestroGenreBySourceGenre(genreDto, ProgramSourceEnum.Master);
-            }
-
-            return genre;
-        }
-
-        private ShowTypeDto _MapToShowTypeDto(LookupDto showTypeLookup)
-        {
-            return new ShowTypeDto
-            {
-                Id = showTypeLookup.Id,
-                Name = showTypeLookup.Display
-            };
         }
 
         private List<ProgramMappingsFileRequestDto> _ReadProgramMappingsFile(Stream stream)
