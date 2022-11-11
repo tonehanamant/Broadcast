@@ -11,7 +11,7 @@
       "PlanId": 332,
       "ProgramAirDate": "4/10/2022",
       "ProgramAirTime": "8:28:28 AM",
-      "ProgramName": "CBS Mornings",
+      "ProgramName": null,
       "RecommendedPlan": "4Q'21 Macy's EM",
       "SpotLengthString": ":15",
       "Station": "WBNS"
@@ -30,7 +30,7 @@
       "PlanId": 332,
       "ProgramAirDate": "4/10/2022",
       "ProgramAirTime": "8:28:28 AM",
-      "ProgramName": "CBS Mornings",
+      "ProgramName": null,
       "RecommendedPlan": "4Q'21 Macy's EM",
       "SpotLengthString": ":15",
       "Station": "WBNS"

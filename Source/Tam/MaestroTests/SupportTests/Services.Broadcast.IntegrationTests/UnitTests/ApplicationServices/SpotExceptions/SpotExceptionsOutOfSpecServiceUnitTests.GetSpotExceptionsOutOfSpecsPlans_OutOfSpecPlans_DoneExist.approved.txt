@@ -6,7 +6,7 @@
       "AffectedSpotsCount": 1,
       "AudienceName": "Women 25-54",
       "FlightString": "09/28 - 12/06/2021 (10 Weeks)",
-      "Impressions": 0.01,
+      "Impressions": 0.0,
       "PlanId": 334,
       "PlanName": "4Q'21 Macy's SYN",
       "SpotLengthString": ":15",
