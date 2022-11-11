@@ -97,6 +97,7 @@ namespace BroadcastComposerWeb.Controllers.Inventory
 
 		[HttpGet]
 		[Route("DownloadInventoryExportFile")]
+		[Authorize]
 		public HttpResponseMessage DownloadInventoryExportFile(int id = 0)
 		{
 			if (id == 0)
@@ -130,6 +131,7 @@ namespace BroadcastComposerWeb.Controllers.Inventory
         /// <returns></returns>
         [HttpPost]
 		[Route("GenerateMarketAffiliatesReport")]
+		[Authorize]
 		public BaseResponse<Guid> GenerateInventoryMarketAffiliatesReport([FromBody] InventoryMarketAffiliatesRequest request)
 		{
 			var fullName = _GetCurrentUserFullName();
