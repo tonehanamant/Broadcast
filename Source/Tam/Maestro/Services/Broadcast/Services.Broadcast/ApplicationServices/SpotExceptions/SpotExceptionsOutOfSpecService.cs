@@ -159,7 +159,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             PlanName = x.PlanName,
                             AffectedSpotsCount = x.AffectedSpotsCount,
                             Impressions = Math.Floor(x.Impressions / 1000),
-                            SyncedTimestamp = null,
+                            SyncedTimestamp = x.SyncedTimestamp,
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
                             FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"

@@ -245,7 +245,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             {
                 var outOfSpecDetailsDone = context.spot_exceptions_out_of_specs_done
                     .Where(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.program_air_time >= weekStartDate
-                    && spotExceptionsOutOfSpecDoneDb.program_air_time <= weekEndDate).ToList();
+                    && spotExceptionsOutOfSpecDoneDb.program_air_time <= weekEndDate).Include(x => x.spot_exceptions_out_of_spec_done_decisions).ToList();
 
                 var outOfSpecGroupingDone = outOfSpecDetailsDone.GroupBy(x => new { x.recommended_plan_id })
                     .Select(x =>
@@ -253,6 +253,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         var first = x.First();
                         var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
                         var audience = first.audience;
+                        var decisions = x.Select(y => y.spot_exceptions_out_of_spec_done_decisions).ToList();
                         return new SpotExceptionsOutOfSpecGroupingDto
                         {
                             PlanId = x.Key.recommended_plan_id ?? default,
@@ -260,6 +261,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                             PlanName = first.plan.name,
                             AffectedSpotsCount = x.Count(),
                             Impressions = x.Sum(y => y.impressions),
+                            SyncedTimestamp = decisions.Max(d => d.Max(m => m.synced_at)).ToString(),
                             FlightStartDate = recommendedPlanVersion.flight_start_date,
                             FlightEndDate = recommendedPlanVersion.flight_end_date,
                             SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
@@ -665,8 +667,9 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     station_legacy_call_letters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     daypart_code = doneOutOfSpecToAdd.DaypartCode,
                     genre_name = doneOutOfSpecToAdd.GenreName,
-                    spot_length_id = doneOutOfSpecToAdd.SpotLengthId,
-                    audience_id = doneOutOfSpecToAdd.AudienceId,
+                    spot_length_id = doneOutOfSpecToAdd.SpotLength.Id,
+                    audience_id = doneOutOfSpecToAdd.Audience.Id,
+                    program_network = doneOutOfSpecToAdd.ProgramNetwork,
                     program_air_time = doneOutOfSpecToAdd.ProgramAirTime,
                     reason_code_id = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
                     ingested_by = doneOutOfSpecToAdd.IngestedBy,
