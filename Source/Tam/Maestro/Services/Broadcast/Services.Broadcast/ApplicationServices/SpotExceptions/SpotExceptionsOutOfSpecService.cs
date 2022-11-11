@@ -808,7 +808,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     spotExceptionsOutOfSpecProgram.ProgramName = program;
                     foreach (var programName in listOfProgramNames)
                     {
-                        spotExceptionsOutOfSpecProgram.Genres.Add(_GenreCache.GetGenreLookupDtoById(programName.GenreId).Display);
+                        var genre = _GenreCache.GetGenreLookupDtoById(programName.GenreId).Display;
+                        var genres = HandleFlexGenres(genre);
+                        spotExceptionsOutOfSpecProgram.Genres.AddRange(genres);
                     }
                     result.Add(spotExceptionsOutOfSpecProgram);
                 }
@@ -819,6 +821,20 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 throw new CadentException(msg, ex);
             }
             return result;
+        }
+
+        internal static List<string> HandleFlexGenres(string genre)
+        {
+            const string flexGenreToken = "/";
+            var genres = new List<string> { genre };
+
+            if (genre.Contains(flexGenreToken))
+            {
+                var split = genre.Split(flexGenreToken.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                genres.AddRange(split.Select(s => s.Trim()).ToList());
+                genres = genres.OrderBy(s => s).ToList();
+            }
+            return genres;
         }
 
         private void _RemoveVariousAndUnmatchedFromPrograms(List<ProgramNameDto> result)

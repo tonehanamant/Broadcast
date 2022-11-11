@@ -943,6 +943,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
         }
 
+        [Test]
+        [TestCase("ActionAdventure", 1, "ActionAdventure", "", "")]
+        [TestCase("Action Adventure", 1, "Action Adventure", "", "")]
+        [TestCase("Action/Adventure", 3, "Action", "Action/Adventure", "Adventure")]
+        [TestCase("Adventure/Action", 3, "Action", "Adventure", "Adventure/Action")]
+        [TestCase("Adventure / Action", 3, "Action", "Adventure", "Adventure / Action")]
+        public void HandleFlexGenres(string genre, int expectedResultCount, string resultFirstEntry, string resultSecondEntry, string resultThirdEntry)
+        {
+            // Act
+            var result = SpotExceptionsOutOfSpecService.HandleFlexGenres(genre);
+
+            // Assert
+            Assert.AreEqual(expectedResultCount, result.Count);
+            if (expectedResultCount > 1)
+            {
+                Assert.AreEqual(resultFirstEntry, result[0]);
+                Assert.AreEqual(resultSecondEntry, result[1]);
+                Assert.AreEqual(resultThirdEntry, result[2]);
+            }
+        }
+
         private List<SpotExceptionsOutOfSpecGroupingDto> _GetOutOfSpecGroupingToDoData()
         {
             return new List<SpotExceptionsOutOfSpecGroupingDto>()
