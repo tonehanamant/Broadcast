@@ -589,7 +589,7 @@ namespace Services.Broadcast.Repositories
             {
 
                 var planEntities = (from plans in context.plans
-                                    where (plans.campaign.advertiser_master_id == advertiserMasterId && plans.id!= sourcePlanId && plans.plan_iscis.Count != 0)
+                                    where (plans.campaign.advertiser_master_id == advertiserMasterId && plans.id!= sourcePlanId)
                                     select plans)
                                     .Include(x => x.campaign)
                                     .Include(x => x.plan_versions)

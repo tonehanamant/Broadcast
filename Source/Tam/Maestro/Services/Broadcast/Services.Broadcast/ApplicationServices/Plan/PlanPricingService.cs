@@ -532,7 +532,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
 
                 ValidateAndApplyMargin(planPricingParametersDto);
-
+                _ValidateDaypart(plan.Dayparts);
                 int planVersionId;
 
                 // For drafts, we use the plan version id sent as parameter.
@@ -603,6 +603,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 parameters.AdjustedBudget = parameters.Budget;
                 parameters.AdjustedCPM = parameters.CPM;
+            }
+        }
+        private void _ValidateDaypart(List<PlanDaypartDto> Dayparts)
+        {
+            Dayparts.RemoveAll(x => x.DaypartCodeId == 24);
+            if (Dayparts.Count==0)
+            {
+                throw new CadentException("No inventory found for custom daypart");
+               
             }
         }
 
