@@ -343,8 +343,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             List<PlanIsciDto> toSaveFiltered = new List<PlanIsciDto>();
             foreach (var mapping in toSave)
             {
-                var planIscisCount = _PlanIsciRepository.GetPlanIscis(mapping.PlanId).Count(x => x.Isci == mapping.Isci &&
+                int planIscisCount = 0;
+                var planIsciList = _PlanIsciRepository.GetPlanIscis(mapping.PlanId);
+
+
+                planIscisCount = planIscisCount+ planIsciList.Count(x => x.Isci == mapping.Isci &&
                 x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);
+                planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci == mapping.Isci && mapping.FlightStartDate.Date <= x.FlightEndDate.Date
+                && _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightStartDate.Date)
+                && _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightEndDate.Date)
+                && mapping.SpotLengthId != x.SpotLengthId
+                );              
                 if (planIscisCount == 0)
                 {
                     toSaveFiltered.Add(mapping);
@@ -745,7 +754,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 if(isciplan!=null)
                 {
                     var dayparts = isciplan.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList();
-                    var spotLengthString = _GetSpotLengthsString(isciplan.plan.plan_iscis.Select(y => y.spot_length_id).FirstOrDefault());
+                    var spotLengthString = _GetSpotLengthsString(isciplan.plan_version_creative_lengths.Select(y => y.spot_length_id).FirstOrDefault());
                     var flightString = $"{isciplan.flight_start_date.ToString(flightStartDateFormat)}-{isciplan.flight_end_date.ToString(flightEndDateFormat)}";
                     var targetPlan= new TargetPlans
                     {

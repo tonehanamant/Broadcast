@@ -104,7 +104,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _CampaignService.Object,
                 _StandardDaypartService.Object,
                 _SpotLengthEngine.Object,
-                _DateTimeEngineMock.Object,                
+                _DateTimeEngineMock.Object,
                 _AabEngineMock.Object,
                 featureToggleHelper,
                 _ConfigurationSettingsHelperMock.Object);
@@ -1464,24 +1464,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
               {
                     new PlanIsciDto
                     {
-                         Id = 1,
+                        Id = 1,
                         PlanId = 1,
+                        SpotLengthId=1,
                         Isci = "MyIsci1",
                         FlightStartDate = DateTime.Now.AddDays(-10),
                         FlightEndDate = DateTime.Now.AddDays(30)
                     },
                     new PlanIsciDto
                     {
-                         Id = 1,
+                        Id = 1,
                         PlanId = 1,
+                        SpotLengthId=1,
                         Isci = "MyIsci2",
                         FlightStartDate = DateTime.Now.AddDays(-10),
                         FlightEndDate = DateTime.Now.AddDays(30)
                     },
                     new PlanIsciDto
                     {
-                         Id = 1,
+                        Id = 1,
                         PlanId = 1,
+                        SpotLengthId=1,
                         Isci = "MyIsci3",
                         FlightStartDate = DateTime.Now.AddDays(-10),
                         FlightEndDate = DateTime.Now.AddDays(30)
@@ -2125,7 +2128,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             // Arrange
             const int planId = 23;
-            const int campaignId = 32;            
+            const int campaignId = 32;
             int expectedCount = 2;
 
             _SpotLengthRepositoryMock
@@ -2266,7 +2269,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Arrange
             const int planId = 23;
             const int campaignId = 32;
-            DateTime dateTime = DateTime.Today;           
+            DateTime dateTime = DateTime.Today;
             int expectedCount = 1;
 
             _SpotLengthRepositoryMock
@@ -2297,6 +2300,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                         {
                                             code = "SYN"
                                         }
+                                    }
+                                },
+                                plan_version_creative_lengths = new List<plan_version_creative_lengths>
+                                {
+                                    new plan_version_creative_lengths
+                                    {
+                                        spot_length_id=1
+
+                                    },
+                                    new plan_version_creative_lengths
+                                    {
+                                         spot_length_id=1
                                     }
                                 },
                                 audience = new audience {code = "test"},
@@ -2390,7 +2405,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         name = "Abc",
                         plan_versions = new List<plan_versions>
                         {
-                            new plan_versions 
+                            new plan_versions
                             {
                                 id = 1,
                                 plan_id=1,

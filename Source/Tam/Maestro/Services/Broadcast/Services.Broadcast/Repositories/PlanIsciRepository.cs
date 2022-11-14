@@ -593,6 +593,7 @@ namespace Services.Broadcast.Repositories
                                     select plans)
                                     .Include(x => x.campaign)
                                     .Include(x => x.plan_versions)
+                                    .Include(p => p.plan_versions.Select(y => y.plan_version_creative_lengths))
                                     .Include(p => p.plan_versions.Select(y => y.plan_version_dayparts.Select(z => z.standard_dayparts)))
                                     .Include(p => p.plan_versions.Select(y => y.audience))
                                     .Include(x => x.plan_iscis)

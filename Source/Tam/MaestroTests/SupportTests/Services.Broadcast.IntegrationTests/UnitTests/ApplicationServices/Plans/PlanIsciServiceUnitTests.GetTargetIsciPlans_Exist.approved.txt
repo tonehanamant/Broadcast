@@ -5,7 +5,7 @@
       "DemoString": "test",
       "FlightString": "08/29-08/29/2024",
       "Id": 1,
-      "SpotLengthString": ":15",
+      "SpotLengthString": ":30",
       "Title": "test123"
     }
   ]
