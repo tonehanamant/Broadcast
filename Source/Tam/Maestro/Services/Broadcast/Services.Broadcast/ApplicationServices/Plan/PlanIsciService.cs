@@ -344,7 +344,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var mapping in toSave)
             {
                 var planIscisCount = _PlanIsciRepository.GetPlanIscis(mapping.PlanId).Count(x => x.Isci == mapping.Isci &&
-                x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date && x.SpotLengthId==mapping.SpotLengthId);
+                x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);
                 if (planIscisCount == 0)
                 {
                     toSaveFiltered.Add(mapping);

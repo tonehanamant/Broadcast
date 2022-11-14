@@ -610,7 +610,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             Dayparts.RemoveAll(x => x.DaypartCodeId == 24);
             if (Dayparts.Count==0)
             {
-                throw new CadentException("No inventory found for custom daypart");
+                throw new CadentException("Only custom dayparts are selected hence no inventory found for pricing run");
                
             }
         }
