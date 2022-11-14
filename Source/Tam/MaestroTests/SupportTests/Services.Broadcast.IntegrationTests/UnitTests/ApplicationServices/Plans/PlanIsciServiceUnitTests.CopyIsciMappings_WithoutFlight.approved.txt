@@ -6,7 +6,7 @@
     "FlightEndDate": "2022-11-28T00:00:00",
     "FlightStartDate": "2022-10-28T00:00:00",
     "Id": 0,
-    "Isci": "MyIsci1",
+    "Isci": "MyIsci10",
     "PlanId": 1,
     "SpotLengthId": 1,
     "StartTime": null
@@ -18,7 +18,7 @@
     "FlightEndDate": "2022-11-28T00:00:00",
     "FlightStartDate": "2022-10-28T00:00:00",
     "Id": 0,
-    "Isci": "MyIsci2",
+    "Isci": "MyIsci20",
     "PlanId": 1,
     "SpotLengthId": 1,
     "StartTime": null
@@ -30,7 +30,7 @@
     "FlightEndDate": "2022-11-28T00:00:00",
     "FlightStartDate": "2022-10-28T00:00:00",
     "Id": 0,
-    "Isci": "MyIsci3",
+    "Isci": "MyIsci30",
     "PlanId": 1,
     "SpotLengthId": 1,
     "StartTime": null

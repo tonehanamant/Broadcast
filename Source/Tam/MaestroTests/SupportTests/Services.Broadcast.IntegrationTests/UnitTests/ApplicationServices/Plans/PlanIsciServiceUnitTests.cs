@@ -1419,7 +1419,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciPlanMappingDto
                 {
                    PlanId = 1,
-                   Isci = "MyIsci1",
+                   Isci = "MyIsci10",
                    SpotLengthId=1,
                    IsciPlanMappingFlights = new List<IsciPlanMappingFlightsDto>
                    {
@@ -1429,7 +1429,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciPlanMappingDto
                 {
                    PlanId = 1,
-                   Isci = "MyIsci2",
+                   Isci = "MyIsci20",
                    SpotLengthId=1,
                    IsciPlanMappingFlights = new List<IsciPlanMappingFlightsDto>
                    {
@@ -1439,7 +1439,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciPlanMappingDto
                 {
                    PlanId = 1,
-                   Isci = "MyIsci3",
+                   Isci = "MyIsci30",
                    SpotLengthId=1,
                    IsciPlanMappingFlights = new List<IsciPlanMappingFlightsDto>
                    {
@@ -1532,7 +1532,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciPlanMappingDto
                 {
                    PlanId = 1,
-                   Isci = "MyIsci1",
+                   Isci = "MyIsci10",
                    SpotLengthId=1,
                    IsciPlanMappingFlights =new List<IsciPlanMappingFlightsDto>
                    {
@@ -1546,7 +1546,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciPlanMappingDto
                 {
                    PlanId = 1,
-                   Isci = "MyIsci2",
+                   Isci = "MyIsci20",
                    SpotLengthId=1,
                    IsciPlanMappingFlights =new List<IsciPlanMappingFlightsDto>
                    {
@@ -1560,7 +1560,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 new IsciPlanMappingDto
                 {
                    PlanId = 1,
-                   Isci = "MyIsci3",
+                   Isci = "MyIsci30",
                    SpotLengthId=1,
                    IsciPlanMappingFlights =new List<IsciPlanMappingFlightsDto>
                    {
@@ -1763,23 +1763,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
           {
                     new PlanIsciDto
                     {
-                         Id = 1,
+                        Id = 1,
                         PlanId = 1,
+                        SpotLengthId=1,
                         Isci = "MyIsci1",
                         FlightStartDate = DateTime.Now.AddDays(-10),
                         FlightEndDate = DateTime.Now.AddDays(30)
                     },
                     new PlanIsciDto
                     {
-                         Id = 1,
+                        Id = 1,
                         PlanId = 1,
+                        SpotLengthId=1,
                         Isci = "MyIsci2",
                         FlightStartDate = DateTime.Now.AddDays(-10),
                         FlightEndDate = DateTime.Now.AddDays(30)
                     },
                     new PlanIsciDto
                     {
-                         Id = 1,
+                        Id = 1,
+                        SpotLengthId=1,
                         PlanId = 1,
                         Isci = "MyIsci3",
                         FlightStartDate = DateTime.Now.AddDays(-10),

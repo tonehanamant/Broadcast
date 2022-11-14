@@ -344,16 +344,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var mapping in toSave)
             {
                 int planIscisCount = 0;
-                var planIsciList = _PlanIsciRepository.GetPlanIscis(mapping.PlanId);
-
+                var planIsciList = _PlanIsciRepository.GetPlanIscis(mapping.PlanId);                
 
                 planIscisCount = planIscisCount+ planIsciList.Count(x => x.Isci == mapping.Isci &&
-                x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);
-                planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci == mapping.Isci && mapping.FlightStartDate.Date <= x.FlightEndDate.Date
-                && _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightStartDate.Date)
-                && _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightEndDate.Date)
-                && mapping.SpotLengthId != x.SpotLengthId
-                );              
+                x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);               
+                DateTime flightEndDate = mapping.FlightEndDate.Date.AddDays(-1);
+                planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci == mapping.Isci 
+                && ( _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightStartDate.Date)
+                || _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, flightEndDate)
+                || mapping.SpotLengthId != x.SpotLengthId)
+                );
                 if (planIscisCount == 0)
                 {
                     toSaveFiltered.Add(mapping);
