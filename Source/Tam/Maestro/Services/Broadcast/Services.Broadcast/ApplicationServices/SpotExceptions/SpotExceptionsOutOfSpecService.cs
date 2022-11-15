@@ -145,7 +145,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             AudienceName = x.AudienceName,
                             FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
-                    }).ToList();
+                    }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
                 }
 
                 if (outOfSpecDone?.Any() ?? false)
@@ -164,7 +164,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             AudienceName = x.AudienceName,
                             FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
-                    }).ToList();
+                    }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
                 }
                 _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Groupings");
             }

@@ -6,8 +6,8 @@
       "AudienceName": "Women 25-54",
       "FlightString": "10/04 - 12/19/2021 (11 Weeks)",
       "Impressions": 0.0,
-      "PlanId": 322,
-      "PlanName": "4Q'21 Dupixent Early Morning News",
+      "PlanId": 323,
+      "PlanName": "4Q'21 Dupixent Daytime",
       "SpotLengthString": ":15"
     },
     {
@@ -16,8 +16,8 @@
       "AudienceName": "Women 25-54",
       "FlightString": "10/04 - 12/19/2021 (11 Weeks)",
       "Impressions": 0.0,
-      "PlanId": 323,
-      "PlanName": "4Q'21 Dupixent Daytime",
+      "PlanId": 322,
+      "PlanName": "4Q'21 Dupixent Early Morning News",
       "SpotLengthString": ":15"
     },
     {
