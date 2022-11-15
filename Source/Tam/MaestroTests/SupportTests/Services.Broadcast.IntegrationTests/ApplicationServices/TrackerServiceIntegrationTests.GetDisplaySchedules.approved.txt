@@ -1,11 +1,6 @@
 ﻿{
   "AabAdvertisers": [],
-  "Advertisers": [
-    {
-      "Display": "1 Vision",
-      "Id": 37674
-    }
-  ],
+  "Advertisers": [],
   "PostingBooks": [
     {
       "Display": "0215",
@@ -58,7 +53,7 @@
   ],
   "Schedules": [
     {
-      "Advertiser": "1 Vision",
+      "Advertiser": "",
       "AdvertiserId": 37674,
       "AdvertiserMasterId": null,
       "Audiences": null,
@@ -84,7 +79,7 @@
       "StartDate": "2016-01-01T00:00:00"
     },
     {
-      "Advertiser": "1 Vision",
+      "Advertiser": "",
       "AdvertiserId": 37674,
       "AdvertiserMasterId": null,
       "Audiences": null,
@@ -110,7 +105,7 @@
       "StartDate": "2016-01-01T00:00:00"
     },
     {
-      "Advertiser": "1 Vision",
+      "Advertiser": "",
       "AdvertiserId": 37674,
       "AdvertiserMasterId": null,
       "Audiences": null,

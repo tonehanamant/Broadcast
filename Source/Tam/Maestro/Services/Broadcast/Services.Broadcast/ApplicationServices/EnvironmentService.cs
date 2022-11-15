@@ -90,9 +90,7 @@ namespace Services.Broadcast.ApplicationServices
                 // Keep These : these are referenced by the NavBar.cshtml           
                 DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),
                 DisplayIsciMappingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ISCI_MAPPING),
-                DisplaySpotExceptionsLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS),
-                //This is refer by TrackerView.cshtml and ScheduleModal.cshtml
-                DisplayAabAdvertiser = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB)
+                DisplaySpotExceptionsLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS)
             };
             
             return environmentInfo;

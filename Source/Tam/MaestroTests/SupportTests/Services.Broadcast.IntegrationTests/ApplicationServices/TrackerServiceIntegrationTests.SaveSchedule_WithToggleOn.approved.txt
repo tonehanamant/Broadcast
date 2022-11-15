@@ -1,6 +1,6 @@
 {
   "Advertiser": null,
-  "AdvertiserId": 39279,
+  "AdvertiserId": 0,
   "AdvertiserMasterId": null,
   "Audiences": [
     {

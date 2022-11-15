@@ -45,7 +45,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _RatingAdjustmentsRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IRatingAdjustmentsRepository>();
             _DetectionRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IDetectionRepository>();
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
-            _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, false);
             _FeatureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
         }
 
@@ -2136,14 +2135,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true)]
         [UseReporter(typeof(DiffReporter))]
-        public void GetDisplaySchedules_WithToggleOn(bool toggleEnabled)
+        public void GetDisplaySchedules_WithToggleOn()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, toggleEnabled);
-
                 var actual = _TrackerService.GetSchedulesByDate(new DateTime(2016, 5, 30), new DateTime(2017, 03, 19));
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
@@ -2160,13 +2156,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true)]
         [UseReporter(typeof(DiffReporter))]
-        public void GetDetectionInitialOptions_WithToggleOn(bool toggleEnabled)
+        public void GetDetectionInitialOptions_WithToggleOn()
         {
             using (new TransactionScopeWrapper(TransactionScopeOption.Suppress, IsolationLevel.ReadUncommitted))
             {
-                _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, toggleEnabled);
                 var response = _TrackerService.GetDetectionLoadData(new DateTime(2019, 01, 01));
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(Quarter), "Id");
@@ -2182,13 +2176,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true)]
         [UseReporter(typeof(DiffReporter))]
-        public void SaveSchedule_WithToggleOn(bool toggleEnabled)
+        public void SaveSchedule_WithToggleOn()
         {
             using (new TransactionScopeWrapper())
             {
-                _SetFeatureToggle(FeatureToggles.ENABLE_MIGRATE_LEGACY_AAB, toggleEnabled);
                 var saveRequest = new ScheduleSaveRequest
                 {
                     Schedule = new ScheduleDTO

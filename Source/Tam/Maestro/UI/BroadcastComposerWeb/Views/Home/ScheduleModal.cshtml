@@ -44,24 +44,12 @@
                                 </div>
 
                             </div>
-                            @if (!(ViewBag.DisplayAabAdvertiser != null && ViewBag.DisplayAabAdvertiser))
-                            {
-                                <div class="col-xs-2">
-                                    <div class="form-group">
-                                        <label for="schedule_input_advertiser">Advertiser</label>
-                                        <select class="form-control" name="schedule_input_advertiser" style="width: 100%" data-bind="options: $root.Advertisers, optionsValue: 'Id', optionsText: 'Display', value: AdvertiserId,  optionsCaption: 'Choose Advertiser...'"></select>
-                                    </div>
-                                </div>
-                            }
-                            @if (ViewBag.DisplayAabAdvertiser != null && ViewBag.DisplayAabAdvertiser)
-                            {
                                 <div class="col-xs-2">
                                     <div class="form-group">
                                         <label for="schedule_input_advertiser">Advertiser</label>
                                         <select class="form-control" name="schedule_input_aabadvertiser" style="width: 100%" data-bind="options: $root.AabAdvertisers, optionsValue: 'Id', optionsText: 'Display', value: AdvertiserMasterId,  optionsCaption: 'Choose Advertiser...'"></select>
                                     </div>
                                 </div>
-                            }
                             <div class="col-xs-2">
                                 <div class="form-inline">
                                     <div class="form-group">

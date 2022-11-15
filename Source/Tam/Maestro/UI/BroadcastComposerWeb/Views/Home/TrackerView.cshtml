@@ -44,14 +44,7 @@
                 <label for="quarter_filter_input">Quarter</label>
                 <select id="quarter_filter_input" style="margin-right: 8px; width:100px;" class="form-control input-sm "><option>Quarter</option></select>
                 <label for="advertiser_filter_input">Advertiser</label>
-                @if (!(ViewBag.DisplayAabAdvertiser != null && ViewBag.DisplayAabAdvertiser))
-                {
-                    <select style="width:180px;" class="form-control input-sm" id="advertiser_filter_input"><option>Advertiser</option></select>
-                }
-                @if (ViewBag.DisplayAabAdvertiser != null && ViewBag.DisplayAabAdvertiser)
-                {
                     <select style="width:180px;" class="form-control input-sm" id="aabadvertiser_filter_input"><option>Advertiser</option></select>
-                }
             </div>
         </div>
 
