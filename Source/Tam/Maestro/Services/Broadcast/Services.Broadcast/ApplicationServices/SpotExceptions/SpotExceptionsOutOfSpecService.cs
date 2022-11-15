@@ -795,7 +795,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
                 if (programsSpotExceptionDecisions != null)
                 {
-                    programs.AddRange(programsSpotExceptionDecisions);
+                    foreach(var decision in programsSpotExceptionDecisions)
+                    {
+                        if(!programs.Any(x => x.OfficialProgramName.ToLower().Contains(decision.OfficialProgramName.ToLower())))
+                        {
+                            programs.Add(decision);
+                        }
+                    }
                 }
 
                 _RemoveVariousAndUnmatchedFromPrograms(programs);
