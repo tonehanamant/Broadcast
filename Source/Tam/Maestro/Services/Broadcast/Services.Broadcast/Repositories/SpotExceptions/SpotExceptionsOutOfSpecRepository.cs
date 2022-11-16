@@ -850,6 +850,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 SpotLength = _MapSpotLengthToDto(spotExceptionsOutOfSpecToDoEntity.spot_lengths),
                 Audience = _MapAudienceToDto(spotExceptionsOutOfSpecToDoEntity.audience),
                 ProgramAirTime = spotExceptionsOutOfSpecToDoEntity.program_air_time,
+                ProgramNetwork = spotExceptionsOutOfSpecToDoEntity.program_network,
                 IngestedBy = spotExceptionsOutOfSpecToDoEntity.ingested_by,
                 IngestedAt = spotExceptionsOutOfSpecToDoEntity.ingested_at,
                 IngestedMediaWeekId = spotExceptionsOutOfSpecToDoEntity.ingested_media_week_id,
