@@ -33,7 +33,8 @@
       "ProgramName": null,
       "RecommendedPlan": "4Q'21 Macy's EM",
       "SpotLengthString": ":15",
-      "Station": "WBNS"
+      "Station": "WBNS",
+      "SyncedTimestamp": null
     }
   ]
 }

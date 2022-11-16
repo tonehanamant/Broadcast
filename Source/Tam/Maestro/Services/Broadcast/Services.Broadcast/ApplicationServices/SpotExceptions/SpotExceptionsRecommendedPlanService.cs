@@ -118,6 +118,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             PlanName = x.PlanName,
                             AffectedSpotsCount = x.AffectedSpotsCount,
                             Impressions = Math.Floor((double)(x.Impressions / 1000.00)),
+                            SyncedTimestamp = null,
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
                             FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
@@ -137,6 +138,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             PlanName = x.PlanName,
                             AffectedSpotsCount = x.AffectedSpotsCount,
                             Impressions = Math.Floor((double)(x.Impressions / 1000)),
+                            SyncedTimestamp = x.SyncedTimestamp,
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
                             FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
@@ -230,6 +232,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             PlanId = syncedPlan.PlanId,
                             RecommendedPlan = syncedPlan.RecommendedPlanName,
                             Impressions = Math.Floor((double)(syncedPlan.Impressions / 1000)),
+                            SyncedTimestamp = syncedPlan.SyncedTimestamp,
                             SpotLengthString = $":{syncedPlan.SpotLength}",
                             Affiliate = syncedPlan.Affiliate,
                             Market = syncedPlan.MarketName,

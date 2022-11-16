@@ -237,6 +237,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     {
                         var first = x.First();
                         var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
+                        var decisions = x.Select(y => y.spot_exceptions_recommended_plan_done_decisions).ToList();
                         return new SpotExceptionsRecommendedPlanGroupingDto
                         {
                             PlanId = x.Key.recommended_plan_id,
@@ -244,6 +245,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                             PlanName = first.plan.name,
                             AffectedSpotsCount = x.Count(),
                             Impressions = x.Sum(y => y.spot_delivered_impressions),
+                            SyncedTimestamp = decisions.Max(d => d.Max(m => m.synced_at)).ToString(),
                             FlightStartDate = recommendedPlanVersion.flight_start_date,
                             FlightEndDate = recommendedPlanVersion.flight_end_date,
                             SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
@@ -398,6 +400,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 var planSpotsDone = planDetailsDone.Select(x =>
                 {
+                    var decision = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_exceptions_recommended_plan_done_decisions.First();
                     return new SpotExceptionsRecommendedPlanSpotsDto
                     {
                         Id = x.recommendedPlansDone.lengthPlan.marketPlan.plan.id,
@@ -407,6 +410,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         PlanId = x.recommendedPlansDone.lengthPlan.marketPlan.detail.recommended_plan_id,
                         RecommendedPlanName = x.recommendedPlansDone.lengthPlan.marketPlan.detail.plan.name,
                         Impressions = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        SyncedTimestamp = decision.synced_at.ToString(),
                         SpotLength = x.recommendedPlansDone.spotLength.length,
                         ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
                         InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,

@@ -46,6 +46,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         public double? Impressions { get; set; }
 
         /// <summary>
+        /// Gets or sets the synced timestamp.
+        /// </summary>
+        /// <value>The synced timestamp.</value>
+        public string SyncedTimestamp { get; set; }
+
+        /// <summary>
         /// Gets or sets the flight start date.
         /// </summary>
         /// <value>The flight start date.</value>

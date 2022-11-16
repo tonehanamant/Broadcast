@@ -61,6 +61,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         public double? Impressions { get; set; }
 
         /// <summary>
+        /// Gets or sets the synced timestamp.
+        /// </summary>
+        /// <value>The synced timestamp.</value>
+        public string SyncedTimestamp { get; set; }
+
+        /// <summary>
         /// Gets or sets the spot length string.
         /// </summary>
         /// <value>The spot length string.</value>
@@ -111,6 +117,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// </summary>
         /// <value>The impressions.</value>
         public double? Impressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the synced timestamp.
+        /// </summary>
+        /// <value>The synced timestamp.</value>
+        public string SyncedTimestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the spot length string.

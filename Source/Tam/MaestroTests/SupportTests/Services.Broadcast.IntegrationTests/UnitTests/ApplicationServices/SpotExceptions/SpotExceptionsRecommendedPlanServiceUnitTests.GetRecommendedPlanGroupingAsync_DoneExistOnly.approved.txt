@@ -9,7 +9,8 @@
       "Impressions": 0.0,
       "PlanId": 334,
       "PlanName": "4Q'21 Macy's SYN",
-      "SpotLengthString": ":15"
+      "SpotLengthString": ":15",
+      "SyncedTimestamp": null
     }
   ]
 }
