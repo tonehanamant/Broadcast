@@ -1,6 +1,6 @@
 [
   "ThisQuarterIsTHEQuarter Totals",
-  0.0,
+  "",
   "-",
   "-",
   "-",

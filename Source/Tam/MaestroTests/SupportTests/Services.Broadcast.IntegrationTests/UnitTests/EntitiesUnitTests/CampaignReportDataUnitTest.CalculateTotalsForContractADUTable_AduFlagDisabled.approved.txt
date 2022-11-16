@@ -1,6 +1,6 @@
 [
   "ThisQuarterIsTHEQuarter Totals",
-  2.5,
+  "ADU",
   "-",
   "-",
   "-",

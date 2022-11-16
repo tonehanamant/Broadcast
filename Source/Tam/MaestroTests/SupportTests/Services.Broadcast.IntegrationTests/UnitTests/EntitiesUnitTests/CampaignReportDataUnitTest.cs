@@ -123,10 +123,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                 UnitsValues = new List<object> {"ADU"}
             };
 
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
-            };
+            var testClass = new CampaignReportData();
 
             // Action
             testClass._PopulateTotalAdusForFlowchartAduTable(tableData);
@@ -144,16 +141,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void PopulateTotalAdusForFlowchartAduTable_WithoutAdu(bool isAduFlagEnabled)
+        public void PopulateTotalAdusForFlowchartAduTable_WithoutAdu()
         {
             // Arrange
             var tableData = new FlowChartQuarterTableData();
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => isAduFlagEnabled)
-            };
+            var testClass = new CampaignReportData();
 
             // Action
             testClass._PopulateTotalAdusForFlowchartAduTable(tableData);
@@ -175,10 +167,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
                 UnitsValues = new List<object> { 2.5 }
             };
 
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => false)
-            };
+            var testClass = new CampaignReportData();
 
             // Action
             testClass._PopulateTotalAdusForFlowchartAduTable(tableData);
@@ -199,10 +188,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         public void PopulateFlowchartAduTableData_AduFlagEnabled()
         {
             // Arrange
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
-            };
+            var testClass = new CampaignReportData();
 
             var startDate = new DateTime();
 
@@ -246,10 +232,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         public void PopulateFlowchartAduTableData_WithoutAdu_AduFlagEnabled()
         {
             // Arrange
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
-            };
+            var testClass = new CampaignReportData();
+
             var startDate = new DateTime();
 
             List<PlanDto> plans = new List<PlanDto>
@@ -299,8 +283,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
 
             var testClass = new CampaignReportData
             {
-                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
-                _IsAduFlagEnabled = new Lazy<bool>(() => false)
+                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object
             };
 
             var startDate = new DateTime(2021,7,12);
@@ -351,75 +334,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         }
 
         [Test]
-        public void PopulateFlowchartAduTableData_WithoutAdu_AduFlagDisabled()
-        {
-            // Arrange
-            const double calculatedAdu = 1.21;
-            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
-            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
-                .Returns(calculatedAdu);
-
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => false),
-                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
-            };
-
-            var startDate = new DateTime(2021, 7, 12);
-            var spotLengthId = 2;
-
-            List<PlanDto> plans = new List<PlanDto>
-            {
-                new PlanDto
-                {
-                    CreativeLengths = new List<CreativeLength>
-                    {
-                        new CreativeLength
-                        {
-                            SpotLengthId = spotLengthId
-                        }
-                    },
-                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                    {
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    },
-                    ImpressionsPerUnit = 1
-                }
-            };
-            FlowChartQuarterTableData tableData = new FlowChartQuarterTableData();
-            FlowChartQuarterTableData firstTable = new FlowChartQuarterTableData
-            {
-                WeeksStartDate = new List<object> { null, null, startDate, null }
-            };
-
-            int weekIndex = 2;
-
-            // Act
-            testClass._PopulateFlowchartAduTableData(plans, tableData, firstTable, weekIndex);
-
-            // Assert
-            var toVerify = new
-            {
-                tableData.DistributionPercentages,
-                tableData.UnitsValues,
-                tableData.ImpressionsValues,
-                tableData.CostValues,
-                tableData.CPMValues
-            };
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
-        }
-
-        [Test]
         public void PopulateContractAduTable_AduFlagEnabled()
         {
             // Arrange
             var testClass = new CampaignReportData
             {
                 _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
             };
 
             var startDate = new DateTime(2021, 7, 12);
@@ -454,7 +374,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             var testClass = new CampaignReportData
             {
                 _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
             };
 
             var startDate = new DateTime(2021, 7, 12);
@@ -483,113 +402,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         }
 
         [Test]
-        public void PopulateContractAduTable_AduFlagDisabled()
-        {
-            // Arrange
-            const double calculatedAdu = 1.21;
-            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
-            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
-                .Returns(calculatedAdu);
-
-            var testClass = new CampaignReportData
-            {
-                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
-                _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
-                _IsAduFlagEnabled = new Lazy<bool>(() => false)
-            };
-
-            var startDate = new DateTime(2021, 7, 12);
-            var spotLengthId = 2;
-
-            List<PlanDto> plans = new List<PlanDto>
-            {
-                new PlanDto
-                {
-                    CreativeLengths = new List<CreativeLength>
-                    {
-                        new CreativeLength
-                        {
-                            SpotLengthId = spotLengthId
-                        }
-                    },
-                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                    {
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 2.5, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    },
-                    ImpressionsPerUnit = 1
-                }
-            };
-            var table = new ContractQuarterTableData();
-
-            // Act
-            testClass._PopulateContractAduTable(table, plans, spotLengthId, startDate);
-
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(table.Rows));
-        }
-
-        [Test]
-        public void PopulateContractAduTable_WithoutAdu_AduFlagDisabled()
-        {
-            // Arrange
-            const double calculatedAdu = 0;
-            var weeklyBreakdownEngine = new Mock<IWeeklyBreakdownEngine>();
-            weeklyBreakdownEngine.Setup(s => s.CalculateADUWithDecimals(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<bool>(), It.IsAny<int>()))
-                .Returns(calculatedAdu);
-
-            var testClass = new CampaignReportData
-            {
-                _WeeklyBreakdownEngine = weeklyBreakdownEngine.Object,
-                _AllSpotLengths = SpotLengthTestData.GetAllSpotLengths(),
-                _IsAduFlagEnabled = new Lazy<bool>(() => false)
-            };
-
-            var startDate = new DateTime(2021, 7, 12);
-            var spotLengthId = 2;
-
-            List<PlanDto> plans = new List<PlanDto>
-            {
-                new PlanDto
-                {
-                    CreativeLengths = new List<CreativeLength>
-                    {
-                        new CreativeLength
-                        {
-                            SpotLengthId = spotLengthId
-                        }
-                    },
-                    WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
-                    {
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-14), AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(-7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate, AduImpressions = 0, SpotLengthId = spotLengthId },
-                        new WeeklyBreakdownWeek{ StartDate = startDate.AddDays(7), AduImpressions = 0, SpotLengthId = spotLengthId },
-                    },
-                    ImpressionsPerUnit = 1
-                }
-            };
-            var table = new ContractQuarterTableData();
-
-            // Act
-            testClass._PopulateContractAduTable(table, plans, spotLengthId, startDate);
-
-            // Assert
-            Assert.AreEqual(0, table.Rows.Count);
-        }
-
-        [Test]
         public void CalculateTotalsForContractADUTable_AduFlagEnabled()
         {
             // Arrange
             const string quarterLabel = "ThisQuarterIsTHEQuarter";
 
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
-            };
+            var testClass = new CampaignReportData();
 
             //units are the third value in the row
             var rows = new List<List<object>>
@@ -612,10 +430,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             // Arrange
             const string quarterLabel = "ThisQuarterIsTHEQuarter";
 
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => true)
-            };
+            var testClass = new CampaignReportData();
 
             //units are the third value in the row
             var rows = new List<List<object>>
@@ -638,10 +453,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             // Arrange
             const string quarterLabel = "ThisQuarterIsTHEQuarter";
 
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => false)
-            };
+            var testClass = new CampaignReportData();
 
             //units are the third value in the row
             var rows = new List<List<object>>
@@ -664,10 +476,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             // Arrange
             const string quarterLabel = "ThisQuarterIsTHEQuarter";
 
-            var testClass = new CampaignReportData
-            {
-                _IsAduFlagEnabled = new Lazy<bool>(() => false)
-            };
+            var testClass = new CampaignReportData();
 
             //units are the third value in the row
             var rows = new List<List<object>>
