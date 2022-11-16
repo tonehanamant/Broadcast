@@ -716,7 +716,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     station_legacy_call_letters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     daypart_code = doneOutOfSpecToAdd.DaypartCode,
                     genre_name = doneOutOfSpecToAdd.GenreName,
-                    spot_length_id = doneOutOfSpecToAdd.SpotLengthId,
+                    spot_length_id = doneOutOfSpecToAdd.SpotLength.Id,
                     audience_id = doneOutOfSpecToAdd.AudienceId,
                     program_air_time = doneOutOfSpecToAdd.ProgramAirTime,
                     reason_code_id = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
