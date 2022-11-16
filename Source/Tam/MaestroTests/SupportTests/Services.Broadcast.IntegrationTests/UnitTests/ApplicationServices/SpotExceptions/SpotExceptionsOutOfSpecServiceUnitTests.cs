@@ -448,7 +448,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecSpotsInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest));
 
             // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Inventory Sources", result.Message);
         }
 
         [Test]
@@ -519,7 +519,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecReasonCodesAsync());
 
             // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Reason Codes", result.Message);
         }
 
         [Test]
@@ -635,7 +635,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecMarketsAsync(spotExceptionsOutOfSpecSpotsRequest));
 
             // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Markets", result.Message);
         }
 
         [Test]
@@ -822,7 +822,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecAdvertisersAsync(spotExceptionsOutofSpecAdvertisersRequest));
 
             // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Advertisers", result.Message);
         }
 
         [Test]

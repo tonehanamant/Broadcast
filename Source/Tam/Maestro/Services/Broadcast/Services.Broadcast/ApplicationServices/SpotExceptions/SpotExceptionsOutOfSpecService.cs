@@ -308,19 +308,23 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             var outOfSpecSpotsToDo = new List<string>();
             var outOfSpecSpotsDone = new List<string>();
+            List<string> inventorySources = new List<string>();
 
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Inventory Sources");
             try
             {
                 outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
                 outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsDoneInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
+
+                inventorySources = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(inventorySource => inventorySource).ToList();
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Inventory Sources");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Inventory Sources";
                 throw new CadentException(msg, ex);
             }
 
-            var inventorySources = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(inventorySource => inventorySource).ToList();
             return inventorySources;
         }
 
@@ -329,6 +333,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             var spotExceptionsOutOfSpecReasonCodeResults = new List<SpotExceptionsOutOfSpecReasonCodeResultDto>();
 
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Reason Codes");
             try
             {
                 var spotExceptionsOutOfSpecReasonCodes = await _SpotExceptionsOutOfSpecRepository.GetSpotExceptionsOutOfSpecReasonCodesAsync();
@@ -339,11 +344,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     ReasonCode = spotExceptionsOutOfSpecReasonCode.ReasonCode,
                     Description = spotExceptionsOutOfSpecReasonCode.Reason,
                     Label = spotExceptionsOutOfSpecReasonCode.Label
-                }).ToList();
+                }).OrderBy(x => x.Label).ToList();
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Reason Codes");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Reason Codes";
                 throw new CadentException(msg, ex);
             }
 
@@ -355,19 +362,22 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             var outOfSpecSpotsToDo = new List<string>();
             var outOfSpecSpotsDone = new List<string>();
+            List<string> markets = new List<string>();
 
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Markets");
             try
             {
                 outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoMarketsAsync(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
                 outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsDoneMarketsAsync(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
+
+                markets = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(market => market).ToList();
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Markets");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Markets";
                 throw new CadentException(msg, ex);
             }
-
-            var markets = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(market => market).ToList();
 
             return markets;
         }
@@ -399,24 +409,27 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             List<Guid?> outOfSpecSpotsDone = null;
             List<string> advertiserName = new List<string>();
 
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Advertisers");
             try
             {
                 outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoAdvertisersAsync(spotExceptionsOutofSpecAdvertisersRequest.WeekStartDate, spotExceptionsOutofSpecAdvertisersRequest.WeekEndDate);
                 outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsDoneAdvertisersAsync(spotExceptionsOutofSpecAdvertisersRequest.WeekStartDate, spotExceptionsOutofSpecAdvertisersRequest.WeekEndDate);
+
+                var advertisersMasterIds = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().ToList();
+                if (advertisersMasterIds.Any())
+                {
+                    advertiserName = advertisersMasterIds.Select(n => _GetAdvertiserName(n.Value) ?? "Unknown").ToList();
+                }
+
+                advertiserName = advertiserName.OrderBy(n => n).ToList();
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Advertisers");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Advertisers";
                 throw new CadentException(msg, ex);
             }
 
-            var advertisersMasterIds = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().ToList();
-            if (advertisersMasterIds.Any())
-            {
-                advertiserName = advertisersMasterIds.Select(n => _GetAdvertiserName(n.Value) ?? "Unknown").ToList();
-            }
-
-            advertiserName = advertiserName.OrderBy(n => n).ToList();
             return advertiserName;
         }
 

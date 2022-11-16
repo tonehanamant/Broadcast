@@ -403,6 +403,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     advertiserName = advertisersMasterIds.Select(n => _GetAdvertiserName(n) ?? "Unknown").ToList();
                 }
 
+                advertiserName = advertiserName.OrderBy(n => n).ToList();
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Advertisers");
             }
             catch (Exception ex)
@@ -455,9 +456,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     return recommendedPlanFiltersResult;
                 }
-                recommendedPlanFiltersResult.Markets = marketFilters;
-                recommendedPlanFiltersResult.Stations = legacyCallLetterFilters;
-                recommendedPlanFiltersResult.InventorySources = inventorySourceFilters;
+                recommendedPlanFiltersResult.Markets = marketFilters.OrderBy(x => x).ToList();
+                recommendedPlanFiltersResult.Stations = legacyCallLetterFilters.OrderBy(x => x).ToList();
+                recommendedPlanFiltersResult.InventorySources = inventorySourceFilters.OrderBy(x => x).ToList();
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters");
             }
