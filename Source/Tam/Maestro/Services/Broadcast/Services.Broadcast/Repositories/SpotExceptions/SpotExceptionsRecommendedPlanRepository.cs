@@ -301,7 +301,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         ProgramName = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.program_name,
                         InventorySource = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.inventory_source,
                         Affiliate = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.affiliate,
-                        MarketName = x.Station?.market?.geography_name,
+                        MarketName = x.recommendedPlansToDo.lengthPlan.market.geography_name,
                         Station = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.station_legacy_call_letters
                     };
 
@@ -357,7 +357,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
                         InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,
                         Affiliate = x.recommendedPlansDone.lengthPlan.marketPlan.plan.affiliate,
-                        MarketName = x.Station?.market?.geography_name,
+                        MarketName = x.recommendedPlansDone.lengthPlan.market.geography_name,
                         Station = x.recommendedPlansDone.lengthPlan.marketPlan.plan.station_legacy_call_letters
                     };
 
@@ -415,7 +415,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
                         InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,
                         Affiliate = x.recommendedPlansDone.lengthPlan.marketPlan.plan.affiliate,
-                        MarketName = x.Station?.market?.geography_name,
+                        MarketName = x.recommendedPlansDone.lengthPlan.market.geography_name,
                         Station = x.recommendedPlansDone.lengthPlan.marketPlan.plan.station_legacy_call_letters
                     };
 
