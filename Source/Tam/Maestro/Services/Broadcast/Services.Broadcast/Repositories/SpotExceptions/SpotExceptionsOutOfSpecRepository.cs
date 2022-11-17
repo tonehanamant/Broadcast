@@ -718,6 +718,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     genre_name = doneOutOfSpecToAdd.GenreName,
                     spot_length_id = doneOutOfSpecToAdd.SpotLength.Id,
                     audience_id = doneOutOfSpecToAdd.Audience.Id,
+                    program_network = doneOutOfSpecToAdd.ProgramNetwork,
                     program_air_time = doneOutOfSpecToAdd.ProgramAirTime,
                     reason_code_id = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
                     ingested_by = doneOutOfSpecToAdd.IngestedBy,

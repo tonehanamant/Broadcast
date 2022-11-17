@@ -653,6 +653,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         SpotLength = existingOutOfSpecToDo.SpotLength,
                         Audience = existingOutOfSpecToDo.Audience,
                         ProgramAirTime = existingOutOfSpecToDo.ProgramAirTime,
+                        ProgramNetwork = existingOutOfSpecToDo.ProgramNetwork,
                         IngestedBy = existingOutOfSpecToDo.IngestedBy,
                         IngestedAt = existingOutOfSpecToDo.IngestedAt,
                         IngestedMediaWeekId = existingOutOfSpecToDo.IngestedMediaWeekId,
