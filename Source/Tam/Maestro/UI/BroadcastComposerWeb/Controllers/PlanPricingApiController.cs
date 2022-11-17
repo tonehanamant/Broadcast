@@ -36,10 +36,9 @@ namespace BroadcastComposerWeb.Controllers
         [Route("Queue")]
         public async Task<BaseResponse<PlanPricingJob>> Queue(PlanPricingParametersDto planPricingRequestDto)
         {
-            var result = (await _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
-                    .QueuePricingJobAsync(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
 
-            return _ConvertToBaseResponse(() =>  result);
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
+                    .QueuePricingJobAsync(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()).Result);
         }
 
         [HttpPost]
