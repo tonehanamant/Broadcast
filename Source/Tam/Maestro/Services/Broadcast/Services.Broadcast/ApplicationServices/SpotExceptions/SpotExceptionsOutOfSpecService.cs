@@ -829,7 +829,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     spotExceptionsOutOfSpecProgram.ProgramName = program;
                     foreach (var programName in listOfProgramNames)
                     {
-                        var genre = _GenreCache.GetGenreLookupDtoById(programName.GenreId).Display;
+                        var genre = _GenreCache.GetGenreLookupDtoById(programName.GenreId).Display.ToUpper();
                         var genres = HandleFlexGenres(genre);
                         spotExceptionsOutOfSpecProgram.Genres.AddRange(genres);
                     }
