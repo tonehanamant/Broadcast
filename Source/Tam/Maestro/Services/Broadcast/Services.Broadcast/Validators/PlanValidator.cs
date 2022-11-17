@@ -522,17 +522,12 @@ namespace Services.Broadcast.Validators
             {
                 throw new PlanValidationException(INVALID_TOTAL_MARKET_COVERAGE);
             }
-
-            var isEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS);
-            if (isEnabled)
-            {
                 const double maxTotalMarketSov = 100.01;
                 var marketsSovTotalExceedsThreshold = _PlanMarketSovCalculator.DoesMarketSovTotalExceedThreshold(plan.AvailableMarkets, maxTotalMarketSov);
                 if (marketsSovTotalExceedsThreshold)
                 {
                     throw new PlanValidationException(INVALID_TOTAL_MARKET_SHARE_OF_VOICE);
                 }
-            }
         }
 
         private void _ValidateOptionalPercentage(double? candidate, string errorMessage)

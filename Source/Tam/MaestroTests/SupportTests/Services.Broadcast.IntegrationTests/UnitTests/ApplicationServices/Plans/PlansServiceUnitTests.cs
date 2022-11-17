@@ -190,7 +190,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
 
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.VPVH_DEMO, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE, false);
 
@@ -2536,117 +2535,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedCount, result.AvailableMarkets.Count);
             Assert.AreEqual(expectedTotalWeight, result.TotalWeight);
             _PlanMarketSovCalculator.Verify(s => s.CalculateMarketWeightsClearAll(It.IsAny<List<PlanAvailableMarketDto>>()), Times.Once());
-        }
-
-        [Test]
-        public void OnSaveHandlePlanAvailableMarketSovFeature_ToggleOff()
-        {
-            // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = false;
-
-            var plan = _GetNewPlan();
-
-            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
-            {
-                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2},
-                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York"}
-            };
-
-            _PlanMarketSovCalculator.Setup(s => s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
-                .Returns<List<PlanAvailableMarketDto>>((l) =>
-                {
-                    l.ForEach(a =>
-                    {
-                        if (!a.IsUserShareOfVoicePercent)
-                        {
-                            a.ShareOfVoicePercent = a.PercentageOfUS;
-                        }
-                    });
-                    return new PlanAvailableMarketCalculationResult
-                    {
-                        AvailableMarkets = l,
-                        TotalWeight = 54.5
-                    };
-                });
-
-            // Act
-            _PlanService._OnSaveHandlePlanAvailableMarketSovFeature(plan);
-
-            // Assert
-            Assert.IsTrue(plan.AvailableMarkets[0].IsUserShareOfVoicePercent);
-            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
-
-            Assert.IsFalse(plan.AvailableMarkets[1].IsUserShareOfVoicePercent);
-            Assert.AreEqual(32.5, plan.AvailableMarkets[1].ShareOfVoicePercent);
-        }
-
-        [Test]
-        public void OnSaveHandlePlanAvailableMarketSovFeature_ToggleOn()
-        {
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = true;
-
-            var plan = _GetNewPlan();
-
-            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
-            {
-                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2, IsUserShareOfVoicePercent = true},
-                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York", ShareOfVoicePercent = 32.5, IsUserShareOfVoicePercent = false}
-            };
-
-            // Act
-            _PlanService._OnSaveHandlePlanAvailableMarketSovFeature(plan);
-
-            // Assert
-            Assert.IsTrue(plan.AvailableMarkets[0].IsUserShareOfVoicePercent);
-            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
-
-            Assert.IsFalse(plan.AvailableMarkets[1].IsUserShareOfVoicePercent);
-            Assert.AreEqual(32.5, plan.AvailableMarkets[1].ShareOfVoicePercent);
-        }
-
-        [Test]
-        public void OnGetHandlePlanAvailableMarketSovFeature_ToggleOff()
-        {
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = false;
-
-            var plan = _GetNewPlan();
-
-            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
-            {
-                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2, IsUserShareOfVoicePercent = true},
-                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York", ShareOfVoicePercent = 32.5, IsUserShareOfVoicePercent = false}
-            };
-
-            // Act
-            _PlanService._OnGetHandlePlanAvailableMarketSovFeature(plan);
-
-            // Assert
-            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
-            Assert.IsFalse(plan.AvailableMarkets[1].ShareOfVoicePercent.HasValue);
-        }
-
-        [Test]
-        public void OnGetHandlePlanAvailableMarketSovFeature_ToggleOn()
-        {
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS] = true;
-
-            var plan = _GetNewPlan();
-
-            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
-            {
-                new PlanAvailableMarketDto {MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, Market = "Portland-Auburn", ShareOfVoicePercent = 22.2, IsUserShareOfVoicePercent = true},
-                new PlanAvailableMarketDto {MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, Market = "New York", ShareOfVoicePercent = 32.5, IsUserShareOfVoicePercent = false}
-            };
-
-            // Act
-            _PlanService._OnGetHandlePlanAvailableMarketSovFeature(plan);
-
-            // Assert
-            Assert.IsTrue(plan.AvailableMarkets[0].IsUserShareOfVoicePercent);
-            Assert.AreEqual(22.2, plan.AvailableMarkets[0].ShareOfVoicePercent);
-
-            Assert.IsFalse(plan.AvailableMarkets[1].IsUserShareOfVoicePercent);
-            Assert.AreEqual(32.5, plan.AvailableMarkets[1].ShareOfVoicePercent);
         }
 
         [Test]

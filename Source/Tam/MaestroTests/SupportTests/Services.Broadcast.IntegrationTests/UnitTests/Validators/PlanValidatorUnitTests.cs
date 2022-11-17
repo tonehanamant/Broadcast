@@ -981,12 +981,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         [Test]
         public void ValidatePlan_TotalShareOfVoicePercentBiggerThanOneHundredPercent_SovCalcsEnabled()
         {
-            const bool isPlanMarketSovCalculationsEnabled = true;
             _ConfigureMocksToReturnTrue();
-
-            _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS))
-                .Returns(isPlanMarketSovCalculationsEnabled);
-
             _PlanMarketSovCalculator.Setup(s => s.DoesMarketSovTotalExceedThreshold(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<double>()))
                 .Returns(true);
 
@@ -999,28 +994,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Invalid total market share of voice."));
-        }
-
-        [Test]
-        public void ValidatePlan_TotalShareOfVoicePercentBiggerThanOneHundredPercent_SovCalcsDisabled()
-        {
-            const bool isPlanMarketSovCalculationsEnabled = false;
-            _ConfigureMocksToReturnTrue();
-
-            _FeatureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS))
-                .Returns(isPlanMarketSovCalculationsEnabled);
-
-            _PlanMarketSovCalculator.Setup(s => s.DoesMarketSovTotalExceedThreshold(It.IsAny<List<PlanAvailableMarketDto>>(), It.IsAny<double>()))
-                .Returns(true);
-
-            var plan = _GetPlan();
-            plan.AvailableMarkets = new List<PlanAvailableMarketDto>
-            {
-                new PlanAvailableMarketDto {ShareOfVoicePercent = 75, PercentageOfUS = 80 },
-                new PlanAvailableMarketDto {ShareOfVoicePercent = 75, PercentageOfUS = 5 },
-            };
-
-            Assert.DoesNotThrow(() => _planValidator.ValidatePlan(plan));
         }
 
         [Test]

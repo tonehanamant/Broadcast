@@ -334,8 +334,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly INtiToNsiConversionRepository _NtiToNsiConversionRepository;
         private readonly IPlanBuyingRepository _PlanBuyingRepository;
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
-        private readonly ILockingEngine _LockingEngine;
-        private Lazy<bool> _IsMarketSovCalculationEnabled;
+        private readonly ILockingEngine _LockingEngine;       
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IPlanIsciRepository _PlanIsciRepository;
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
@@ -389,8 +388,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanMarketSovCalculator = planMarketSovCalculator;
             _NtiToNsiConversionRepository = broadcastDataRepositoryFactory.GetDataRepository<INtiToNsiConversionRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
-            _IsMarketSovCalculationEnabled = new Lazy<bool>(() =>
-                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_MARKET_SOV_CALCULATIONS));
             _LockingEngine = lockingEngine;
             _DateTimeEngine = dateTimeEngine;
             _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
@@ -404,34 +401,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
 
-        internal void _OnSaveHandlePlanAvailableMarketSovFeature(PlanDto plan)
-        {
-            // When the flag is disabled we want to fill in the missing values
-            if (!_IsMarketSovCalculationEnabled.Value)
-            {
-                plan.AvailableMarkets.Where(s => s.ShareOfVoicePercent.HasValue).ToList()
-                    .ForEach(s => s.IsUserShareOfVoicePercent = true);
+       
 
-                var result = _PlanMarketSovCalculator.CalculateMarketWeights(plan.AvailableMarkets);
-                plan.AvailableMarkets = result.AvailableMarkets;
-                plan.AvailableMarketsSovTotal = result.TotalWeight;
-            }
-        }
-
-        internal void _OnGetHandlePlanAvailableMarketSovFeature(PlanDto plan)
-        {
-            // when the flag is disabled then we want to hide the feature values
-            if (!_IsMarketSovCalculationEnabled.Value)
-            {
-                plan.AvailableMarkets.ForEach(s =>
-                {
-                    if (!s.IsUserShareOfVoicePercent)
-                    {
-                        s.ShareOfVoicePercent = null;
-                    }
-                });
-            }
-        }
 
         ///<inheritdoc/>
         public async Task<int> SavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
@@ -517,7 +488,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
                 _CalculateDaypartOverrides(plan.Dayparts);
-                _OnSaveHandlePlanAvailableMarketSovFeature(plan);
+                
 
                 processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
                 processTimers.Start(SW_KEY_PLAN_VALIDATION);
@@ -684,8 +655,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
                     _CalculateDaypartOverrides(plan.Dayparts);
                 }
-
-                _OnSaveHandlePlanAvailableMarketSovFeature(plan);
 
                 _PlanValidator.ValidatePlanDraft(plan);
 
@@ -1053,8 +1022,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SetWeeklyBreakdownTotals(plan);
 
             _ConvertImpressionsToUserFormat(plan);
-
-            _OnGetHandlePlanAvailableMarketSovFeature(plan);
             _HandleAvailableMarketSovs(plan);
             _AddDaypartToWeeklyBreakdownResult(plan);
 

@@ -7,6 +7,7 @@
         public static string DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
         public static string ENABLE_PRICING_EFFICIENCY_MODEL = "broadcast-enable-pricing-efficiency-model";
         public static string ENABLE_PLAN_MARKET_SOV_CALCULATIONS = "broadcast-enable-plan-market-sov-calculations";
+        public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";
         public static string VPVH_DEMO = "broadcast-vpvh-demo";
         public static string ENABLE_LOCKING_CONSOLIDATION = "broadcast-enable-locking-consolidation";
         public static string PRICING_MODEL_OPEN_MARKET_INVENTORY = "broadcast-pricing-model-open-market-inventory";
@@ -14,7 +15,6 @@
         public static string PRICING_MODEL_BARTER_INVENTORY = "broadcast-pricing-model-barter-inventory";
         public static string PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = "broadcast-pricing-model-proprietary-o-and-o-inventory";
         public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";
-        public static string ADU_FLAG = "broadcast-enabled-adu-flag";
         public static string EXTERNAL_NOTE_EXPORT = "Broadcast-EnableExternalNoteExport";
         public static string ENABLE_ISCI_MAPPING = "broadcast-enable-isci-mapping";
         public static string BUY_EXP_REP_ORG = "broadcast-buy-exp-rep-org";
