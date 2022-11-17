@@ -1037,12 +1037,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         public PlanDto_v2 GetPlan_v2(int planId, int? versionId = null)
         {
-            var plan = GetPlan(planId, versionId);
-            var isVPVHDemoEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.VPVH_DEMO);
-            if (isVPVHDemoEnabled)
-            {
-                _CalculateVPVHForPlan(plan);
-            }
+            var plan = GetPlan(planId, versionId);           
+            _CalculateVPVHForPlan(plan);
             var conversionRate = (!plan.Dayparts.IsNullOrEmpty()) ? _PlanRepository.GetNsiToNtiConversionRate(plan.Dayparts) : 1;
             var plan_v2 = _MapPlanDtoToPlanDto_v2(plan, conversionRate);
             return plan_v2;

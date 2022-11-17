@@ -27,8 +27,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = null;
             var testClass = new CampaignReportData
-            {
-                _IsVPVHDemoEnabled = new Lazy<bool>(() => true)
+            {                
             };
             var projection = _GetPlanProjectionForCampaignExport();
 
@@ -48,8 +47,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = _GetPlanPricingResultsDayparts();
             var testClass = new CampaignReportData
-            {
-                _IsVPVHDemoEnabled = new Lazy<bool>(() => true)
+            {                
             };
             var projection = _GetPlanProjectionForCampaignExport();
 
@@ -75,23 +73,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = null;
             var testClass = new CampaignReportData
-            {
-                _IsVPVHDemoEnabled = new Lazy<bool>(() => vpvhFlagEnabled)
+            {                
             };
             var projection = _GetPlanProjectionForCampaignExport();
 
             // Action
-            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts, isVpvhDemoEnabled : vpvhFlagEnabled);
+            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts);
 
             // Assert
             Assert.AreEqual(expectedHhImpressions, projection.TotalHHImpressions);
             Assert.AreEqual(expectedHhRatings, projection.TotalHHRatingPoints);
         }
 
-        [Test]
-        [TestCase(false, 200.0, 12.2)]
-        [TestCase(true, 183.15018315018312, 11.17216117216117)]
-        public void ProjectHHAudienceData_VPVH_WithRunPricing(bool vpvhFlagEnabled, double expectedHhImpressions, double expectedHhRatings)
+        [Test]       
+        [TestCase(183.15018315018312, 11.17216117216117)]
+        public void ProjectHHAudienceData_VPVH_WithRunPricing(double expectedHhImpressions, double expectedHhRatings)
         {
             // Arrange
             PlanDto plan = _GetNewPlan();
@@ -101,13 +97,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = _GetPlanPricingResultsDayparts(2);
             var testClass = new CampaignReportData
-            {
-                _IsVPVHDemoEnabled = new Lazy<bool>(() => vpvhFlagEnabled)
+            {                
             };
             var projection = _GetPlanProjectionForCampaignExport();
 
             // Action
-            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts, isVpvhDemoEnabled: vpvhFlagEnabled);
+            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts);
 
             // Assert
             Assert.AreEqual(expectedHhImpressions, projection.TotalHHImpressions);

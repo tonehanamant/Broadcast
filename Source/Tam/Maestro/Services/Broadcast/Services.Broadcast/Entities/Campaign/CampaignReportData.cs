@@ -55,8 +55,7 @@ namespace Services.Broadcast.Entities.Campaign
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         internal List<LookupDto> _AllSpotLengths;
         private readonly Dictionary<int, double> _SpotLengthDeliveryMultipliers;
-        private static List<StandardDaypartDto> _StandardDaypartList;
-        internal Lazy<bool> _IsVPVHDemoEnabled;
+        private static List<StandardDaypartDto> _StandardDaypartList;        
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         internal Lazy<bool> _IsExternalNoteExportEnabled;
         private readonly Lazy<bool> _IsCampaignExportTotalMonthlyCostEnabled;
@@ -90,8 +89,7 @@ namespace Services.Broadcast.Entities.Campaign
             _SpotLengthDeliveryMultipliers = spotLengthDeliveryMultipliers;
             _StandardDaypartList = standardDayparts;
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsVPVHDemoEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.VPVH_DEMO));
+            _FeatureToggleHelper = featureToggleHelper;            
             _IsExternalNoteExportEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EXTERNAL_NOTE_EXPORT));
             _IsCampaignExportTotalMonthlyCostEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST));
 
@@ -271,7 +269,7 @@ namespace Services.Broadcast.Entities.Campaign
                         newProjectedPlan.Units = _CalculateUnitsForWeekComponent(weekComponent, planImpressionsPerUnit, plan.Equivalized, _SpotLengthDeliveryMultipliers);
 
                         _ProjectGuaranteedAudienceDataByWeek(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts);
-                        _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts, _IsVPVHDemoEnabled.Value);
+                        _ProjectHHAudienceData(plan, weekComponent, newProjectedPlan, planPricingResultsDayparts);
                         _ProjectSecondaryAudiencesData(plan, weekComponent, newProjectedPlan, newProjectedPlan.TotalHHImpressions);
 
                         result.Add(newProjectedPlan);
@@ -283,12 +281,12 @@ namespace Services.Broadcast.Entities.Campaign
         }
 
         internal void _ProjectHHAudienceData(PlanDto plan, WeeklyBreakdownWeek planWeek, PlanProjectionForCampaignExport planProjection,
-            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts, bool isVpvhDemoEnabled)
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
         {
             var audienceImpressions = planWeek.WeeklyImpressions;
             double? audienceVpvh = null;
 
-            if (isVpvhDemoEnabled && !planWeek.DaypartOrganizationId.HasValue)
+            if (!planWeek.DaypartOrganizationId.HasValue)
             {
                 audienceVpvh = _GetCalculatedVpvh(planWeek.DaypartCodeId.Value, plan.Id, planPricingResultsDayparts);
             }
@@ -352,15 +350,11 @@ namespace Services.Broadcast.Entities.Campaign
             projection.GuaranteedAudience.WeightedPercentage = planWeek.WeeklyImpressions / plan.TargetImpressions.Value;
             projection.GuaranteedAudience.TotalImpressions = planWeek.WeeklyImpressions;
             projection.GuaranteedAudience.TotalRatingPoints = planWeek.WeeklyRatings;
-
-            if (_IsVPVHDemoEnabled.Value)
+            // calculated results could be null if pricing hasn't been run yet.
+            var calculatedVpvh = _GetCalculatedVpvh(projection.DaypartCodeId, plan.Id, planPricingResultsDayparts);
+            if (calculatedVpvh.HasValue)
             {
-                // calculated results could be null if pricing hasn't been run yet.
-                var calculatedVpvh = _GetCalculatedVpvh(projection.DaypartCodeId, plan.Id, planPricingResultsDayparts);
-                if (calculatedVpvh.HasValue)
-                {
-                    projection.GuaranteedAudience.VPVH = calculatedVpvh.Value;
-                }
+                projection.GuaranteedAudience.VPVH = calculatedVpvh.Value;
             }
         }
 
@@ -550,15 +544,8 @@ namespace Services.Broadcast.Entities.Campaign
                         double totalHHImpressions = items.Sum(x => x.TotalHHImpressions) / 1000;
                         string spotLengthLabel = $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}";
                         double vpvh = 0;
-                        if (_IsVPVHDemoEnabled.Value)
-                        {
-                            vpvh = items.Average(x => x.GuaranteedAudience.VPVH > 0 ? x.GuaranteedAudience.VPVH : ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions));
-                        }
-                        else
-                        {
-                            vpvh = ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions);
-                        }
-
+                        vpvh = items.Average(x => x.GuaranteedAudience.VPVH > 0 ? x.GuaranteedAudience.VPVH : ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions));
+                        
                         var row = new ProposalQuarterTableRowData
                         {
                             DaypartCode = daypartGroup.Key.DaypartCode,
@@ -1207,7 +1194,7 @@ namespace Services.Broadcast.Entities.Campaign
                         },
                         GuaranteedData = new AudienceData
                         {
-                            VPVH = !_IsVPVHDemoEnabled.Value ? ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions) : items.Average(x => x.GuaranteedData.VPVH),
+                            VPVH = items.Average(x => x.GuaranteedData.VPVH),
                             RatingPoints = items.Sum(x => x.GuaranteedData.RatingPoints),
                             TotalRatingPoints = totalRatingPoints,
                             Impressions = items.Sum(x => x.GuaranteedData.Impressions),
