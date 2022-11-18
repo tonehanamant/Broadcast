@@ -1,4 +1,5 @@
 ﻿using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
+using Services.Broadcast.Entities.ReelRosterIscis;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Helpers.Json;
 using System;
@@ -43,13 +44,27 @@ namespace Services.Broadcast.Clients
         {
             var requestUrl = @"pull-spot-exception-results/api/Results/notify-data-ready";
             var requestContent = new StringContent(JsonSerializerHelper.ConvertToJson(request), Encoding.UTF8, "application/json");
+            ResultsSyncResponse result;;
 
             var client = await _GetSecureHttpClientAsync(AppName_Results);
-
             var postResponse = await client.PostAsync(requestUrl, requestContent);
-            var result = await postResponse.Content.ReadAsAsync<bool>();
 
-            return result;
+            if (postResponse.IsSuccessStatusCode == false)
+            {
+                _LogInfo($"Error connecting to ResultsApi for notify-data-ready.  Requested by '{request.RequestedBy}'.");
+                throw new InvalidOperationException($"Error connecting to ResultsApi for notify-data-ready : {postResponse}");
+            }
+
+            result = await postResponse.Content.ReadAsAsync<ResultsSyncResponse>();
+
+            if (!result.Success)
+            {
+                _LogInfo($"Error calling the ResultsApi.  Requested by '{request.RequestedBy}'.");
+                throw new InvalidOperationException($"Error calling the ResultsApi for notify-data-ready : {result.Message}");
+            }
+
+            _LogInfo($"Successfully notified consumers that results data is ready.  Requested by '{request.RequestedBy}'.");
+            return result.Success;
         }
 
         private async Task<HttpClient> _GetSecureHttpClientAsync(string appName)

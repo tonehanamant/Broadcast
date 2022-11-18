@@ -627,6 +627,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         {
                             AcceptedAsInSpec = spotExceptionsOutOfSpecSaveRequest.Decisions.Where(x => x.TodoId == existingOutOfSpecToDo.Id).Select(x => x.AcceptAsInSpec).Single(),
                             DecisionNotes = spotExceptionsOutOfSpecSaveRequest.Decisions.Where(x => x.TodoId == existingOutOfSpecToDo.Id).Select(x => x.AcceptAsInSpec ? "In" : "Out").Single(),
+                            ProgramName = existingOutOfSpecToDo.ProgramName,
+                            GenreName = existingOutOfSpecToDo.GenreName,
+                            DaypartCode = existingOutOfSpecToDo.DaypartCode,
                             DecidedBy = userName,
                             DecidedAt = _DateTimeEngine.GetCurrentMoment()
                         }
