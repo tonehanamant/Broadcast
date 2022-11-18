@@ -20,7 +20,6 @@
         public static string CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST = "broadcast-campaign-export-total-monthly-cost";
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
-        public static string ENABLE_RESTRICTIONS_PROGRAM_OR = "broadcast-restrictions-enable-program-or";
         public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
         public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
         public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";

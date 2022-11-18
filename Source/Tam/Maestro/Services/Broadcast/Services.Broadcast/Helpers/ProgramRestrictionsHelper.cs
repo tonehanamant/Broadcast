@@ -26,8 +26,7 @@ namespace Services.Broadcast.Helpers
             List<Day> cadentDayDefinitions,
             Dictionary<int, List<int>> daypartDefaultDayIds,
             int thresholdInSecondsForProgramIntersect,
-            bool useTrueIndependentStations,
-            bool enableRestrictionsProgramOr
+            bool useTrueIndependentStations
             ) where T : BasePlanInventoryProgram
         {
             var result = new List<T>();
@@ -39,7 +38,7 @@ namespace Services.Broadcast.Helpers
                 {
                     continue;
                 }
-                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program, useTrueIndependentStations, enableRestrictionsProgramOr);
+                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program, useTrueIndependentStations);
                 if (planDaypartsMatchByRestrictions.Count == 0)
                 {
                     continue;
@@ -145,28 +144,18 @@ namespace Services.Broadcast.Helpers
         }
 
         private static List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program, 
-            bool useTrueIndependentStations, bool enableRestrictionsProgramOr)
+            bool useTrueIndependentStations)
         {
             var result = new List<ProgramInventoryDaypart>();
 
             foreach (var inventoryDaypart in programInventoryDayparts)
             {
-                if (enableRestrictionsProgramOr)
-                {
+                
                     var passGenreOrProgramRestrictions = _IsProgramAllowedByGenreOrProgramRestrictions(inventoryDaypart);
                     if (!passGenreOrProgramRestrictions)
                     {
                         continue;
                     }
-                }
-                else
-                {
-                    if (!_IsProgramAllowedByProgramRestrictions(inventoryDaypart))
-                        continue;
-
-                    if (!_IsProgramAllowedByGenreRestrictions(inventoryDaypart))
-                        continue;
-                }
 
                 if (!_IsProgramAllowedByShowTypeRestrictions(inventoryDaypart))
                     continue;
