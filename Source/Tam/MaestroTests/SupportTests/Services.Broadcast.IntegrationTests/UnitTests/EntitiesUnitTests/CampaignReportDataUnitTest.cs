@@ -492,10 +492,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         public void ExternalExportNotes_IsExternalNoteExportEnabled()
         {
             // Arrange
-            var testClass = new CampaignReportData
-            {
-                _IsExternalNoteExportEnabled = new Lazy<bool>(() => true)
-            };
+            var testClass = new CampaignReportData();
             List<PlanDto> plans = new List<PlanDto>
             {
                 new PlanDto
@@ -524,34 +521,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
 
             // Assert
              Assert.AreEqual("All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\nNo Family Guy (Plan ID 1); News Only (Plan ID 3); ", testClass.Notes);
-        }
-
-        [Test]
-        public void ExternalExportNotes_IsExternalNoteExportDisabled()
-        {
-            // Arrange
-            var testClass = new CampaignReportData
-            {
-                _IsExternalNoteExportEnabled = new Lazy<bool>(() => false)
-            };
-            List<PlanDto> plans = new List<PlanDto>
-            {
-                new PlanDto
-                {
-                    Id = 1,
-                    FlightNotes = "No Family Guy"
-                },
-                new PlanDto
-                {
-                    Id = 2,
-                    FlightNotes = null
-                }
-            };
-            // Act
-            testClass._PopulateNotes(plans);
-
-            // Assert
-            Assert.AreEqual("All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.", testClass.Notes);
         }
 
         [Test]

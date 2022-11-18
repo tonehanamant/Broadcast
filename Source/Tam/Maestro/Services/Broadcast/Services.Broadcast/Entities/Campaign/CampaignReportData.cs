@@ -57,7 +57,6 @@ namespace Services.Broadcast.Entities.Campaign
         private readonly Dictionary<int, double> _SpotLengthDeliveryMultipliers;
         private static List<StandardDaypartDto> _StandardDaypartList;        
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        internal Lazy<bool> _IsExternalNoteExportEnabled;
         private readonly Lazy<bool> _IsCampaignExportTotalMonthlyCostEnabled;
 
         /// <summary>
@@ -89,8 +88,7 @@ namespace Services.Broadcast.Entities.Campaign
             _SpotLengthDeliveryMultipliers = spotLengthDeliveryMultipliers;
             _StandardDaypartList = standardDayparts;
             HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
-            _FeatureToggleHelper = featureToggleHelper;            
-            _IsExternalNoteExportEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.EXTERNAL_NOTE_EXPORT));
+            _FeatureToggleHelper = featureToggleHelper; 
             _IsCampaignExportTotalMonthlyCostEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST));
 
             List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans, planPricingResultsDayparts);
@@ -126,8 +124,7 @@ namespace Services.Broadcast.Entities.Campaign
 
         internal void _PopulateNotes(List<PlanDto> plans)
         {
-            if (_IsExternalNoteExportEnabled.Value)
-            {
+           
                 Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n";
                 foreach (var plan in plans)
                 {
@@ -139,11 +136,6 @@ namespace Services.Broadcast.Entities.Campaign
                         Notes = string.Concat(Notes, planExternalnotesFormat);
                     }
                 }
-            }
-            else
-            {
-                Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.";
-            }
         }
 
         private void _PopulateFlightHiatuses(List<DateTime> plansHiatuses)
