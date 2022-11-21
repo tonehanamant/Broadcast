@@ -3148,7 +3148,9 @@ namespace Services.Broadcast.Repositories
             return _InReadUncommitedTransaction(context =>
             {
                 var result = (from plan in context.plans
-                              join planVersion in context.plan_versions on plan.id equals planVersion.plan_id
+                              join planVersion in context.plan_versions 
+                                on new { planId = plan.id, planVersionId = plan.latest_version_id } 
+                                equals new { planId = planVersion.plan_id, planVersionId = planVersion.id }
                               join planDaypart in context.plan_version_dayparts on planVersion.id equals planDaypart.plan_version_id
                               join stdDayparts in context.standard_dayparts on planDaypart.standard_daypart_id equals stdDayparts.id
                               where !(plan.deleted_at.HasValue) && planDaypart.plan_version_id == planVersion.id && planIds.Contains(plan.id)
