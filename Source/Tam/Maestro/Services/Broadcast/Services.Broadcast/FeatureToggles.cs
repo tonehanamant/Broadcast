@@ -15,7 +15,6 @@
         public static string PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = "broadcast-pricing-model-proprietary-o-and-o-inventory";
         public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";
         public static string ENABLE_ISCI_MAPPING = "broadcast-enable-isci-mapping";
-        public static string BUY_EXP_REP_ORG = "broadcast-buy-exp-rep-org";
         public static string CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST = "broadcast-campaign-export-total-monthly-cost";
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";

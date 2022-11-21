@@ -3,7 +3,7 @@
     {
       "Affiliate": "CW",
       "Budget": 13504.6875,
-      "Cpm": 21.8983,
+      "Cpm": 21.898309550835089995135398100,
       "Impressions": 616.7,
       "ImpressionsPercentage": 99.43566591,
       "LegacyCallLetters": "WPIX",
@@ -16,7 +16,7 @@
     {
       "Affiliate": "FOX",
       "Budget": 150.7500,
-      "Cpm": 43.0714,
+      "Cpm": 43.071428571428571428571428600,
       "Impressions": 3.5,
       "ImpressionsPercentage": 0.56433409,
       "LegacyCallLetters": "WPFO",
@@ -30,7 +30,7 @@
   "PostingType": 2,
   "SpotAllocationModelMode": 2,
   "Totals": {
-    "AvgCpm": 22.0177,
+    "AvgCpm": 22.017796678490809416317317000,
     "AvgImpressions": 0.0,
     "Budget": 13655.4375,
     "Impressions": 620.2,

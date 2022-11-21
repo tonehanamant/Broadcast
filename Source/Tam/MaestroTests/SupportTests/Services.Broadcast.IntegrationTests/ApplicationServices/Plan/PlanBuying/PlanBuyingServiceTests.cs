@@ -422,7 +422,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var bands = _PlanBuyingService.GetBuyingBands(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingBandsDto>();
-                Assert.AreEqual(result.Result.OptimalCpm, bands.Totals.AvgCpm);
+                Assert.AreEqual(result.Result.OptimalCpm, (Math.Floor(bands.Totals.AvgCpm * 10000))/10000);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(bands, jsonSettings));
             }
         }
@@ -442,7 +442,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var stations = _PlanBuyingService.GetStations(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingStationResultDto>();
-                Assert.AreEqual(result.Result.OptimalCpm, stations.Totals.AvgCpm);
+                Assert.AreEqual(result.Result.OptimalCpm, Math.Floor(stations.Totals.AvgCpm * 10000)/10000);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(stations, jsonSettings));
             }
         }
@@ -462,7 +462,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var repFirms = _PlanBuyingService.GetBuyingRepFirms(planBuyingRequestDto.PlanId.Value, null);
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultRepFirmDto>();
-                Assert.AreEqual(result.Result.OptimalCpm, repFirms.Totals.AvgCpm);
+                Assert.AreEqual(result.Result.OptimalCpm, Math.Floor(repFirms.Totals.AvgCpm * 10000)/10000);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(repFirms, jsonSettings));
             }
         }
@@ -483,7 +483,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
                 var result = _PlanBuyingService.GetCurrentBuyingExecution(planBuyingRequestDto.PlanId.Value, PostingTypeEnum.NTI);
 
                 JsonSerializerSettings jsonSettings = _GetJsonSettings<PlanBuyingResultProgramsDto>();
-                Assert.AreEqual(result.Result.OptimalCpm, programs.Totals.AvgCpm);
+                Assert.AreEqual(result.Result.OptimalCpm, Math.Truncate(10000 * programs.Totals.AvgCpm)/10000);
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(programs, jsonSettings));
             }
         }
@@ -786,6 +786,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             jsonResolver.Ignore(typeof(PlanBuyingStationDto), "Id");
 
             jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "BuyingJobId");
+            jsonResolver.Ignore(typeof(PlanBuyingBandsDto), "PlanVersionId");
 
             jsonResolver.Ignore(typeof(PlanBuyingResultOwnershipGroupDto), "PlanVersionId");
             jsonResolver.Ignore(typeof(PlanBuyingResultOwnershipGroupDto), "BuyingJobId");

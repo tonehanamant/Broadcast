@@ -1,4 +1,3 @@
 [
-  "Ownership group 3",
-  "NASY"
+  "TEGNA"
 ]

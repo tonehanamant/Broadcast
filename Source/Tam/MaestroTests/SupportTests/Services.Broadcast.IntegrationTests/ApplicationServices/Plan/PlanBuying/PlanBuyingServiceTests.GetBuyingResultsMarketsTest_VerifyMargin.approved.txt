@@ -1,8 +1,8 @@
 {
   "Details": [
     {
-      "Budget": 10803.75,
-      "Cpm": 17.5186476406681,
+      "Budget": 10803.7500,
+      "Cpm": 17.518647640668071996108318500,
       "Impressions": 616.7,
       "ImpressionsPercentage": 99.43566591,
       "MarketCoveragePercent": 10.0,
@@ -13,8 +13,8 @@
       "StationCount": 1
     },
     {
-      "Budget": 120.6,
-      "Cpm": 34.4571428571429,
+      "Budget": 120.6000,
+      "Cpm": 34.457142857142857142857142900,
       "Impressions": 3.5,
       "ImpressionsPercentage": 0.56433409,
       "MarketCoveragePercent": 0.328,
@@ -28,7 +28,7 @@
   "PostingType": 2,
   "SpotAllocationModelMode": 2,
   "Totals": {
-    "AvgCpm": 17.6142,
+    "AvgCpm": 17.614237342792647533053853600,
     "AvgImpressions": 0.0,
     "Budget": 10924.3500,
     "Impressions": 620.2,

@@ -93,7 +93,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.BUY_EXP_REP_ORG, false);
 
             _IConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)).Returns("c:\\TempFolder");
 
@@ -5177,6 +5176,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void GetStations()
         {
             // Arrange
+            int stationResultCount = 0;
             const int planId = 224;
             PostingTypeEnum postingType = PostingTypeEnum.NSI;
 
@@ -5257,6 +5257,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                         PostingType = PostingTypeEnum.NSI,
                         Dayparts = _GetPlanDayparts()
                     });
+            _PlanBuyingStationEngineMock.Setup(s => s.CalculateAggregateOfStations(It.IsAny<PlanBuyingStationResultDto>()))
+               .Returns(new PlanBuyingStationResultDto()
+               {
+                   BuyingJobId = 24,
+                   PlanVersionId = 95,
+                   SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                   PostingType = PostingTypeEnum.NSI,
+                   Totals = new PlanBuyingProgramTotalsDto()
+                   {
+                       Budget = 3912,
+                       AvgCpm = 2,
+                       Impressions = 2041.65,
+                       SpotCount = 300,
+                       StationCount = 46
+                   },
+                   Details = new List<PlanBuyingStationDto>()
+                   {
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 3912,
+                        Cpm = 2,
+                        Impressions = 2045,
+                        ImpressionsPercentage = 0,
+                        Market = "Madison",
+                        Spots = 2,
+                        Station = "HMTV",
+                        Affiliate = "CW",
+                        RepFirm = "HMTV",
+                        OwnerName = "HMTV",
+                        LegacyCallLetters = "HMTV"
+                      },
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 5436,
+                        Cpm = 2,
+                        Impressions = 3452,
+                        ImpressionsPercentage = 0,
+                        Market = "Tulsa",
+                        Spots = 6,
+                        Station = "HMTV",
+                        Affiliate = "KMYT",
+                        RepFirm = "TEGNA",
+                        OwnerName = "Lockwood Broadcasting Inc.",
+                        LegacyCallLetters = "HMTV"
+                      }
+                   }
+               }).Callback<PlanBuyingStationResultDto>(element =>
+               {
+                   stationResultCount = element.Details.Count;
+               });
 
             var tc = _GetService();
 
@@ -5266,7 +5316,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Assert
             Assert.AreEqual(result.Details[0].LegacyCallLetters, result.Details[0].RepFirm);
             Assert.AreEqual(result.Details[0].LegacyCallLetters, result.Details[0].OwnerName);
-            Assert.AreEqual("Katz", result.Details[1].RepFirm);
+            Assert.AreEqual("TEGNA", result.Details[1].RepFirm);
             Assert.AreEqual("Lockwood Broadcasting Inc.", result.Details[1].OwnerName);
         }
         private List<CurrentBuyingExecutionResultDto> _GetCurrentBuyingExecutionsResults()
@@ -5337,6 +5387,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void GetResultRepFirms()
         {
+            int stationResultCount = 0;
             // Arrange
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
@@ -5364,7 +5415,56 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 });
             var service = _GetService();
             var plan = _GetPlan();
-
+            _PlanBuyingStationEngineMock.Setup(s => s.CalculateAggregateOfStations(It.IsAny<PlanBuyingStationResultDto>()))
+             .Returns(new PlanBuyingStationResultDto()
+             {
+                 BuyingJobId = 24,
+                 PlanVersionId = 95,
+                 SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                 PostingType = PostingTypeEnum.NSI,
+                 Totals = new PlanBuyingProgramTotalsDto()
+                 {
+                     Budget = 3912,
+                     AvgCpm = 2,
+                     Impressions = 2041.65,
+                     SpotCount = 300,
+                     StationCount = 46
+                 },
+                 Details = new List<PlanBuyingStationDto>()
+                 {
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 3912,
+                        Cpm = 2,
+                        Impressions = 2045,
+                        ImpressionsPercentage = 0,
+                        Market = "Madison",
+                        Spots = 2,
+                        Station = "HMTV",
+                        Affiliate = "CW",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      },
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 5436,
+                        Cpm = 2,
+                        Impressions = 3452,
+                        ImpressionsPercentage = 0,
+                        Market = "Tulsa",
+                        Spots = 6,
+                        Station = "HMTV",
+                        Affiliate = "KMYT",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      }
+                 }
+             }).Callback<PlanBuyingStationResultDto>(element =>
+             {
+                 stationResultCount = element.Details.Count;
+             });
             // Act
             var result = service.GetResultRepFirms(plan.Id, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
 
@@ -5376,6 +5476,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [UseReporter(typeof(DiffReporter))]
         public void GetResultOwnershipGroups()
         {
+            int stationResultCount = 0;
             // Arrange
             _PlanBuyingRepositoryMock
                 .Setup(x => x.GetLatestBuyingJob(It.IsAny<int>()))
@@ -5405,6 +5506,57 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                   }
                 }
                 });
+            _PlanBuyingStationEngineMock.Setup(s => s.CalculateAggregateOfStations(It.IsAny<PlanBuyingStationResultDto>()))
+              .Returns(new PlanBuyingStationResultDto()
+              {
+                  BuyingJobId = 24,
+                  PlanVersionId = 95,
+                  SpotAllocationModelMode = SpotAllocationModelMode.Efficiency,
+                  PostingType = PostingTypeEnum.NSI,
+                  Totals = new PlanBuyingProgramTotalsDto()
+                  {
+                      Budget = 3912,
+                      AvgCpm = 2,
+                      Impressions = 2041.65,
+                      SpotCount = 300,
+                      StationCount = 46
+                  },
+                  Details = new List<PlanBuyingStationDto>()
+                  {
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 3912,
+                        Cpm = 2,
+                        Impressions = 2045,
+                        ImpressionsPercentage = 0,
+                        Market = "Madison",
+                        Spots = 2,
+                        Station = "HMTV",
+                        Affiliate = "CW",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      },
+                      new PlanBuyingStationDto()
+                      {
+                        Budget = 5436,
+                        Cpm = 2,
+                        Impressions = 3452,
+                        ImpressionsPercentage = 0,
+                        Market = "Tulsa",
+                        Spots = 6,
+                        Station = "HMTV",
+                        Affiliate = "KMYT",
+                        RepFirm = "TEGNA",
+                        OwnerName = "TEGNA",
+                        LegacyCallLetters = "HMTV"
+                      }
+                  }
+              }).Callback<PlanBuyingStationResultDto>(element =>
+              {
+                  stationResultCount = element.Details.Count;
+              });
+
             var service = _GetService();
             var Id = 1197;
 
@@ -6176,7 +6328,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -6359,7 +6510,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -6542,7 +6692,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -6709,7 +6858,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             { };
@@ -6859,7 +7007,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -7011,7 +7158,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var Id = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -7202,7 +7348,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var planId = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -7930,7 +8075,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }); ;
           
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var planId = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {
@@ -8200,7 +8344,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }); ;
 
             var service = _GetService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.BUY_EXP_REP_ORG] = true;
             var planId = 1197;
             var planBuyingFilter = new PlanBuyingFilterDto()
             {

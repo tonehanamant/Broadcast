@@ -168,7 +168,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="isConversionRequired">User Format Conversion Flag</param>
         /// <returns></returns>
         PlanBuyingStationResultDto GetStations(int planId, PostingTypeEnum? postingType,
-            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null,bool isConversionRequired = true);
+            SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null, bool isConversionRequired = true);
 
         /// <summary>
         /// Retrieves the Buying Results Markets Summary
@@ -284,7 +284,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
-        private readonly Lazy<bool> _IsBuyExpRepOrgEnabled;
         private readonly Lazy<bool> _IsParallelPricingEnabled;
         protected Lazy<bool> _IsProgramLineupAllocationByAffiliateEnabled;
 
@@ -349,7 +348,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
-            _IsBuyExpRepOrgEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.BUY_EXP_REP_ORG));
             _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
             _IsProgramLineupAllocationByAffiliateEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE));
@@ -1093,8 +1091,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     MaxCPM = planBuyingParametersDto.MaxCpm,
                     InflationFactor = planBuyingParametersDto.InflationFactor,
                     MarketGroup = planBuyingParametersDto.MarketGroup,
-                    ShareBookId= planBuyingParametersDto.ShareBookId,
-                    HUTBookId= planBuyingParametersDto.HUTBookId
+                    ShareBookId = planBuyingParametersDto.ShareBookId,
+                    HUTBookId = planBuyingParametersDto.HUTBookId
                 };
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FETCHING_PLAN_AND_PARAMETERS);
 
@@ -2313,8 +2311,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
                 MarketGroup = requestParameters.MarketGroup,
-                HUTBookId= requestParameters.HUTBookId,
-                ShareBookId=requestParameters.ShareBookId
+                HUTBookId = requestParameters.HUTBookId,
+                ShareBookId = requestParameters.ShareBookId
             };
             var parameters = new PlanBuyingParametersDto
             {
@@ -2351,8 +2349,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 MaxCPM = requestParameters.MaxCpm,
                 InflationFactor = requestParameters.InflationFactor,
                 MarketGroup = requestParameters.MarketGroup,
-                HUTBookId= requestParameters.HUTBookId,
-                ShareBookId= requestParameters.ShareBookId
+                HUTBookId = requestParameters.HUTBookId,
+                ShareBookId = requestParameters.ShareBookId
             };
             var inventorySourceIds = _GetInventorySourceIdsByTypes(_GetSupportedInventorySourceTypes());
 
@@ -2385,37 +2383,30 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return null;
 
             postingType = _ResolvePostingType(planId, postingType);
-            if (_IsBuyExpRepOrgEnabled.Value)
-            {
-                var stationProgramResult = _PlanBuyingRepository.GetBuyingProgramsResultByJobId_V2(job.Id, postingType, spotAllocationModelMode);
-                if (stationProgramResult == null)
-                    return null;
-                stationProgramResult.Details = stationProgramResult.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
+            var stationProgramResult = _PlanBuyingRepository.GetBuyingProgramsResultByJobId_V2(job.Id, postingType, spotAllocationModelMode);
+            if (stationProgramResult == null)
+                return null;
+            stationProgramResult.Details = stationProgramResult.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
 
-                if (planBuyingFilter != null)
-                {
-                    if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
-                    {
-                        stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }
-                    else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
-                    {
-                        stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
-                    }
-                    else if (planBuyingFilter.OwnerNames?.Any() ?? false)
-                    {
-                        stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }
-                }
-                results = _PlanBuyingProgramEngine.GetAggregatedProgramStations(stationProgramResult);
-                results.Details = results.Details.OrderByDescending(p => p.ImpressionsPercentage)
-                                                  .ThenByDescending(p => p.ProgramName)
-                                                  .ToList();
-            }
-            else
+            if (planBuyingFilter != null)
             {
-                results = _PlanBuyingRepository.GetBuyingProgramsResultByJobId(job.Id, postingType, spotAllocationModelMode);
+                if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
+                {
+                    stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                }
+                else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
+                {
+                    stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
+                }
+                else if (planBuyingFilter.OwnerNames?.Any() ?? false)
+                {
+                    stationProgramResult.Details = stationProgramResult.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                }
             }
+            results = _PlanBuyingProgramEngine.GetAggregatedProgramStations(stationProgramResult);
+            results.Details = results.Details.OrderByDescending(p => p.ImpressionsPercentage)
+                                              .ThenByDescending(p => p.ProgramName)
+                                              .ToList();
             if (results == null)
                 return null;
 
@@ -2437,85 +2428,76 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             postingType = _ResolvePostingType(planId, postingType);
+            var latestParametersForPlanBuyingJob = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(job.Id);
 
-            if (_IsBuyExpRepOrgEnabled.Value)
+            var buyingApiResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, spotAllocationModelMode, (PostingTypeEnum)postingType);
+            if (buyingApiResults == null)
             {
-                var latestParametersForPlanBuyingJob = _PlanBuyingRepository.GetLatestParametersForPlanBuyingJob(job.Id);
-
-                var buyingApiResults = _PlanBuyingRepository.GetBuyingApiResultsByJobId(job.Id, spotAllocationModelMode, (PostingTypeEnum)postingType);
-                if (buyingApiResults == null)
-                {
-                    return null;
-                }
-                buyingApiResults.AllocatedSpots.ForEach(allocatedSpot =>
-                {
-                    allocatedSpot.RepFirm = allocatedSpot.RepFirm ?? allocatedSpot.LegacyCallLetters;
-                    allocatedSpot.OwnerName = allocatedSpot.OwnerName ?? allocatedSpot.LegacyCallLetters;
-                });
-
-                var planBuyingBandInventoryStations = new PlanBuyingBandInventoryStationsDto();
-                try
-                {
-                    planBuyingBandInventoryStations = _PlanBuyingRepository.GetPlanBuyingBandInventoryStations(job.Id);
-                }
-                catch (Exception exception)
-                {
-                    _LogError($"No Bands Inventory data found. If happened before May 2022 then the feature hasn't been released and this can be ignored. If after then look into this", exception);
-                    return null;
-                }
-
-                if (planBuyingBandInventoryStations == null)
-                {
-                    return null;
-                }
-
-                planBuyingBandInventoryStations.Details.ForEach(planBuyingBandInventoryStation =>
-                {
-                    planBuyingBandInventoryStation.RepFirm = planBuyingBandInventoryStation.RepFirm ?? planBuyingBandInventoryStation.LegacyCallLetters;
-                    planBuyingBandInventoryStation.OwnerName = planBuyingBandInventoryStation.OwnerName ?? planBuyingBandInventoryStation.LegacyCallLetters;
-                });
-
-                if (planBuyingFilter != null)
-                {
-                    if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
-                    {
-                        buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                        planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }
-                    else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
-                    {
-                        buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
-                        planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
-                    }
-                    else if (planBuyingFilter.OwnerNames?.Any() ?? false)
-                    {
-                        buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                        planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }
-                }
-
-                if (planBuyingBandInventoryStations.PostingType != postingType)
-                {
-                    foreach (var details in planBuyingBandInventoryStations.Details)
-                    {
-                        var temp = PostingTypeConversionHelper.ConvertImpressions(details.Impressions,
-                            planBuyingBandInventoryStations.PostingType, details.PostingTypeConversionRate);
-                        details.Impressions = temp;
-                    }
-                }
-
-                planBuyingBands = _PlanBuyingBandCalculationEngine.Calculate(planBuyingBandInventoryStations, buyingApiResults, latestParametersForPlanBuyingJob);
-                planBuyingBands?.Details.OrderBy(p => p.MinBand).ToList();
+                return null;
             }
-            else
+            buyingApiResults.AllocatedSpots.ForEach(allocatedSpot =>
             {
-                planBuyingBands = _PlanBuyingRepository.GetPlanBuyingBandByJobId(job.Id, postingType, spotAllocationModelMode);
+                allocatedSpot.RepFirm = allocatedSpot.RepFirm ?? allocatedSpot.LegacyCallLetters;
+                allocatedSpot.OwnerName = allocatedSpot.OwnerName ?? allocatedSpot.LegacyCallLetters;
+            });
+
+            var planBuyingBandInventoryStations = new PlanBuyingBandInventoryStationsDto();
+            try
+            {
+                planBuyingBandInventoryStations = _PlanBuyingRepository.GetPlanBuyingBandInventoryStations(job.Id);
             }
-            if (planBuyingBands == null)
+            catch (Exception exception)
+            {
+                _LogError($"No Bands Inventory data found. If happened before May 2022 then the feature hasn't been released and this can be ignored. If after then look into this", exception);
+                return null;
+            }
+
+            if (planBuyingBandInventoryStations == null)
             {
                 return null;
             }
 
+            planBuyingBandInventoryStations.Details.ForEach(planBuyingBandInventoryStation =>
+            {
+                planBuyingBandInventoryStation.RepFirm = planBuyingBandInventoryStation.RepFirm ?? planBuyingBandInventoryStation.LegacyCallLetters;
+                planBuyingBandInventoryStation.OwnerName = planBuyingBandInventoryStation.OwnerName ?? planBuyingBandInventoryStation.LegacyCallLetters;
+            });
+
+            if (planBuyingFilter != null)
+            {
+                if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
+                {
+                    buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                    planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                }
+                else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
+                {
+                    buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
+                    planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
+                }
+                else if (planBuyingFilter.OwnerNames?.Any() ?? false)
+                {
+                    buyingApiResults.AllocatedSpots = buyingApiResults.AllocatedSpots.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                    planBuyingBandInventoryStations.Details = planBuyingBandInventoryStations.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                }
+            }
+
+            if (planBuyingBandInventoryStations.PostingType != postingType)
+            {
+                foreach (var details in planBuyingBandInventoryStations.Details)
+                {
+                    var temp = PostingTypeConversionHelper.ConvertImpressions(details.Impressions,
+                        planBuyingBandInventoryStations.PostingType, details.PostingTypeConversionRate);
+                    details.Impressions = temp;
+                }
+            }
+
+            planBuyingBands = _PlanBuyingBandCalculationEngine.Calculate(planBuyingBandInventoryStations, buyingApiResults, latestParametersForPlanBuyingJob);
+            planBuyingBands?.Details.OrderBy(p => p.MinBand).ToList();
+            if (planBuyingBands == null)
+            {
+                return null;
+            }
             _PlanBuyingBandCalculationEngine.ConvertImpressionsToUserFormat(planBuyingBands);
             return planBuyingBands;
         }
@@ -2524,39 +2506,18 @@ namespace Services.Broadcast.ApplicationServices.Plan
         public PlanBuyingResultMarketsDto GetMarkets(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
-            if (_IsBuyExpRepOrgEnabled.Value)
+            bool isConversionRequired = false;
+            var stationResult = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
+            if (stationResult == null)
             {
-                bool isConversionRequired = false;
-                var stationResult = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
-                if (stationResult == null)
-                {
-                    return null;
-                }
-                var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
-                var plan = _PlanRepository.GetPlan(planId);
-
-                var aggregatedResult = _PlanBuyingMarketResultsEngine.CalculateAggregatedResultOfMarket(stationResult, marketCoverages, plan);
-                _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(aggregatedResult);
-                return aggregatedResult;
+                return null;
             }
-            else
-            {
-                var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
+            var marketCoverages = _MarketCoverageRepository.GetMarketsWithLatestCoverage();
+            var plan = _PlanRepository.GetPlan(planId);
 
-                if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
-                {
-                    return null;
-                }
-                postingType = _ResolvePostingType(planId, postingType);
-                var results = _PlanBuyingRepository.GetPlanBuyingResultMarketsByJobId(job.Id, postingType, spotAllocationModelMode);
-                if (results == null)
-                {
-                    return null;
-                }
-                _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(results);
-
-                return results;
-            }
+            var aggregatedResult = _PlanBuyingMarketResultsEngine.CalculateAggregatedResultOfMarket(stationResult, marketCoverages, plan);
+            _PlanBuyingMarketResultsEngine.ConvertImpressionsToUserFormat(aggregatedResult);
+            return aggregatedResult;
         }
 
         /// <inheritdoc />
@@ -2575,121 +2536,62 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             result.Details = result.Details.Select(w => { w.RepFirm = w.RepFirm ?? w.LegacyCallLetters; w.OwnerName = w.OwnerName ?? w.LegacyCallLetters; return w; }).ToList();
 
-            if (_IsBuyExpRepOrgEnabled.Value)
+            if (planBuyingFilter != null)
             {
-                if (planBuyingFilter != null)
+                if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
                 {
-                    if ((planBuyingFilter.RepFirmNames?.Any() ?? false) && (planBuyingFilter.OwnerNames?.Any() ?? false))
-                    {
-                        result.Details = result.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }
-                    else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
-                    {
-                        result.Details = result.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
-                    }
-                    else if (planBuyingFilter.OwnerNames?.Any() ?? false)
-                    {
-                        result.Details = result.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
-                    }
+                    result.Details = result.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm) && planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
                 }
-
-                var aggStationResult = _PlanBuyingStationCalculationEngine.CalculateAggregateOfStations(result);
-                if (isConversionRequired)
+                else if (planBuyingFilter.RepFirmNames?.Any() ?? false)
                 {
-                    _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(aggStationResult);
+                    result.Details = result.Details.Where(x => planBuyingFilter.RepFirmNames.Contains(x.RepFirm)).ToList();
                 }
-                return aggStationResult;
+                else if (planBuyingFilter.OwnerNames?.Any() ?? false)
+                {
+                    result.Details = result.Details.Where(x => planBuyingFilter.OwnerNames.Contains(x.OwnerName)).ToList();
+                }
             }
 
-            _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(result);
-
-            return result;
+            var aggStationResult = _PlanBuyingStationCalculationEngine.CalculateAggregateOfStations(result);
+            if (isConversionRequired)
+            {
+                _PlanBuyingStationCalculationEngine.ConvertImpressionsToUserFormat(aggStationResult);
+            }
+            return aggStationResult;
         }
 
         /// <inheritdoc />
         public PlanBuyingResultOwnershipGroupDto GetBuyingOwnershipGroups(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
+            bool isConversionRequired = false;
+            var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
 
-            if (_IsBuyExpRepOrgEnabled.Value)
+            if (result == null)
             {
-                bool isConversionRequired = false;
-                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
-
-                if (result == null)
-                {
-                    return null;
-                }
-
-                var aggResult = _PlanBuyingOwnershipGroupEngine.CalculateAggregateOfOwnershipGroup(result);
-                _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(aggResult);
-                return aggResult;
-            }
-            else
-            {
-                var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
-
-                if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
-                {
-                    return null;
-                }
-
-                postingType = _ResolvePostingType(planId, postingType);
-
-                PlanBuyingResultOwnershipGroupDto results = _PlanBuyingRepository.GetBuyingOwnershipGroupsByJobId(job.Id, postingType, spotAllocationModelMode);
-
-                if (results == null)
-                {
-                    return null;
-                }
-
-                _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(results);
-
-                return results;
+                return null;
             }
 
+            var aggResult = _PlanBuyingOwnershipGroupEngine.CalculateAggregateOfOwnershipGroup(result);
+            _PlanBuyingOwnershipGroupEngine.ConvertImpressionsToUserFormat(aggResult);
+            return aggResult;
         }
 
         /// <inheritdoc />
         public PlanBuyingResultRepFirmDto GetBuyingRepFirms(int planId, PostingTypeEnum? postingType,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Efficiency, PlanBuyingFilterDto planBuyingFilter = null)
         {
-            if (_IsBuyExpRepOrgEnabled.Value)
+            bool isConversionRequired = false;
+            var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
+
+            if (result == null)
             {
-                bool isConversionRequired = false;
-                var result = GetStations(planId, postingType, spotAllocationModelMode, planBuyingFilter, isConversionRequired);
-
-                if (result == null)
-                {
-                    return null;
-                }
-
-                var aggResult = _PlanBuyingRepFirmEngine.CalculateAggregateOfRepFirm(result);
-                _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(aggResult);
-                return aggResult;
+                return null;
             }
-            else
-            {
-                var job = _PlanBuyingRepository.GetLatestBuyingJob(planId);
 
-                if (job == null || job.Status != BackgroundJobProcessingStatus.Succeeded)
-                {
-                    return null;
-                }
-
-                postingType = _ResolvePostingType(planId, postingType);
-
-                PlanBuyingResultRepFirmDto results = _PlanBuyingRepository.GetBuyingRepFirmsByJobId(job.Id, postingType, spotAllocationModelMode);
-
-                if (results == null)
-                {
-                    return null;
-                }
-
-                _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(results);
-
-                return results;
-            }
+            var aggResult = _PlanBuyingRepFirmEngine.CalculateAggregateOfRepFirm(result);
+            _PlanBuyingRepFirmEngine.ConvertImpressionsToUserFormat(aggResult);
+            return aggResult;
         }
 
         internal int _GetPricingModelVersion()
@@ -2716,7 +2618,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         }
 
-        public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate,bool isProgramLineupAllocationByAffiliateEnabled = false)
+        public ProgramLineupReportData GetProgramLineupReportData(ProgramLineupReportRequest request, DateTime currentDate, bool isProgramLineupAllocationByAffiliateEnabled = false)
         {
             if (request.SelectedPlans.IsEmpty())
                 throw new CadentException("Choose at least one plan");
