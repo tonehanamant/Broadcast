@@ -55,9 +55,7 @@ namespace Services.Broadcast.Entities.Campaign
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         internal List<LookupDto> _AllSpotLengths;
         private readonly Dictionary<int, double> _SpotLengthDeliveryMultipliers;
-        private static List<StandardDaypartDto> _StandardDaypartList;        
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsCampaignExportTotalMonthlyCostEnabled;
+        private static List<StandardDaypartDto> _StandardDaypartList;                      
 
         /// <summary>
         /// DO NOT CONSUME outside of Unit Tests.
@@ -87,10 +85,7 @@ namespace Services.Broadcast.Entities.Campaign
             _AllSpotLengths = spotLengths;
             _SpotLengthDeliveryMultipliers = spotLengthDeliveryMultipliers;
             _StandardDaypartList = standardDayparts;
-            HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
-            _FeatureToggleHelper = featureToggleHelper; 
-            _IsCampaignExportTotalMonthlyCostEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST));
-
+            HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());            
             List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans, planPricingResultsDayparts);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
                 , guaranteedDemos, orderedAudiences, dateTimeEngine);
@@ -661,13 +656,10 @@ namespace Services.Broadcast.Entities.Campaign
                 WeeksStartDate = firstTable.WeeksStartDate,
                 Months = firstTable.Months
             };
-            if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
+            for (int i = 0; i < firstTable.Months.Count; i++)
             {
-                for (int i = 0; i < firstTable.Months.Count; i++)
-                {
-                    tableData.MonthlyCostValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
-                }
-            }
+                tableData.MonthlyCostValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
+            }           
             for (int i = 0; i < tableData.TotalWeeksInQuarter; i++)
             {
                 tableData.UnitsValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.UnitsValues[i])));
@@ -762,13 +754,10 @@ namespace Services.Broadcast.Entities.Campaign
             tablesInQuarterDaypart.AddRange(finalSummaryTable);
 
             _CalculateTotalsForFlowChartTableSummary(tableData);
-            if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
+            for (int i = 0; i < tableData.Months.Count; i++)
             {
-                for (int i = 0; i < tableData.Months.Count; i++)
-                {
-                    tableData.MonthlyCostValues.Add(afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
-                }
-            }
+                tableData.MonthlyCostValues.Add(afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
+            }            
             FlowChartQuarterTables.Add(tableData);
 
         }
@@ -879,11 +868,8 @@ namespace Services.Broadcast.Entities.Campaign
                                         //add the tuple to the Month array
                                         newTable.Months.Add((monthGroup.Key.MediaMonthName, weeksInMonth));
                                         var monthItems = monthGroup.ToList();
-                                        if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
-                                        {
-                                            var monthlyCost = monthGroup.Sum(y => y.TotalCost);
-                                            newTable.MonthlyCostValues.Add(monthlyCost);
-                                        }
+                                        var monthlyCost = monthGroup.Sum(y => y.TotalCost);
+                                        newTable.MonthlyCostValues.Add(monthlyCost);
                                         monthItems
                                                 .GroupBy(x => x.WeekStartDate)
                                                 .ToList()

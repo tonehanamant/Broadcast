@@ -1641,61 +1641,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
 
-        [Test]
-        public void GetAndValidateCampaignReportDataWithCustomDaypart_WhenToggleTrue()
-        {
-            // Arrange
-            var planOne = _GetBasePlanForCampaignExport();
-            planOne.Name = "Plan One";
-
-            //change daypart start/end time
-            var planTwo = _GetBasePlanForCampaignExport();
-            planTwo.Id++;
-            planTwo.Name = "Plan Two";
-            planTwo.Dayparts.First().StartTimeSeconds = 42000;
-            planTwo.Dayparts.First().EndTimeSeconds = 44999;
-
-            var plansDict = new Dictionary<int, PlanDto>
-            {
-                { planOne.Id, planOne },
-                { planTwo.Id, planTwo },
-            };
-
-            var campaignId = planOne.CampaignId;
-            var request = new CampaignReportRequest
-            {
-                CampaignId = campaignId,
-                ExportType = CampaignExportTypeEnum.Proposal,
-                SelectedPlans = new List<int> { planOne.Id, planTwo.Id }
-            };
-            var campaign = _GetCampaignForExport(campaignId, new List<PlanDto> { planOne, planTwo });
-            var campaignLocksWell = true;
-            var agency = new AgencyDto { Id = 1, MasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B"), Name = "Agent1" };
-            var advertiser = new AdvertiserDto { Id = 2, MasterId = new Guid("1806450A-E0A3-416D-B38D-913FB5CF3879"), Name = "Advertiser1", AgencyId = 1, AgencyMasterId = new Guid("89AB30C5-23A7-41C1-9B7D-F5D9B41DBE8B") };
-
-            _CampaignRepositoryMock
-                .Setup(x => x.GetCampaign(campaignId))
-                .Returns(campaign);
-            _PlanRepositoryMock.Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
-                .Returns<int, int?>((i, b) => plansDict[i]);
-            _LockingManagerApplicationServiceMock
-                .Setup(x => x.GetLockObject(It.IsAny<string>()))
-                .Returns(new LockResponse { Success = campaignLocksWell });
-            _AabEngine.Setup(x => x.GetAgency(It.IsAny<Guid>()))
-                .Returns(agency);
-            _AabEngine.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns(advertiser);
-            _DateTimeEngineMock
-                .Setup(x => x.GetCurrentMoment())
-                .Returns(new DateTime(2020, 01, 01));
-
-            var tc = _BuildCampaignService();
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST] = true;
-            // Act
-            var response = tc.GetAndValidateCampaignReportData(request);
-            // Assert
-            Approvals.Verify(IntegrationTestHelper.ConvertToJson(response));
-        }
+       
         [Test]
         public void GetAndValidateCampaignReportDataWithCustomDaypart()
         {
@@ -2889,9 +2835,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns<DateTime, DateTime>(MediaMonthAndWeekTestData.GetMediaMonthsIntersecting);
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeeksByMediaMonth(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeeksByMediaMonth);
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST, false);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION, false);
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();                  
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             return new CampaignService(
                 _DataRepositoryFactoryMock.Object,

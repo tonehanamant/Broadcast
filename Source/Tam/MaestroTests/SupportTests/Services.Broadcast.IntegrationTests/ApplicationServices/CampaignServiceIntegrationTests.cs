@@ -54,8 +54,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             _CampaignService = IntegrationTestApplicationServiceFactory.GetApplicationService<ICampaignService>();
             _CampaignSummaryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<ICampaignSummaryRepository>();
-            _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();
-            _SetFeatureToggle(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST, false);
+            _WeeklyBreakdownEngine = IntegrationTestApplicationServiceFactory.GetApplicationService<IWeeklyBreakdownEngine>();            
             _FeatureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
         }
 

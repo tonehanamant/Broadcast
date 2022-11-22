@@ -18,15 +18,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         private string[] hiatusDaysColumn = { "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P" };
 
-        private readonly string TABLE_12_WEEKS = "A2:O9";
-
-        private readonly string TABLE_13_WEEKS_MONTH_1 = "A12:P19";   //month 1 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_2 = "A22:P29";   //month 2 has 5 weeks
-        private readonly string TABLE_13_WEEKS_MONTH_3 = "A32:P39";   //month 3 has 5 weeks
-
-        private readonly string TABLE_14_WEEKS_MONTH_1 = "A62:Q69";   //month 2 & 3 have 5 weeks
-        private readonly string TABLE_14_WEEKS_MONTH_2 = "A52:Q59";   //month 1 & 3 have 5 weeks
-        private readonly string TABLE_14_WEEKS_MONTH_3 = "A42:Q49";   //month 1 & 2 have 5 weeks
+        private readonly string TABLE_12_WEEKS = "A2:O9";       
 
         private readonly string TABLE_13_WEEKS_MONTH_1_V2 = "A12:P21";   //month 1 has 5 weeks
         private readonly string TABLE_13_WEEKS_MONTH_2_V2 = "A22:P31";   //month 2 has 5 weeks
@@ -44,15 +36,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private int currentRowIndex = 0;
 
         private readonly ExcelWorksheet WORKSHEET;
-        private readonly ExcelWorksheet TEMPLATES_WORKSHEET;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly Lazy<bool> _IsCampaignExportTotalMonthlyCostEnabled;
+        private readonly ExcelWorksheet TEMPLATES_WORKSHEET;           
         public FlowChartReportGenerator(ExcelWorksheet flowChartWorksheet, ExcelWorksheet templatesWorksheet, IFeatureToggleHelper featureToggleHelper)
         {
             WORKSHEET = flowChartWorksheet;
-            TEMPLATES_WORKSHEET = templatesWorksheet;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsCampaignExportTotalMonthlyCostEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.CAMPAIGN_EXPORT_TOTAL_MONTHLY_COST));
+            TEMPLATES_WORKSHEET = templatesWorksheet;           
         }
 
         public void PopulateFlowChartTab(CampaignReportData campaignReportData, string dayparts)
@@ -74,44 +62,22 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
 
         private string _FindTemplateTableAddress(ExcelWorksheet templateTablesWorksheet, FlowChartQuarterTableData table)
         {
-            string result = string.Empty;
-            if (_IsCampaignExportTotalMonthlyCostEnabled.Value)
+            string result = string.Empty;            
+            switch (table.TotalWeeksInQuarter)
             {
-                switch (table.TotalWeeksInQuarter)
-                {
-                    case 12:
-                        result = TABLE_12_WEEKS;
-                        break;
-                    case 13:
-                        if (table.Months[0].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_1_V2;
-                        if (table.Months[1].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_2_V2;
-                        if (table.Months[2].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_3_V2;
-                        break;
-                    case 14:
-                        if (table.Months[0].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_1_V2;
-                        if (table.Months[1].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_2_V2;
-                        if (table.Months[2].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_3_V2;
-                        break;
-                }
-            }
-            else
-            {
-                switch (table.TotalWeeksInQuarter)
-                {
-                    case 12:
-                        result = TABLE_12_WEEKS;
-                        break;
-                    case 13:
-                        if (table.Months[0].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_1;
-                        if (table.Months[1].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_2;
-                        if (table.Months[2].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_3;
-                        break;
-                    case 14:
-                        if (table.Months[0].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_1;
-                        if (table.Months[1].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_2;
-                        if (table.Months[2].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_3;
-                        break;
-                }
+                case 12:
+                    result = TABLE_12_WEEKS;
+                    break;
+                case 13:
+                    if (table.Months[0].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_1_V2;
+                    if (table.Months[1].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_2_V2;
+                    if (table.Months[2].WeeksInMonth == FIVE_WEEKS) result = TABLE_13_WEEKS_MONTH_3_V2;
+                    break;
+                case 14:
+                    if (table.Months[0].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_1_V2;
+                    if (table.Months[1].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_2_V2;
+                    if (table.Months[2].WeeksInMonth == FOUR_WEEKS) result = TABLE_14_WEEKS_MONTH_3_V2;
+                    break;
             }
             return string.IsNullOrWhiteSpace(result)
                 ? throw new ApplicationException($"Could not find the correct flow chart template table. Quarter {table.QuarterLabel}")
@@ -186,7 +152,7 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
             currentRowIndex++;
 
             //add Total Monthly Cost            
-            if (_IsCampaignExportTotalMonthlyCostEnabled.Value && !table.TableTitle.Contains("ADU"))
+            if (!table.TableTitle.Contains("ADU"))
             {
                 flowChartWorksheet.Cells[currentRowIndex, FIRST_MONTH_COLUMN_INDEX]
                     .Value = table.MonthlyCostValues[0];
