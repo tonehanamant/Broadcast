@@ -30,8 +30,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(standardDaypartRepository.Object);
 
             var featureToggleHelper = new Mock<IFeatureToggleHelper>();
-            featureToggleHelper.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART))
-                .Returns(enableCustomDaypart);
 
             // create the service for return
             var service = new StandardDaypartService(repoFactory.Object, featureToggleHelper.Object);

@@ -27,7 +27,6 @@ namespace Services.Broadcast.ApplicationServices
 
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
-        private Lazy<bool> _IsCustomDaypartEnabled;
 
 
         public StandardDaypartService(IDataRepositoryFactory broadcastDataRepositoryFactory, IFeatureToggleHelper featureToggleHelper)
@@ -35,19 +34,11 @@ namespace Services.Broadcast.ApplicationServices
         {
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _FeatureToggleHelper = featureToggleHelper;
-            _IsCustomDaypartEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART));
         }
 
         public List<StandardDaypartDto> GetAllStandardDayparts()
         {
             var dayparts = _StandardDaypartRepository.GetAllStandardDayparts();
-
-            if (!_IsCustomDaypartEnabled.Value)
-            {
-                var filtered = dayparts.Where(s => !s.Code.Equals(CUSTOM_DAYPART_SPORTS_CODE)).ToList();
-                dayparts = filtered;
-            }
-          
             return dayparts;
         }
 
@@ -55,12 +46,6 @@ namespace Services.Broadcast.ApplicationServices
         public List<StandardDaypartFullDto> GetAllStandardDaypartsWithAllData()
         {
             var standardDaypartDtos = _StandardDaypartRepository.GetAllStandardDaypartsWithAllData();
-
-            if (!_IsCustomDaypartEnabled.Value)
-            {
-                var filtered = standardDaypartDtos.Where(s => s.DaypartType != DaypartTypeEnum.Sports).ToList();
-                standardDaypartDtos = filtered;
-            }
 
             DaypartTimeHelper.AddOneSecondToEndTime(standardDaypartDtos);
 

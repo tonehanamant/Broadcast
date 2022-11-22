@@ -18,8 +18,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         public void SetUp()
         {
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART))
-                .Returns(false);
             _DaypartTypeService = new DaypartTypeService(
                _FeatureToggleMock.Object
               );
@@ -37,12 +35,9 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
         [Test]
         [TestCase(true)]
-        [TestCase(false)]
         public void GetDaypartTypes_DaypartTypesToggle(bool toggleEnabled)
         {
             // Arrange
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_CUSTOM_DAYPART))
-                .Returns(toggleEnabled);
            
             int expectedCount = toggleEnabled ? 4 : 3;           
             var daypartTypes = _DaypartTypeService.GetDaypartTypes();
