@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Net.Http;
@@ -39,7 +40,7 @@ namespace Services.Broadcast.Clients
 
             if (_apiTokenMap.TryGetValue(appName, out var apiTokenInfo))
             {
-                if (apiTokenInfo.ExpirationDate <= (DateTime.UtcNow - TimeSpan.FromMinutes(5)))
+                if (TokenExpiryCheckHelper.HasTokenExpired(apiTokenInfo.ExpirationDate, DateTime.Now))
                 {
                     apiTokenInfo = await _UpdateApiTokenAsync(umApiBaseUrl, appName, applicationId);
                 }

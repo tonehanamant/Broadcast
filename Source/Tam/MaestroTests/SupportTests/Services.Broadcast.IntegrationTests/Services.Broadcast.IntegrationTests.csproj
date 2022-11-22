@@ -607,6 +607,7 @@
     <Compile Include="UnitTests\Helpers\PlanPricingBuyingFileHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\ProgramDeDuperHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\ProgramRestrictionsHelperUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\TokenExpiryCheckHelperUnitTest.cs" />
     <Compile Include="UnitTests\Helpers\WebUtilityHelperUnitTests.cs" />
     <Compile Include="UnitTests\InventoryRatingsProcessing\MediaMonthCrunchStatusTests.cs" />
     <Compile Include="UnitTests\PostingBookServiceTests.cs" />

@@ -1089,6 +1089,7 @@
     <Compile Include="Helpers\PostingTypeConversionHelper.cs" />
     <Compile Include="Helpers\ProgramDeDuperHelper.cs" />
     <Compile Include="Helpers\ProgramRestrictionsHelper.cs" />
+    <Compile Include="Helpers\TokenExpiryCheckHelper.cs" />
     <Compile Include="Helpers\WebUtilityHelper.cs" />
     <Compile Include="Helpers\KeyHelper.cs" />
     <Compile Include="BusinessEngines\PlanPricingInventoryQuarterCalculatorEngine.cs" />
