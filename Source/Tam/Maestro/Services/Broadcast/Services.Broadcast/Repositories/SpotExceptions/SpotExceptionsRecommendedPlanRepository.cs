@@ -166,14 +166,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         /// <param name="decisionsToAdd">The decisions to add.</param>
         void UpdateRecommendedPlanDoneDecisionsAsync(List<SpotExceptionsRecommendedPlanSpotDecisionsDoneDto> decisionsToAdd);
-
-        /// <summary>
-        /// Gets the name of the market.
-        /// </summary>
-        /// <param name="marketCode">The market code.</param>
-        /// <returns>
-        /// </returns>
-        string GetMarketName(int marketCode);
     }
 
     public class SpotExceptionsRecommendedPlanRepository : BroadcastRepositoryBase, ISpotExceptionsRecommendedPlanRepository
@@ -274,14 +266,13 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         x => x.id, y => y.spot_exceptions_recommended_plan_id,
                         (x, y) => new { plan = x, detail = y }
                     )
-                    .Join(context.markets, x => x.plan.market_code, y => y.market_code, (x, y) => new { marketPlan = x, market = y })
-                    .Join(context.spot_lengths, x => x.marketPlan.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
-                    .Where(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.plan.program_air_time >= weekStartDate
-                    && recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.plan.program_air_time <= weekEndDate
-                    && recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.detail.recommended_plan_id == planId)
+                    .Join(context.spot_lengths, x => x.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
+                    .Where(recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.lengthPlan.plan.program_air_time >= weekStartDate
+                    && recommendedPlanSpotsToDoDb.lengthPlan.plan.program_air_time <= weekEndDate
+                    && recommendedPlanSpotsToDoDb.lengthPlan.detail.recommended_plan_id == planId)
                     .GroupJoin(
                         context.stations,
-                        recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.lengthPlan.marketPlan.plan.station_legacy_call_letters,
+                        recommendedPlanSpotsToDoDb => recommendedPlanSpotsToDoDb.lengthPlan.plan.station_legacy_call_letters,
                         stationDb => stationDb.legacy_call_letters,
                         (recommendedPlanSpotsToDoDb, stationDb) => new { recommendedPlansToDo = recommendedPlanSpotsToDoDb, Station = stationDb.FirstOrDefault() })
                     .ToList();
@@ -290,19 +281,19 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 {
                     return new SpotExceptionsRecommendedPlanSpotsDto
                     {
-                        Id = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.id,
-                        EstimateId = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.estimate_id,
-                        IsciName = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.house_isci,
-                        ProgramAirTime = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.program_air_time,
-                        RecommendedPlanName = x.recommendedPlansToDo.lengthPlan.marketPlan.detail.plan.name,
-                        PlanId = x.recommendedPlansToDo.lengthPlan.marketPlan.detail.recommended_plan_id,
-                        Impressions = x.recommendedPlansToDo.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        Id = x.recommendedPlansToDo.lengthPlan.plan.id,
+                        EstimateId = x.recommendedPlansToDo.lengthPlan.plan.estimate_id,
+                        IsciName = x.recommendedPlansToDo.lengthPlan.plan.house_isci,
+                        ProgramAirTime = x.recommendedPlansToDo.lengthPlan.plan.program_air_time,
+                        RecommendedPlanName = x.recommendedPlansToDo.lengthPlan.detail.plan.name,
+                        PlanId = x.recommendedPlansToDo.lengthPlan.detail.recommended_plan_id,
+                        Impressions = x.recommendedPlansToDo.lengthPlan.detail.spot_delivered_impressions,
                         SpotLength = x.recommendedPlansToDo.spotLength.length,
-                        ProgramName = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.program_name,
-                        InventorySource = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.inventory_source,
-                        Affiliate = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.affiliate,
-                        MarketName = x.recommendedPlansToDo.lengthPlan.market.geography_name,
-                        Station = x.recommendedPlansToDo.lengthPlan.marketPlan.plan.station_legacy_call_letters
+                        ProgramName = x.recommendedPlansToDo.lengthPlan.plan.program_name,
+                        InventorySource = x.recommendedPlansToDo.lengthPlan.plan.inventory_source,
+                        Affiliate = x.recommendedPlansToDo.lengthPlan.plan.affiliate,
+                        MarketName = x.Station?.market?.geography_name,
+                        Station = x.recommendedPlansToDo.lengthPlan.plan.station_legacy_call_letters
                     };
 
                 }).ToList();
@@ -329,15 +320,14 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     x => x.id, y => y.spot_exceptions_recommended_plan_done_id,
                     (x, y) => new { plan = x, detail = y }
                 )
-                .Join(context.markets, x => x.plan.market_code, y => y.market_code, (x, y) => new { marketPlan = x, market = y })
-                .Join(context.spot_lengths, x => x.marketPlan.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
-                .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time >= weekStartDate
-                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time <= weekEndDate
-                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.recommended_plan_id == planId
-                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.spot_exceptions_recommended_plan_done_decisions.Select(x => x.synced_at).FirstOrDefault() == null)
+                .Join(context.spot_lengths, x => x.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
+                .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.plan.program_air_time >= weekStartDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.plan.program_air_time <= weekEndDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.detail.recommended_plan_id == planId
+                && recommendedPlanSpotsDoneDb.lengthPlan.detail.spot_exceptions_recommended_plan_done_decisions.Select(x => x.synced_at).FirstOrDefault() == null)
                 .GroupJoin(
                     context.stations,
-                    recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.station_legacy_call_letters,
+                    recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.plan.station_legacy_call_letters,
                     stationDb => stationDb.legacy_call_letters,
                     (recommendedPlanSpotsDoneDb, stationDb) => new { recommendedPlansDone = recommendedPlanSpotsDoneDb, Station = stationDb.FirstOrDefault() })
                 .ToList();
@@ -346,19 +336,19 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 {
                     return new SpotExceptionsRecommendedPlanSpotsDto
                     {
-                        Id = x.recommendedPlansDone.lengthPlan.marketPlan.plan.id,
-                        EstimateId = x.recommendedPlansDone.lengthPlan.marketPlan.plan.estimate_id,
-                        IsciName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.house_isci,
-                        ProgramAirTime = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_air_time,
-                        RecommendedPlanName = x.recommendedPlansDone.lengthPlan.marketPlan.detail.plan.name,
-                        PlanId = x.recommendedPlansDone.lengthPlan.marketPlan.detail.recommended_plan_id,
-                        Impressions = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        Id = x.recommendedPlansDone.lengthPlan.plan.id,
+                        EstimateId = x.recommendedPlansDone.lengthPlan.plan.estimate_id,
+                        IsciName = x.recommendedPlansDone.lengthPlan.plan.house_isci,
+                        ProgramAirTime = x.recommendedPlansDone.lengthPlan.plan.program_air_time,
+                        RecommendedPlanName = x.recommendedPlansDone.lengthPlan.detail.plan.name,
+                        PlanId = x.recommendedPlansDone.lengthPlan.detail.recommended_plan_id,
+                        Impressions = x.recommendedPlansDone.lengthPlan.detail.spot_delivered_impressions,
                         SpotLength = x.recommendedPlansDone.spotLength.length,
-                        ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
-                        InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,
-                        Affiliate = x.recommendedPlansDone.lengthPlan.marketPlan.plan.affiliate,
-                        MarketName = x.recommendedPlansDone.lengthPlan.market.geography_name,
-                        Station = x.recommendedPlansDone.lengthPlan.marketPlan.plan.station_legacy_call_letters
+                        ProgramName = x.recommendedPlansDone.lengthPlan.plan.program_name,
+                        InventorySource = x.recommendedPlansDone.lengthPlan.plan.inventory_source,
+                        Affiliate = x.recommendedPlansDone.lengthPlan.plan.affiliate,
+                        MarketName = x.Station?.market?.geography_name,
+                        Station = x.recommendedPlansDone.lengthPlan.plan.station_legacy_call_letters
                     };
 
                 }).ToList();
@@ -385,38 +375,37 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     x => x.id, y => y.spot_exceptions_recommended_plan_done_id,
                     (x, y) => new { plan = x, detail = y }
                 )
-                .Join(context.markets, x => x.plan.market_code, y => y.market_code, (x, y) => new { marketPlan = x, market = y })
-                .Join(context.spot_lengths, x => x.marketPlan.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
-                .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time >= weekStartDate
-                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.program_air_time <= weekEndDate
-                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.recommended_plan_id == planId
-                && recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.detail.spot_exceptions_recommended_plan_done_decisions.Select(x => x.synced_at).FirstOrDefault() != null)
+                .Join(context.spot_lengths, x => x.plan.spot_length_id, y => y.id, (x, y) => new { lengthPlan = x, spotLength = y })
+                .Where(recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.plan.program_air_time >= weekStartDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.plan.program_air_time <= weekEndDate
+                && recommendedPlanSpotsDoneDb.lengthPlan.detail.recommended_plan_id == planId
+                && recommendedPlanSpotsDoneDb.lengthPlan.detail.spot_exceptions_recommended_plan_done_decisions.Select(x => x.synced_at).FirstOrDefault() != null)
                 .GroupJoin(
                     context.stations,
-                    recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.marketPlan.plan.station_legacy_call_letters,
+                    recommendedPlanSpotsDoneDb => recommendedPlanSpotsDoneDb.lengthPlan.plan.station_legacy_call_letters,
                     stationDb => stationDb.legacy_call_letters,
                     (recommendedPlanSpotsDoneDb, stationDb) => new { recommendedPlansDone = recommendedPlanSpotsDoneDb, Station = stationDb.FirstOrDefault() })
                 .ToList();
 
                 var planSpotsDone = planDetailsDone.Select(x =>
                 {
-                    var decision = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_exceptions_recommended_plan_done_decisions.First();
+                    var decision = x.recommendedPlansDone.lengthPlan.detail.spot_exceptions_recommended_plan_done_decisions.First();
                     return new SpotExceptionsRecommendedPlanSpotsDto
                     {
-                        Id = x.recommendedPlansDone.lengthPlan.marketPlan.plan.id,
-                        EstimateId = x.recommendedPlansDone.lengthPlan.marketPlan.plan.estimate_id,
-                        IsciName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.house_isci,
-                        ProgramAirTime = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_air_time,
-                        PlanId = x.recommendedPlansDone.lengthPlan.marketPlan.detail.recommended_plan_id,
-                        RecommendedPlanName = x.recommendedPlansDone.lengthPlan.marketPlan.detail.plan.name,
-                        Impressions = x.recommendedPlansDone.lengthPlan.marketPlan.detail.spot_delivered_impressions,
+                        Id = x.recommendedPlansDone.lengthPlan.plan.id,
+                        EstimateId = x.recommendedPlansDone.lengthPlan.plan.estimate_id,
+                        IsciName = x.recommendedPlansDone.lengthPlan.plan.house_isci,
+                        ProgramAirTime = x.recommendedPlansDone.lengthPlan.plan.program_air_time,
+                        PlanId = x.recommendedPlansDone.lengthPlan.detail.recommended_plan_id,
+                        RecommendedPlanName = x.recommendedPlansDone.lengthPlan.detail.plan.name,
+                        Impressions = x.recommendedPlansDone.lengthPlan.detail.spot_delivered_impressions,
                         SyncedTimestamp = decision.synced_at.ToString(),
                         SpotLength = x.recommendedPlansDone.spotLength.length,
-                        ProgramName = x.recommendedPlansDone.lengthPlan.marketPlan.plan.program_name,
-                        InventorySource = x.recommendedPlansDone.lengthPlan.marketPlan.plan.inventory_source,
-                        Affiliate = x.recommendedPlansDone.lengthPlan.marketPlan.plan.affiliate,
-                        MarketName = x.recommendedPlansDone.lengthPlan.market.geography_name,
-                        Station = x.recommendedPlansDone.lengthPlan.marketPlan.plan.station_legacy_call_letters
+                        ProgramName = x.recommendedPlansDone.lengthPlan.plan.program_name,
+                        InventorySource = x.recommendedPlansDone.lengthPlan.plan.inventory_source,
+                        Affiliate = x.recommendedPlansDone.lengthPlan.plan.affiliate,
+                        MarketName = x.Station?.market?.geography_name,
+                        Station = x.recommendedPlansDone.lengthPlan.plan.station_legacy_call_letters
                     };
 
                 }).ToList();
@@ -436,13 +425,13 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
                 var marketFilters = context.spot_exceptions_recommended_plans
-                    .Join(context.markets, x => x.market_code, y => y.market_code, (x, y) => new { plan = x, market = y })
+                    .Join(context.stations, x => x.station_legacy_call_letters, y => y.legacy_call_letters, (x, y) => new { plan = x, station = y })
                     .Where(x => x.plan.program_air_time >= weekStartDate && x.plan.program_air_time <= weekEndDate)
-                    .Select(x => x.market.geography_name)
+                    .Select(x => x.station.market.geography_name ?? "Unknown")
                     .Union(context.spot_exceptions_recommended_plans_done
-                    .Join(context.markets, x => x.market_code, y => y.market_code, (x, y) => new { plan = x, market = y })
+                    .Join(context.stations, x => x.station_legacy_call_letters, y => y.legacy_call_letters, (x, y) => new { plan = x, station = y })
                     .Where(x => x.plan.program_air_time >= weekStartDate && x.plan.program_air_time <= weekEndDate)
-                    .Select(x => x.market.geography_name))
+                    .Select(x => x.station.market.geography_name ?? "Unknown"))
                     .ToList();
 
                 _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
@@ -456,7 +445,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Legacy Call Letters");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
                 var legacyCallLetterFilters = context.spot_exceptions_recommended_plans
@@ -467,7 +456,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     .Select(x => x.station_legacy_call_letters))
                     .ToList();
 
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Legacy Call Letters");
                 return legacyCallLetterFilters;
             }));
         }
@@ -478,7 +467,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+            _LogInfo($"Starting: Retrieving Spot Exceptions Recommended Plan Filters: Inventory Sources");
             return Task.FromResult(_InReadUncommitedTransaction(context =>
             {
                 var inventorySourceFilters = context.spot_exceptions_recommended_plans
@@ -489,7 +478,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     .Select(x => x.inventory_source))
                     .ToList();
 
-                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Markets");
+                _LogInfo($"Finished: Retrieving Spot Exceptions Recommended Plan Filters: Inventory Sources");
                 return inventorySourceFilters;
             }));
         }
@@ -780,19 +769,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 }
 
                 context.SaveChanges();
-            });
-        }
-
-        /// <inheritdoc />
-        public string GetMarketName(int marketCode)
-        {
-            return _InReadUncommitedTransaction(context =>
-            {
-                var marketName = context.markets
-                                .Where(m => m.market_code == marketCode)
-                                .Select(m => m.geography_name)
-                                .Single();
-                return marketName;
             });
         }
 
