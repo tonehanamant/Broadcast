@@ -46,7 +46,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             // TODO SDE : this should be reworked for these to be true, as they are in production
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL] = false;
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPricingApiClient, PricingApiClientStub>();
 
@@ -1928,8 +1927,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public async Task SavePricingResultsTestWithMultiLengthAndEfficiency()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForPricingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -1966,8 +1963,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public async Task GetProgramsForVersion_v2()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForPricingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -2003,8 +1998,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public async Task GetStationsForVersion_V2()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForPricingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -2040,8 +2033,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public async Task GetMarketsForVersion_v2()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForPricingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -2080,8 +2071,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Category("long_running")]
         public async Task GetPricingBandsForVersion_v2()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForPricingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();

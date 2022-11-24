@@ -5,8 +5,6 @@
         public static string USE_TRUE_INDEPENDENT_STATIONS = "broadcast-use-true-independent-stations";
         public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";           
         public static string DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
-        public static string ENABLE_PRICING_EFFICIENCY_MODEL = "broadcast-enable-pricing-efficiency-model";
-        public static string ENABLE_PLAN_MARKET_SOV_CALCULATIONS = "broadcast-enable-plan-market-sov-calculations";
         public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";        
         public static string ENABLE_LOCKING_CONSOLIDATION = "broadcast-enable-locking-consolidation";
         public static string PRICING_MODEL_OPEN_MARKET_INVENTORY = "broadcast-pricing-model-open-market-inventory";

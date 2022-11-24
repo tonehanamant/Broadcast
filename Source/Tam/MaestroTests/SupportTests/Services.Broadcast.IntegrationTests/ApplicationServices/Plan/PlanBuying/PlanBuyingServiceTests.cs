@@ -42,7 +42,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
             _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             // TODO SDE : this should be reworked for these to be true, as they are in production
             //_LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ALLOW_MULTIPLE_CREATIVE_LENGTHS] = false;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL] = false;
 
             IntegrationTestApplicationServiceFactory.Instance.RegisterType<IPlanBuyingApiClient, PlanBuyingApiClientStub>();
             _PlanBuyingService = IntegrationTestApplicationServiceFactory.GetApplicationService<IPlanBuyingService>();
@@ -835,7 +834,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public async void SavePricingResultsTestWithMultiLengthAndEfficiency()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
@@ -867,7 +865,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBandsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
 
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
@@ -899,8 +896,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetStationsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -931,8 +926,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetMarketsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -963,8 +956,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetProgramsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -995,8 +986,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBuyingOwnershipGroupsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();
@@ -1027,8 +1016,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Plan.PlanBuyin
         [Category("long_running")]
         public void GetBuyingRepFirmsWithEfficiencyModelEnabled()
         {
-            _SetFeatureToggle(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, true);
-
             string resultsToVerify;
             var jsonSettings = _GetJsonSettingsForBuyingResults();
             var plan = PlanTestDataHelper.GetPlanForAllocationModelRunMultiSpot();

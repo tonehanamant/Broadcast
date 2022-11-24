@@ -745,17 +745,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return result;
             }
 
-            var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
-
             var jobCompletedWithinLastFiveMinutes = _DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var expectedResultCount = PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
+                var expectedResultCount = PricingExecutionResultExpectedCount();
                 result = ValidatePricingExecutionResult(result, expectedResultCount);
             }
             else
             {
-                var filledInResults = FillInMissingPricingResultsWithEmptyResults(result.Results, isPricingEfficiencyModelEnabled);
+                var filledInResults = FillInMissingPricingResultsWithEmptyResults(result.Results);
                 result.Results = filledInResults;
             }
 
@@ -783,25 +781,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal List<CurrentPricingExecutionResultDto> FillInMissingPricingResultsWithEmptyResults(List<CurrentPricingExecutionResultDto> candidateResults, bool isPricingEfficiencyModelEnabled)
+        internal List<CurrentPricingExecutionResultDto> FillInMissingPricingResultsWithEmptyResults(List<CurrentPricingExecutionResultDto> candidateResults)
         {
             // We only have to worry about the three use cases
             // 1) Neither toggle is enabled
             // 2) isPostingTypeToggleEnabled is enabled and isPricingEfficiencyModelEnabled is not enabled
             // 3) Both are enabled.
             var results = candidateResults.DeepCloneUsingSerialization();
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                return results;
-            }
 
             _AddEmptyPricingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Quality);
             _AddEmptyPricingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Quality);
-
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                return results;
-            }
 
             _AddEmptyPricingResult(results, PostingTypeEnum.NSI, SpotAllocationModelMode.Efficiency);
             _AddEmptyPricingResult(results, PostingTypeEnum.NTI, SpotAllocationModelMode.Efficiency);
@@ -837,26 +826,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        internal int PricingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled)
+        internal int PricingExecutionResultExpectedCount()
         {
-            int expectedResult = 0;
-
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                expectedResult = 1;
-            }
-            else if (!isPricingEfficiencyModelEnabled)
-            {
-                expectedResult = 2;
-            }
-            else if (isPricingEfficiencyModelEnabled)
-            {
-                expectedResult = 3;
-            }
-            else
-            {
-                expectedResult = 6;
-            }
+            int expectedResult = 3;
             return expectedResult;
         }
 
@@ -1158,7 +1130,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private async Task<List<PlanPricingAllocationResult>> _SendPricingRequestsAsync(int jobId, PlanDto plan, List<PlanPricingInventoryProgram> inventory,
             PlanPricingParametersDto planPricingParametersDto, ProprietaryInventoryData proprietaryInventoryData,
-            CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
+            CancellationToken token, bool goalsFulfilledByProprietaryInventory,
             PlanPricingJobDiagnostic diagnostic)
         {
             var results = new List<PlanPricingAllocationResult>();
@@ -1172,9 +1144,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PostingType = plan.PostingType,
                 SpotAllocationModelMode = SpotAllocationModelMode.Quality
             });
-
-            if (isPricingEfficiencyModelEnabled)
-            {
                 results.Add(new PlanPricingAllocationResult
                 {
                     Spots = new List<PlanPricingAllocatedSpot>(),
@@ -1194,7 +1163,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     PostingType = plan.PostingType,
                     SpotAllocationModelMode = SpotAllocationModelMode.Floor
                 });
-            }
 
             if (!goalsFulfilledByProprietaryInventory)
             {
@@ -1271,8 +1239,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // used to tie the logging messages together.
             var processingId = Guid.NewGuid();
             _LogInfo("Starting...", processingId);
-            var isPricingEfficiencyModelEnabled =
-                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
 
             var diagnostic = new PlanPricingJobDiagnostic();
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_TOTAL_DURATION);
@@ -1329,7 +1295,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 //Send it to the DS Model based on the plan posting type, as selected in the plan detail.
                 var modelAllocationResults = await _SendPricingRequestsAsync(jobId, plan, inventory, planPricingParametersDto, proprietaryInventoryData,
-                    token, goalsFulfilledByProprietaryInventory, isPricingEfficiencyModelEnabled, diagnostic);
+                    token, goalsFulfilledByProprietaryInventory, diagnostic);
 
                 token.ThrowIfCancellationRequested();
                 diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);

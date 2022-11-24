@@ -660,17 +660,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 return result;
             }
 
-            var isPricingEfficiencyModelEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
-
             var jobCompletedWithinLastFiveMinutes = _DidBuyingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var expectedResultCount = _GetBuyingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
+                var expectedResultCount = _GetBuyingExecutionResultExpectedCount();
                 result = _ValidateBuyingExecutionResult(result, expectedResultCount);
             }
             else
             {
-                var filledInResults = _FillInMissingBuyingResultsWithEmptyResults(result.Results, postingType, isPricingEfficiencyModelEnabled);
+                var filledInResults = _FillInMissingBuyingResultsWithEmptyResults(result.Results, postingType);
                 result.Results = filledInResults;
             }
 
@@ -698,15 +696,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        internal List<CurrentBuyingExecutionResultDto> _FillInMissingBuyingResultsWithEmptyResults(List<CurrentBuyingExecutionResultDto> candidateResults, PostingTypeEnum postingType,
-            bool isPricingEfficiencyModelEnabled)
+        internal List<CurrentBuyingExecutionResultDto> _FillInMissingBuyingResultsWithEmptyResults(List<CurrentBuyingExecutionResultDto> candidateResults, PostingTypeEnum postingType)
         {
             var results = candidateResults.DeepCloneUsingSerialization();
-
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                return results;
-            }
 
             _AddEmptyBuyingResult(results, postingType, SpotAllocationModelMode.Efficiency);
             _AddEmptyBuyingResult(results, postingType, SpotAllocationModelMode.Floor);
@@ -739,18 +731,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return result;
         }
 
-        internal int _GetBuyingExecutionResultExpectedCount(bool isPricingEfficiencyModelEnabled)
+        internal int _GetBuyingExecutionResultExpectedCount()
         {
-            int expectedResult = 0;
-
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                expectedResult = 1;
-            }
-            else
-            {
-                expectedResult = 3;
-            }
+            int expectedResult = 3;
             return expectedResult;
         }
 
@@ -970,7 +953,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private async Task<List<PlanBuyingAllocationResult>> _SendBuyingRequestsAsync(int jobId, PlanDto plan, List<PlanBuyingInventoryProgram> inventory,
             PlanBuyingParametersDto planBuyingParametersDto, ProprietaryInventoryData proprietaryInventoryData,
-            CancellationToken token, bool goalsFulfilledByProprietaryInventory, bool isPricingEfficiencyModelEnabled,
+            CancellationToken token, bool goalsFulfilledByProprietaryInventory,
             PlanBuyingJobDiagnostic diagnostic)
         {
 
@@ -1070,9 +1053,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var diagnostic = new PlanBuyingJobDiagnostic();
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 
-            var isPricingEfficiencyModelEnabled =
-                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL);
-
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_PROCESSING);
             var planBuyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
             planBuyingJob.Status = BackgroundJobProcessingStatus.Processing;
@@ -1124,7 +1104,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 token.ThrowIfCancellationRequested();
 
                 var modelAllocationResults = await _SendBuyingRequestsAsync(jobId, plan, inventory, planBuyingParametersDto, proprietaryInventoryData,
-                    token, goalsFulfilledByProprietaryInventory, isPricingEfficiencyModelEnabled, diagnostic);
+                    token, goalsFulfilledByProprietaryInventory, diagnostic);
 
                 token.ThrowIfCancellationRequested();
 

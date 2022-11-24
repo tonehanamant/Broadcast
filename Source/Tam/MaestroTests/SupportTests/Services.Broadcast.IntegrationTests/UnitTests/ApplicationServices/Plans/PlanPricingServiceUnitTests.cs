@@ -85,11 +85,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
         protected PlanPricingService _GetService(bool useTrueIndependentStations = false,
-                                                                bool isPricingEfficiencyModelEnabled = false, bool isPostingTypeToggleEnabled = false)
+                                                               bool isPostingTypeToggleEnabled = false)
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PRICING_EFFICIENCY_MODEL, isPricingEfficiencyModelEnabled);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
@@ -6344,7 +6343,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<int?>())).Returns(6.75M);
 
             // TODO SDE : this should be reworked for these to be true, as they are in production
-            var service = _GetService(false, true, true);
+            var service = _GetService(false,true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, null);
@@ -6418,7 +6417,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<int?>())).Returns(6.75M);
 
             // TODO SDE : this should be reworked for these to be true, as they are in production
-            var service = _GetService(false, true, true);
+            var service = _GetService(false,true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, PlanVersionId);
@@ -11201,13 +11200,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(false, 1)]
-        [TestCase(true, 3)]
-        public void PricingExecutionResultExpectedCountTest(bool isPricingEfficiencyModelEnabled, int expectedResult)
+        [TestCase(3)]
+        public void PricingExecutionResultExpectedCountTest(int expectedResult)
         {
             var service = _GetService();
             // Act
-            var count = service.PricingExecutionResultExpectedCount(isPricingEfficiencyModelEnabled);
+            var count = service.PricingExecutionResultExpectedCount();
             // Assert     
             Assert.AreEqual(count, expectedResult);
         }
@@ -11316,11 +11314,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(1, false)]
-        [TestCase(1, true)]
-        [TestCase(2, true)]
-        [TestCase(6, true)]
-        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount, bool isPricingEfficiencyModelEnabled)
+        [TestCase(3)]
+        public void FillInMissingPricingResultsWithEmptyResults(int startingResultCount)
         {
             // Arrange
             var candidateResults = new List<CurrentPricingExecutionResultDto>();
@@ -11376,22 +11371,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            var results = service.FillInMissingPricingResultsWithEmptyResults(candidateResults, isPricingEfficiencyModelEnabled);
+            var results = service.FillInMissingPricingResultsWithEmptyResults(candidateResults);
 
             // Assert
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                Assert.AreEqual(1, results.Count());
-                return;
-            }
 
             Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
             Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Quality));
-
-            if (!isPricingEfficiencyModelEnabled)
-            {
-                return;
-            }
 
             Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NSI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));
             Assert.IsTrue(results.Any(a => a.PostingType == PostingTypeEnum.NTI && a.SpotAllocationModelMode == SpotAllocationModelMode.Efficiency));

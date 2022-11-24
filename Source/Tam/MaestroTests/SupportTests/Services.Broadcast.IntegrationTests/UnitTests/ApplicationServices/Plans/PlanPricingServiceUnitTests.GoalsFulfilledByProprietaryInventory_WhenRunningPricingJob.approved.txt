@@ -7,7 +7,7 @@
     "PlanVersionPricingDaypartsList": [],
     "PostingType": 0,
     "Programs": [],
-    "SpotAllocationModelMode": 1,
+    "SpotAllocationModelMode": 3,
     "Totals": {
       "AvgCpm": 0.0,
       "AvgImpressions": 0.0,
@@ -27,7 +27,87 @@
     "PlanVersionPricingDaypartsList": [],
     "PostingType": 0,
     "Programs": [],
-    "SpotAllocationModelMode": 1,
+    "SpotAllocationModelMode": 3,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 0,
+      "Spots": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "GoalFulfilledByProprietary": true,
+    "JobId": 1,
+    "OptimalCpm": 0.0006666666666666666666667000,
+    "PlanVersionId": 0,
+    "PlanVersionPricingDaypartsList": [],
+    "PostingType": 0,
+    "Programs": [],
+    "SpotAllocationModelMode": 3,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 0,
+      "Spots": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "GoalFulfilledByProprietary": true,
+    "JobId": 1,
+    "OptimalCpm": 0.0006666666666666666666667000,
+    "PlanVersionId": 0,
+    "PlanVersionPricingDaypartsList": [],
+    "PostingType": 0,
+    "Programs": [],
+    "SpotAllocationModelMode": 3,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 0,
+      "Spots": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "GoalFulfilledByProprietary": true,
+    "JobId": 1,
+    "OptimalCpm": 0.0006666666666666666666667000,
+    "PlanVersionId": 0,
+    "PlanVersionPricingDaypartsList": [],
+    "PostingType": 0,
+    "Programs": [],
+    "SpotAllocationModelMode": 3,
+    "Totals": {
+      "AvgCpm": 0.0,
+      "AvgImpressions": 0.0,
+      "Budget": 0.0,
+      "Impressions": 0.0,
+      "ImpressionsPercentage": 0.0,
+      "MarketCount": 0,
+      "Spots": 0,
+      "StationCount": 0
+    }
+  },
+  {
+    "GoalFulfilledByProprietary": true,
+    "JobId": 1,
+    "OptimalCpm": 0.0006666666666666666666667000,
+    "PlanVersionId": 0,
+    "PlanVersionPricingDaypartsList": [],
+    "PostingType": 0,
+    "Programs": [],
+    "SpotAllocationModelMode": 3,
     "Totals": {
       "AvgCpm": 0.0,
       "AvgImpressions": 0.0,
