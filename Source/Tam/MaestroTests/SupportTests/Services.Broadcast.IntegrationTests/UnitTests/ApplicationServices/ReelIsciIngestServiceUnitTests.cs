@@ -253,9 +253,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true, 0, 0, 0)]
-        [TestCase(false, 2, 2, 1)]
-        public void PerformReelIsciIngestBetweenRange_DeletePlanIscis_NotExistInReelIsci(bool toggleEnabled, int expectedDeleteCount, int deletedCount, int runCount)
+        [TestCase(0, 0, 0)]
+        public void PerformReelIsciIngestBetweenRange_DeletePlanIscis_NotExistInReelIsci(int expectedDeleteCount, int deletedCount, int runCount)
         {
             //Arrange
             var startDate = new DateTime(2021, 01, 01);
@@ -265,9 +264,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ReelIsciApiClientMock
                 .Setup(x => x.GetReelRosterIscis(It.IsAny<DateTime>(), It.IsAny<int>()))
                 .Returns(new List<ReelRosterIsciDto>());
-
-            _featureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_KEEP_ORPHANED_ISCI_MAPPING))
-                .Returns(toggleEnabled);
 
             _PlanIsciRepositoryMock
                 .Setup(x => x.DeletePlanIscisNotExistInReelIsci(It.IsAny<DateTime>(), It.IsAny<string>()))
