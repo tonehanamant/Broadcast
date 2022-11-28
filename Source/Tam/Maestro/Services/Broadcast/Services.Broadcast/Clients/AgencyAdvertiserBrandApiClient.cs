@@ -43,7 +43,6 @@ namespace Services.Broadcast.Clients
         private const string _CoreApiVersion = "api/v2";
         private readonly Lazy<string> _AABApiUrl;
         private readonly HttpClient _HttpClient;
-        private readonly bool _IsAABCoreAPIEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgencyAdvertiserBrandApiClient"/> class.
@@ -54,7 +53,6 @@ namespace Services.Broadcast.Clients
         {
             _AABApiUrl = new Lazy<string>(() => $"{_GetAgencyAdvertiserBrandApiUrl()}");
              _HttpClient = httpClient;
-            _IsAABCoreAPIEnabled = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_AAB_CORE_API);
         }
 
         /// <inheritdoc/>
@@ -63,17 +61,10 @@ namespace Services.Broadcast.Clients
             try
             {
                 List<aab_agency> apiResult = new List<aab_agency>();
-                if (_IsAABCoreAPIEnabled)
-                {
-                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
-                    apiResult = httpClient.Get<ApiListResponseTyped<aab_agency>>($"{_CoreApiVersion}/agencies").ResultList;
-                }
-                else
-                {
-                    var url = $"{_AABApiUrl.Value}/agencies";
-                    apiResult = _HttpClient.Get<List<aab_agency>>(url);
-                }
-
+                
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                apiResult = httpClient.Get<ApiListResponseTyped<aab_agency>>($"{_CoreApiVersion}/agencies").ResultList;
+               
                 var result = apiResult.Select(i => new AgencyDto
                 {
                     Id = i.id,
@@ -94,16 +85,9 @@ namespace Services.Broadcast.Clients
             try
             {
                 List<aab_advertiser> apiResult = new List<aab_advertiser>();
-                if (_IsAABCoreAPIEnabled)
-                {
-                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
-                    apiResult = httpClient.Get<ApiListResponseTyped<aab_advertiser>>($"{_CoreApiVersion}/advertisers").ResultList;
-                }
-                else
-                {
-                    var url = $"{_AABApiUrl.Value}/advertisers";
-                    apiResult = _HttpClient.Get<List<aab_advertiser>>(url);
-                }
+               
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                apiResult = httpClient.Get<ApiListResponseTyped<aab_advertiser>>($"{_CoreApiVersion}/advertisers").ResultList;
 
                 var result = apiResult.Select(i => new AdvertiserDto()
                 {
@@ -125,18 +109,11 @@ namespace Services.Broadcast.Clients
             try
             {
                 aab_advertiser advertiserFullInfo = new aab_advertiser();
-                if (_IsAABCoreAPIEnabled)
-                {
-                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
-                    advertiserFullInfo = httpClient.Get<ApiItemResponseTyped<aab_advertiser>>
+                
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                advertiserFullInfo = httpClient.Get<ApiItemResponseTyped<aab_advertiser>>
                         ($"{_CoreApiVersion}/advertisers/company/{advertiserMasterId}")
                         .Result;
-                }
-                else
-                {
-                    var url = $"{_AABApiUrl.Value}/advertisers/getadvertiserbyid/{advertiserMasterId}";
-                    advertiserFullInfo = _HttpClient.Get<aab_advertiser>(url);
-                }
 
                 var products = advertiserFullInfo.products.Select(i => new ProductDto
                 {
