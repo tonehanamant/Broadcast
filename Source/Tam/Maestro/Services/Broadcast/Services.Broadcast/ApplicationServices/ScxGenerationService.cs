@@ -392,7 +392,7 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var entity = TransformFromDtoToOpenMarketEntity(d);
                 return entity;
-            })
+            }).GroupBy(x=>x.FileId).Select(x=>x.First())
                 .OrderByDescending(s => s.GenerationRequestDateTime)
                 .ToList();
 
@@ -411,7 +411,7 @@ namespace Services.Broadcast.ApplicationServices
                 GenerationRequestDateTime = scxOpenMarketFileGenerationDetail.GenerationRequestDateTime,
                 GenerationRequestedByUsername = scxOpenMarketFileGenerationDetail.GenerationRequestedByUsername,
                 Affiliates = scxOpenMarketFileGenerationDetail.Affilates,
-                DaypartCode = scxOpenMarketFileGenerationDetail.DaypartCode,
+                DaypartCodes = scxOpenMarketFileGenerationDetail.DaypartCodes,
                 QuarterDetails = quarters,
                 ProcessingStatus = processingStatus,
                 FileId = scxOpenMarketFileGenerationDetail.FileId,

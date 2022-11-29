@@ -47,7 +47,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The name of the unit.
         /// </value>
-        public string Affilates { get; set; }
+        public List<string> Affilates { get; set; }
 
         /// <summary>
         /// Gets or sets the daypart code.
@@ -55,7 +55,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The daypart code.
         /// </value>
-        public string DaypartCode { get; set; }
+        public List<string> DaypartCodes { get; set; }
 
         /// <summary>
         /// Gets or sets the start date time.

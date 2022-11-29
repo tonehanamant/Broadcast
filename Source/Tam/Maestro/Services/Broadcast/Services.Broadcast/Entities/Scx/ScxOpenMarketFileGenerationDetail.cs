@@ -31,7 +31,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The name of the unit.
         /// </value>
-        public string Affiliates { get; set; }
+        public List<string> Affiliates { get; set; }
 
         /// <summary>
         /// Gets or sets the daypart code.
@@ -39,7 +39,7 @@ namespace Services.Broadcast.Entities.Scx
         /// <value>
         /// The daypart code.
         /// </value>
-        public string DaypartCode { get; set; }
+        public List<string> DaypartCodes { get; set; }
 
         /// <summary>
         /// Gets or sets the quarter details.

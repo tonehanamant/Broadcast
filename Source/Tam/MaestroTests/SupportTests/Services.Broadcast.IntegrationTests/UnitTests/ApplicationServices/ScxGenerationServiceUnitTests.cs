@@ -502,8 +502,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 GenerationRequestDateTime = new DateTime(2017, 10, 17, 19, 30, 3),
                 GenerationRequestedByUsername = "SomeGuy",
                 FileId = 12,
-                Affilates = "NBC",
-                DaypartCode = "EMN",
+                Affilates = new List<string>() { "NBC","ABC"},
+                DaypartCodes = new List<string>() { "EMN", "ABC" },
                 StartDateTime = new DateTime(2017, 10, 17, 19, 30, 3),
                 EndDateTime = new DateTime(2017, 11, 17, 19, 30, 3),
                 ProcessingStatusId = 1
@@ -660,7 +660,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var result = tc.GetOpenMarketScxFileGenerationHistory();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(1, result.Count);
             Assert.AreEqual(1, getHistoryCalls.Count);
             Assert.AreEqual(3, getHistoryReturn.Count);
         }

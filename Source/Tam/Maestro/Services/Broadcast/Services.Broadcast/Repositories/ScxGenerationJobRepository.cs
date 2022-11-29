@@ -376,14 +376,15 @@ namespace Services.Broadcast.Repositories
 
         private static List<ScxOpenMarketFileGenerationDetailDto> GetOpenMarketGenerationDetails(BroadcastContext context, int inventorySourceId)
         {
-            var details = (from j in context.scx_generation_open_market_jobs
-                           join f in context.scx_generation_open_market_job_files on j.id equals f.scx_generation_open_market_job_id into fs
-                           from f in fs.DefaultIfEmpty()
+            var details = (from f in context.scx_generation_open_market_job_files
+                           join j in context.scx_generation_open_market_jobs on f.scx_generation_open_market_job_id equals j.id into fs
+                           from j in fs.DefaultIfEmpty()
                            join d in context.scx_generation_open_market_job_dayparts on f.scx_generation_open_market_job_id equals d.scx_generation_open_market_job_id into ds
                            from d in ds.DefaultIfEmpty()
                            join s in context.standard_dayparts on d.standard_daypart_id equals s.id into sd
                            from s in sd.DefaultIfEmpty()
-                           join x in context.scx_generation_open_market_job_affiliates on j.id equals x.scx_generation_open_market_job_id into xy
+                           join x in context.scx_generation_open_market_job_affiliates on f.scx_generation_open_market_job_id equals x.scx_generation_open_market_job_id into xy
+                           from x in xy.DefaultIfEmpty()
                            where j.inventory_source_id.Equals(inventorySourceId)
                            select new ScxOpenMarketFileGenerationDetailDto
                            {
@@ -391,8 +392,8 @@ namespace Services.Broadcast.Repositories
                                GenerationRequestedByUsername = j.requested_by,
                                FileId = f.id,
                                Filename = f.file_name,
-                               Affilates = f.affiliate,
-                               DaypartCode = s.code,
+                               Affilates = x.scx_generation_open_market_jobs.scx_generation_open_market_job_affiliates.Select(x => x.affiliate).ToList(),
+                               DaypartCodes = f.scx_generation_open_market_jobs.scx_generation_open_market_job_dayparts.Select(x => x.standard_dayparts.code).ToList(),
                                StartDateTime = f.start_date,
                                EndDateTime = f.end_date,
                                ProcessingStatusId = j.status
