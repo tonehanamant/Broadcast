@@ -13,7 +13,7 @@ namespace Services.Broadcast.Entities.Scx
         /// Daypart code id used to filter data
         /// </summary>
         /// <value>12344</value>
-        public int StandardDaypartId { get; set; }
+        public List<int> DaypartIds { get; set; }
 
         /// <summary>
         /// Start Date of the start quarter
@@ -25,7 +25,7 @@ namespace Services.Broadcast.Entities.Scx
         /// </summary>
         public DateTime EndDate { get; set; }
 
-        public int MarketCode { get; set; }
+        public string MarketRanks { get; set; }
         public OpenMarketInventoryExportGenreTypeEnum GenreType { get; set; }
         public List<string> Affiliates { get; set; }
     }

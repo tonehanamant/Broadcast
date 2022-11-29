@@ -120,7 +120,7 @@ namespace Services.Broadcast.ApplicationServices
 
             _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
 
-			  return jobId;
+              return jobId;
         }
 
         public void RequeueScxGenerationJob(int jobId)
@@ -295,7 +295,6 @@ namespace Services.Broadcast.ApplicationServices
             var jobId = _ScxGenerationJobRepository.AddOpenMarketJob(job);
 
             _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxOpenMarketGenerationJob(jobId));
-
             return jobId;
         }
 

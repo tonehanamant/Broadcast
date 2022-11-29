@@ -256,9 +256,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<scx_generation_open_market_job_affiliates> scx_generation_open_market_job_affiliates { get; set; }
         public virtual DbSet<scx_generation_open_market_job_dayparts> scx_generation_open_market_job_dayparts { get; set; }
-        public virtual DbSet<scx_generation_open_market_job_files> scx_generation_open_market_job_files { get; set; }
-        public virtual DbSet<scx_generation_open_market_job_markets> scx_generation_open_market_job_markets { get; set; }
         public virtual DbSet<scx_generation_open_market_jobs> scx_generation_open_market_jobs { get; set; }
         public virtual DbSet<plan> plans { get; set; }
+        public virtual DbSet<scx_generation_open_market_job_files> scx_generation_open_market_job_files { get; set; }
+        public virtual DbSet<scx_generation_open_market_job_markets> scx_generation_open_market_job_markets { get; set; }
     }
 }

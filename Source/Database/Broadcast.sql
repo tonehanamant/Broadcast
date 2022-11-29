@@ -1277,6 +1277,38 @@ GO
 
 /*************************************** END BP-5992 ************************************/
 
+IF EXISTS (SELECT *
+   FROM   information_schema.columns
+    WHERE  table_name = 'scx_generation_open_market_job_markets' AND column_name = 'market_code')
+					  BEGIN
+					  TRUNCATE TABLE scx_generation_open_market_job_markets
+					  ALTER TABLE scx_generation_open_market_job_markets
+					  DROP CONSTRAINT FK_scx_generation_open_market_job_markets_markets
+					  ALTER TABLE scx_generation_open_market_job_markets
+					  DROP COLUMN market_code
+					  ALTER TABLE scx_generation_open_market_job_markets
+					  ADD [rank] int not null
+					  END
+					  GO          
+
+IF EXISTS (SELECT *
+   FROM   information_schema.columns
+   WHERE  table_name = 'scx_generation_open_market_job_files' AND column_name = 'market_code')
+					  BEGIN
+					  TRUNCATE TABLE scx_generation_open_market_job_files
+					  ALTER TABLE scx_generation_open_market_job_files
+					  DROP COLUMN market_code
+					  ALTER TABLE scx_generation_open_market_job_files
+					  ADD [rank] varchar(255) not null
+					  ALTER TABLE scx_generation_open_market_job_files
+					  ALTER COLUMN standard_daypart_id varchar(255) not null
+					  ALTER TABLE scx_generation_open_market_job_files
+					  ALTER COLUMN  affiliate varchar(255) not null
+					  END
+					  GO
+
+/*************************************** END UPDATE SCRIPT *******************************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

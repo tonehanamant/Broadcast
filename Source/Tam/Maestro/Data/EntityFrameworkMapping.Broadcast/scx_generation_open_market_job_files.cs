@@ -17,13 +17,13 @@ namespace EntityFrameworkMapping.Broadcast
         public int id { get; set; }
         public int scx_generation_open_market_job_id { get; set; }
         public string file_name { get; set; }
-        public int standard_daypart_id { get; set; }
+        public string standard_daypart_id { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
-        public short market_code { get; set; }
         public int export_genre_type_id { get; set; }
         public string affiliate { get; set; }
         public Nullable<System.Guid> shared_folder_files_id { get; set; }
+        public string rank { get; set; }
     
         public virtual scx_generation_open_market_jobs scx_generation_open_market_jobs { get; set; }
     }

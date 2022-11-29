@@ -8,12 +8,12 @@ namespace Services.Broadcast.Entities.Scx
     public class OpenMarketInventoryScxFile
     {
         public MemoryStream ScxStream { get; set; }
-        public int DaypartCodeId { get; set; }
+        public List<int> DaypartIds { get; set; }
         public InventorySource InventorySource { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public Guid? SharedFolderFileId { get; set; }
-        public int MarketCode { get; set; }
+        public string MarketRank { get; set; }
         public OpenMarketInventoryExportGenreTypeEnum GenreType { get; set; }
         public string Affiliate { get; set; }
 
@@ -23,7 +23,7 @@ namespace Services.Broadcast.Entities.Scx
             {
                 return string.Concat(string.Join("_",
                     new string[] { InventorySource.Name,
-                        MarketCode.ToString(),
+                        MarketRank.ToString(),
                         GenreType.ToString(),
                         Affiliate,
                         StartDate.ToString("yyyyMMdd"),

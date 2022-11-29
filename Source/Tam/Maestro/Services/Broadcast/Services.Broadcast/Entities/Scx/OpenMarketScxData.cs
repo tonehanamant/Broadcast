@@ -8,9 +8,9 @@ namespace Services.Broadcast.Entities.Scx
     public class OpenMarketScxData
     {
         public string Affiliate { get; set; }
-        public int MarketCode { get; set; }
+        public string MarketRank { get; set; }
         public string DaypartCode { get; set; }
-        public int DaypartCodeId { get; set; }
+        public List<int> DaypartIds { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public InventorySource InventorySource { get; set; }

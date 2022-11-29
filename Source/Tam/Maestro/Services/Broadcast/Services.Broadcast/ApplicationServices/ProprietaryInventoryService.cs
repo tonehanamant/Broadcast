@@ -349,8 +349,7 @@ namespace Services.Broadcast.ApplicationServices
             var inventoryDataPrep = _InventoryScxDataPrepFactory.GetOpenMarketInventoryDataPrep(inventorySource.InventoryType);
             var genres = _GenreRepository.GetAllMaestroGenres();
             var exportGenreIds = GenreHelper.GetGenreIdsForOpenMarket(request.GenreType, genres);
-            var inventoryData = inventoryDataPrep.GetInventoryScxOpenMarketData(inventorySourceIdOpenMarket, request.StandardDaypartId, request.StartDate, request.EndDate,request.MarketCode, exportGenreIds, request.Affiliates);
-
+            var inventoryData = inventoryDataPrep.GetInventoryScxOpenMarketData(inventorySourceIdOpenMarket, request.DaypartIds, request.StartDate, request.EndDate,request.MarketRanks, exportGenreIds, request.Affiliates);
             return _InventoryScxDataConverter.ConvertOpenMrketInventoryData(inventoryData);
         }
     }

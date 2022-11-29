@@ -600,14 +600,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             {
                 new OpenMarketInventoryScxFile
                 {
-                    DaypartCodeId = 1,
+                    DaypartIds = new List<int> { 1, 2, 3 },
                     InventorySource = new InventorySource { Id = 1, Name = "TestSource", IsActive = true, InventoryType = InventorySourceTypeEnum.OpenMarket },
                     StartDate = new DateTime(2021,10,01),
                     EndDate = new DateTime(2021,10,17),
                     ScxStream = testScxFileStream,
                     Affiliate =  "NBC",
                     GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
-                    MarketCode = 390
+                    MarketRank = "1-7;9-25;165"
                 }
             };
 

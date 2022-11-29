@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="10">
+      <Diagram DiagramId="25447c09bb944d43b4309b552b8ef2c5" Name="Diagram1" ZoomLevel="11">
         <EntityTypeShape EntityType="BroadcastModel.audience_audiences" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="BroadcastModel.audience" Width="1.5" PointX="2.75" PointY="0.5" />
         <EntityTypeShape EntityType="BroadcastModel.daypart" Width="1.5" PointX="13.75" PointY="2.5" />
@@ -587,15 +587,10 @@
         <AssociationConnector Association="BroadcastModel.FK_programs_show_types" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" Width="1.5" PointX="40.625" PointY="48.625" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" Width="1.5" PointX="40.625" PointY="40.125" />
-        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_files" Width="1.5" PointX="40.625" PointY="51.125" />
-        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_markets" Width="1.5" PointX="40.625" PointY="32.125" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_jobs" Width="1.5" PointX="38.375" PointY="44.25" />
-        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" />
-        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" />
-        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" />
         <EntityTypeShape EntityType="BroadcastModel.plan" Width="1.5" PointX="3" PointY="106.25" />
         <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
@@ -604,6 +599,10 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_files" Width="1.5" PointX="40.75" PointY="51.75" />
+        <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_markets" Width="1.5" PointX="40.75" PointY="43.125" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" />
+        <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

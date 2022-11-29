@@ -283,28 +283,9 @@ namespace Services.Broadcast.Repositories
                     var scxOpenMarketJobId = scxOpenMarketJob.id;
                     if (scxOpenMarketJobId > 0)
                     {
-                        var scxOpenMarketJobDayparts = new scx_generation_open_market_job_dayparts
-                        {
-                            standard_daypart_id = job.InventoryScxOpenMarketsDownloadRequest.StandardDaypartId,
-                            scx_generation_open_market_job_id = scxOpenMarketJobId
-                        };
-                        context.scx_generation_open_market_job_dayparts.Add(scxOpenMarketJobDayparts);
-                        var scxOpenMarketJobMarkets = new scx_generation_open_market_job_markets
-                        {
-                            market_code = (short)job.InventoryScxOpenMarketsDownloadRequest.MarketCode,
-                            scx_generation_open_market_job_id = scxOpenMarketJobId
-                        };
-                        context.scx_generation_open_market_job_markets.Add(scxOpenMarketJobMarkets);
-                        foreach (var affiliate in job.InventoryScxOpenMarketsDownloadRequest.Affiliates)
-                        {
-                            var scxOpenMarketJobAffiliate = new scx_generation_open_market_job_affiliates
-                            {
-                                affiliate = affiliate,
-                                scx_generation_open_market_job_id = scxOpenMarketJobId
-                            };
-                            context.scx_generation_open_market_job_affiliates.Add(scxOpenMarketJobAffiliate);
-                        }
-
+                        _AddOpenMarketJobMarkets(job,context,scxOpenMarketJobId);
+                        _AddOpenMarketJobDayparts(job, context, scxOpenMarketJobId);
+                        _AddOpenMarketJobAffiliate(job, context, scxOpenMarketJobId);
                         context.SaveChanges();
                     }
                     return scxOpenMarketJobId;
@@ -317,11 +298,11 @@ namespace Services.Broadcast.Repositories
                 context =>
                 {
                     var jobs = context.scx_generation_open_market_jobs
-                    .Include(s=>s.scx_generation_open_market_job_dayparts)
-                    .Include(s=>s.scx_generation_open_market_job_markets)
-                    .Include(s=>s.scx_generation_open_market_job_affiliates)
+                    .Include(s => s.scx_generation_open_market_job_dayparts)
+                    .Include(s => s.scx_generation_open_market_job_markets)
+                    .Include(s => s.scx_generation_open_market_job_affiliates)
                         .Where(j => j.id == jobId).Single(@"Unable to find job with id {jobId}");
-                    
+
                     return _MapForOpenMarket(jobs);
                 });
         }
@@ -335,9 +316,9 @@ namespace Services.Broadcast.Repositories
                     StartDate = scxOpenMarketsJob.start_date,
                     EndDate = scxOpenMarketsJob.end_date,
                     GenreType = (OpenMarketInventoryExportGenreTypeEnum)scxOpenMarketsJob.export_genre_type_id,
-                    StandardDaypartId = scxOpenMarketsJob.scx_generation_open_market_job_dayparts.Select(x=>x.standard_daypart_id).FirstOrDefault(),
-                    MarketCode = scxOpenMarketsJob.scx_generation_open_market_job_markets.Select(x=>x.market_code).FirstOrDefault(),
-                    Affiliates = scxOpenMarketsJob.scx_generation_open_market_job_affiliates.Select(x=>x.affiliate).ToList()
+                    DaypartIds = scxOpenMarketsJob.scx_generation_open_market_job_dayparts.Select(x => x.standard_daypart_id).ToList(),
+                    MarketRanks = string.Join(",",scxOpenMarketsJob.scx_generation_open_market_job_markets.Select(x => x.rank).ToList()),
+                    Affiliates = scxOpenMarketsJob.scx_generation_open_market_job_affiliates.Select(x => x.affiliate).ToList()
                 },
                 Status = (BackgroundJobProcessingStatus)scxOpenMarketsJob.status,
                 QueuedAt = scxOpenMarketsJob.queued_at,
@@ -368,20 +349,20 @@ namespace Services.Broadcast.Repositories
                         {
                             scx_generation_open_market_job_id = job.Id,
                             file_name = file.FileName,
-                            standard_daypart_id = file.DaypartCodeId,
+                            standard_daypart_id = string.Join(",",file.DaypartIds.ToList()),
                             start_date = file.StartDate,
                             end_date = file.EndDate,
                             shared_folder_files_id = file.SharedFolderFileId,
-                            market_code = (short)job.InventoryScxOpenMarketsDownloadRequest.MarketCode,
+                            rank = job.InventoryScxOpenMarketsDownloadRequest.MarketRanks,
                             export_genre_type_id = (int)job.InventoryScxOpenMarketsDownloadRequest.GenreType,
-                            affiliate = job.InventoryScxOpenMarketsDownloadRequest.Affiliates.FirstOrDefault()
+                            affiliate = string.Join(",", job.InventoryScxOpenMarketsDownloadRequest.Affiliates.ToList())
                         });
                     }
 
                     context.SaveChanges();
                 });
         }
-       
+
 
         public List<ScxOpenMarketFileGenerationDetailDto> GetOpenMarketScxFileGenerationDetails(int sourceId)
         {
@@ -398,7 +379,7 @@ namespace Services.Broadcast.Repositories
             var details = (from j in context.scx_generation_open_market_jobs
                            join f in context.scx_generation_open_market_job_files on j.id equals f.scx_generation_open_market_job_id into fs
                            from f in fs.DefaultIfEmpty()
-                           join d in context.scx_generation_open_market_job_dayparts on f.standard_daypart_id equals d.id into ds
+                           join d in context.scx_generation_open_market_job_dayparts on f.scx_generation_open_market_job_id equals d.scx_generation_open_market_job_id into ds
                            from d in ds.DefaultIfEmpty()
                            join s in context.standard_dayparts on d.standard_daypart_id equals s.id into sd
                            from s in sd.DefaultIfEmpty()
@@ -418,6 +399,55 @@ namespace Services.Broadcast.Repositories
                            })
                 .ToList();
             return details;
+        }
+        private void _AddOpenMarketJobMarkets(ScxOpenMarketsGenerationJob job, BroadcastContext context, int scxOpenMarketJobId)
+        {
+            List<int> completeRange = new List<int>();
+            var rangeOfList = job.InventoryScxOpenMarketsDownloadRequest.MarketRanks.Split(';');
+            foreach (var range in rangeOfList)
+            {
+                if (range.Contains('-'))
+                {
+                    var newRange = range.Split('-');
+                    var subList = Enumerable.Range(Convert.ToInt32(newRange[0]), Convert.ToInt32(newRange[1])).ToList<int>();
+                    completeRange.AddRange(subList);
+                }
+                else
+                {
+                    completeRange.Add(Convert.ToInt32(range));
+                }
+            }
+            foreach (var marketRank in completeRange)
+            {
+                var scxOpenMarketJobMarkets = new scx_generation_open_market_job_markets
+                {
+                    rank = marketRank,
+                    scx_generation_open_market_job_id = scxOpenMarketJobId
+                };
+                context.scx_generation_open_market_job_markets.Add(scxOpenMarketJobMarkets);
+            }
+        }
+        private void _AddOpenMarketJobDayparts(ScxOpenMarketsGenerationJob job, BroadcastContext context, int scxOpenMarketJobId)
+        {
+            job.InventoryScxOpenMarketsDownloadRequest.DaypartIds.ForEach(daypart =>
+            {
+                context.scx_generation_open_market_job_dayparts.Add(new scx_generation_open_market_job_dayparts
+                {
+                    standard_daypart_id = daypart,
+                    scx_generation_open_market_job_id = scxOpenMarketJobId
+                });
+            });
+        }
+        private void _AddOpenMarketJobAffiliate(ScxOpenMarketsGenerationJob job, BroadcastContext context,int scxOpenMarketJobId)
+        {
+            job.InventoryScxOpenMarketsDownloadRequest.Affiliates.ForEach(affiliate =>
+            {
+                context.scx_generation_open_market_job_affiliates.Add(new scx_generation_open_market_job_affiliates
+                {
+                    affiliate = affiliate,
+                    scx_generation_open_market_job_id = scxOpenMarketJobId
+                });
+            });
         }
     }
 }

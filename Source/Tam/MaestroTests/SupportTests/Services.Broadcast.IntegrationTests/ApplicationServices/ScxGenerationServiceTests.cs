@@ -336,17 +336,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var request = new InventoryScxOpenMarketsDownloadRequest
                 {
-                    StandardDaypartId = 1,
+                    DaypartIds = new List<int> { 1, 2, 3 },
                     StartDate = new DateTime(2019, 3, 1),
                     EndDate = new DateTime(2019, 3, 15),
                     Affiliates = new List<string> { "ABC","NBC"},
                     GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
-                    MarketCode = 390
+                    MarketRanks = "1-7;9-25;165"
+                    
                 };
                 
                 var jobId = _ScxGenerationService.QueueScxOpenMarketsGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));
 
                 var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+                job.CompletedAt = new DateTime(2019, 3, 15);
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(job, _GetJsonSettingsForOpenMarket()));
             } 
@@ -374,10 +376,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
-                    StandardDaypartId = 1,
+                    DaypartIds = new List<int> {1,2,3},
                     Affiliates = new List<string> { "ABC","NBC"},
                     GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
-                    MarketCode = 390
+                    MarketRanks = "1-7;9-25;165",
                 };
 
                 var jobId = _ScxGenerationService.QueueScxOpenMarketsGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));
@@ -402,10 +404,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 {
                     EndDate = new DateTime(2019, 03, 31),
                     StartDate = new DateTime(2018, 12, 31),
-                    StandardDaypartId = 1,
+                    DaypartIds = new List<int> { 1, 2, 3 },
                     Affiliates = new List<string> { "ABC", "NBC" },
                     GenreType = OpenMarketInventoryExportGenreTypeEnum.News,
-                    MarketCode = 390
+                    MarketRanks = "1-7;9-25;165",
                 };
 
                 var jobId = _ScxGenerationService.QueueScxOpenMarketsGenerationJob(request, "IntegrationTestUser", new DateTime(2019, 7, 11));

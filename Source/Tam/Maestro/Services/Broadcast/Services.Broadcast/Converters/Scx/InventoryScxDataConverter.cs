@@ -97,10 +97,10 @@ namespace Services.Broadcast.Converters.Scx
                 {
                     ScxStream = stream,
                     InventorySource = scxDataObject.InventorySource,
-                    DaypartCodeId = scxDataObject.DaypartCodeId,
+                    DaypartIds = scxDataObject.DaypartIds,
                     StartDate = scxDataObject.StartDate,
                     EndDate = scxDataObject.EndDate,
-                    MarketCode = scxDataObject.MarketCode,
+                    MarketRank = scxDataObject.MarketRank,
                     Affiliate = scxDataObject.Affiliate
                 });
             }

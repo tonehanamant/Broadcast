@@ -2374,21 +2374,21 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="scx_generation_open_market_job_id" Type="int" Nullable="false" />
           <Property Name="file_name" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="start_date" Type="datetime" Nullable="false" />
           <Property Name="end_date" Type="datetime" Nullable="false" />
-          <Property Name="market_code" Type="smallint" Nullable="false" />
           <Property Name="export_genre_type_id" Type="int" Nullable="false" />
-          <Property Name="affiliate" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="affiliate" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="shared_folder_files_id" Type="uniqueidentifier" />
+          <Property Name="rank" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="scx_generation_open_market_job_markets">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="market_code" Type="smallint" Nullable="false" />
           <Property Name="scx_generation_open_market_job_id" Type="int" Nullable="false" />
+          <Property Name="rank" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="scx_generation_open_market_jobs">
           <Key>
@@ -6823,18 +6823,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_scx_generation_open_market_job_markets_markets">
-          <End Role="markets" Type="Self.markets" Multiplicity="1" />
-          <End Role="scx_generation_open_market_job_markets" Type="Self.scx_generation_open_market_job_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="markets">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="scx_generation_open_market_job_markets">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
           <End Role="scx_generation_open_market_jobs" Type="Self.scx_generation_open_market_jobs" Multiplicity="1" />
           <End Role="scx_generation_open_market_job_markets" Type="Self.scx_generation_open_market_job_markets" Multiplicity="*" />
@@ -9219,10 +9207,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
             <End Role="scx_generation_open_market_job_files" EntitySet="scx_generation_open_market_job_files" />
           </AssociationSet>
-          <AssociationSet Name="FK_scx_generation_open_market_job_markets_markets" Association="Self.FK_scx_generation_open_market_job_markets_markets">
-            <End Role="markets" EntitySet="markets" />
-            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
-          </AssociationSet>
           <AssociationSet Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" Association="Self.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
             <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
             <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
@@ -11160,13 +11144,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="scx_generation_open_market_job_affiliates" EntityType="BroadcastModel.scx_generation_open_market_job_affiliates" />
           <EntitySet Name="scx_generation_open_market_job_dayparts" EntityType="BroadcastModel.scx_generation_open_market_job_dayparts" />
-          <EntitySet Name="scx_generation_open_market_job_files" EntityType="BroadcastModel.scx_generation_open_market_job_files" />
-          <EntitySet Name="scx_generation_open_market_job_markets" EntityType="BroadcastModel.scx_generation_open_market_job_markets" />
           <EntitySet Name="scx_generation_open_market_jobs" EntityType="BroadcastModel.scx_generation_open_market_jobs" />
-          <AssociationSet Name="FK_scx_generation_open_market_job_markets_markets" Association="BroadcastModel.FK_scx_generation_open_market_job_markets_markets">
-            <End Role="market" EntitySet="markets" />
-            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
-          </AssociationSet>
           <AssociationSet Name="FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs">
             <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
             <End Role="scx_generation_open_market_job_affiliates" EntitySet="scx_generation_open_market_job_affiliates" />
@@ -11178,14 +11156,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_scx_generation_open_market_job_dayparts_standard_dayparts" Association="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts">
             <End Role="standard_dayparts" EntitySet="standard_dayparts" />
             <End Role="scx_generation_open_market_job_dayparts" EntitySet="scx_generation_open_market_job_dayparts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
-            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
-            <End Role="scx_generation_open_market_job_files" EntitySet="scx_generation_open_market_job_files" />
-          </AssociationSet>
-          <AssociationSet Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
-            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
-            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
           </AssociationSet>
           <EntitySet Name="plans" EntityType="BroadcastModel.plan" />
           <AssociationSet Name="FK_plans_campaigns" Association="BroadcastModel.FK_plans_campaigns">
@@ -11215,6 +11185,16 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <AssociationSet Name="FK_spot_exceptions_recommended_plan_details_plans" Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans">
             <End Role="plan" EntitySet="plans" />
             <End Role="spot_exceptions_recommended_plan_details" EntitySet="spot_exceptions_recommended_plan_details" />
+          </AssociationSet>
+          <EntitySet Name="scx_generation_open_market_job_files" EntityType="BroadcastModel.scx_generation_open_market_job_files" />
+          <EntitySet Name="scx_generation_open_market_job_markets" EntityType="BroadcastModel.scx_generation_open_market_job_markets" />
+          <AssociationSet Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_files" EntitySet="scx_generation_open_market_job_files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
+            <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
+            <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
@@ -14232,7 +14212,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" FromRole="market" ToRole="inventory_proprietary_summary_station_audiences" />
           <NavigationProperty Name="plan_version_daypart_available_markets" Relationship="BroadcastModel.FK_plan_version_daypart_available_markets_markets" FromRole="market" ToRole="plan_version_daypart_available_markets" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
-          <NavigationProperty Name="scx_generation_open_market_job_markets" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" FromRole="market" ToRole="scx_generation_open_market_job_markets" />
         </EntityType>
         <Association Name="FK_market_coverages_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -19459,32 +19438,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_dayparts_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_dayparts" ToRole="scx_generation_open_market_jobs" />
           <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_scx_generation_open_market_job_dayparts_standard_dayparts" FromRole="scx_generation_open_market_job_dayparts" ToRole="standard_dayparts" />
         </EntityType>
-        <EntityType Name="scx_generation_open_market_job_files">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
-          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
-          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="export_genre_type_id" Type="Int32" Nullable="false" />
-          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="shared_folder_files_id" Type="Guid" />
-          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_files" ToRole="scx_generation_open_market_jobs" />
-        </EntityType>
-        <EntityType Name="scx_generation_open_market_job_markets">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="market_code" Type="Int16" Nullable="false" />
-          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_markets" FromRole="scx_generation_open_market_job_markets" ToRole="market" />
-          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_markets" ToRole="scx_generation_open_market_jobs" />
-        </EntityType>
         <EntityType Name="scx_generation_open_market_jobs">
           <Key>
             <PropertyRef Name="id" />
@@ -19503,18 +19456,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="scx_generation_open_market_job_files" Relationship="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_jobs" ToRole="scx_generation_open_market_job_files" />
           <NavigationProperty Name="scx_generation_open_market_job_markets" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_jobs" ToRole="scx_generation_open_market_job_markets" />
         </EntityType>
-        <Association Name="FK_scx_generation_open_market_job_markets_markets">
-          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
-          <End Type="BroadcastModel.scx_generation_open_market_job_markets" Role="scx_generation_open_market_job_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="market">
-              <PropertyRef Name="market_code" />
-            </Principal>
-            <Dependent Role="scx_generation_open_market_job_markets">
-              <PropertyRef Name="market_code" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_scx_generation_open_market_job_affiliates_scx_generation_open_market_jobs">
           <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
           <End Type="BroadcastModel.scx_generation_open_market_job_affiliates" Role="scx_generation_open_market_job_affiliates" Multiplicity="*" />
@@ -19548,30 +19489,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="scx_generation_open_market_job_dayparts">
               <PropertyRef Name="standard_daypart_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
-          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
-          <End Type="BroadcastModel.scx_generation_open_market_job_files" Role="scx_generation_open_market_job_files" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="scx_generation_open_market_jobs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="scx_generation_open_market_job_files">
-              <PropertyRef Name="scx_generation_open_market_job_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
-          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
-          <End Type="BroadcastModel.scx_generation_open_market_job_markets" Role="scx_generation_open_market_job_markets" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="scx_generation_open_market_jobs">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="scx_generation_open_market_job_markets">
-              <PropertyRef Name="scx_generation_open_market_job_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19682,6 +19599,55 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="spot_exceptions_recommended_plan_details">
               <PropertyRef Name="recommended_plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="scx_generation_open_market_job_files">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
+          <Property Name="file_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="standard_daypart_id" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="export_genre_type_id" Type="Int32" Nullable="false" />
+          <Property Name="affiliate" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="shared_folder_files_id" Type="Guid" />
+          <Property Name="rank" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_files" ToRole="scx_generation_open_market_jobs" />
+        </EntityType>
+        <EntityType Name="scx_generation_open_market_job_markets">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="scx_generation_open_market_job_id" Type="Int32" Nullable="false" />
+          <Property Name="rank" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="scx_generation_open_market_jobs" Relationship="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" FromRole="scx_generation_open_market_job_markets" ToRole="scx_generation_open_market_jobs" />
+        </EntityType>
+        <Association Name="FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs">
+          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_files" Role="scx_generation_open_market_job_files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_files">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs">
+          <End Type="BroadcastModel.scx_generation_open_market_jobs" Role="scx_generation_open_market_jobs" Multiplicity="1" />
+          <End Type="BroadcastModel.scx_generation_open_market_job_markets" Role="scx_generation_open_market_job_markets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="scx_generation_open_market_jobs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="scx_generation_open_market_job_markets">
+              <PropertyRef Name="scx_generation_open_market_job_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -23089,31 +23055,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="scx_generation_open_market_job_files">
-            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_files">
-              <MappingFragment StoreEntitySet="scx_generation_open_market_job_files">
-                <ScalarProperty Name="shared_folder_files_id" ColumnName="shared_folder_files_id" />
-                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
-                <ScalarProperty Name="export_genre_type_id" ColumnName="export_genre_type_id" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
-                <ScalarProperty Name="file_name" ColumnName="file_name" />
-                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="scx_generation_open_market_job_markets">
-            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_markets">
-              <MappingFragment StoreEntitySet="scx_generation_open_market_job_markets">
-                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
-                <ScalarProperty Name="market_code" ColumnName="market_code" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="scx_generation_open_market_jobs">
             <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_jobs">
               <MappingFragment StoreEntitySet="scx_generation_open_market_jobs">
@@ -23145,6 +23086,31 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="campaign_id" ColumnName="campaign_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scx_generation_open_market_job_files">
+            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_files">
+              <MappingFragment StoreEntitySet="scx_generation_open_market_job_files">
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="shared_folder_files_id" ColumnName="shared_folder_files_id" />
+                <ScalarProperty Name="affiliate" ColumnName="affiliate" />
+                <ScalarProperty Name="export_genre_type_id" ColumnName="export_genre_type_id" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="scx_generation_open_market_job_markets">
+            <EntityTypeMapping TypeName="BroadcastModel.scx_generation_open_market_job_markets">
+              <MappingFragment StoreEntitySet="scx_generation_open_market_job_markets">
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

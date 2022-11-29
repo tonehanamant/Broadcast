@@ -221,10 +221,11 @@ namespace Services.Broadcast.Converters.Scx
             return result;
         }
 
-        public List<OpenMarketScxData> GetInventoryScxOpenMarketData(int inventorySourceId, int daypartCodeId, DateTime startDate, DateTime endDate,int marketCode,List<int> exportGenreIds, List<string> affiliates)
+        public List<OpenMarketScxData> GetInventoryScxOpenMarketData(int inventorySourceId, List<int> daypartIds, DateTime startDate, DateTime endDate, string marketRanks, List<int> exportGenreIds, List<string> affiliates)
         {
             var result = new List<OpenMarketScxData>();
-            var inventory = InventoryRepository.GetInventoryScxOpenMarketData(inventorySourceId, daypartCodeId, startDate, endDate, marketCode, exportGenreIds, affiliates);
+            List<int> marketRankList = marketRanks.Split(',').Select(int.Parse).ToList();
+            var inventory = InventoryRepository.GetInventoryScxOpenMarketData(inventorySourceId, daypartIds, startDate, endDate, marketRankList, exportGenreIds, affiliates);
             var inventorySource = InventoryRepository.GetInventorySource(inventorySourceId);
             var fileIds = inventory.SelectMany(x => x.Manifests).Select(x => x.InventoryFileId.Value).Distinct();
             var fileHeaders = InventoryRepository.GetInventoryFileHeader(fileIds);
@@ -246,8 +247,8 @@ namespace Services.Broadcast.Converters.Scx
                 var scxData = new OpenMarketScxData
                 {
                     DaypartCode = manifests.First().DaypartCode,
-                    DaypartCodeId = daypartCodeId,
-                    MarketCode = marketCode,
+                    DaypartIds = daypartIds,
+                    MarketRank = marketRanks,
                     Affiliate = manifests.First().Station.Affiliation,
                     InventorySource = inventorySource,
                     StartDate = startDate,
