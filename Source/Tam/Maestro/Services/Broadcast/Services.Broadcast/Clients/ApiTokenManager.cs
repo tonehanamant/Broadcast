@@ -22,10 +22,16 @@ namespace Services.Broadcast.Clients
         Task<string> GetOrRefreshTokenAsync(string umApiBaseUrl, string appName, string applicationId);
     }
 
-    public class ApiTokenManager :  IApiTokenManager
+    public class ApiTokenManager : BroadcastBaseClass, IApiTokenManager
     {
         private const string _UmServiceEndpoint = "api/v1/Security/svcToken";
         private static readonly ConcurrentDictionary<string, ApiTokenInfo> _apiTokenMap = new ConcurrentDictionary<string, ApiTokenInfo>(StringComparer.OrdinalIgnoreCase);
+
+        public ApiTokenManager(
+                IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
+            : base(featureToggleHelper, configurationSettingsHelper)
+        {
+        }
 
         public async Task<string> GetOrRefreshTokenAsync(string umApiBaseUrl, string appName, string applicationId)
         {
@@ -40,16 +46,21 @@ namespace Services.Broadcast.Clients
 
             if (_apiTokenMap.TryGetValue(appName, out var apiTokenInfo))
             {
-                if (TokenExpiryCheckHelper.HasTokenExpired(apiTokenInfo.ExpirationDate, DateTime.Now))
+                // Token Expiration date is expressed in UTC
+                if (TokenExpiryCheckHelper.HasTokenExpired(apiTokenInfo.ExpirationDate, DateTime.UtcNow))
                 {
                     apiTokenInfo = await _UpdateApiTokenAsync(umApiBaseUrl, appName, applicationId);
+                }
+                else
+                {
+                    _LogInfo($"Reusing the Token for app '{appName}' with expiration '{_GetExpirationDateString(apiTokenInfo.ExpirationDate)}'.");
                 }
 
                 return apiTokenInfo.Jwt;
 
             }
             else
-            {
+            {                
                 apiTokenInfo = await _UpdateApiTokenAsync(umApiBaseUrl, appName, applicationId);
                 return apiTokenInfo.Jwt;
             }
@@ -65,8 +76,19 @@ namespace Services.Broadcast.Clients
             };
 
             _apiTokenMap[appName] = apiTokenInfo;
+            
+            _LogInfo($"Retrieved a new Token for app '{appName}' with expiration '{_GetExpirationDateString(apiTokenInfo.ExpirationDate)}'.");
 
             return apiTokenInfo;
+        }
+
+        private static string _GetExpirationDateString(DateTime? candidate)
+        {
+            if (candidate.HasValue)
+            {
+                return candidate.Value.ToString("MM/dd/yyyy HH:mm:ss");
+            }
+            return "NotSet";
         }
 
         public TokenResponse _GetAccessToken(string umUrl,string appName, string applicationId)
@@ -84,7 +106,7 @@ namespace Services.Broadcast.Clients
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception(response.ReasonPhrase);
+                    throw new InvalidOperationException(response.ReasonPhrase);
                 }
 
                 return response.Content.ReadAsAsync<TokenResponse>().GetAwaiter().GetResult();
