@@ -350,8 +350,8 @@ namespace Services.Broadcast.Repositories
                             scx_generation_open_market_job_id = job.Id,
                             file_name = file.FileName,
                             standard_daypart_id = string.Join(",",file.DaypartIds.ToList()),
-                            start_date = file.StartDate,
-                            end_date = file.EndDate,
+                            start_date = job.InventoryScxOpenMarketsDownloadRequest.StartDate,
+                            end_date = job.InventoryScxOpenMarketsDownloadRequest.EndDate,
                             shared_folder_files_id = file.SharedFolderFileId,
                             rank = job.InventoryScxOpenMarketsDownloadRequest.MarketRanks,
                             export_genre_type_id = (int)job.InventoryScxOpenMarketsDownloadRequest.GenreType,
@@ -404,18 +404,40 @@ namespace Services.Broadcast.Repositories
         private void _AddOpenMarketJobMarkets(ScxOpenMarketsGenerationJob job, BroadcastContext context, int scxOpenMarketJobId)
         {
             List<int> completeRange = new List<int>();
+            List<int> subList = new List<int>();
             var rangeOfList = job.InventoryScxOpenMarketsDownloadRequest.MarketRanks.Split(';');
             foreach (var range in rangeOfList)
             {
-                if (range.Contains('-'))
+                if (range.Length > 0)
                 {
-                    var newRange = range.Split('-');
-                    var subList = Enumerable.Range(Convert.ToInt32(newRange[0]), Convert.ToInt32(newRange[1])).ToList<int>();
-                    completeRange.AddRange(subList);
-                }
-                else
-                {
-                    completeRange.Add(Convert.ToInt32(range));
+                    if (range.Contains('-'))
+                    {
+                        var newRange = range.Split('-');
+                        if (newRange[0].Length > 0 && newRange[1].Length > 0)
+                        {
+                            subList = Enumerable.Range(Convert.ToInt32(newRange[0]), Convert.ToInt32(newRange[1])).ToList<int>();
+                            completeRange.AddRange(subList);
+                        }
+                        else if (newRange[0].Length > 0 && newRange[1].Length == 0)
+                        {
+                            subList.Add(Convert.ToInt32(newRange[0]));
+                            completeRange.AddRange(subList);
+                        }
+                        else if (newRange[0].Length == 0 && newRange[1].Length > 0)
+                        {
+                            subList.Add(Convert.ToInt32(newRange[1]));
+                            completeRange.AddRange(subList);
+                        }
+                        else if (newRange[0].Length == 0 && newRange[1].Length == 0)
+                        {
+                            //do nothing
+                        }
+                        
+                    }
+                    else
+                    {
+                        completeRange.Add(Convert.ToInt32(range));
+                    }
                 }
             }
             foreach (var marketRank in completeRange)

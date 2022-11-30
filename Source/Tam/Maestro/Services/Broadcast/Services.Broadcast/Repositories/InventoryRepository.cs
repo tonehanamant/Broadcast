@@ -2058,7 +2058,7 @@ namespace Services.Broadcast.Repositories
                     var groups = context.station_inventory_group
                         .SelectMany(x => x.station_inventory_manifest)
                         .SelectMany(x => x.station_inventory_manifest_weeks)
-                        .Where(x => x.start_date <= endDate && x.end_date >= startDate) //filter by start/end date
+                        .Where(x => x.start_date >= startDate && x.end_date <= endDate) //filter by start/end date
                         .SelectMany(x => x.station_inventory_manifest.station_inventory_manifest_dayparts)
                         .Where(x => exportGenreIds.Contains(x.station_inventory_manifest_daypart_genres.FirstOrDefault().genre_id))//filter by Genre
                         .Where(x => affiliates.Contains(x.station_inventory_manifest.station.affiliation) || (affiliates.Contains("IND") && x.station_inventory_manifest.station.is_true_ind))//Filter by affiliation or filter by IND and ind flag true
@@ -2077,6 +2077,7 @@ namespace Services.Broadcast.Repositories
                         .Include(x => x.station_inventory_manifest.Select(m => m.station_inventory_manifest_dayparts.Select(y=>y.station_inventory_manifest_daypart_genres)))
                         .Include(x => x.station_inventory_manifest.Select(m => m.station))
                         .Include(x => x.station_inventory_manifest.Select(m => m.station.market.market_coverages))
+                        .Include(x => x.station_inventory_manifest.Select(m => m.inventory_files.inventory_file_ratings_jobs))
                         .Include(x => x.inventory_sources)
                         .ToList()
                         .Select(_MapToInventoryGroup)
