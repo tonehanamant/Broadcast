@@ -16,7 +16,6 @@
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
         public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
-        public static string ENABLED_WEEKLY_BREAKDOWN_LOCK = "broadcast-enabled-weekly-breakdown-lock";       
         public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";
         public static string ENABLE_PARTIAL_PLAN_SAVE = "broadcast-enable-partial-plan-save";
         public static string ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2 = "broadcast-weekly-breakdown-engine-v-2";

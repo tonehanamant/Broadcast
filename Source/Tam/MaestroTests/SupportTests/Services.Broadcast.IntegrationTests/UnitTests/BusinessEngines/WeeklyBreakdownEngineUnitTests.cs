@@ -683,7 +683,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLED_WEEKLY_BREAKDOWN_LOCK, true);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
@@ -827,7 +826,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             spotLengthEngine.Setup(x => x.GetDeliveryMultipliers())
                 .Returns(_SpotLengthMultiplier);
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLED_WEEKLY_BREAKDOWN_LOCK, true);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
             var weeklyBreakdownEngine = new WeeklyBreakdownEngine(
                 _PlanValidatorMock.Object,
