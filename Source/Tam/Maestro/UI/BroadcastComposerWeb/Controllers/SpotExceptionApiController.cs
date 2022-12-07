@@ -110,7 +110,7 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <param name="spotExceptionsRecommendedPlanSaveRequest">The spot exceptions recommended plan save request.</param>
         /// <returns></returns>
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Route("recommended-plans-save")]
         public async Task<BaseResponse<bool>> SaveSpotExceptionsRecommendedPlan(SpotExceptionsRecommendedPlanSaveDecisionsRequestDto spotExceptionsRecommendedPlanSaveRequest)
@@ -239,7 +239,7 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         /// <param name="spotExceptionsOutOfSpecSaveRequest">The spot exceptions out of spec save request.</param>
         /// <returns></returns>
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [Route("out-of-spec-saves")]
         public async Task<BaseResponse<bool>> SaveOutofSpecDecisionsPlans(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest)
