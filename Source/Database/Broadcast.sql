@@ -1309,6 +1309,26 @@ IF EXISTS (SELECT *
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
+/*************************************** Start BP-6149 ***************************************/
+
+IF NOT EXISTS (SELECT 1 FROM spot_exceptions_out_of_spec_reason_codes WHERE reason_code = 13)
+BEGIN 
+	
+	INSERT INTO spot_exceptions_out_of_spec_reason_codes (reason_code, reason, [label]) VALUES
+		(13,'Incorrect ISCI Time','ISCI Time')
+		,(14,'Incorrect Program Blank','No Available Program')
+
+	UPDATE spot_exceptions_out_of_spec_reason_codes set label = 'Time'
+	WHERE reason_code = 9;
+
+	UPDATE spot_exceptions_out_of_spec_reason_codes set reason = 'Incorrect ISCI Day', label = 'ISCI Day'
+	WHERE reason_code = 6;
+
+END
+
+GO
+/*************************************** END BP-6149 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
