@@ -364,7 +364,7 @@ namespace Services.Broadcast.Repositories
                         var summary = version.plan_version_summaries.Single();
 
                         var draft = planVersions
-                            .Where(x => x.plan_id == version.plan_id && x.is_draft == true).SingleOrDefault();
+                             .Where(x => x.plan_id == version.plan_id && x.is_draft == true).OrderBy(x => x.id).FirstOrDefault();
 
                         return new PlanSummaryDto
                         {
