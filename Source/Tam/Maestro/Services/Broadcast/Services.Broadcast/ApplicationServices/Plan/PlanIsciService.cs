@@ -354,6 +354,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 || _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, flightEndDate)
                 || mapping.SpotLengthId != x.SpotLengthId)
                 );
+                planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci == mapping.Isci
+             && (_IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, x.FlightStartDate.Date)
+             || _IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, x.FlightEndDate.Date)
+             || mapping.SpotLengthId != x.SpotLengthId)
+             );
                 if (planIscisCount == 0)
                 {
                     toSaveFiltered.Add(mapping);
