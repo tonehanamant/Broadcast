@@ -675,8 +675,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         {
                             AcceptedAsInSpec = spotExceptionsOutOfSpecSaveRequest.Decisions.Where(x => x.TodoId == existingOutOfSpecToDo.Id).Select(x => x.AcceptAsInSpec).Single(),
                             DecisionNotes = spotExceptionsOutOfSpecSaveRequest.Decisions.Where(x => x.TodoId == existingOutOfSpecToDo.Id).Select(x => x.AcceptAsInSpec ? "In" : "Out").Single(),
-                            ProgramName = firstRequest.ProgramName,
-                            GenreName = firstRequest.GenreName,
+                            ProgramName = firstRequest.ProgramName.ToUpper(),
+                            GenreName = firstRequest.GenreName.ToUpper(),
                             DaypartCode = firstRequest.DaypartCode,
                             DecidedBy = userName,
                             DecidedAt = _DateTimeEngine.GetCurrentMoment()
@@ -756,8 +756,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     {
                         Id = spotExceptionsOutOfSpec.DoneId.Value,
                         AcceptedAsInSpec = spotExceptionsOutOfSpec.AcceptAsInSpec,
-                        ProgramName = spotExceptionsOutOfSpec.ProgramName,
-                        GenreName = spotExceptionsOutOfSpec.GenreName,
+                        ProgramName = spotExceptionsOutOfSpec.ProgramName.ToUpper(),
+                        GenreName = spotExceptionsOutOfSpec.GenreName.ToUpper(),
                         DaypartCode = spotExceptionsOutOfSpec.DaypartCode
                     };
                     spotExceptionsOutOfSpecDone.Add(spotExceptionsOutOfSpecDoneDecision);
