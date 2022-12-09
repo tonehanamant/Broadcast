@@ -553,6 +553,8 @@
     <Compile Include="Clients\CadentSecuredClientBase.cs" />
     <Compile Include="Clients\GeneralLockingApiClient.cs" />
     <Compile Include="Clients\GeneralLockingApiClientConfigKeys.cs" />
+    <Compile Include="Clients\InventoryManagementApiClient.cs" />
+    <Compile Include="Clients\InventoryManagementApiConfigKeys.cs" />
     <Compile Include="Clients\SpotExceptionsApiClient.cs" />
     <Compile Include="Clients\SpotExceptionsIngestApiConfigKeys.cs" />
     <Compile Include="Converters\Scx\OpenMarketInventoryScxDataPrep.cs" />
