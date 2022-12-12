@@ -23,10 +23,9 @@ namespace Services.Broadcast.Clients
         private async Task<HttpClient> _GetSecureHttpClientAsync()
         {
             var apiBaseUrl = _GetApiUrl();
-            var applicationId = _GetGeneralLockingApplicationId();
-            var appName = _GetGeneralLockingApiAppName();
-            var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);
-            client.Timeout = new TimeSpan(2, 0, 0);
+            var applicationId = _GetApplicationId();
+            var appName = _GetAppName();
+            var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);            
             return client;
         }
 
@@ -36,12 +35,12 @@ namespace Services.Broadcast.Clients
 
             return apiUrl;
         }
-        private string _GetGeneralLockingApplicationId()
+        private string _GetApplicationId()
         {
             var applicationId = _ConfigurationSettingsHelper.GetConfigValue<string>(InventoryManagementApiConfigKeys.ApplicationId);
             return applicationId;
         }
-        private string _GetGeneralLockingApiAppName()
+        private string _GetAppName()
         {
             var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(InventoryManagementApiConfigKeys.AppName);
             return appName;
