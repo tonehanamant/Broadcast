@@ -211,6 +211,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             //This will always return single week since queryStartDate and queryStartDate will always contain single week
             var isciFilterWeek = BroadcastWeeksHelper.GetContainingWeeks(queryStartDate, queryStartDate).FirstOrDefault();
             var isciPlans = _PlanIsciRepository.GetAvailableIsciPlans(queryStartDate, queryEndDate);
+            isciPlans = isciPlans.Where(x => x.Dayparts.Count != 0).ToList();
             List<int> outOfFlightPlans = new List<int>();
             isciPlans.ForEach(P =>
             {
@@ -773,8 +774,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var planIscis = _PlanIsciRepository.GetTargetIsciPlans(campaign.AdvertiserMasterId, sourcePlanId);
             foreach (var singlePlan in planIscis)
             {
-                var isciplan = singlePlan.plan_versions.SingleOrDefault(x => x.flight_end_date >= dateTime && x.id == singlePlan.latest_version_id);
-                if (isciplan != null)
+                var isciplan = singlePlan.plan_versions.SingleOrDefault(x => x.flight_end_date >= dateTime && x.id == singlePlan.latest_version_id && x.is_draft == false);
+                if (isciplan != null && isciplan.plan_version_dayparts.Count != 0)
                 {
                     var dayparts = isciplan.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList();
                     var spotLengthString = _GetSpotLengthsString(isciplan.plan_version_creative_lengths.Select(y => y.spot_length_id).FirstOrDefault());

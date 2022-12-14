@@ -4,13 +4,24 @@
     "AdvertiserName": null,
     "AudienceCode": "HH",
     "Dayparts": [],
+    "FlightDays": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
     "FlightEndDate": "2019-03-02T00:00:00",
+    "FlightHiatusDays": [],
     "FlightStartDate": "2020-02-17T00:00:00",
     "Id": 7009,
     "Iscis": [
       "UniqueIsci1",
       "UniqueIsci2"
     ],
+    "PlanDayparts": [],
     "ProductMasterId": null,
     "SpotLengthValues": [
       30

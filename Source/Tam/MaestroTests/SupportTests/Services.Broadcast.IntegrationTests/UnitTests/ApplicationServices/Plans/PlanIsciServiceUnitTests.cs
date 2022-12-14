@@ -2330,7 +2330,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                             spot_length_id = 3
                                         }
                                      }
-                                }
+                                },
+                                is_draft = false
                             }
                         },
                         plan_iscis = new List<plan_iscis>

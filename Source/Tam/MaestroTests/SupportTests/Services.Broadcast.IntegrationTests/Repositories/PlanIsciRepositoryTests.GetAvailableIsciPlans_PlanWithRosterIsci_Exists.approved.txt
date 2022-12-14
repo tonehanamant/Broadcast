@@ -8,12 +8,129 @@
       "ENLN",
       "SYN"
     ],
+    "FlightDays": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
     "FlightEndDate": "2019-10-13T00:00:00",
+    "FlightHiatusDays": [],
     "FlightStartDate": "2019-07-31T00:00:00",
     "Id": 1540,
     "Iscis": [
       "AB82TXT2H",
       "AB82VR58"
+    ],
+    "PlanDayparts": [
+      {
+        "CustomName": null,
+        "DaypartCodeId": 14,
+        "DaypartOrganizationId": null,
+        "DaypartOrganizationName": null,
+        "DaypartTypeId": 0,
+        "DaypartUniquekey": "14||",
+        "EndTimeSeconds": 0,
+        "IsEndTimeModified": false,
+        "IsStartTimeModified": false,
+        "PlanDaypartId": 0,
+        "Restrictions": {
+          "AffiliateRestrictions": {
+            "Affiliates": [],
+            "ContainType": 2
+          },
+          "GenreRestrictions": {
+            "ContainType": 2,
+            "Genres": []
+          },
+          "ProgramRestrictions": {
+            "ContainType": 2,
+            "Programs": []
+          },
+          "ShowTypeRestrictions": {
+            "ContainType": 2,
+            "ShowTypes": []
+          }
+        },
+        "StartTimeSeconds": 0,
+        "VpvhForAudiences": [],
+        "WeekdaysWeighting": null,
+        "WeekendWeighting": null,
+        "WeightingGoalPercent": null
+      },
+      {
+        "CustomName": null,
+        "DaypartCodeId": 5,
+        "DaypartOrganizationId": null,
+        "DaypartOrganizationName": null,
+        "DaypartTypeId": 0,
+        "DaypartUniquekey": "5||",
+        "EndTimeSeconds": 0,
+        "IsEndTimeModified": false,
+        "IsStartTimeModified": false,
+        "PlanDaypartId": 0,
+        "Restrictions": {
+          "AffiliateRestrictions": {
+            "Affiliates": [],
+            "ContainType": 2
+          },
+          "GenreRestrictions": {
+            "ContainType": 2,
+            "Genres": []
+          },
+          "ProgramRestrictions": {
+            "ContainType": 2,
+            "Programs": []
+          },
+          "ShowTypeRestrictions": {
+            "ContainType": 2,
+            "ShowTypes": []
+          }
+        },
+        "StartTimeSeconds": 0,
+        "VpvhForAudiences": [],
+        "WeekdaysWeighting": null,
+        "WeekendWeighting": null,
+        "WeightingGoalPercent": null
+      },
+      {
+        "CustomName": null,
+        "DaypartCodeId": 10,
+        "DaypartOrganizationId": null,
+        "DaypartOrganizationName": null,
+        "DaypartTypeId": 0,
+        "DaypartUniquekey": "10||",
+        "EndTimeSeconds": 0,
+        "IsEndTimeModified": false,
+        "IsStartTimeModified": false,
+        "PlanDaypartId": 0,
+        "Restrictions": {
+          "AffiliateRestrictions": {
+            "Affiliates": [],
+            "ContainType": 2
+          },
+          "GenreRestrictions": {
+            "ContainType": 2,
+            "Genres": []
+          },
+          "ProgramRestrictions": {
+            "ContainType": 2,
+            "Programs": []
+          },
+          "ShowTypeRestrictions": {
+            "ContainType": 2,
+            "ShowTypes": []
+          }
+        },
+        "StartTimeSeconds": 0,
+        "VpvhForAudiences": [],
+        "WeekdaysWeighting": null,
+        "WeekendWeighting": null,
+        "WeightingGoalPercent": null
+      }
     ],
     "ProductMasterId": "c2771f6b-8579-486a-910c-ff3c84144de7",
     "SpotLengthValues": [
