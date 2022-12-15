@@ -1277,6 +1277,8 @@ GO
 
 /*************************************** END BP-5992 ************************************/
 
+/*************************************** START BP-6037 ************************************/
+
 IF EXISTS (SELECT *
    FROM   information_schema.columns
     WHERE  table_name = 'scx_generation_open_market_job_markets' AND column_name = 'market_code')
@@ -1307,7 +1309,7 @@ IF EXISTS (SELECT *
 					  END
 					  GO
 
-/*************************************** END UPDATE SCRIPT *******************************************************/
+/*************************************** END BP-6037 ************************************/
 
 /*************************************** Start BP-6149 ***************************************/
 
@@ -1328,6 +1330,109 @@ END
 
 GO
 /*************************************** END BP-6149 ***************************************/
+
+/*************************************** START BP-6134 ************************************/
+
+-- Setup the raw data for merge
+IF OBJECT_ID('tempdb..#master_stations_for_merge') IS NOT NULL
+BEGIN 
+	drop table #master_stations_for_merge
+END
+
+CREATE TABLE  #master_stations_for_merge
+(
+	id int identity(1,1) primary key,
+	call_letters NVARCHAR(500) NULL, 
+	affiliation NVARCHAR(500) NULL, 	
+	[owner] NVARCHAR(500) NULL, 
+	rep_name NVARCHAR(500) NULL,
+	market_code INT NULL
+)
+
+INSERT INTO #master_stations_for_merge (call_letters, affiliation, [owner], rep_name, market_code) VALUES
+	('WMNN','IND',NULL,NULL,'140')
+	,('KIVV','FOX','Mission TV, LLC','Millennium Sales & Marketing','364')
+	,('WANF','CBS','Meredith Broadcasting Group','Harrington, Righter & Parsons, Inc.','124')
+	,('KHAS','NBC','Gray Television, Inc','DIRECT','322')
+	,('ELMT','CW',NULL,NULL,'240')
+	,('KAQY','ABC','Gray Television, Inc','Millennium Sales & Marketing','228')
+	,('WKDH','ABC','WTVA, Inc.','Continental Television Sales','273')
+	,('KZBK','CBS','Cordillera Communications','Harrington, Righter & Parsons, Inc.','354')
+	,('WFXS','FOX','Davis Television','Millennium Sales & Marketing','305')
+	,('NBMT','NBC','Gannett Broadcasting','Continental Television Sales','292')
+	,('GTAP','MYNET','Gray Television, Inc','Continental Television Sales','197')
+	,('WMMP','MYNET','Sinclair Broadcast Group','Sinclair ','119')
+	,('WLMO ','CBS','Block Communications','Petry Television, Inc.','158')
+	,('KHBS/KHOG','ABC','Hearst Television, Inc.','DIRECT','270')
+	,('KVTV','CBS','Eagle Creek Broadcasting','Millennium Sales & Marketing','349')
+	,('WAMY','MYNET','Nexstar Broadcasting Group','TeleRep, Inc.','291')
+	,('NIDK','MYNET',NULL,NULL,'358')
+	,('KJNE','NBC','New Moon Communications',NULL,'334')
+	,('ETAP','FOX','Gray Television, Inc','Continental Television Sales','197')
+	,('EFFF','IND','Smith Media, LLC (Sale pending to Nexstar)','DIRECT','123')
+	,('KFXP','FOX','Abraham Telecasting Company','Petry Television, Inc.','358')
+	,('GJHG','MyNet','Gray Television, Inc','Continental Television Sales','256')
+	,('WXMS','IND','Raycom Media','DIRECT','318')
+	,('KTUD','IND','VegasTV, LLC','Harrington, Righter & Parsons, Inc.','439')
+	,('NNBN','MYNET','Rapid Broadcasting Company','Petry Television, Inc.','364')
+	,('KEJB','MYNET','KM Communications',NULL,'228')
+	,('WJAL','IND','Entravision Communications Corporation','In House','111')
+	,('KQEG','IND',NULL,NULL,'302')
+	,('WPMY','MYNET','Sinclair Broadcast Group','Katz ','108')
+	,('SBT2','FOX',NULL,NULL,'188')
+	,('EXXV','MYNET','Morris Multi Media Corp.','Millennium Sales & Marketing','346')
+	,('WVN2','FOX',NULL,NULL,'159')
+	,('WLLZ','MYNET','P&P Cable Holdings',NULL,'140')
+	,('WNWS (WJLA)','ABC',NULL,NULL,'111')
+	,('WTO5','CW','Block Communications','Harrington, Righter & Parsons, Inc.','147')
+	,('K47DF','IND','Cordillera Communications','Harrington, Righter & Parsons, Inc.','200')
+	,('EMGT','MyNet',NULL,NULL,'103')
+	,('WNEG','Ind','UGARF Media Holdings, LLC','MMT Sales','167')
+	,('WHVL','MYNET','Channel Communications',NULL,'174')
+	,('KCEB','IND','Gannett Broadcasting',NULL,'309')
+	,('KCPM','MYNET','Central Plains Media','In House','324')
+	,('EKBT','MYNET','Morgan Murphy Media','Harrington, Righter & Parsons, Inc.','302')
+	,('WMYW-LP','MYNET',NULL,NULL,'150')
+	,('KIDZ','MYNET','Bayou City Broadcasting','DIRECT','262')
+	,('WNFM','MYNET','Comcast',NULL,'171')
+	,('WMYG','MYNET','New Age Media','Petry Television, Inc.','192')
+	,('WOTM','IND','WOTM, LLC',NULL,'230')
+	,('WBQD','MYNET','Tribune Broadcasting Co.','DIRECT','282')
+	,('NNPN','CW','News-Press & Gazette Company',NULL,'238')
+	,('ERGT','MyNet','Sinclair Broadcast Group','Sinclair ','142')
+	,('KCMB','CBS','Reiten Television, Inc.','Continental Television Sales','287')
+	,('EHSV','FOX','Gray Television, Inc','Continental Television Sales','169')
+
+GO
+
+-- Merge
+BEGIN TRANSACTION
+	-- Fix existing
+	UPDATE s SET
+		affiliation = m.affiliation
+		, market_code = m.market_code
+		, rep_firm_name = m.rep_name
+		, owner_name = m.[owner]
+		, modified_by = 'BP-6134'
+		, modified_date = SYSDATETIME()
+	FROM stations s
+	JOIN #master_stations_for_merge m
+		ON s.legacy_call_letters = m.call_letters
+	WHERE s.modified_by <> 'BP-6134' -- try to avoid nugatory updates
+
+	-- Add the missing
+	INSERT INTO stations (station_code, station_call_letters, affiliation, market_code, legacy_call_letters, modified_by, modified_date, rep_firm_name, owner_name, is_true_ind)
+		SELECT NULL, m.call_letters, m.affiliation, m.market_code, m.call_letters, 'BP-6134', SYSDATETIME(), m.rep_name, m.[owner], 0		
+		FROM #master_stations_for_merge m
+		LEFT OUTER JOIN stations s
+			ON s.legacy_call_letters = m.call_letters
+		WHERE s.legacy_call_letters IS NULL
+
+COMMIT TRANSACTION
+
+GO
+
+/*************************************** END BP-6134 ************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
