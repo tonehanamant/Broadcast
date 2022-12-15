@@ -1514,6 +1514,57 @@ GO
 
 /*************************************** END BP-6134 ************************************/
 
+/*************************************** START BP-6104 ************************************/
+
+-- Setup the raw data for merge
+IF OBJECT_ID('tempdb..#master_stations_for_merge') IS NOT NULL
+BEGIN 
+	drop table #master_stations_for_merge
+END
+
+CREATE TABLE  #master_stations_for_merge
+(
+	id int identity(1,1) primary key,
+	call_letters NVARCHAR(500) NULL, 
+	affiliation NVARCHAR(500) NULL, 	
+	[owner] NVARCHAR(500) NULL, 
+	rep_name NVARCHAR(500) NULL,
+	market_code INT NULL
+)
+
+INSERT INTO #master_stations_for_merge (call_letters, affiliation, [owner], rep_name, market_code) VALUES
+	('ETVW','IND','Morgan Murphy Media',NULL,269)	
+
+GO
+
+-- Merge
+BEGIN TRANSACTION
+	-- UPDATES
+	UPDATE s SET
+		affiliation = m.affiliation
+		, market_code = m.market_code
+		, rep_firm_name = m.rep_name
+		, owner_name = m.[owner]
+		, modified_by = 'BP-6104'
+		, modified_date = SYSDATETIME()
+	FROM stations s
+	JOIN #master_stations_for_merge m
+		ON s.legacy_call_letters = m.call_letters
+	WHERE s.modified_by <> 'BP-6104' -- try to avoid nugatory updates
+
+	INSERT INTO stations (station_code, station_call_letters, affiliation, market_code, legacy_call_letters, modified_by, modified_date, rep_firm_name, owner_name, is_true_ind)
+		SELECT NULL, m.call_letters, m.affiliation, m.market_code, m.call_letters, 'BP-6104', SYSDATETIME(), m.rep_name, m.[owner], 0		
+		FROM #master_stations_for_merge m
+		LEFT OUTER JOIN stations s
+			ON s.legacy_call_letters = m.call_letters
+		WHERE s.legacy_call_letters IS NULL	
+
+COMMIT TRANSACTION
+
+GO
+
+/*************************************** END-6104 ************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
