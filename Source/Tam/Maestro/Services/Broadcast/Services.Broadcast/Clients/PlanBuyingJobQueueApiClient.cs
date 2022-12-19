@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan.Buying;
+using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,21 +18,24 @@ namespace Services.Broadcast.Clients
         Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request);
     }
 
-    public class PlanBuyingJobQueueApiClient : IPlanBuyingApiClient
+    public class PlanBuyingJobQueueApiClient : BroadcastBaseClass, IPlanBuyingApiClient
     {
         private readonly Lazy<string> _SubmitUrl;
         private readonly Lazy<string> _FetchUrl;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly HttpClient _HttpClient;
+        private readonly Lazy<bool> _IsZippedPricingEnabled;
         private const string jsonContentType = "application/json";
         private const string gZipHeader =  "gzip";
 
-        public PlanBuyingJobQueueApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+        public PlanBuyingJobQueueApiClient(IConfigurationSettingsHelper configurationSettingsHelper, IFeatureToggleHelper featureToggleHelper, HttpClient httpClient)
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ConfigurationSettingsHelper = configurationSettingsHelper;
             _SubmitUrl = new Lazy<string>(_GetSubmitUrl);
             _FetchUrl = new Lazy<string>(_GetFetchUrl);
             _HttpClient = httpClient;
+            _IsZippedPricingEnabled = new Lazy<bool>(() => featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ZIPPED_PRICING));
         }
 
         public async Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
@@ -67,18 +73,30 @@ namespace Services.Broadcast.Clients
 
         private async Task<BuyingJobSubmitResponse> SubmitRequestAsync(PlanBuyingApiRequestDto_v3 request)
         {
+            var submitResult = new HttpResponseMessage();
             var requestSerialized = JsonConvert.SerializeObject(request);
-               //.ToGZipCompressed();
 
-            var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
-            //content.Headers.ContentEncoding.Add(gZipHeader); 
+            if (_IsZippedPricingEnabled.Value)
+            {
+                var zippedPayload = CompressionHelper.GetGzipCompress(requestSerialized);
 
-            var submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
+                var content = new ByteArrayContent(zippedPayload);
+                content.Headers.Add("Content-Encoding", gZipHeader);
+                content.Headers.ContentType = new MediaTypeHeaderValue(jsonContentType);
+                submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
+            }
+            else
+            {
+                var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
+                submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
+            }
+
             var submitResponse = await submitResult.Content.ReadAsAsync<BuyingJobSubmitResponse>();
 
             if (submitResponse.error != null)
             {
                 var msgs = string.Join(",", submitResponse.error.Messages);
+
                 throw new InvalidOperationException($"Error returned from the pricing api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
             }
 
@@ -87,18 +105,43 @@ namespace Services.Broadcast.Clients
 
         private async Task<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
-            var fetchRequest = new BuyingJobFetchRequest { task_id = taskId };
-            var fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
+            var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
+            var fetchResult = new HttpResponseMessage();
 
-            var fetchResponse = await fetchResult.Content.ReadAsAsync<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>();
-
-            if (fetchResponse.error != null)
+            if (_IsZippedPricingEnabled.Value)
             {
-                var msgs = string.Join(",", fetchResponse.error.Messages);
-                throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
-            }
+                var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
+                var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
+                _HttpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(gZipHeader));
 
-            return fetchResponse;
+                fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
+
+
+                var fetchResponse = await fetchResult.Content.ReadAsByteArrayAsync();
+                var uncommpressedResult = CompressionHelper.GetGzipUncompress(fetchResponse);
+                var response = JsonConvert.DeserializeObject<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>(uncommpressedResult);
+
+                if (!fetchResult.IsSuccessStatusCode)
+                {
+                    var msgs = string.Join(",", fetchResult.ReasonPhrase);
+                    throw new InvalidOperationException($"Error returned from the buying api fetch. Name : '{fetchResult.ReasonPhrase}';  Messages : '{msgs}'");
+                }
+
+                return response;
+            }
+            else
+            {
+                fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
+                var fetchResponse = await fetchResult.Content.ReadAsAsync<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>();
+
+                if (fetchResponse.error != null)
+                {
+                    var msgs = string.Join(",", fetchResponse.error.Messages);
+                    throw new InvalidOperationException($"Error returned from the buying api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
+                }
+
+                return fetchResponse;
+            }
         }
     }
 }

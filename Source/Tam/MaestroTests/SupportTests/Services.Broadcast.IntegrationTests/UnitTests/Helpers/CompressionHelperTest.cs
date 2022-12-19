@@ -51,6 +51,27 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(content.ToString()));
         }
 
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetGzipUncompress_byte()
+        {
+            // Arrange
+            var data = CompressionHelper.GetGzipCompress(JsonConvert.SerializeObject(_GetRawResult()));
+
+            var stream = new MemoryStream(data);
+            var response = new GetObjectResponse()
+            {
+                ResponseStream = stream
+
+            };
+
+            // Act
+            var content = CompressionHelper.GetGzipUncompress(data);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(content.ToString()));
+        }
+
         private static PlanBuyingInventoryRawDto _GetRawResult()
         {
             var data = new PlanBuyingInventoryRawDto

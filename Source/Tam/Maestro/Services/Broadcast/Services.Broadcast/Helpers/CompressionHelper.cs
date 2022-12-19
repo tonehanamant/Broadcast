@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using Services.Broadcast.Helpers;
+using System.Net.Http;
 
 namespace Services.Broadcast.Helpers
 {
@@ -49,6 +50,25 @@ namespace Services.Broadcast.Helpers
                 }
             }
             return content;
+        }
+
+        /// <summary>Gets the gzip uncompress.</summary>
+        /// <param name="gzip">The response.</param>
+        /// <returns></returns>
+        public static string GetGzipUncompress(byte[] gzip)
+        {
+            var content = string.Empty;
+            using (var memoryStream = new MemoryStream(gzip))
+            using (var gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+            using (var memoryStreamOutput = new MemoryStream())
+            {
+                gZipStream.CopyTo(memoryStreamOutput);
+                memoryStreamOutput.Position = 0;
+                var reader = new StreamReader(memoryStreamOutput);
+                content = reader.ReadToEnd();
+
+                return content;
+            }
         }
     }
 }

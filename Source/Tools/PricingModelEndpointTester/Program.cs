@@ -6,7 +6,7 @@ namespace PricingModelEndpointTester
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             var tests = new List<ITest>
             {
@@ -15,7 +15,11 @@ namespace PricingModelEndpointTester
 
             try
             {
-                tests.ForEach(t => t.Run());
+                //tests.ForEach(t => await t.Run());
+                foreach(var test in tests)
+                {
+                    await test.Run();
+                }
             }
             catch (Exception e)
             {

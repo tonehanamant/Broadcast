@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan.Pricing;
+using Services.Broadcast.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,20 +16,21 @@ namespace Services.Broadcast.Clients
         Task<PlanPricingApiSpotsResponseDto_v3> GetPricingSpotsResultAsync(PlanPricingApiRequestDto_v3 request);
     }
 
-    public class PricingJobQueueApiClient : IPricingApiClient
+    public class PricingJobQueueApiClient : BroadcastBaseClass, IPricingApiClient
     {
         private readonly Lazy<string> _PlanPricingAllocationsEfficiencyModelSubmitUrl;
         private Lazy<string> _PlanPricingAllocationsEfficiencyModelFetchUrl;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        private readonly Lazy<bool> _IsZippedPricingEnabled;
         private readonly HttpClient _HttpClient;
         private const string jsonContentType = "application/json";
         private const string gZipHeader =  "gzip";
 
-        public PricingJobQueueApiClient(IConfigurationSettingsHelper configurationSettingsHelper, HttpClient httpClient)
+        public PricingJobQueueApiClient(IConfigurationSettingsHelper configurationSettingsHelper, IFeatureToggleHelper featureToggleHelper, HttpClient httpClient)
+            : base(featureToggleHelper, configurationSettingsHelper)
         {
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
             _PlanPricingAllocationsEfficiencyModelSubmitUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelSubmitUrl);
             _PlanPricingAllocationsEfficiencyModelFetchUrl = new Lazy<string>(_GetPlanPricingAllocationsEfficiencyModelFetchUrl);
+            _IsZippedPricingEnabled = new Lazy<bool>(() => featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ZIPPED_PRICING));
             _HttpClient = httpClient;
         }
 
@@ -67,13 +69,24 @@ namespace Services.Broadcast.Clients
 
         private async Task<PricingJobSubmitResponse> SubmitRequestAsync(PlanPricingApiRequestDto_v3 request)
         {
+            var submitResult = new HttpResponseMessage();
             var requestSerialized = JsonConvert.SerializeObject(request);
-               //.ToGZipCompressed();
 
-            var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
-            //content.Headers.ContentEncoding.Add(gZipHeader); 
+            if (_IsZippedPricingEnabled.Value)
+            {
+                var zippedPayload = CompressionHelper.GetGzipCompress(requestSerialized);
 
-            var submitResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelSubmitUrl.Value, content);
+                var content = new ByteArrayContent(zippedPayload);
+                content.Headers.Add("Content-Encoding", gZipHeader);
+                content.Headers.ContentType = new MediaTypeHeaderValue(jsonContentType);
+                submitResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelSubmitUrl.Value, content);
+            }
+            else
+            {
+                var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
+                submitResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelSubmitUrl.Value, content);
+            }
+
             var submitResponse = await submitResult.Content.ReadAsAsync<PricingJobSubmitResponse>();
 
             if (submitResponse.error != null)
@@ -89,17 +102,42 @@ namespace Services.Broadcast.Clients
         private async Task<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
             var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
-            var fetchResult = await _HttpClient.PostAsJsonAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, fetchRequest);
+            var fetchResult = new HttpResponseMessage();
 
-            var fetchResponse = await fetchResult.Content.ReadAsAsync<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>();
-
-            if (fetchResponse.error != null)
+            if (_IsZippedPricingEnabled.Value)
             {
-                var msgs = string.Join(",", fetchResponse.error.Messages);
-                throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
-            }
+                var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
+                var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
+                _HttpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(gZipHeader));
 
-            return fetchResponse;
+                fetchResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, content);
+
+
+                var fetchResponse = await fetchResult.Content.ReadAsByteArrayAsync();
+                var uncommpressedResult = CompressionHelper.GetGzipUncompress(fetchResponse);
+                var response = JsonConvert.DeserializeObject<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>(uncommpressedResult);
+
+                if (!fetchResult.IsSuccessStatusCode)
+                {
+                    var msgs = string.Join(",", fetchResult.ReasonPhrase);
+                    throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResult.ReasonPhrase}';  Messages : '{msgs}'");
+                }
+
+                return response;
+            }
+            else
+            {
+                fetchResult = await _HttpClient.PostAsJsonAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, fetchRequest);
+                var fetchResponse = await fetchResult.Content.ReadAsAsync<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>();
+
+                if (fetchResponse.error != null)
+                {
+                    var msgs = string.Join(",", fetchResponse.error.Messages);
+                    throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
+                }
+
+                return fetchResponse;
+            }
         }
     }
 }
