@@ -1,0 +1,1666 @@
+{
+  "error": null,
+  "request_id": "09ccef2d5ee743a59c95796d02f5904e",
+  "results": [
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1975828,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1975858,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976020,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976034,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976155,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976158,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976262,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1995606,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1995754,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005684,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005707,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005721,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005743,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005818,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056489,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056496,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056503,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056518,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056522,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056544,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056550,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056588,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056592,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056598,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056652,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056663,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056673,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056680,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056693,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056696,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056707,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056709,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056732,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 4,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056738,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056742,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056760,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056762,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056773,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056775,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056793,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056795,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056796,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056803,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056817,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056821,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056829,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057228,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057236,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057257,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057277,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057291,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057319,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057345,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057394,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057445,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057452,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057508,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058127,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058137,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058144,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058145,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058150,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058155,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058183,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058186,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058210,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058230,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058258,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058269,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058273,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058302,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058306,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058325,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 6,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058358,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058416,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058421,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058441,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058470,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058478,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058497,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058514,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2097798,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2098602,
+      "week_id": 992
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1975828,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1975858,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976020,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976034,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976155,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 4,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976158,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1976262,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 3,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1995606,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 1995754,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005684,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005707,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005721,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005743,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2005818,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056489,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056496,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056503,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056518,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056522,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056544,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056550,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056588,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056592,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056598,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056652,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056663,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056673,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056680,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056693,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056696,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056707,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056709,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056732,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 4,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056738,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056742,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056760,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056762,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056773,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056775,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056793,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056795,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056796,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056803,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056817,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056821,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2056829,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057228,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057236,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057257,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057277,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057291,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057319,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057345,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057394,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057445,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057452,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2057508,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058127,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058137,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058144,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058145,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058150,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058155,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058183,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058186,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058210,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058230,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058258,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058269,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058273,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058302,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058306,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058325,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058358,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058416,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058421,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058441,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 2,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058470,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058478,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 5,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058497,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2058514,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 1,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2097798,
+      "week_id": 993
+    },
+    {
+      "frequencies": [
+        {
+          "frequency": 10,
+          "spot_length_id": 1
+        }
+      ],
+      "id": 2098602,
+      "week_id": 993
+    }
+  ]
+}

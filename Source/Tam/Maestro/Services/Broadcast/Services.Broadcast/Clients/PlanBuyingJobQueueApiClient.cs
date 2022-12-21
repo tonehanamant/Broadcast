@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan.Buying;
-using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -22,7 +20,6 @@ namespace Services.Broadcast.Clients
     {
         private readonly Lazy<string> _SubmitUrl;
         private readonly Lazy<string> _FetchUrl;
-        private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         private readonly HttpClient _HttpClient;
         private readonly Lazy<bool> _IsZippedPricingEnabled;
         private const string jsonContentType = "application/json";
@@ -31,11 +28,10 @@ namespace Services.Broadcast.Clients
         public PlanBuyingJobQueueApiClient(IConfigurationSettingsHelper configurationSettingsHelper, IFeatureToggleHelper featureToggleHelper, HttpClient httpClient)
             : base(featureToggleHelper, configurationSettingsHelper)
         {
-            _ConfigurationSettingsHelper = configurationSettingsHelper;
             _SubmitUrl = new Lazy<string>(_GetSubmitUrl);
             _FetchUrl = new Lazy<string>(_GetFetchUrl);
-            _HttpClient = httpClient;
             _IsZippedPricingEnabled = new Lazy<bool>(() => featureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ZIPPED_PRICING));
+            _HttpClient = httpClient;
         }
 
         public async Task<PlanBuyingApiSpotsResponseDto_v3> GetBuyingSpotsResultAsync(PlanBuyingApiRequestDto_v3 request)
@@ -97,7 +93,7 @@ namespace Services.Broadcast.Clients
             {
                 var msgs = string.Join(",", submitResponse.error.Messages);
 
-                throw new InvalidOperationException($"Error returned from the pricing api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
+                throw new InvalidOperationException($"Error returned from the buying api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
             }
 
             return submitResponse;
@@ -106,32 +102,31 @@ namespace Services.Broadcast.Clients
         private async Task<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
             var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
-            var fetchResult = new HttpResponseMessage();
+            var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
+            var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
 
             if (_IsZippedPricingEnabled.Value)
             {
-                var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
-                var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
                 _HttpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(gZipHeader));
 
-                fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
-
+                var fetchResult = await _HttpClient.PostAsync(_FetchUrl.Value, content);
 
                 var fetchResponse = await fetchResult.Content.ReadAsByteArrayAsync();
                 var uncommpressedResult = CompressionHelper.GetGzipUncompress(fetchResponse);
                 var response = JsonConvert.DeserializeObject<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>(uncommpressedResult);
 
-                if (!fetchResult.IsSuccessStatusCode)
+                if (response.error != null)
                 {
-                    var msgs = string.Join(",", fetchResult.ReasonPhrase);
-                    throw new InvalidOperationException($"Error returned from the buying api fetch. Name : '{fetchResult.ReasonPhrase}';  Messages : '{msgs}'");
+                    var msgs = string.Join(",", response.error.Messages);
+                    throw new InvalidOperationException($"Error returned from the buying api fetch. Name : '{response.error.Name}';  Messages : '{msgs}'");
                 }
 
+                _HttpClient.DefaultRequestHeaders.AcceptEncoding.Remove(new StringWithQualityHeaderValue(gZipHeader));
                 return response;
             }
             else
             {
-                fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
+                var fetchResult = await _HttpClient.PostAsJsonAsync(_FetchUrl.Value, fetchRequest);
                 var fetchResponse = await fetchResult.Content.ReadAsAsync<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>>();
 
                 if (fetchResponse.error != null)

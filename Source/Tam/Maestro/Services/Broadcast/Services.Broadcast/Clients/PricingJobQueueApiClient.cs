@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -102,32 +105,31 @@ namespace Services.Broadcast.Clients
         private async Task<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
             var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
-            var fetchResult = new HttpResponseMessage();
+            var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
+            var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
 
             if (_IsZippedPricingEnabled.Value)
             {
-                var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
-                var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
                 _HttpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(gZipHeader));
 
-                fetchResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, content);
-
+                var fetchResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, content);
 
                 var fetchResponse = await fetchResult.Content.ReadAsByteArrayAsync();
                 var uncommpressedResult = CompressionHelper.GetGzipUncompress(fetchResponse);
                 var response = JsonConvert.DeserializeObject<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>(uncommpressedResult);
 
-                if (!fetchResult.IsSuccessStatusCode)
+                if (response.error != null)
                 {
-                    var msgs = string.Join(",", fetchResult.ReasonPhrase);
-                    throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResult.ReasonPhrase}';  Messages : '{msgs}'");
+                    var msgs = string.Join(",", response.error.Messages);
+                    throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{response.error.Name}';  Messages : '{msgs}'");
                 }
 
+                _HttpClient.DefaultRequestHeaders.AcceptEncoding.Remove(new StringWithQualityHeaderValue(gZipHeader));
                 return response;
             }
             else
             {
-                fetchResult = await _HttpClient.PostAsJsonAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, fetchRequest);
+                var fetchResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, content);
                 var fetchResponse = await fetchResult.Content.ReadAsAsync<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>();
 
                 if (fetchResponse.error != null)

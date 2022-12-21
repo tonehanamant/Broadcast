@@ -18,7 +18,13 @@ namespace PricingModelEndpointTester
                 //tests.ForEach(t => await t.Run());
                 foreach(var test in tests)
                 {
-                    await test.Run();
+                    var client = test.CreateHttpClient();
+                    await test.RunPricingTrue(client);
+                    await test.RunBuyingTrue(client);
+                    await test.RunPricingFalse(client);
+                    await test.RunBuyingFalse(client);
+                    await test.RunPricingTrue(client);
+                    await test.RunBuyingTrue(client);
                 }
             }
             catch (Exception e)
