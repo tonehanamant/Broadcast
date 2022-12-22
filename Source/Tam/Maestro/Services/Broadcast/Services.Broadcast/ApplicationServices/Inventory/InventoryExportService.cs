@@ -231,6 +231,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 var savedFileId = _SaveFile(reportData.ExportFileName, reportOutput.Stream, userName);
 
                 // update the jobs object to completed.
+                job.StatusMessage = templatesFilePath;
                 job.FileName = reportData.ExportFileName;
                 job.SharedFolderFileId = savedFileId;
                 job.Status = BackgroundJobProcessingStatus.Succeeded;
