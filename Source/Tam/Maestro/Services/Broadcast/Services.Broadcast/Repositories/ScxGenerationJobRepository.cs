@@ -69,6 +69,20 @@ namespace Services.Broadcast.Repositories
         /// <param name="sourceId"></param>
         /// <returns>history details</returns>
         List<ScxOpenMarketFileGenerationDetailDto> GetOpenMarketScxFileGenerationDetails(int sourceId);
+
+        /// <summary>
+        /// Gets the file for open market
+        /// </summary>
+        /// <param name="fileId">file id</param>
+        /// <returns>file id</returns>
+        Guid? GetSharedFolderForOpenMarketFile(int fileId);
+
+        /// <summary>
+        /// gets the file name for open market
+        /// </summary>
+        /// <param name="fileId">file id</param>
+        /// <returns></returns>
+        string GetOpenMarketScxFileName(int fileId);
     }
 
     public class ScxGenerationJobRepository : BroadcastRepositoryBase, IScxGenerationJobRepository
@@ -471,6 +485,31 @@ namespace Services.Broadcast.Repositories
                     scx_generation_open_market_job_id = scxOpenMarketJobId
                 });
             });
+        }
+
+        /// <inheritdoc />
+        public Guid? GetSharedFolderForOpenMarketFile(int fileId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var entity = context.scx_generation_open_market_job_files
+                    .Single(s => s.id == fileId,
+                        $"File with Id {fileId} not found.");
+
+                return entity.shared_folder_files_id;
+            });
+        }
+
+        /// <inheritdoc />
+        public string GetOpenMarketScxFileName(int fileId)
+        {
+            var fileName = _InReadUncommitedTransaction(context =>
+            {
+                var file = context.scx_generation_open_market_job_files.Single(s => s.id == fileId, $"File with Id {fileId} not found.");
+                return file.file_name;
+            }
+           );
+            return fileName;
         }
     }
 }

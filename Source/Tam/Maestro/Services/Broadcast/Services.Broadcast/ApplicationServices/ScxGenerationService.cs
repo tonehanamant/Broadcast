@@ -70,6 +70,13 @@ namespace Services.Broadcast.ApplicationServices
         /// </summary>
         /// <returns>Open market History</returns>
         List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory();
+
+        /// <summary>
+        /// Download the open market scx file
+        /// </summary>
+        /// <param name="fileId">file id</param>
+        /// <returns></returns>
+        Tuple<string, Stream, string> DownloadGeneratedScxFileForOpenMarket(int fileId);
     }
 
     public class ScxGenerationService :BroadcastBaseClass, IScxGenerationService
@@ -539,6 +546,51 @@ namespace Services.Broadcast.ApplicationServices
                 var savedId = _SharedFolderService.SaveFile(sharedFile);
                 file.SharedFolderFileId = savedId;
             }
+        }
+
+        /// <inheritdoc />
+        public Tuple<string, Stream, string> DownloadGeneratedScxFileForOpenMarket(int fileId)
+        {
+            if (fileId == 0)
+            {
+                throw new Exception("No file id was supplied!");
+            }
+
+            Tuple<string, Stream, string> result;
+
+            if (_EnableSharedFileServiceConsolidation.Value)
+            {
+                var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderForOpenMarketFile(fileId);
+
+                if (sharedFileId.HasValue)
+                {
+                    _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
+                    var file = _SharedFolderService.GetFile(sharedFileId.Value);
+                    result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                    return result;
+                }
+
+                _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
+            }
+
+            result = _GetOpenMarketFileFromFileService(fileId);
+            return result;
+        }
+
+        private Tuple<string, Stream, string> _GetOpenMarketFileFromFileService(int fileId)
+        {
+            var fileName = _ScxGenerationJobRepository.GetOpenMarketScxFileName(fileId);
+            var dropFolderPath = GetDropFolderPath();
+            var filePaths = _FileService.GetFiles(dropFolderPath);
+            var filePath = filePaths.FirstOrDefault(x => Path.GetFileName(x) == fileName);
+            if (String.IsNullOrWhiteSpace(filePath))
+            {
+                throw new Exception("File not found.  Please regenerate.");
+            }
+
+            var fileStream = _FileService.GetFileStream(filePath);
+            var result = _BuildPackageReturn(fileStream, fileName);
+            return result;
         }
     }
 }

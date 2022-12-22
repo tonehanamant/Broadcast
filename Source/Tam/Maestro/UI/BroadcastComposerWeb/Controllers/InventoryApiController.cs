@@ -380,5 +380,35 @@ namespace BroadcastComposerWeb.Controllers
                 .GetApplicationService<IScxGenerationService>()
                 .GetOpenMarketScxFileGenerationHistory());
         }
+
+        /// <summary>
+        /// Downloads the generated SCX file For Open Market.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("DownloadOpenMarketScxFile")]
+        public HttpResponseMessage DownloadOpenMarketScxFile(int fileId)
+        {
+            try
+            {
+                var file = _ApplicationServiceFactory.GetApplicationService<IScxGenerationService>()
+                    .DownloadGeneratedScxFileForOpenMarket(fileId);
+
+                var result = Request.CreateResponse(HttpStatusCode.OK);
+                result.Content = new StreamContent(file.Item2);
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(file.Item3);
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = file.Item1
+                };
+                return result;
+            }
+            catch (Exception e)
+            {
+                var errorResponse = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+                return errorResponse;
+            }
+        }
     }
 }

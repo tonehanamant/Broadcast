@@ -715,5 +715,122 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(caught);
             Assert.AreEqual(1, getHistoryCalls.Count);
         }
+
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public void DownloadGeneratedScxFileForOpenMarket(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
+        {
+            // Arrange
+            var savedFileGuid = existInSharedFolderService
+                    ? new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5")
+                    : (Guid?)null;
+
+            _FeatureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+                .Returns(enableSharedFileServiceConsolidation);
+
+            _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileName(It.IsAny<int>()))
+                .Returns("fileTwo.txt");
+            var dropFolder = "thisFolder";
+            var getFilesReturn = new List<string>
+            {
+                Path.Combine(dropFolder, "fileOne.txt"),
+                Path.Combine(dropFolder, "fileTwo.txt"),
+                Path.Combine(dropFolder, "fileThree.txt")
+            };
+            _FileService.Setup(s => s.GetFiles(It.IsAny<string>()))
+                .Returns(getFilesReturn);
+            _FileService.Setup(s => s.GetFileStream(It.IsAny<string>()))
+                .Returns(new MemoryStream());
+
+            _ScxGenerationJobRepository.Setup(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()))
+                .Returns(savedFileGuid);
+
+            _SharedFolderService.Setup(s => s.GetFile(It.IsAny<Guid>()))
+                .Returns(new SharedFolderFile { FileName = "fileTwo", FileExtension = ".txt", FileContent = new MemoryStream() });
+
+            var tc = _GetTestClass();
+
+            // Act
+            var result = tc.DownloadGeneratedScxFileForOpenMarket(2);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual("fileTwo.txt", result.Item1);
+            Assert.IsNotNull(result.Item2);
+            Assert.AreEqual("text/plain", result.Item3);
+
+            var shouldCheckSharedFolderService = enableSharedFileServiceConsolidation;
+            if (shouldCheckSharedFolderService)
+            {
+                _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()), Times.Once);
+                if (existInSharedFolderService)
+                {
+                    _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Once);
+                }
+                else
+                {
+                    _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
+                }
+            }
+
+            var shouldHaveCheckedFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+            if (shouldHaveCheckedFileService)
+            {
+                _ScxGenerationJobRepository.Verify(s => s.GetOpenMarketScxFileName(It.IsAny<int>()), Times.Once);
+                _FileService.Verify(s => s.GetFiles(It.IsAny<string>()), Times.Once);
+                _FileService.Verify(s => s.GetFileStream(It.IsAny<string>()), Times.Once);
+            }
+            else
+            {
+                _FileService.Verify(s => s.GetFiles(It.IsAny<string>()), Times.Never);
+                _FileService.Verify(s => s.GetFileStream(It.IsAny<string>()), Times.Never);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DownloadGeneratedOpenMarketScxFileWithFileNotFound(bool enableSharedFileServiceConsolidation)
+        {
+            // Arrange
+            _FeatureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+                .Returns(enableSharedFileServiceConsolidation);
+
+            _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileName(It.IsAny<int>()))
+                .Returns("fileUnfound.txt");
+            var getFilesCallCount = 0;
+            var dropFolder = "thisFolder";
+            var getFilesReturn = new List<string>
+            {
+                Path.Combine(dropFolder, "fileOne.txt"),
+                Path.Combine(dropFolder, "fileTwo.txt"),
+                Path.Combine(dropFolder, "fileThree.txt")
+            };
+            _FileService.Setup(s => s.GetFiles(It.IsAny<string>()))
+                .Callback(() => getFilesCallCount++)
+                .Returns(getFilesReturn);
+
+            var tc = _GetTestClass();
+
+            // Act
+            var caught = Assert.Throws<Exception>(() => tc.DownloadGeneratedScxFileForOpenMarket(2));
+
+            // Assert
+            Assert.AreEqual("File not found.  Please regenerate.", caught.Message);
+
+            if (enableSharedFileServiceConsolidation)
+            {
+                _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()), Times.Once);
+                _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
+            }
+
+            _ScxGenerationJobRepository.Verify(s => s.GetOpenMarketScxFileName(It.IsAny<int>()), Times.Once);
+            _FileService.Verify(s => s.GetFiles(It.IsAny<string>()), Times.Once);
+            _FileService.Verify(s => s.GetFileStream(It.IsAny<string>()), Times.Never);
+        }
     }
 }
