@@ -6,11 +6,14 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.Inventory;
 using System;
@@ -32,17 +35,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private readonly IInventoryRepository _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
         private readonly IStandardDaypartRepository _StandardDaypartRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
         private readonly IInventoryExportRepository _InventoryExportRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
-
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private static IFeatureToggleHelper _FeatureToggleHelper;
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private int nbcOAndO_InventorySourceId = 0;
+        private int lilaMax_InventorySourceId = 0;
 
         [SetUp]
         public void Init()
         {
             try
             {
+                _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
                 nbcOAndO_InventorySourceId = _InventoryRepository.GetInventorySourceByName("NBC O&O").Id;
+                lilaMax_InventorySourceId = _InventoryRepository.GetInventorySourceByName("LilaMax").Id;
                 _InventoryFileTestHelper = new InventoryFileTestHelper();
+                _FeatureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             }
             catch (Exception e)
             {
@@ -52,6 +60,13 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         }
 
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
+        }
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
@@ -334,6 +349,22 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
         [Test]
         [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetInventoryUnitsTest_ToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+            var inventorySourceId = 7; // LilaMax
+            var standardDaypartId = 1; // EMN
+            var startDate = new DateTime(2019, 4, 1);
+            var endDate = new DateTime(2019, 6, 30, 23, 59, 59);
+
+            var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
         [Category("long_running")]
         public void ReturnsUnits_WhenRatingsAreProcessed()
         {
@@ -345,6 +376,27 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 var standardDaypartId = 1; // EMN
                 var startDate = new DateTime(2025, 1, 1);
                 var endDate = new DateTime(2025, 3, 31);
+
+                var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(units));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("long_running")]
+        public void ReturnsUnits_WhenRatingsAreProcessed_ToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+
+                var inventorySourceId = 7; // LilaMax
+                var standardDaypartId = 1; // EMN
+                var startDate = new DateTime(2019, 4, 1);
+                var endDate = new DateTime(2019, 6, 30, 23, 59, 59);
 
                 var units = _InventorySummaryService.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
 
@@ -411,9 +463,44 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         [Test]
         [UseReporter(typeof(DiffReporter))]
         [Category("short_running")]
+        public void GetInventoryQuartersBySourceAndDaypartCodeTest_ToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+            using (new TransactionScopeWrapper())
+            {
+                var standardDaypartId = _StandardDaypartRepository.GetStandardDaypartByCode("EMN").Id;
+
+                var quarters = _InventorySummaryService.GetInventoryQuarters(lilaMax_InventorySourceId, standardDaypartId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
         public void GetStandardDaypartTest()
         {
             var daypartCodes = _InventorySummaryService.GetStandardDayparts(nbcOAndO_InventorySourceId);
+
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(StandardDaypartDto), "Id");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(daypartCodes, jsonSettings));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetStandardDaypartTest_ToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+            var daypartCodes = _InventorySummaryService.GetStandardDayparts(lilaMax_InventorySourceId);
 
             var jsonResolver = new IgnorableSerializerContractResolver();
             jsonResolver.Ignore(typeof(StandardDaypartDto), "Id");
@@ -433,6 +520,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var inventoryCards = _InventorySummaryService.GetInventorySources();
 
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetInventorySourcesTest_ToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+            var inventoryCards = _InventorySummaryService.GetInventorySources();
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(inventoryCards));
         }
 
@@ -603,6 +700,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             var sourceTypes = _InventorySummaryService.GetInventorySourceTypes();
 
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(sourceTypes));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetInventorySummarySourceTypes_ToggleOn()
+        {
+            _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+            var sourceTypes = _InventorySummaryService.GetInventorySourceTypes();
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(sourceTypes));
         }
 

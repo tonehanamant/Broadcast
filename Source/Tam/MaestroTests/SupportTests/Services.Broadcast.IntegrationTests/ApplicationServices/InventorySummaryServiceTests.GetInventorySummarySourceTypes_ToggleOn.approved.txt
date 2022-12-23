@@ -1,0 +1,22 @@
+[
+  {
+    "Display": "Barter",
+    "Id": 2
+  },
+  {
+    "Display": "Diginet",
+    "Id": 5
+  },
+  {
+    "Display": "O&O",
+    "Id": 3
+  },
+  {
+    "Display": "Open Market",
+    "Id": 1
+  },
+  {
+    "Display": "Syndication",
+    "Id": 4
+  }
+]

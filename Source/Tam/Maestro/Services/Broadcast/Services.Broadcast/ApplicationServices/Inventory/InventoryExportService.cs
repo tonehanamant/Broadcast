@@ -109,6 +109,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         /// <inheritdoc />
         public List<LookupDto> GetOpenMarketExportGenreTypes()
         {
+            
             return EnumExtensions.ToLookupDtoList<InventoryExportGenreTypeEnum>()
                 .OrderBy(i => i.Display).ToList();
         }

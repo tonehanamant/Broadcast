@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.InventorySummary;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -72,7 +73,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryLogoRepository _InventoryLogoRepository;
         private readonly IInventorySummaryCache _InventorySummaryCache;
         private readonly IBackgroundJobClient _BackgroundJobClient;
-
+        private readonly IInventoryManagementApiClient _InventoryManagementApiClient;
+        protected Lazy<bool> _IsInventoryServiceMigrationEnabled;
         public InventorySummaryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                        IQuarterCalculationEngine quarterCalculationEngine,
                                        IBroadcastAudiencesCache audiencesCache,
@@ -80,7 +82,8 @@ namespace Services.Broadcast.ApplicationServices
                                        IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
                                        IInventoryGapCalculationEngine inventoryGapCalculationEngine,
                                        IInventorySummaryCache inventorySummaryCache,
-                                       IBackgroundJobClient backgroundJobClient, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+                                       IBackgroundJobClient backgroundJobClient, IInventoryManagementApiClient inventoryManagementApiClient,
+                                       IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _QuarterCalculationEngine = quarterCalculationEngine;
             _AudiencesCache = audiencesCache;
@@ -94,41 +97,72 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryLogoRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryLogoRepository>();
             _InventorySummaryCache = inventorySummaryCache;
             _BackgroundJobClient = backgroundJobClient;
+            _InventoryManagementApiClient = inventoryManagementApiClient;
+            _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));            
         }
 
         public List<InventorySource> GetInventorySources()
         {
-            var inventorySources = _InventoryRepository.GetInventorySources();
-
-            return inventorySources.Where(x => SummariesSourceTypes.Contains(x.InventoryType)).ToList();
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GetInventorySources();
+            }
+            else
+            {
+                return _InventoryRepository.GetInventorySources();
+            }            
         }
 
         public List<LookupDto> GetInventorySourceTypes()
         {
-            return EnumExtensions.ToLookupDtoList<InventorySourceTypeEnum>()
-                .OrderBy(i => i.Display).ToList();
+            if(_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GetInventorySourceTypes();
+            }
+            else
+            {
+                return EnumExtensions.ToLookupDtoList<InventorySourceTypeEnum>()
+               .OrderBy(i => i.Display).ToList();
+            }
+           
         }
 
         public InventoryQuartersDto GetInventoryQuarters(DateTime currentDate)
         {
-            return new InventoryQuartersDto
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                Quarters = _GetInventorySummaryQuarters(currentDate),
-                DefaultQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate)
-            };
+                return _InventoryManagementApiClient.GetInventoryQuarters();
+            }
+            else
+            {
+                return new InventoryQuartersDto
+                {
+                    Quarters = _GetInventorySummaryQuarters(currentDate),
+                    DefaultQuarter = _QuarterCalculationEngine.GetQuarterRangeByDate(currentDate)
+                };
+            }
+                
         }
 
         public InventoryQuartersDto GetInventoryQuarters(int inventorySourceId, int standardDaypartId)
         {
-            var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, standardDaypartId);
-            var mediaMonthIds = weeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
-            var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(mediaMonthIds);
-            var quarters = mediaMonths
-                .GroupBy(x => new { x.Quarter, x.Year }) // take unique quarters
-                .Select(x => _QuarterCalculationEngine.GetQuarterDetail(x.Key.Quarter, x.Key.Year))
-                .ToList();
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {                
+                return _InventoryManagementApiClient.GetInventoryQuarters(inventorySourceId,standardDaypartId);
+            }
+            else
+            {
+                var weeks = _InventoryRepository.GetStationInventoryManifestWeeks(inventorySourceId, standardDaypartId);
+                var mediaMonthIds = weeks.Select(x => x.MediaWeek.MediaMonthId).Distinct();
+                var mediaMonths = _MediaMonthAndWeekAggregateCache.GetMediaMonthsByIds(mediaMonthIds);
+                var quarters = mediaMonths
+                    .GroupBy(x => new { x.Quarter, x.Year }) // take unique quarters
+                    .Select(x => _QuarterCalculationEngine.GetQuarterDetail(x.Key.Quarter, x.Key.Year))
+                    .ToList();
 
-            return new InventoryQuartersDto { Quarters = quarters };
+                return new InventoryQuartersDto { Quarters = quarters };
+            }
         }
 
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
@@ -497,19 +531,32 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<StandardDaypartDto> GetStandardDayparts(int inventorySourceId)
         {
-            return _StandardDaypartRepository.GetStandardDaypartsByInventorySource(inventorySourceId);
+            if(_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GetStandardDayparts(inventorySourceId);
+            }
+            else
+            {
+                return  _StandardDaypartRepository.GetStandardDaypartsByInventorySource(inventorySourceId);
+            }
         }
 
         public List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate)
         {
-            if (startDate > endDate)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return new List<string>();
+                return _InventoryManagementApiClient.GetInventoryUnits(inventorySourceId,standardDaypartId, startDate, endDate);
             }
+            else
+            {
+                if (startDate > endDate)
+                {
+                    return new List<string>();
+                }
+                var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, standardDaypartId, startDate, endDate);
 
-            var groups = _InventoryRepository.GetInventoryGroups(inventorySourceId, standardDaypartId, startDate, endDate);
-
-            return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+                return groups.Select(x => x.Name).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+            }
         }
 
         public void QueueAggregateInventorySummaryDataJob(int inventorySourceId)

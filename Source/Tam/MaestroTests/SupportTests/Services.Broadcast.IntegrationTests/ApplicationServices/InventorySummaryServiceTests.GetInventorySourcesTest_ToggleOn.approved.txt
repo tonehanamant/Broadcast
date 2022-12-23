@@ -1,0 +1,146 @@
+[
+  {
+    "Id": 1,
+    "InventoryType": 1,
+    "IsActive": true,
+    "Name": "Open Market"
+  },
+  {
+    "Id": 3,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TVB"
+  },
+  {
+    "Id": 4,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "TTWN"
+  },
+  {
+    "Id": 5,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "CNN"
+  },
+  {
+    "Id": 6,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "Sinclair"
+  },
+  {
+    "Id": 7,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "LilaMax"
+  },
+  {
+    "Id": 8,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "MLB"
+  },
+  {
+    "Id": 9,
+    "InventoryType": 2,
+    "IsActive": true,
+    "Name": "Ference Media"
+  },
+  {
+    "Id": 10,
+    "InventoryType": 4,
+    "IsActive": true,
+    "Name": "20th Century Fox (Twentieth Century)"
+  },
+  {
+    "Id": 11,
+    "InventoryType": 4,
+    "IsActive": true,
+    "Name": "CBS Synd"
+  },
+  {
+    "Id": 12,
+    "InventoryType": 4,
+    "IsActive": true,
+    "Name": "NBCU Syn"
+  },
+  {
+    "Id": 13,
+    "InventoryType": 4,
+    "IsActive": true,
+    "Name": "WB Syn"
+  },
+  {
+    "Id": 14,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "ABC O&O"
+  },
+  {
+    "Id": 15,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "NBC O&O"
+  },
+  {
+    "Id": 16,
+    "InventoryType": 3,
+    "IsActive": true,
+    "Name": "KATZ"
+  },
+  {
+    "Id": 17,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Antenna TV"
+  },
+  {
+    "Id": 18,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Bounce"
+  },
+  {
+    "Id": 19,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "BUZZR"
+  },
+  {
+    "Id": 20,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "COZI"
+  },
+  {
+    "Id": 21,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Escape"
+  },
+  {
+    "Id": 22,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Grit"
+  },
+  {
+    "Id": 23,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "HITV"
+  },
+  {
+    "Id": 24,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Laff"
+  },
+  {
+    "Id": 25,
+    "InventoryType": 5,
+    "IsActive": true,
+    "Name": "Me TV"
+  }
+]

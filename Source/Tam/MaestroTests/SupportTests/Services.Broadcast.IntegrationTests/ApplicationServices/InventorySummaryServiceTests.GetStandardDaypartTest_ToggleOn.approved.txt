@@ -1,0 +1,17 @@
+[
+  {
+    "Code": "MDN",
+    "FullName": "Midday News",
+    "VpvhCalculationSourceType": 1
+  },
+  {
+    "Code": "ENLN",
+    "FullName": "Evening News/Late News",
+    "VpvhCalculationSourceType": 2
+  },
+  {
+    "Code": "EMN",
+    "FullName": "Early Morning News",
+    "VpvhCalculationSourceType": 1
+  }
+]

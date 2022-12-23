@@ -303,7 +303,7 @@ namespace Services.Broadcast.ApplicationServices
 
             // Migration Related
             unityContainer.RegisterType<IInventoryErrorFilesMigrationService, InventoryErrorFilesMigrationService>();
-
+            unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
 

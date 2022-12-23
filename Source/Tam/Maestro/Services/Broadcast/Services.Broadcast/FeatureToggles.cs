@@ -40,5 +40,6 @@
         public static string ENABLE_PROGRAM_NAME_MATCH_BY_SIMILARITY_V2 = "enable-program-name-match-by-similarity-v2";
 
         public static string ENABLE_ZIPPED_PRICING = "broadcast-enable-zipped-pricing";
+        public static string ENABLE_INVENTORY_SERVICE_MIGRATION = "enable-inventory-service-migration";
     }
 }

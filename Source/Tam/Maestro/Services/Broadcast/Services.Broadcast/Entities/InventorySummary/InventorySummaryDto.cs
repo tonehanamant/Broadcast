@@ -85,4 +85,9 @@ namespace Services.Broadcast.Entities.InventorySummary
             public decimal? CPM { get; set; }
         }
     }
+
+    public class InventorySummaryApiResponse : InventorySummaryDto
+    {
+       
+    }
 }
