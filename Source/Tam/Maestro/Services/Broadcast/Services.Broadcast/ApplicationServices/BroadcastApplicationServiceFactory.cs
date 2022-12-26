@@ -300,7 +300,8 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();
             unityContainer.RegisterType<IBroadcastLockingService, BroadcastLockingService>();
             unityContainer.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
-
+            //Inventory Microservice service
+            unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();
             // Migration Related
             unityContainer.RegisterType<IInventoryErrorFilesMigrationService, InventoryErrorFilesMigrationService>();
             unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();

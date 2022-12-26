@@ -3,13 +3,18 @@ using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.Locking;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Helpers;
+using Services.Broadcast.Helpers.Json;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
+using System.Collections.Generic;
+using Services.Broadcast.Exceptions;
 
 namespace Services.Broadcast.Clients
 {
@@ -21,6 +26,11 @@ namespace Services.Broadcast.Clients
         List<StandardDaypartDto> GetStandardDayparts(int inventorySourceId);
         List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter);
+        /// <summary>Saves an open market inventory file </summary>      
+        /// <param name="saveRequest">InventoryFileSaveRequest object containing an open market inventory file</param>
+        /// <returns>InventoryFileSaveResult object</returns>
+        InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequestDto saveRequest);
+
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -192,6 +202,28 @@ namespace Services.Broadcast.Clients
         {
             var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(InventoryManagementApiConfigKeys.AppName);
             return appName;
+        }
+      
+        public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequestDto saveRequest)
+        {
+            try
+            {
+                
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/InventoryFile";              
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                
+                 var content = new StringContent(JsonConvert.SerializeObject(saveRequest), Encoding.UTF8, "application/json");
+
+                var apiResult = httpClient.PostAsync(requestUri, content).Result;
+                var result = apiResult.Content.ReadAsAsync<InventoryFileApIItemResponseTyped<InventoryFileSaveResult>>();
+                var inventoryFileSaveResultResponse = result.Result.Result;
+
+                return inventoryFileSaveResultResponse;
+            }
+            catch (Exception ex)    
+            {
+                throw new CadentException($"Error occured while uploading inventory file", ex);
+            }
         }
     }
 }

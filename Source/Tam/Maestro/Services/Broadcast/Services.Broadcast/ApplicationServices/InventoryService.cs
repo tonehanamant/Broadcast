@@ -2,15 +2,17 @@
 using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
-using Common.Systems.LockTokens;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using Services.Broadcast.Validators;
@@ -98,8 +100,9 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IInventoryProgramsProcessingService _InventoryProgramsProcessingService;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
+        private readonly Lazy<bool> _IsInventoryServiceMigrationEnabled;
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
-
+        private readonly IInventoryManagementApiClient _InventoryApiClient;
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
             IDaypartCache daypartCache,
@@ -119,6 +122,7 @@ namespace Services.Broadcast.ApplicationServices
             IInventoryRatingsProcessingService inventoryRatingsService,
             IInventoryProgramsProcessingService inventoryProgramsProcessingService,
             IDateTimeEngine dateTimeEngine,
+            IInventoryManagementApiClient inventoryApiClient,
             IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
                 : base(featureToggleHelper, configurationSettingsHelper)
         {
@@ -148,6 +152,10 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryRatingsService = inventoryRatingsService;
             _InventoryProgramsProcessingService = inventoryProgramsProcessingService;
             _DateTimeEngine = dateTimeEngine;
+            _InventoryApiClient = inventoryApiClient;
+            _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
+              _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
+
             _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
@@ -186,8 +194,7 @@ namespace Services.Broadcast.ApplicationServices
             var hasConflict = hasDateRangeConflict && hasDaypartConflict;
 
             return hasConflict;
-        }
-
+        }        
         /// <summary>
         /// Saves an open market inventory file
         /// </summary>
@@ -196,111 +203,130 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="nowDate">Now date</param>
         /// <returns>InventoryFileSaveResult object</returns>
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request, string userName, DateTime nowDate)
-        {
-            if (!Path.GetExtension(request.FileName).Equals(".xml", StringComparison.InvariantCultureIgnoreCase))
+        {            
+            InventoryFileSaveResult result;
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return new InventoryFileSaveResult
+                InventoryFileSaveRequestDto fileRequest = new InventoryFileSaveRequestDto
                 {
-                    Status = FileStatusEnum.Failed,
-                    ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xml File" }
+                    FileName = request.FileName,
+                    RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
                 };
-            }
-
-            var inventorySource = _InventoryRepository.GetInventorySource(BroadcastConstants.OpenMarketSourceId);
-
-            _OpenMarketFileImporter.LoadFromSaveRequest(request);
-            _OpenMarketFileImporter.CheckFileHash();
-
-            InventoryFile inventoryFile = _OpenMarketFileImporter.GetPendingInventoryFile(inventorySource, userName, nowDate);
-
-            inventoryFile.Id = _InventoryFileRepository.CreateInventoryFile(inventoryFile, userName, nowDate);
-
-            var stationLocks = new List<IDisposable>();
-            var lockedStationIds = new List<int>();
-            try
-            {
-                _OpenMarketFileImporter.ExtractFileData(request.StreamData, inventoryFile);
-                inventoryFile.FileStatus = _OpenMarketFileImporter.FileProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
-
-                if (_OpenMarketFileImporter.FileProblems.Any())
+                result=_InventoryApiClient.SaveInventoryFile(fileRequest);
+                if (result.Status == FileStatusEnum.Loaded)
                 {
-                    _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems), userName);
+                    _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
+                    _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(result.FileId, userName);
                 }
-                else
+            }
+            else
+            {
+                if (!Path.GetExtension(request.FileName).Equals(".xml", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (!inventoryFile.HasManifests())
+                    return new InventoryFileSaveResult
                     {
-                        _ProcessFileWithProblems(inventoryFile, new []{ "Unable to parse any file records."}, userName);
-                        return _SetInventoryFileSaveResult(inventoryFile);
-                    }
+                        Status = FileStatusEnum.Failed,
+                        ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xml File" }
+                    };
+                }
 
-                    _OpenMarketFileImporter.FileProblems.AddRange(_InventoryFileValidator.ValidateInventoryFile(inventoryFile));
+                var inventorySource = _InventoryRepository.GetInventorySource(BroadcastConstants.OpenMarketSourceId);
+
+                _OpenMarketFileImporter.LoadFromSaveRequest(request);
+                _OpenMarketFileImporter.CheckFileHash();
+
+                InventoryFile inventoryFile = _OpenMarketFileImporter.GetPendingInventoryFile(inventorySource, userName, nowDate);
+
+                inventoryFile.Id = _InventoryFileRepository.CreateInventoryFile(inventoryFile, userName, nowDate);
+
+                var stationLocks = new List<IDisposable>();
+                var lockedStationIds = new List<int>();
+                try
+                {
+                    _OpenMarketFileImporter.ExtractFileData(request.StreamData, inventoryFile);
+                    inventoryFile.FileStatus = _OpenMarketFileImporter.FileProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
 
                     if (_OpenMarketFileImporter.FileProblems.Any())
                     {
                         _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems), userName);
-                        return _SetInventoryFileSaveResult(inventoryFile);
                     }
-
-                    var fileStationsDict = inventoryFile
-                       .GetAllManifests()
-                       .Select(x => x.Station)
-                       .GroupBy(s => s.Id)
-                       .ToDictionary(g => g.First().Id, g => g.First().LegacyCallLetters);
-
-                    WebUtilityHelper.HtmlDecodeProgramNames(inventoryFile);
-
-                    using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                    else
                     {
-                        _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
+                        if (!inventoryFile.HasManifests())
+                        {
+                            _ProcessFileWithProblems(inventoryFile, new[] { "Unable to parse any file records." }, userName);
+                            return _SetInventoryFileSaveResult(inventoryFile);
+                        }
 
-                        _EnsureInventoryDaypartIds(inventoryFile);
-                        _StationInventoryGroupService.AddNewStationInventoryOpenMarket(inventoryFile);
+                        _OpenMarketFileImporter.FileProblems.AddRange(_InventoryFileValidator.ValidateInventoryFile(inventoryFile));
 
-                        _SaveInventoryFileContacts(userName, inventoryFile);
-                        _StationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), userName, nowDate, inventorySource.Id);
-                        inventoryFile.FileStatus = FileStatusEnum.Loaded;
-                        _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+                        if (_OpenMarketFileImporter.FileProblems.Any())
+                        {
+                            _ProcessFileWithProblems(inventoryFile, _LoadValidationProblemsFromFileProblems(_OpenMarketFileImporter.FileProblems), userName);
+                            return _SetInventoryFileSaveResult(inventoryFile);
+                        }
 
-                        transaction.Complete();
+                        var fileStationsDict = inventoryFile
+                           .GetAllManifests()
+                           .Select(x => x.Station)
+                           .GroupBy(s => s.Id)
+                           .ToDictionary(g => g.First().Id, g => g.First().LegacyCallLetters);
 
-                        _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                        WebUtilityHelper.HtmlDecodeProgramNames(inventoryFile);
+
+                        using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                        {
+                            _LockingEngine.LockStations(fileStationsDict, lockedStationIds, stationLocks);
+
+                            _EnsureInventoryDaypartIds(inventoryFile);
+                            _StationInventoryGroupService.AddNewStationInventoryOpenMarket(inventoryFile);
+
+                            _SaveInventoryFileContacts(userName, inventoryFile);
+                            _StationRepository.UpdateStationList(fileStationsDict.Keys.ToList(), userName, nowDate, inventorySource.Id);
+                            inventoryFile.FileStatus = FileStatusEnum.Loaded;
+                            _InventoryFileRepository.UpdateInventoryFile(inventoryFile);
+
+                            transaction.Complete();
+
+                            _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                        }
                     }
                 }
-            }
-            catch (FileUploadException<InventoryFileProblem>)
-            {
-                throw;
-            }
-            catch (BroadcastDuplicateInventoryFileException)
-            {
-                throw;
-            }
-            catch (Exception e)
-            {
-                // Try to update the status of the file if possible.
-                try
+                catch (FileUploadException<InventoryFileProblem>)
                 {
-                    _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
-                    _InventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
+                    throw;
                 }
-                catch { }
-
-                throw new BroadcastInventoryDataException($"Error loading new inventory file: {e.Message}", inventoryFile.Id, e);
-            }
-
-            if (!inventoryFile.ValidationProblems.Any())
-            {
-                _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
-                _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(inventoryFile.Id, userName);
-
-                if (_EnableSaveIngestedInventoryFile.Value)
+                catch (BroadcastDuplicateInventoryFileException)
                 {
-                    _SaveUploadedInventoryFileToFileStore(request, inventoryFile.Id, userName);
+                    throw;
                 }
-            }
+                catch (Exception e)
+                {
+                    // Try to update the status of the file if possible.
+                    try
+                    {
+                        _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                        _InventoryFileRepository.UpdateInventoryFileStatus(inventoryFile.Id, FileStatusEnum.Failed);
+                    }
+                    catch { }
 
-            return _SetInventoryFileSaveResult(inventoryFile);
+                    throw new BroadcastInventoryDataException($"Error loading new inventory file: {e.Message}", inventoryFile.Id, e);
+                }
+
+                if (!inventoryFile.ValidationProblems.Any())
+                {
+                    _InventoryRatingsService.QueueInventoryFileRatingsJob(inventoryFile.Id);
+                    _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(inventoryFile.Id, userName);
+
+                    if (_EnableSaveIngestedInventoryFile.Value)
+                    {
+                        _SaveUploadedInventoryFileToFileStore(request, inventoryFile.Id, userName);
+                    }
+                }
+
+                result = _SetInventoryFileSaveResult(inventoryFile);
+            }
+            return result;
         }
 
         internal void _SaveUploadedInventoryFileToFileStore(InventoryFileSaveRequest request, int inventoryFileId, string userName)

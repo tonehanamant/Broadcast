@@ -1,15 +1,14 @@
 ﻿using Newtonsoft.Json;
 
-namespace Services.Broadcast.Entities.Locking
+namespace Services.Broadcast.Entities.Inventory
 {
     /// <summary>
     /// Represents the locking api response
     /// </summary>
-    public class LockingApiResponse
-    {
-        /// <summary>
-        /// Returns True if api gives response otherwise false
-        /// </summary>
+    public class InventoryFileApiResponse
+    {/// <summary>
+     /// Returns True if api gives response otherwise false
+     /// </summary>
         [JsonProperty("success")]
         public bool Success { get; set; }
         /// <summary>

@@ -565,6 +565,9 @@
     <Compile Include="Entities\DTO\SpotExceptionsApi\ResultsSyncRequest.cs" />
     <Compile Include="Entities\DTO\SpotExceptionsApi\ResultsSyncResponse.cs" />
     <Compile Include="Entities\Enums\Inventory\OpenMarketInventoryExportGenreTypeEnum.cs" />
+    <Compile Include="Entities\Inventory\InventoryFileApIItemResponseTyped.cs" />
+    <Compile Include="Entities\Inventory\InventoryFileApiResponse.cs" />
+    <Compile Include="Entities\Inventory\InventoryFileSaveRequestDto.cs" />
     <Compile Include="Entities\Isci\IsciTargetPlansDto.cs" />
     <Compile Include="Entities\Isci\SearchIsciRequestDto.cs" />
     <Compile Include="Entities\Isci\SearchPlanIscisDto.cs" />

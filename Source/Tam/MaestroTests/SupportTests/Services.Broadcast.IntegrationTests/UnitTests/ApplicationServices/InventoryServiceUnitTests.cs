@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -29,6 +30,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IDaypartCache> _DaypartCacheMock;
         private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
         private Mock<ISMSClient> _SmsClientMock;
+        private Mock<IInventoryManagementApiClient> _InventoryManagementApiClientMock;
         private Mock<IProprietarySpotCostCalculationEngine> _ProprietarySpotCostCalculationEngineMock;
         private Mock<IStationInventoryGroupService> _StationInventoryGroupServiceMock;
         private Mock<IBroadcastAudiencesCache> _AudiencesCacheMock;
@@ -59,6 +61,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
             _SmsClientMock = new Mock<ISMSClient>();
+            _InventoryManagementApiClientMock = new Mock<IInventoryManagementApiClient>();
             _ProprietarySpotCostCalculationEngineMock = new Mock<IProprietarySpotCostCalculationEngine>();
             _StationInventoryGroupServiceMock = new Mock<IStationInventoryGroupService>();
             _AudiencesCacheMock = new Mock<IBroadcastAudiencesCache>();
@@ -108,7 +111,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _InventoryFileValidatorMock.Object,
                 _DaypartCacheMock.Object,
                 _QuarterCalculationEngineMock.Object,
-                _SmsClientMock.Object,
+                _SmsClientMock.Object,               
                 _ProprietarySpotCostCalculationEngineMock.Object,
                 _StationInventoryGroupServiceMock.Object,
                 _AudiencesCacheMock.Object,
@@ -123,6 +126,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _InventoryRatingsServiceMock.Object,
                 _InventoryProgramsProcessingServiceMock.Object,
                 _DateTimeEngine.Object,
+                _InventoryManagementApiClientMock.Object,
                 _FeatureToggleMock.Object,
                 _ConfigurationSettingsHelperMock.Object);
         }

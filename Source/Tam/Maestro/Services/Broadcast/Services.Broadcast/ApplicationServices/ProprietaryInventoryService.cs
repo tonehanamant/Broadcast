@@ -4,10 +4,12 @@ using Common.Services.Repositories;
 using OfficeOpenXml;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.BusinessEngines.InventoryDaypartParsing;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Converters.Scx;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
+using Services.Broadcast.Entities.Inventory;
 using Services.Broadcast.Entities.ProprietaryInventory;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Exceptions;
@@ -77,7 +79,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IStationMappingService _IStationMappingService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IGenreRepository _GenreRepository;
-
+        private readonly IInventoryManagementApiClient _InventoryApiClient;
+        private readonly Lazy<bool> _IsInventoryServiceMigrationEnabled;
         /// <summary>
         /// Spot lengths dictionary where key is the id and value is the duration
         /// </summary>
@@ -99,6 +102,7 @@ namespace Services.Broadcast.ApplicationServices
             , IInventoryProgramsProcessingService inventoryProgramsProcessingService
             , ISharedFolderService sharedFolderService
             , IStationMappingService stationMappingService
+            ,IInventoryManagementApiClient inventoryApiClient
             , IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) 
             : base(featureToggleHelper, configurationSettingsHelper)
         {
@@ -122,95 +126,117 @@ namespace Services.Broadcast.ApplicationServices
             _IStationMappingService = stationMappingService;
             _SharedFolderService = sharedFolderService;
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
-
             _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
+            _InventoryApiClient = inventoryApiClient;
+            _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
+              _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
+
         }
 
         ///<inheritdoc/>
         public InventoryFileSaveResult SaveProprietaryInventoryFile(FileRequest request, string userName, DateTime nowDate)
         {
-            if (!request.FileName.EndsWith(".xlsx"))
+            InventoryFileSaveResult result = new InventoryFileSaveResult();
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return new InventoryFileSaveResult
+                InventoryFileSaveRequestDto fileRequest = new InventoryFileSaveRequestDto
                 {
-                    Status = FileStatusEnum.Failed,
-                    ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xlsx File" }
+                    FileName = request.FileName,
+                    RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
                 };
-            } 
-
-            var stationLocks = new List<IDisposable>();
-            var lockedStationIds = new List<int>();
-            var inventorySource = _ReadInventorySourceFromFile(request.StreamData);
-            var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
-
-            fileImporter.LoadFromSaveRequest(request);
-            fileImporter.CheckFileHash();
-
-            ProprietaryInventoryFile proprietaryFile = fileImporter.GetPendingProprietaryInventoryFile(userName, inventorySource);
-            
-            proprietaryFile.Id = _InventoryFileRepository.CreateInventoryFile(proprietaryFile, userName, nowDate);
-            try
-            {
-                var fileStreamWithErrors = fileImporter.ExtractData(proprietaryFile);
-                proprietaryFile.FileStatus = proprietaryFile.ValidationProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
-
-                if (proprietaryFile.ValidationProblems.Any())
+                result = _InventoryApiClient.SaveInventoryFile(fileRequest);
+                if (result.Status== FileStatusEnum.Loaded)
                 {
-                    _InventoryRepository.AddValidationProblems(proprietaryFile);
-                    WriteErrorFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName, userName, nowDate);
+                    _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
+                    _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(result.FileId, userName);
                 }
-                else
+            }
+            else
+            {
+                if (!request.FileName.EndsWith(".xlsx"))
                 {
-                    using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                    result = new InventoryFileSaveResult
                     {
-                        var header = proprietaryFile.Header;
-                        var stations = fileImporter.GetFileStations(proprietaryFile);
-                        var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
-                        
-                        fileImporter.PopulateManifests(proprietaryFile, stations);
+                        Status = FileStatusEnum.Failed,
+                        ValidationProblems = new List<string> { "Invalid file format. Please, provide a .xlsx File" }
+                    };
+                }
 
-                        var spotLEngthDurationsById = _SpotLengthDurationsById.Value;
-                        fileImporter.HandleManifestDuplicates(proprietaryFile, spotLEngthDurationsById);
+                var stationLocks = new List<IDisposable>();
+                var lockedStationIds = new List<int>();
+                var inventorySource = _ReadInventorySourceFromFile(request.StreamData);
+                var fileImporter = _ProprietaryFileImporterFactory.GetFileImporterInstance(inventorySource);
 
-                        fileImporter.PopulateInventoryFileDateRange(proprietaryFile);
-                        _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
-                        WebUtilityHelper.HtmlDecodeProgramNames(proprietaryFile);
+                fileImporter.LoadFromSaveRequest(request);
+                fileImporter.CheckFileHash();
 
-                        _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
+                ProprietaryInventoryFile proprietaryFile = fileImporter.GetPendingProprietaryInventoryFile(userName, inventorySource);
 
-                        _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.ContractedDaypartId);
+                proprietaryFile.Id = _InventoryFileRepository.CreateInventoryFile(proprietaryFile, userName, nowDate);
+                try
+                {
+                    var fileStreamWithErrors = fileImporter.ExtractData(proprietaryFile);
+                    proprietaryFile.FileStatus = proprietaryFile.ValidationProblems.Any() ? FileStatusEnum.Failed : FileStatusEnum.Loaded;
 
-                        _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, nowDate, proprietaryFile.InventorySource.Id);
+                    if (proprietaryFile.ValidationProblems.Any())
+                    {
+                        _InventoryRepository.AddValidationProblems(proprietaryFile);
+                        WriteErrorFileToDisk(fileStreamWithErrors, proprietaryFile.Id, request.FileName, userName, nowDate);
+                    }
+                    else
+                    {
+                        using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                        {
+                            var header = proprietaryFile.Header;
+                            var stations = fileImporter.GetFileStations(proprietaryFile);
+                            var stationsDict = stations.ToDictionary(x => x.Id, x => x.LegacyCallLetters);
 
-                        proprietaryFile.RowsProcessed = proprietaryFile.DataLines.Count();
+                            fileImporter.PopulateManifests(proprietaryFile, stations);
 
-                        _ProprietaryRepository.SaveProprietaryInventoryFile(proprietaryFile);
-                        transaction.Complete();
+                            var spotLEngthDurationsById = _SpotLengthDurationsById.Value;
+                            fileImporter.HandleManifestDuplicates(proprietaryFile, spotLEngthDurationsById);
 
-                        _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                            fileImporter.PopulateInventoryFileDateRange(proprietaryFile);
+                            _SetStartAndEndDatesForManifestWeeks(proprietaryFile, header.EffectiveDate, header.EndDate);
+                            WebUtilityHelper.HtmlDecodeProgramNames(proprietaryFile);
+
+                            _LockingEngine.LockStations(stationsDict, lockedStationIds, stationLocks);
+
+                            _StationInventoryGroupService.AddNewStationInventory(proprietaryFile, header.ContractedDaypartId);
+
+                            _StationRepository.UpdateStationList(stationsDict.Keys.ToList(), userName, nowDate, proprietaryFile.InventorySource.Id);
+
+                            proprietaryFile.RowsProcessed = proprietaryFile.DataLines.Count();
+
+                            _ProprietaryRepository.SaveProprietaryInventoryFile(proprietaryFile);
+                            transaction.Complete();
+
+                            _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                        }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
-                proprietaryFile.ValidationProblems.Add(ex.Message);
-                proprietaryFile.FileStatus = FileStatusEnum.Failed;
-                _InventoryRepository.AddValidationProblems(proprietaryFile);
-            }
+                catch (Exception ex)
+                {
+                    _LockingEngine.UnlockStations(lockedStationIds, stationLocks);
+                    proprietaryFile.ValidationProblems.Add(ex.Message);
+                    proprietaryFile.FileStatus = FileStatusEnum.Failed;
+                    _InventoryRepository.AddValidationProblems(proprietaryFile);
+                }
 
-            if (!proprietaryFile.ValidationProblems.Any())
-            {
-                _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
-                _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(proprietaryFile.Id, userName);
-            }            
+                if (!proprietaryFile.ValidationProblems.Any())
+                {
+                    _InventoryRatingsService.QueueInventoryFileRatingsJob(proprietaryFile.Id);
+                    _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(proprietaryFile.Id, userName);
+                }
 
-            return new InventoryFileSaveResult
-            {
-                FileId = proprietaryFile.Id,
-                ValidationProblems = proprietaryFile.ValidationProblems,
-                Status = proprietaryFile.FileStatus
-            };
+                result = new InventoryFileSaveResult
+                {
+                    FileId = proprietaryFile.Id,
+                    ValidationProblems = proprietaryFile.ValidationProblems,
+                    Status = proprietaryFile.FileStatus
+                };
+            }
+            return result;
         }
 
         private void _SetStartAndEndDatesForManifestWeeks(InventoryFileBase inventoryFile, DateTime effectiveDate, DateTime endDate)
