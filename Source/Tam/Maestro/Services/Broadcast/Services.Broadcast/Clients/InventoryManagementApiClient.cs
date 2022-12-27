@@ -39,7 +39,7 @@ namespace Services.Broadcast.Clients
                  IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper)
              : base(apiTokenManager, featureToggleHelper, configurationSettingsHelper)
         {
-        }       
+        }
         private async Task<HttpClient> _GetSecureHttpClientAsync()
         {
             var apiBaseUrl = _GetApiUrl();
@@ -67,7 +67,7 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(String.Format("Error occured while getting inventory sources, Error:{0}", ex.Message.ToString()));
-            }                    
+            }
         }
         public List<LookupDto> GetInventorySourceTypes()
         {
@@ -92,7 +92,7 @@ namespace Services.Broadcast.Clients
         }
 
         public InventoryQuartersDto GetInventoryQuarters(int? inventorySourceId = null, int? standardDaypartId = null)
-        {            
+        {
             try
             {
                 var requestUri = $"{coreApiVersion}/broadcast/Inventory/Quarters?inventorySourceId={inventorySourceId}&standardDaypartId={standardDaypartId}";
@@ -110,7 +110,7 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(String.Format("Error occured while getting inventory quarters, Error:{0}", ex.Message.ToString()));
-            }            
+            }
         }
 
         public List<StandardDaypartDto> GetStandardDayparts(int inventorySourceId)
@@ -133,7 +133,7 @@ namespace Services.Broadcast.Clients
             {
                 throw new InvalidOperationException(String.Format("Error occured while getting standard dayparts, Error:{0}", ex.Message.ToString()));
             }
-            
+
         }
         public List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate)
         {
@@ -161,7 +161,7 @@ namespace Services.Broadcast.Clients
         {
             try
             {
-                List<InventorySummaryDto> inventorySummaries = new List<InventorySummaryDto>();       
+                List<InventorySummaryDto> inventorySummaries = new List<InventorySummaryDto>();
                 List<InventorySummaryApiResponse> inventorySummaryApiResponses = new List<InventorySummaryApiResponse>();
                 var requestUri = $"{coreApiVersion}/broadcast/Inventory/Summaries";
                 var content = new StringContent(JsonConvert.SerializeObject(inventorySourceCardFilter), Encoding.UTF8, "application/json");
@@ -173,9 +173,9 @@ namespace Services.Broadcast.Clients
                 }
                 var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<InventorySummaryApiResponse>>();
                 inventorySummaryApiResponses = result.Result.ResultList;
-               foreach(var items in inventorySummaryApiResponses)
+                foreach (var items in inventorySummaryApiResponses)
                 {
-                    InventorySummaryDto item  = items;
+                    InventorySummaryDto item = items;
                     inventorySummaries.Add(item);
                 }
                 _LogInfo("Successfully get inventory summaries: " + JsonConvert.SerializeObject(inventorySummaries));
@@ -203,26 +203,37 @@ namespace Services.Broadcast.Clients
             var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(InventoryManagementApiConfigKeys.AppName);
             return appName;
         }
-      
+
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequestDto saveRequest)
         {
             try
             {
-                
-                var requestUri = $"{coreApiVersion}/broadcast/Inventory/InventoryFile";              
+
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/InventoryFile";
                 var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
-                
-                 var content = new StringContent(JsonConvert.SerializeObject(saveRequest), Encoding.UTF8, "application/json");
 
-                var apiResult = httpClient.PostAsync(requestUri, content).Result;
-                var result = apiResult.Content.ReadAsAsync<InventoryFileApIItemResponseTyped<InventoryFileSaveResult>>();
-                var inventoryFileSaveResultResponse = result.Result.Result;
+                var content = new StringContent(JsonConvert.SerializeObject(saveRequest), Encoding.UTF8, "application/json");
 
-                return inventoryFileSaveResultResponse;
+                var apiResult = httpClient.PostAsync(requestUri, content).Result;                
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryFileSaveResult>>();
+                if (result.Result.Success)
+                {
+                    InventoryFileSaveResult inventoryFileSaveResult = new InventoryFileSaveResult
+                    {
+                        Status = result.Result.Result.Status,
+                        FileId = result.Result.Result.FileId,
+                        ValidationProblems = result.Result.Result.ValidationProblems
+                    };
+                    return inventoryFileSaveResult;
+                }
+                else
+                {
+                    throw new InvalidOperationException(String.Format(result.Result.Message));
+                }
             }
-            catch (Exception ex)    
+            catch (Exception ex)
             {
-                throw new CadentException($"Error occured while uploading inventory file", ex);
+                throw new InvalidOperationException(String.Format(ex.Message.ToString()));
             }
         }
     }
