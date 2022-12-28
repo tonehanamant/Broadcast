@@ -20,10 +20,46 @@ namespace Services.Broadcast.Clients
 {
     public interface IInventoryManagementApiClient
     {
+        /// <summary>
+        /// Get inventory sources for summaries
+        /// </summary>
+        /// <remarks>
+        /// Get a list of inventory sources available for summary
         List<LookupDto> GetInventorySourceTypes();
+        /// <summary>
+        ///  Get all inventory source types
+        /// </summary>
         List<InventorySource> GetInventorySources();
+        /// <summary>
+        /// Get all quarters for inventory
+        /// </summary>
+        /// <remarks>
+        /// Get a list of quarters for which there is available inventory
+        /// 
+        /// Make a request without parameters or only with one of the parameters specified 
+        /// in order to get a list of quarters for all sources
+        /// 
+        /// Make a request with both inventorySourceId and standardDaypartId specified in order to get 
+        /// a list of quarters for specific inventory source and daypart
+        /// </remarks>
+        /// <param name="inventorySourceId">Unique identifier of inventory source which is used to filter inventory out</param>
+        /// <param name="standardDaypartId">Unique identifier of daypart default which is used to filter inventory out</param>
         InventoryQuartersDto GetInventoryQuarters(int? inventorySourceId = null, int? standardDaypartId = null);
+        /// <summary>
+        /// Get a list of all available standard dayparts for specific inventory
+        /// </summary>
+        /// <param name="inventorySourceId">The inventory source identifier.</param>        
         List<StandardDaypartDto> GetStandardDayparts(int inventorySourceId);
+        /// <summary>
+        /// Get all units for inventory
+        /// </summary>
+        /// <remarks>
+        /// Get a list of units for which there is available inventory that match inventory source, daypart code, start date, end date
+        /// </remarks>
+        /// <param name="inventorySourceId">Unique identifier of inventory source which is used to filter inventory out</param>
+        /// <param name="standardDaypartId">Unique identifier of daypart default which is used to filter inventory out</param>
+        /// <param name="startDate">Start date of the period for which inventory needs to be found</param>
+        /// <param name="endDate">End date of the period for which inventory needs to be found</param>
         List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate);
         List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter);
         /// <summary>Saves an open market inventory file </summary>      

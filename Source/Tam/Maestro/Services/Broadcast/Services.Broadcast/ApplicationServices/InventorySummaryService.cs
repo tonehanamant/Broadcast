@@ -189,9 +189,16 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventorySummaryDto> GetInventorySummariesWithCache(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
         {
-            List<InventorySummaryDto> GetInventorySummariesFunc() => GetInventorySummaries(inventorySummaryFilterDto, currentDate);
-            inventorySummaryFilterDto.LatestInventoryUpdatesBySourceId = _InventorySummaryRepository.GetLatestSummaryUpdatesBySource();
-            return _InventorySummaryCache.GetOrCreate(inventorySummaryFilterDto, GetInventorySummariesFunc);
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GetInventorySummaries(inventorySummaryFilterDto);
+            }
+            else
+            {
+                List<InventorySummaryDto> GetInventorySummariesFunc() => GetInventorySummaries(inventorySummaryFilterDto, currentDate);
+                inventorySummaryFilterDto.LatestInventoryUpdatesBySourceId = _InventorySummaryRepository.GetLatestSummaryUpdatesBySource();
+                return _InventorySummaryCache.GetOrCreate(inventorySummaryFilterDto, GetInventorySummariesFunc);
+            }
         }
 
         private IEnumerable<InventorySummaryDto> _LoadInventorySummaryForQuarter(InventorySummaryFilterDto inventorySummaryFilterDto)

@@ -7,7 +7,7 @@ namespace Services.Broadcast.Entities.InventorySummary
     {
         public int InventorySourceId { get; set; }
         public string InventorySourceName { get; set; }
-        public QuarterDetailDto Quarter { get; internal set; }
+        public QuarterDetailDto Quarter { get; set; }
         public bool HasRatesAvailableForQuarter { get; set; }
         public int TotalMarkets { get; set; }
         public int TotalStations { get; set; }        
