@@ -23,6 +23,9 @@ using Services.Broadcast.ApplicationServices.Inventory;
 using Tam.Maestro.Data.Entities;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
+using Services.Broadcast.Clients;
+using Tam.Maestro.Common.DataLayer;
+using Services.Broadcast.Entities.InventorySummary;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 {
@@ -74,6 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -116,7 +120,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
             mediaMonthAndWeekAggregateCache
                 .Setup(s => s.GetMediaMonthById(It.IsAny<int>()))
-                .Returns(new MediaMonth(1, 2020, 12, "NotSure", new DateTime(2020,12, 1), new DateTime(2020, 12, 31)));
+                .Returns(new MediaMonth(1, 2020, 12, "NotSure", new DateTime(2020, 12, 1), new DateTime(2020, 12, 31)));
 
             mediaMonthAndWeekAggregateCache
                 .Setup(s => s.GetMediaWeeksByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -145,7 +149,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Callback(() => calculateCalledCount++)
                 .Returns(calculateReturn);
 
-            object[][] headers =  { new object[] { "01/01", "02/02"} };
+            object[][] headers = { new object[] { "01/01", "02/02" } };
             inventoryExportEngine.Setup(s => s.GetInventoryTableWeeklyColumnHeaders(It.IsAny<List<DateTime>>()))
                 .Returns(headers);
 
@@ -207,7 +211,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(stationRepository.Object);
             broadcastDataRepositoryFactory.Setup(s => s.GetDataRepository<IBroadcastAudienceRepository>())
                 .Returns(audienceRepository.Object);
-            
+
             var dateTimeEngine = new Mock<IDateTimeEngine>();
             dateTimeEngine.Setup(s => s.GetCurrentMoment())
                 .Returns(testCurrentTimestamp);
@@ -235,7 +239,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 marketService.Object,
                 nsiPostingBooksService.Object,
                 dateTimeEngine.Object,
-                featureToggle.Object, configurationSettingsHelper.Object);
+                featureToggle.Object, configurationSettingsHelper.Object, inventoryManagementClient.Object);
 
             // *** ACT ***/
             var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH);
@@ -255,7 +259,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(34, getInventoryForExportOpenMarketCalls[0].Item2[0]); // genre id should be news only
             // verify the calculated call
             Assert.AreEqual(1, calculateCalledCount);
-            
+
             // verify the saved job
             //updatedJobs
             Assert.AreEqual(1, updatedJobs.Count);
@@ -323,6 +327,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -490,7 +495,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 marketService.Object,
                 nsiPostingBooksService.Object,
                 dateTimeEngine.Object,
-                featureToggle.Object, configurationSettingsHelper.Object);
+                featureToggle.Object, configurationSettingsHelper.Object, inventoryManagementClient.Object);
 
             // *** ACT ***/
             var result = service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH);
@@ -593,7 +598,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                     EndDate = new DateTime(2020, 6, 28)
                 }
             };
-            var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);            
+            var testCurrentTimestamp = new DateTime(2020, 05, 06, 14, 32, 18);
 
             // instantiate our mocks.
             var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
@@ -614,6 +619,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
 
             // load our mocks with our test data.
             var inventorySource = new InventorySource
@@ -623,7 +629,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             };
 
             inventoryRepository.Setup(s => s.GetInventorySource(It.IsAny<int>()))
-                .Returns(inventorySource);            
+                .Returns(inventorySource);
 
             const int createdJobId = 1;
             var jobsCreated = new List<Tuple<InventoryExportJobDto, string>>();
@@ -704,7 +710,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 marketService.Object,
                 nsiPostingBooksService.Object,
                 dateTimeEngine.Object,
-                featureToggle.Object,configurationSettingsHelper.Object);
+                featureToggle.Object, configurationSettingsHelper.Object, inventoryManagementClient.Object);
 
             // *** ACT ***/
             var caught = Assert.Throws<InvalidOperationException>(() => service.GenerateExportForOpenMarket(request, TEST_USERNAME, TEST_TEMPLATE_PATH));
@@ -743,6 +749,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
 
             var savedFileGuid = existInSharedFolderService
                 ? new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5")
@@ -750,11 +757,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // load our mocks with our test data.
             inventoryExportJobRepository.Setup(s => s.GetJob(It.IsAny<int>()))
-                .Returns(new InventoryExportJobDto {FileName = "TestFileName.xlsx", SharedFolderFileId = savedFileGuid });
+                .Returns(new InventoryExportJobDto { FileName = "TestFileName.xlsx", SharedFolderFileId = savedFileGuid });
 
-            var getFileStreamCalls = new List<Tuple<string,string>>();
+            var getFileStreamCalls = new List<Tuple<string, string>>();
             fileService.Setup(s => s.GetFileStream(It.IsAny<string>(), It.IsAny<string>()))
-                .Callback<string,string>((s,sf) => getFileStreamCalls.Add(new Tuple<string, string>(s, sf)))
+                .Callback<string, string>((s, sf) => getFileStreamCalls.Add(new Tuple<string, string>(s, sf)))
                 .Returns(new MemoryStream());
 
             var nsiPostingBooksService = new Mock<INsiPostingBookService>();
@@ -797,7 +804,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 nsiPostingBooksService.Object,
                 dateTimeEngine.Object,
                 featureToggle.Object,
-                configurationSettingsHelper.Object);
+                configurationSettingsHelper.Object, inventoryManagementClient.Object);
 
             // *** ACT ***/
             var result = service.DownloadOpenMarketExportFile(1);
@@ -853,6 +860,220 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 new LookupDto { Display = "Special", Id = 56 }
             };
             return allGenres;
+        }
+
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOpenMarketExportInventoryQuartersTest_WhenfeatureToggleOn()
+        {
+            // instantiate our mocks.
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var inventoryExportEngine = new Mock<IInventoryExportEngine>();
+            var fileService = new Mock<IFileService>();
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
+
+            var inventoryRepository = new Mock<IInventoryRepository>();
+            var inventoryExportRepository = new Mock<IInventoryExportRepository>();
+            var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
+            var genreRepository = new Mock<IGenreRepository>();
+            var stationRepository = new Mock<IStationRepository>();
+            var audienceRepository = new Mock<IBroadcastAudienceRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+
+            //Adding mock data to required repos
+            featureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION))
+                .Returns(true);
+            inventoryManagementClient.Setup(s => s.GetOpenMarketExportInventoryQuarters(It.IsAny<int>())).Returns(getQurters);
+
+            // instantiate our test server with all our setup mocks.
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
+                quarterCalculationEngine.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                inventoryExportEngine.Object,
+                fileService.Object,
+                sharedFolderService.Object,
+                spotLengthEngine.Object,
+                daypartCache.Object,
+                marketService.Object,
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object, configurationSettingsHelper.Object, inventoryManagementClient.Object);
+            using (new TransactionScopeWrapper())
+            {
+                var quarters = service.GetOpenMarketExportInventoryQuarters(7);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(quarters));
+            }
+        }
+
+        private InventoryQuartersDto getQurters()
+        {
+            var quarters = new InventoryQuartersDto
+            {
+                DefaultQuarter = new QuarterDetailDto
+                {
+                    EndDate = new DateTime(2021, 01, 04),
+                    StartDate = new DateTime(2022, 01, 04),
+                    Quarter = 4,
+                    Year = 2022
+                }
+            };
+            return quarters;
+        }
+
+        private List<LookupDto> _getGenres()
+        {
+            return new List<LookupDto>
+            {
+                new LookupDto
+                {
+                    Id = 1,
+                    Display = "Enrich"
+                }
+            };
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void Getgeneres_WhenInventoryMicroservicefeatureToggleOn()
+        {
+            // instantiate our mocks.
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var inventoryExportEngine = new Mock<IInventoryExportEngine>();
+            var fileService = new Mock<IFileService>();
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
+
+            var inventoryRepository = new Mock<IInventoryRepository>();
+            var inventoryExportRepository = new Mock<IInventoryExportRepository>();
+            var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
+            var genreRepository = new Mock<IGenreRepository>();
+            var stationRepository = new Mock<IStationRepository>();
+            var audienceRepository = new Mock<IBroadcastAudienceRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+
+            //Adding mock data to required repos
+            featureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION))
+                .Returns(true);
+            inventoryManagementClient.Setup(s => s.GetInventoryGenreTypes()).Returns(_getGenres());
+
+            // instantiate our test server with all our setup mocks.
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
+                quarterCalculationEngine.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                inventoryExportEngine.Object,
+                fileService.Object,
+                sharedFolderService.Object,
+                spotLengthEngine.Object,
+                daypartCache.Object,
+                marketService.Object,
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object, configurationSettingsHelper.Object, inventoryManagementClient.Object);
+            using (new TransactionScopeWrapper())
+            {
+                var GenreTypes = service.GetOpenMarketExportGenreTypes();
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(GenreTypes));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GenrateExportForOpenMarket_WhenInventoryMicroservicefeatureToggleOn()
+        {
+            // instantiate our mocks.
+            var broadcastDataRepositoryFactory = new Mock<IDataRepositoryFactory>();
+            var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
+            var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
+            var inventoryExportEngine = new Mock<IInventoryExportEngine>();
+            var fileService = new Mock<IFileService>();
+            var spotLengthEngine = new Mock<ISpotLengthEngine>();
+            var daypartCache = new Mock<IDaypartCache>();
+            var marketService = new Mock<IMarketService>();
+
+            var inventoryRepository = new Mock<IInventoryRepository>();
+            var inventoryExportRepository = new Mock<IInventoryExportRepository>();
+            var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
+            var genreRepository = new Mock<IGenreRepository>();
+            var stationRepository = new Mock<IStationRepository>();
+            var audienceRepository = new Mock<IBroadcastAudienceRepository>();
+            var featureToggle = new Mock<IFeatureToggleHelper>();
+            var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
+            configurationSettingsHelper.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
+                .Returns(@"C:\Temp");
+            var inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
+            var nsiPostingBooksService = new Mock<INsiPostingBookService>();
+            var sharedFolderService = new Mock<ISharedFolderService>();
+            var dateTimeEngine = new Mock<IDateTimeEngine>();
+
+            //Adding mock data to required repos
+            featureToggle.Setup(s =>
+                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION))
+                .Returns(true);
+
+            var inventoryRequest = new InventoryExportRequestDto
+            {
+                Genre = InventoryExportGenreTypeEnum.NotEnriched,
+                Quarter = new QuarterDetailDto
+                {
+                    EndDate = new DateTime(2021, 01, 04),
+                    StartDate = new DateTime(2022, 01, 04),
+                    Quarter = 4,
+                    Year = 2022
+                }
+            };
+            int expectedResult = 123;
+            string userName = "TestUSer";
+            string templatePath = "~/test";
+            inventoryManagementClient.Setup(s => s.GenerateExportForOpenMarket(It.IsAny<InventoryExportRequestDto>())).Returns(expectedResult);
+
+            // instantiate our test server with all our setup mocks.
+            var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
+                quarterCalculationEngine.Object,
+                mediaMonthAndWeekAggregateCache.Object,
+                inventoryExportEngine.Object,
+                fileService.Object,
+                sharedFolderService.Object,
+                spotLengthEngine.Object,
+                daypartCache.Object,
+                marketService.Object,
+                nsiPostingBooksService.Object,
+                dateTimeEngine.Object,
+                featureToggle.Object, configurationSettingsHelper.Object, inventoryManagementClient.Object);
+            using (new TransactionScopeWrapper())
+            {
+                var result = service.GenerateExportForOpenMarket(inventoryRequest, userName, templatePath);
+
+                //assertion
+                Assert.NotNull(result);
+                Assert.AreEqual(expectedResult, result);
+            }
         }
     }
 }

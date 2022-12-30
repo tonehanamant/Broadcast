@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
@@ -69,6 +70,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly IDateTimeEngine _DateTimeEngine;
 
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
+        private readonly IInventoryManagementApiClient _InventoryManagementApiClient;
+        protected Lazy<bool> _IsInventoryServiceMigrationEnabled;
 
         public InventoryExportService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IQuarterCalculationEngine quarterCalculationEngine,
@@ -79,10 +82,11 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
             IMarketService marketService,
-            INsiPostingBookService nsiPostingBookService, 
+            INsiPostingBookService nsiPostingBookService,
             IDateTimeEngine dateTimeEngine,
-            IFeatureToggleHelper featureToggleHelper, 
-            IConfigurationSettingsHelper configurationSettingsHelper) 
+            IFeatureToggleHelper featureToggleHelper,
+            IConfigurationSettingsHelper configurationSettingsHelper,
+            IInventoryManagementApiClient inventoryManagementApiClient)
                 : base(featureToggleHelper, configurationSettingsHelper)
         {
             _InventoryExportRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryExportRepository>();
@@ -104,30 +108,50 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             _DateTimeEngine = dateTimeEngine;
 
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
+            _InventoryManagementApiClient = inventoryManagementApiClient;
+            _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
         }
 
         /// <inheritdoc />
         public List<LookupDto> GetOpenMarketExportGenreTypes()
         {
-            
-            return EnumExtensions.ToLookupDtoList<InventoryExportGenreTypeEnum>()
-                .OrderBy(i => i.Display).ToList();
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GetInventoryGenreTypes();
+            }
+            else
+            {
+                return EnumExtensions.ToLookupDtoList<InventoryExportGenreTypeEnum>()
+                    .OrderBy(i => i.Display).ToList();
+            }
         }
 
         /// <inheritdoc />
         public InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId)
         {
-            var quarters = _InventoryExportRepository.GetInventoryQuartersForSource(inventorySourceId);
-            var quarterDetails = quarters.Select(i => _QuarterCalculationEngine.GetQuarterDetail(i.Quarter, i.Year))
-                .ToList();
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GetOpenMarketExportInventoryQuarters(inventorySourceId);
+            }
+            else
+            {
+                var quarters = _InventoryExportRepository.GetInventoryQuartersForSource(inventorySourceId);
+                var quarterDetails = quarters.Select(i => _QuarterCalculationEngine.GetQuarterDetail(i.Quarter, i.Year))
+                    .ToList();
 
-            return new InventoryQuartersDto
-            { Quarters = quarterDetails, DefaultQuarter = quarterDetails.FirstOrDefault() };
+                return new InventoryQuartersDto
+                { Quarters = quarterDetails, DefaultQuarter = quarterDetails.FirstOrDefault() };
+            }
         }
 
         /// <inheritdoc />
         public int GenerateExportForOpenMarket(InventoryExportRequestDto request, string userName, string templatesFilePath)
         {
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GenerateExportForOpenMarket(request);
+            }
             const int spotLengthMinutes = 30;
             const int inventorySourceIdOpenMarket = 1;
             var inventorySource = _InventoryRepository.GetInventorySource(inventorySourceIdOpenMarket);
@@ -205,7 +229,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 var markets = _MarketService.GetMarketsWithLatestCoverage();
 
                 var tableData = _InventoryExportEngine.GetInventoryTableData(calculated, stations, markets, mediaWeekIds, dayparts, audiences, genres);
-                
+
                 var shareBookId = _NsiPostingBookService.GetLatestNsiPostingBookForMonthContainingDate(request.Quarter.StartDate);
                 var shareBookMonth = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(shareBookId);
 
@@ -221,7 +245,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
                 var reportGenerator = new InventoryExportGenerator(templatesFilePath);
                 var reportOutput = reportGenerator.Generate(reportData);
-                
+
                 processingSw.Stop();
 
                 _LogInfo($"Export job {job.Id} processed {inventory.Count} records to {tableData.Length} file lines in {processingSw.ElapsedMilliseconds} ms", userName);
@@ -279,7 +303,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
                 _FileService.CreateDirectory(folderPath);
                 _FileService.Create(folderPath, fileName, fileStream);
             }
-            
+
             return fileId;
         }
 

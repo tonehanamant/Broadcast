@@ -66,7 +66,9 @@ namespace Services.Broadcast.Clients
         /// <param name="saveRequest">InventoryFileSaveRequest object containing an open market inventory file</param>
         /// <returns>InventoryFileSaveResult object</returns>
         InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequestDto saveRequest);
-
+        InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId);
+        List<LookupDto> GetInventoryGenreTypes();
+        int GenerateExportForOpenMarket(InventoryExportRequestDto request);
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -82,6 +84,7 @@ namespace Services.Broadcast.Clients
             var applicationId = _GetApplicationId();
             var appName = _GetAppName();
             var client = await _GetSecureHttpClientAsync(apiBaseUrl, applicationId, appName);
+            client.Timeout = new TimeSpan(1, 0, 0);
             return client;
         }
         public List<InventorySource> GetInventorySources()
@@ -270,6 +273,75 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(String.Format(ex.Message.ToString()));
+            }
+        }
+
+        public InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/InventoryExport/QuartersOpenMarket?inventorySourceId={inventorySourceId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For get inventory quarters api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryQuartersDto>>();
+                InventoryQuartersDto inventoryQuarters = result.Result.Result;
+                _LogInfo("Successfully get inventory sources: " + JsonConvert.SerializeObject(inventoryQuarters));
+                return inventoryQuarters;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting inventory Ecport quarters, Error:{0}", ex.Message.ToString()));
+            }
+        }
+
+        public List<LookupDto> GetInventoryGenreTypes()
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/InventoryExport/GenreTypes";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For get inventoryExport Genres api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<LookupDto>>();
+                List<LookupDto> inventoryGeners = result.Result.ResultList;
+                _LogInfo("Successfully get inventory sources: " + JsonConvert.SerializeObject(inventoryGeners));
+                return inventoryGeners;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting inventory genres, Error:{0}", ex.Message.ToString()));
+            }
+        }
+
+        public int GenerateExportForOpenMarket(InventoryExportRequestDto request)
+        {
+            try
+            {
+                int result1 = 0;
+                var requestUri = $"{coreApiVersion}/broadcast/InventoryExport/GenerateExportForOpenMarket";
+                var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.PostAsync(requestUri, content).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For get inventory summaries api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<int>>();
+                result1 = result.Result.Result;
+
+                _LogInfo("Successfully get inventory export for open market");
+                return result1;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(string.Format("Error occured while getting inventory summaries, Error:{0}", ex.Message.ToString()));
             }
         }
     }
