@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using System.Collections.Generic;
 using Services.Broadcast.Exceptions;
+using System.Text.RegularExpressions;
+using System.Linq;
+using System.Web;
 
 namespace Services.Broadcast.Clients
 {
@@ -66,6 +69,26 @@ namespace Services.Broadcast.Clients
         /// <param name="saveRequest">InventoryFileSaveRequest object containing an open market inventory file</param>
         /// <returns>InventoryFileSaveResult object</returns>
         InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequestDto saveRequest);
+        /// <summary>
+        /// Generates inventory file that contained errors filtered by the id passed
+        /// </summary>
+        /// <param name="fileId">id to filter the files by</param>
+        /// <returns>Returns error file as stream and the file name</returns>
+        Tuple<string, Stream, string> DownloadErrorFile(int fileId);
+        /// <summary>
+        /// Generates inventory file that contained errors filtered by the id passed
+        /// </summary>
+        /// <param name="inventorySourceId">inventorySourceId to filter record</param>
+        /// <param name="quarter">quarter to filter record</param>
+        /// <param name="year">year to filter record</param>
+        /// <returns>Returns inventory upload history records depending on filter applied</returns>
+        List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year);
+        /// <summary>
+        /// Generates an archive with inventory files that contained errors filtered by the list of ids passed
+        /// </summary>
+        /// <param name="fileIds">List of file ids to filter the files by</param>
+        /// <returns>Returns a zip archive as stream and the zip name</returns>
+        Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds);
         InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId);
         List<LookupDto> GetInventoryGenreTypes();
         int GenerateExportForOpenMarket(InventoryExportRequestDto request);
@@ -172,7 +195,7 @@ namespace Services.Broadcast.Clients
             {
                 throw new InvalidOperationException(String.Format("Error occured while getting standard dayparts, Error:{0}", ex.Message.ToString()));
             }
-
+            
         }
         public List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate)
         {
@@ -242,7 +265,7 @@ namespace Services.Broadcast.Clients
             var appName = _ConfigurationSettingsHelper.GetConfigValue<string>(InventoryManagementApiConfigKeys.AppName);
             return appName;
         }
-
+      
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequestDto saveRequest)
         {
             try
@@ -274,6 +297,99 @@ namespace Services.Broadcast.Clients
             {
                 throw new InvalidOperationException(String.Format(ex.Message.ToString()));
             }
+        }
+        public Tuple<string, Stream, string> DownloadErrorFile(int fileId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/DownloadErrorFile?fileId={fileId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For download error file api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryDownloadErrorFileDto>>().Result;
+                var rawFileName = result.Result.content.headers[1].value[0].ToString();
+                var fileMimeType = result.Result.content.headers[0].value[0].ToString();
+                var reg = new Regex("\".*?\"");
+                var fileName = reg.Matches(rawFileName)[0].Value.ToString().Replace('"', ' ').Trim();
+                string partialPath = @"\InventoryUpload\Errors\";
+                string filePath = $"{ _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)}{partialPath}{fileId}_{fileName}";
+                 
+                Stream stream = new FileStream(filePath, FileMode.Open);
+                var errorFile =  new Tuple<string, Stream, string>(fileName, stream, fileMimeType);
+                _LogInfo("Successfully get error file: " + JsonConvert.SerializeObject(fileName));
+                return errorFile;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting inventory sources, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
+        {
+            try
+            {
+                var quertString = _ToQueryString(fileIds);
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/DownloadErrorFiles{quertString}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For download error files api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryDownloadErrorFileDto>>().Result;
+                var rawFileName = result.Result.content.headers[1].value[0].ToString();
+                int pFrom = rawFileName.IndexOf("filename=") + "filename=".Length;
+                int pTo = rawFileName.Length;
+
+                string fileName = rawFileName.Substring(pFrom, pTo - pFrom);
+                byte[] byteArray = Encoding.UTF8.GetBytes(result.Result.content.ToString());
+                MemoryStream stream = new MemoryStream(byteArray);
+
+                var errorFiles = new Tuple<string, Stream>(fileName, stream);
+                _LogInfo("Successfully get error file: " + JsonConvert.SerializeObject(fileName));
+                return errorFiles;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting inventory sources, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/UploadHistory?inventorySourceId={inventorySourceId}&quarter={quarter}&year={year}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For download error file api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<InventoryUploadHistoryDto>>();
+                var resultList = result.Result.ResultList;
+                _LogInfo("Successfully get list of results: " + JsonConvert.SerializeObject(resultList));
+                return resultList;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting inventory sources, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        private string _ToQueryString(List<int> fileIds)
+        {
+            int[] array = fileIds.ToArray();
+            var nvc = array.Select(x => new KeyValuePair<string, int>("fileIds", x)).ToList();
+            string queryString = null;
+            string[] QueryArray = new string[nvc.Count];
+            for (int i = 0; i < nvc.Count; i++)
+            {
+                QueryArray[i] = nvc[i].Key + "=" + nvc[i].Value;
+            }
+            queryString = "?" + string.Join("&", QueryArray);
+            return queryString;
         }
 
         public InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId)

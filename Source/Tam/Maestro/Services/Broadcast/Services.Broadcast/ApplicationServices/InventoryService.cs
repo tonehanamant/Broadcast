@@ -845,37 +845,44 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<InventoryUploadHistoryDto> GetInventoryUploadHistory(int inventorySourceId, int? quarter, int? year)
         {
-            var result = new List<InventoryUploadHistoryDto>();
-            var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
-            var uploadHistory = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId, quarterDateRange.Start, quarterDateRange.End);
-
-            foreach (var uploadHistoryItem in uploadHistory)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                var uploadHistoryItemDto = new InventoryUploadHistoryDto
-                {
-                    FileId = uploadHistoryItem.FileId,
-                    UploadDateTime = uploadHistoryItem.UploadDateTime,
-                    Username = uploadHistoryItem.Username,
-                    Filename = uploadHistoryItem.Filename,
-                    DaypartCodes = uploadHistoryItem.DaypartCodes,
-                    EffectiveDate = uploadHistoryItem.EffectiveDate,
-                    EndDate = uploadHistoryItem.EndDate,
-                    HutBook = uploadHistoryItem.HutBook,
-                    ShareBook = uploadHistoryItem.ShareBook,
-                    Rows = uploadHistoryItem.Rows,
-                    Status = _GetUploadHistoryStatus(uploadHistoryItem)
-                };
+                return _InventoryApiClient.GetInventoryUploadHistory(inventorySourceId,quarter,year);
+            }
+            else
+            {
+                var result = new List<InventoryUploadHistoryDto>();
+                var quarterDateRange = _QuarterCalculationEngine.GetQuarterDateRange(quarter, year);
+                var uploadHistory = _InventoryRepository.GetInventoryUploadHistoryForInventorySource(inventorySourceId, quarterDateRange.Start, quarterDateRange.End);
 
-                if (uploadHistoryItem.EffectiveDate.HasValue &&
-                    uploadHistoryItem.EndDate.HasValue)
+                foreach (var uploadHistoryItem in uploadHistory)
                 {
-                    uploadHistoryItemDto.Quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(uploadHistoryItem.EffectiveDate.Value, uploadHistoryItem.EndDate.Value);
+                    var uploadHistoryItemDto = new InventoryUploadHistoryDto
+                    {
+                        FileId = uploadHistoryItem.FileId,
+                        UploadDateTime = uploadHistoryItem.UploadDateTime,
+                        Username = uploadHistoryItem.Username,
+                        Filename = uploadHistoryItem.Filename,
+                        DaypartCodes = uploadHistoryItem.DaypartCodes,
+                        EffectiveDate = uploadHistoryItem.EffectiveDate,
+                        EndDate = uploadHistoryItem.EndDate,
+                        HutBook = uploadHistoryItem.HutBook,
+                        ShareBook = uploadHistoryItem.ShareBook,
+                        Rows = uploadHistoryItem.Rows,
+                        Status = _GetUploadHistoryStatus(uploadHistoryItem)
+                    };
+
+                    if (uploadHistoryItem.EffectiveDate.HasValue &&
+                        uploadHistoryItem.EndDate.HasValue)
+                    {
+                        uploadHistoryItemDto.Quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(uploadHistoryItem.EffectiveDate.Value, uploadHistoryItem.EndDate.Value);
+                    }
+
+                    result.Add(uploadHistoryItemDto);
                 }
 
-                result.Add(uploadHistoryItemDto);
+                return result;
             }
-
-            return result;
         }
 
         private string _GetUploadHistoryStatus(InventoryUploadHistory inventoryUploadHistory)
@@ -900,22 +907,29 @@ namespace Services.Broadcast.ApplicationServices
 
         public Tuple<string, Stream, string> DownloadErrorFile(int fileId)
         {
-            Tuple<string, Stream, string> result;
-            if (_EnableSharedFileServiceConsolidation.Value)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                // get the file 
-                var inventoryFileDetails = _GetInventoryFileById(fileId);
-                if (inventoryFileDetails.ErrorFileSharedFolderFileId.HasValue)
-                {
-                    _LogInfo($"Translated fileId '{fileId}' as errorFileSharedFolderFileId '{inventoryFileDetails.ErrorFileSharedFolderFileId.Value}'");
-                    var file = _SharedFolderService.GetFile(inventoryFileDetails.ErrorFileSharedFolderFileId.Value);
-                    result = _BuildPackageReturnForSingleFile(file.FileContent, file.FileNameWithExtension);
-                    return result;
-                }
+                return _InventoryApiClient.DownloadErrorFile(fileId);
             }
-            
-            result = _RetrieveErrorFileWithFileService(fileId);
-            return result;
+            else
+            {
+                Tuple<string, Stream, string> result;
+                if (_EnableSharedFileServiceConsolidation.Value)
+                {
+                    // get the file 
+                    var inventoryFileDetails = _GetInventoryFileById(fileId);
+                    if (inventoryFileDetails.ErrorFileSharedFolderFileId.HasValue)
+                    {
+                        _LogInfo($"Translated fileId '{fileId}' as errorFileSharedFolderFileId '{inventoryFileDetails.ErrorFileSharedFolderFileId.Value}'");
+                        var file = _SharedFolderService.GetFile(inventoryFileDetails.ErrorFileSharedFolderFileId.Value);
+                        result = _BuildPackageReturnForSingleFile(file.FileContent, file.FileNameWithExtension);
+                        return result;
+                    }
+                }
+
+                result = _RetrieveErrorFileWithFileService(fileId);
+                return result;
+            }
         }
 
         private Tuple<string, Stream, string> _RetrieveErrorFileWithFileService(int fileId)
@@ -947,19 +961,26 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
         {
-            var archiveFileName = $"InventoryErrorFiles_{_DateTimeEngine.GetCurrentMoment().ToString("MMddyyyyhhmmss")}.zip";
-            Tuple<string, Stream> result;
-
-            if (_EnableSharedFileServiceConsolidation.Value)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                var sharedFolderFileIds = _InventoryFileRepository.GetErrorFileSharedFolderFileIds(fileIds);
-                var archiveStream = _SharedFolderService.CreateZipArchive(sharedFolderFileIds);
-                result = _BuildPackageReturnForArchiveFile(archiveFileName, archiveStream);
+               return _InventoryApiClient.DownloadErrorFiles(fileIds);
+            }
+            else
+            {
+                var archiveFileName = $"InventoryErrorFiles_{_DateTimeEngine.GetCurrentMoment().ToString("MMddyyyyhhmmss")}.zip";
+                Tuple<string, Stream> result;
+
+                if (_EnableSharedFileServiceConsolidation.Value)
+                {
+                    var sharedFolderFileIds = _InventoryFileRepository.GetErrorFileSharedFolderFileIds(fileIds);
+                    var archiveStream = _SharedFolderService.CreateZipArchive(sharedFolderFileIds);
+                    result = _BuildPackageReturnForArchiveFile(archiveFileName, archiveStream);
+                    return result;
+                }
+
+                result = _DownloadErrorFilesFromFileService(archiveFileName, fileIds);
                 return result;
             }
-
-            result = _DownloadErrorFilesFromFileService(archiveFileName, fileIds);
-            return result;
         }
 
         private Tuple<string, Stream> _DownloadErrorFilesFromFileService(string archiveFileName, List<int> fileIds)
