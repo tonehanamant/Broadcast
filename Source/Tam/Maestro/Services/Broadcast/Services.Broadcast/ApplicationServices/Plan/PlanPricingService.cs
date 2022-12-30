@@ -1434,6 +1434,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             catch (Exception exception)
             {
+                _LogInfo(String.Format("Error attempting to run the pricing model.{0}", exception.Message.ToString()));
                 _HandlePricingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the pricing model.", diagnostic);
             }
         }
