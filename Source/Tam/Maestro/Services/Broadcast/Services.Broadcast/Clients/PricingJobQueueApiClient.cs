@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.Plan.Pricing;
 using Services.Broadcast.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -72,6 +69,7 @@ namespace Services.Broadcast.Clients
 
         private async Task<PricingJobSubmitResponse> SubmitRequestAsync(PlanPricingApiRequestDto_v3 request)
         {
+            _LogInfo($"Starting: Submitting the pricing request");
             var submitResult = new HttpResponseMessage();
             var requestSerialized = JsonConvert.SerializeObject(request);
 
@@ -83,11 +81,13 @@ namespace Services.Broadcast.Clients
                 content.Headers.Add("Content-Encoding", gZipHeader);
                 content.Headers.ContentType = new MediaTypeHeaderValue(jsonContentType);
                 submitResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelSubmitUrl.Value, content);
+                _LogInfo($"Submitted the pricing request with a gzip payload");
             }
             else
             {
                 var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
                 submitResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelSubmitUrl.Value, content);
+                _LogInfo($"Submitted the pricing request with a json payload");
             }
 
             var submitResponse = await submitResult.Content.ReadAsAsync<PricingJobSubmitResponse>();
@@ -99,11 +99,13 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException($"Error returned from the pricing api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
             }
 
+            _LogInfo($"Finished: Submitting the pricing request");
             return submitResponse;
         }
 
         private async Task<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
+            _LogInfo($"Starting: Fetching the pricing results");
             var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
             var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
             var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
@@ -125,6 +127,9 @@ namespace Services.Broadcast.Clients
                 }
 
                 _HttpClient.DefaultRequestHeaders.AcceptEncoding.Remove(new StringWithQualityHeaderValue(gZipHeader));
+
+                _LogInfo($"Submitted the pricing request with a gzip payload");
+                _LogInfo($"Finished: Fetching the pricing results");
                 return response;
             }
             else
@@ -138,6 +143,8 @@ namespace Services.Broadcast.Clients
                     throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
                 }
 
+                _LogInfo($"Submitted the pricing request with a json payload");
+                _LogInfo($"Finished: Fetching the pricing results");
                 return fetchResponse;
             }
         }

@@ -69,6 +69,7 @@ namespace Services.Broadcast.Clients
 
         private async Task<BuyingJobSubmitResponse> SubmitRequestAsync(PlanBuyingApiRequestDto_v3 request)
         {
+            _LogInfo($"Starting: Submitting the buying request");
             var submitResult = new HttpResponseMessage();
             var requestSerialized = JsonConvert.SerializeObject(request);
 
@@ -80,11 +81,13 @@ namespace Services.Broadcast.Clients
                 content.Headers.Add("Content-Encoding", gZipHeader);
                 content.Headers.ContentType = new MediaTypeHeaderValue(jsonContentType);
                 submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
+                _LogInfo($"Submitted the buying request with a gzip payload");
             }
             else
             {
                 var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
                 submitResult = await _HttpClient.PostAsync(_SubmitUrl.Value, content);
+                _LogInfo($"Submitted the buying request with a json payload");
             }
 
             var submitResponse = await submitResult.Content.ReadAsAsync<BuyingJobSubmitResponse>();
@@ -96,11 +99,13 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException($"Error returned from the buying api submit. Name : '{submitResponse.error.Name}';  Messages : '{msgs}'");
             }
 
+            _LogInfo($"Finished: Submitting the buying request");
             return submitResponse;
         }
 
         private async Task<BuyingJobFetchResponse<PlanBuyingApiSpotsResultDto_v3>> FetchResultAsync(string taskId)
         {
+            _LogInfo($"Starting: Fetching the buying results");
             var fetchRequest = new PricingJobFetchRequest { task_id = taskId };
             var requestSerialized = JsonConvert.SerializeObject(fetchRequest);
             var content = new StringContent(requestSerialized, Encoding.UTF8, jsonContentType);
@@ -122,6 +127,9 @@ namespace Services.Broadcast.Clients
                 }
 
                 _HttpClient.DefaultRequestHeaders.AcceptEncoding.Remove(new StringWithQualityHeaderValue(gZipHeader));
+
+                _LogInfo($"Submitted the buying request with a gzip payload");
+                _LogInfo($"Finished: Fetching the buying results");
                 return response;
             }
             else
@@ -135,6 +143,8 @@ namespace Services.Broadcast.Clients
                     throw new InvalidOperationException($"Error returned from the buying api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
                 }
 
+                _LogInfo($"Submitted the buying request with a json payload");
+                _LogInfo($"Finished: Fetching the buying results");
                 return fetchResponse;
             }
         }
