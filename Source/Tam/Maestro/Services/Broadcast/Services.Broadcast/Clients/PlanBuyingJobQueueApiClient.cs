@@ -128,7 +128,7 @@ namespace Services.Broadcast.Clients
 
                 _HttpClient.DefaultRequestHeaders.AcceptEncoding.Remove(new StringWithQualityHeaderValue(gZipHeader));
 
-                _LogInfo($"Submitted the buying request with a gzip payload");
+                _LogInfo($"Fetching the buying request with a gzip payload");
                 _LogInfo($"Finished: Fetching the buying results");
                 return response;
             }
@@ -143,7 +143,7 @@ namespace Services.Broadcast.Clients
                     throw new InvalidOperationException($"Error returned from the buying api fetch. Name : '{fetchResponse.error.Name}';  Messages : '{msgs}'");
                 }
 
-                _LogInfo($"Submitted the buying request with a json payload");
+                _LogInfo($"Fetching the buying request with a json payload");
                 _LogInfo($"Finished: Fetching the buying results");
                 return fetchResponse;
             }
