@@ -18,6 +18,7 @@ using Services.Broadcast.Exceptions;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Web;
+using Services.Broadcast.Entities.Scx;
 
 namespace Services.Broadcast.Clients
 {
@@ -92,6 +93,18 @@ namespace Services.Broadcast.Clients
         InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId);
         List<LookupDto> GetInventoryGenreTypes();
         int GenerateExportForOpenMarket(InventoryExportRequestDto request);
+        /// <summary>
+        /// Generates list of result for inventory source id
+        /// </summary>
+        /// <param name="sourceId">inventory source id</param>
+        /// <returns>Returns a list of scx file generation history</returns>
+        List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId);
+        /// <summary>
+        /// Generates scx file
+        /// </summary>
+        /// <param name="fileId">inventory source id</param>
+        /// <returns>Returns scx file</returns>
+        Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId);
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -458,6 +471,57 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(string.Format("Error occured while getting inventory summaries, Error:{0}", ex.Message.ToString()));
+            }
+        }
+
+        public List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/ScxFileGenerationHistory?inventorySourceId={sourceId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For SCX file Genedration history");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<ScxFileGenerationDetail>>();
+                var resultList = result.Result.ResultList;
+                _LogInfo("Successfully get list of SCX file Genedration history: " + JsonConvert.SerializeObject(resultList));
+                return resultList;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting scx file generation history, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        public Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/DownloadScxFile?fileId={fileId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For download scx file");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryDownloadErrorFileDto>>().Result;
+                var rawFileName = result.Result.content.headers[1].value[0].ToString();
+                var fileMimeType = result.Result.content.headers[0].value[0].ToString();
+                var reg = new Regex("\".*?\"");
+                var fileName = reg.Matches(rawFileName)[0].Value.ToString().Replace('"', ' ').Trim();
+                string partialPath = @"\ScxFiles\";
+                string filePath = $"{ _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)}{partialPath}{fileName}";
+
+                Stream stream = new FileStream(filePath, FileMode.Open);
+                var errorFile = new Tuple<string, Stream, string>(fileName, stream, fileMimeType);
+                _LogInfo("Successfully get scx file: " + JsonConvert.SerializeObject(fileName));
+                return errorFile;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while downloading scx file, Error:{0}", ex.Message.ToString()));
             }
         }
     }

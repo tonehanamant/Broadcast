@@ -3,6 +3,7 @@ using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Hangfire;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Scx;
@@ -89,6 +90,8 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IFileService _FileService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
+        private readonly IInventoryManagementApiClient _InventoryApiClient;
+        private readonly Lazy<bool> _IsInventoryServiceMigrationEnabled;
 
         public ScxGenerationService(IDataRepositoryFactory broadcastDataRepositoryFactory, 
             IProprietaryInventoryService proprietaryInventoryService, 
@@ -97,7 +100,8 @@ namespace Services.Broadcast.ApplicationServices
             IQuarterCalculationEngine quarterCalculationEngine,
             IBackgroundJobClient backgroundJobClient,
             IFeatureToggleHelper featureToggleHelper, 
-            IConfigurationSettingsHelper configurationSettingsHelper) 
+            IConfigurationSettingsHelper configurationSettingsHelper,
+            IInventoryManagementApiClient inventoryApiClient) 
             : base(featureToggleHelper, configurationSettingsHelper)
         {
             _ScxGenerationJobRepository = broadcastDataRepositoryFactory.GetDataRepository<IScxGenerationJobRepository>();
@@ -108,6 +112,9 @@ namespace Services.Broadcast.ApplicationServices
             _FileService = fileService;
             _SharedFolderService = sharedFolderService;
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
+            _InventoryApiClient = inventoryApiClient;
+            _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
+          _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
         }
 
         public int QueueScxGenerationJob(InventoryScxDownloadRequest inventoryScxDownloadRequest, string userName, DateTime currentDate)
@@ -240,9 +247,16 @@ namespace Services.Broadcast.ApplicationServices
         /// <inheritdoc />
         public List<ScxFileGenerationDetail> GetScxFileGenerationHistory(int sourceId)
         {
-            var detailDtos = _ScxGenerationJobRepository.GetScxFileGenerationDetails(sourceId);
-            var details = TransformFromDtoToEntities(detailDtos);
-            return details;
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+              return  _InventoryApiClient.GetScxFileGenerationHistory(sourceId);
+            }
+            else
+            {
+                var detailDtos = _ScxGenerationJobRepository.GetScxFileGenerationDetails(sourceId);
+                var details = TransformFromDtoToEntities(detailDtos);
+                return details;
+            }
         }
 
         private List<ScxFileGenerationDetail> TransformFromDtoToEntities(List<ScxFileGenerationDetailDto> dtos)
@@ -267,26 +281,32 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new Exception("No file id was supplied!");
             }
-
-            Tuple<string, Stream, string> result;
-
-            if (_EnableSharedFileServiceConsolidation.Value)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderFileIdForFile(fileId);
+               return _InventoryApiClient.DownloadGeneratedScxFile(fileId);
+            }
+            else
+            {
+                Tuple<string, Stream, string> result;
 
-                if (sharedFileId.HasValue)
+                if (_EnableSharedFileServiceConsolidation.Value)
                 {
-                    _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
-                    var file = _SharedFolderService.GetFile(sharedFileId.Value);
-                    result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
-                    return result;
+                    var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderFileIdForFile(fileId);
+
+                    if (sharedFileId.HasValue)
+                    {
+                        _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
+                        var file = _SharedFolderService.GetFile(sharedFileId.Value);
+                        result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                        return result;
+                    }
+
+                    _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
                 }
 
-                _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
+                result = _GetFileFromFileService(fileId);
+                return result;
             }
-
-            result = _GetFileFromFileService(fileId);
-            return result;
         }
 
         public int QueueScxOpenMarketsGenerationJob(InventoryScxOpenMarketsDownloadRequest inventoryScxOpenMarketsDownloadRequest, string userName, DateTime currentDate)

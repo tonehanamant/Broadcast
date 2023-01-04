@@ -7,6 +7,7 @@ using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
@@ -33,6 +34,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<ISharedFolderService> _SharedFolderService;
 
         private Mock<IScxGenerationJobRepository> _ScxGenerationJobRepository;
+        private Mock<IInventoryManagementApiClient> _InventoryManagementApiClientMock;
 
         [SetUp]
         public void SetUp()
@@ -52,6 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _DataRepositoryFactory.Setup(s => s.GetDataRepository<IScxGenerationJobRepository>())
                 .Returns(_ScxGenerationJobRepository.Object);
+            _InventoryManagementApiClientMock = new Mock<IInventoryManagementApiClient>();
         }
 
         public ScxGenerationService _GetTestClass()
@@ -64,7 +67,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 _QuartersCalculationEngine.Object,
                 _BackgroundJobClient.Object,
                 _FeatureToggle.Object,
-                _ConfigurationSettingsHelper.Object);
+                _ConfigurationSettingsHelper.Object,
+                _InventoryManagementApiClientMock.Object);
 
             return tc;
         }
