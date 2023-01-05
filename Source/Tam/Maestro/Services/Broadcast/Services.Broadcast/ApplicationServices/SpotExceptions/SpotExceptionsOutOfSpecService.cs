@@ -756,8 +756,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     {
                         Id = spotExceptionsOutOfSpec.DoneId.Value,
                         AcceptedAsInSpec = spotExceptionsOutOfSpec.AcceptAsInSpec,
-                        ProgramName = spotExceptionsOutOfSpec.ProgramName.ToUpper(),
-                        GenreName = spotExceptionsOutOfSpec.GenreName.ToUpper(),
+                        ProgramName = spotExceptionsOutOfSpec.ProgramName?.ToUpper(),
+                        GenreName = spotExceptionsOutOfSpec.GenreName?.ToUpper(),
                         DaypartCode = spotExceptionsOutOfSpec.DaypartCode
                     };
                     spotExceptionsOutOfSpecDone.Add(spotExceptionsOutOfSpecDoneDecision);
