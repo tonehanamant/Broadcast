@@ -1,6 +1,6 @@
 {
   "EstimateId": 6840,
-  "FlightDateString": "01/01-01/01/0001",
+  "FlightDateString": "01/01/0001-01/01/0001",
   "FlightEndDate": "1/1/0001 12:00:00 AM",
   "FlightStartDate": "1/1/0001 12:00:00 AM",
   "Id": 0,
@@ -9,7 +9,7 @@
     {
       "AudienceName": "Women 25-54",
       "DaypartCode": "SYN",
-      "FlightDateString": "01/01-01/01/0001",
+      "FlightDateString": "01/01/0001-01/01/0001",
       "FlightEndDate": "1/1/0001 12:00:00 AM",
       "FlightStartDate": "1/1/0001 12:00:00 AM",
       "Id": 0,
@@ -35,7 +35,7 @@
   ],
   "Product": null,
   "ProgramAirDate": "04/10/2022",
-  "ProgramAirTime": "08:28:28 AM",
+  "ProgramAirTime": "08:28:28",
   "ProgramName": "CBS Mornings",
   "SpotLengthString": ":0"
 }

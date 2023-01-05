@@ -78,7 +78,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public SpotExceptionsRecommendedPlanService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -91,14 +90,11 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _SpotExceptionsRecommendedPlanRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionsRecommendedPlanRepository>();
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
-            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc />
         public async Task<SpotExceptionsRecommendedPlanGroupingResults> GetRecommendedPlanGroupingAsync(SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest)
         {
-            const string flightStartDateFormat = "MM/dd";
-            const string flightEndDateFormat = "MM/dd/yyyy";
             var groupedPlans = new SpotExceptionsRecommendedPlanGroupingResults();
 
             try
@@ -121,7 +117,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             SyncedTimestamp = null,
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
-                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                            FlightString = $"{DateTimeHelper.GetForDisplay(x.FlightStartDate, SpotExceptionsConstants.DateFormat)} - {DateTimeHelper.GetForDisplay(x.FlightEndDate, SpotExceptionsConstants.DateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
 
                     }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
@@ -138,10 +134,10 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             PlanName = x.PlanName,
                             AffectedSpotsCount = x.AffectedSpotsCount,
                             Impressions = Math.Floor((double)(x.Impressions / 1000)),
-                            SyncedTimestamp = x.SyncedTimestamp,
+                            SyncedTimestamp = DateTimeHelper.GetForDisplay(x.SyncedTimestamp, SpotExceptionsConstants.DateTimeFormat),
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
-                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                            FlightString = $"{DateTimeHelper.GetForDisplay(x.FlightStartDate, SpotExceptionsConstants.DateFormat)} - {DateTimeHelper.GetForDisplay(x.FlightEndDate, SpotExceptionsConstants.DateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
 
                     }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
@@ -179,8 +175,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             Id = activePlan.Id,
                             EstimateId = activePlan.EstimateId,
                             IsciName = activePlan.IsciName,
-                            ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
                             PlanId = activePlan.PlanId,
                             RecommendedPlan = activePlan.RecommendedPlanName,
                             Impressions = Math.Floor((double)(activePlan.Impressions / 1000)),
@@ -203,8 +199,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             Id = gueuedPlan.Id,
                             EstimateId = gueuedPlan.EstimateId,
                             IsciName = gueuedPlan.IsciName,
-                            ProgramAirDate = gueuedPlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = gueuedPlan.ProgramAirTime.ToLongTimeString(),
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(gueuedPlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(gueuedPlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
                             PlanId = gueuedPlan.PlanId,
                             RecommendedPlan = gueuedPlan.RecommendedPlanName,
                             Impressions = Math.Floor((double)(gueuedPlan.Impressions / 1000)),
@@ -227,12 +223,12 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             Id = syncedPlan.Id,
                             EstimateId = syncedPlan.EstimateId,
                             IsciName = syncedPlan.IsciName,
-                            ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(syncedPlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(syncedPlan.ProgramAirTime, SpotExceptionsConstants.DateTimeFormat),
                             PlanId = syncedPlan.PlanId,
                             RecommendedPlan = syncedPlan.RecommendedPlanName,
                             Impressions = Math.Floor((double)(syncedPlan.Impressions / 1000)),
-                            SyncedTimestamp = syncedPlan.SyncedTimestamp,
+                            SyncedTimestamp = DateTimeHelper.GetForDisplay(syncedPlan.SyncedTimestamp, SpotExceptionsConstants.DateTimeFormat),
                             SpotLengthString = $":{syncedPlan.SpotLength}",
                             Affiliate = syncedPlan.Affiliate,
                             Market = syncedPlan.MarketName,
@@ -255,11 +251,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <inheritdoc />
         public async Task<SpotExceptionsRecommendedPlanDetailsResultDto> GetRecommendedPlanDetailsAsync(int detailsId)
         {
-            const string programAirDateFormat = "MM/dd/yyyy";
-            const string programAirTimeFormat = "hh:mm:ss tt";
-            const string flightStartDateFormat = "MM/dd";
-            const string flightEndDateFormat = "MM/dd/yyyy";
-
             var recommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto();
 
             try
@@ -284,19 +275,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         Product = _GetProductName(recommendedPlanDetails.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlanDetails.RecommendedPlanDetail.ProductMasterId),
                         FlightStartDate = recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate.ToString(),
                         FlightEndDate = recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate.ToString(),
-                        FlightDateString = $"{Convert.ToDateTime(recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate).ToString(flightStartDateFormat)}-{Convert.ToDateTime(recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate).ToString(flightEndDateFormat)}",
+                        FlightDateString = $"{DateTimeHelper.GetForDisplay(recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate, SpotExceptionsConstants.DateFormat)}-{DateTimeHelper.GetForDisplay(recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate, SpotExceptionsConstants.DateFormat)}",
                         ProgramName = recommendedPlanDetailsToDo.ProgramName,
-                        ProgramAirDate = recommendedPlanDetailsToDo.ProgramAirTime.ToString(programAirDateFormat),
-                        ProgramAirTime = recommendedPlanDetailsToDo.ProgramAirTime.ToString(programAirTimeFormat),
+                        ProgramAirDate = DateTimeHelper.GetForDisplay(recommendedPlanDetailsToDo.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                        ProgramAirTime = DateTimeHelper.GetForDisplay(recommendedPlanDetailsToDo.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
                         InventorySourceName = recommendedPlanDetailsToDo.InventorySource,
                         Plans = recommendedPlanDetailsToDo.SpotExceptionsRecommendedPlanDetailsToDo.Select(recommendedPlanDetail => new RecommendedPlanDetailResultDto
                         {
                             Id = recommendedPlanDetail.Id,
                             Name = recommendedPlanDetail.RecommendedPlanDetail.Name,
                             SpotLengthString = string.Join(", ", recommendedPlanDetail.RecommendedPlanDetail.SpotLengths.Select(spotLength => $":{spotLength.Length}")),
-                            FlightStartDate = $"{recommendedPlanDetail.RecommendedPlanDetail.FlightStartDate}",
-                            FlightEndDate = $"{recommendedPlanDetail.RecommendedPlanDetail.FlightEndDate}",
-                            FlightDateString = $"{recommendedPlanDetail.RecommendedPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{recommendedPlanDetail.RecommendedPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
+                            FlightStartDate = recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate.ToString(),
+                            FlightEndDate = recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate.ToString(),
+                            FlightDateString = $"{DateTimeHelper.GetForDisplay(recommendedPlanDetail.RecommendedPlanDetail.FlightStartDate, SpotExceptionsConstants.DateFormat)}-{DateTimeHelper.GetForDisplay(recommendedPlanDetail.RecommendedPlanDetail.FlightEndDate, SpotExceptionsConstants.DateFormat)}",
                             IsRecommendedPlan = recommendedPlanDetail.IsRecommendedPlan,
                             Pacing = _CalculatePacing(recommendedPlanDetail.DeliveredImpressions, recommendedPlanDetail.ContractedImpressions) + "%",
                             RecommendedPlanId = recommendedPlanDetail.RecommendedPlanId,
@@ -329,19 +320,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         Product = _GetProductName(recommendedPlanDetails.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlanDetails.RecommendedPlanDetail.ProductMasterId),
                         FlightStartDate = recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate.ToString(),
                         FlightEndDate = recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate.ToString(),
-                        FlightDateString = $"{Convert.ToDateTime(recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate).ToString(flightStartDateFormat)}-{Convert.ToDateTime(recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate).ToString(flightEndDateFormat)}",
+                        FlightDateString = $"{DateTimeHelper.GetForDisplay(recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate, SpotExceptionsConstants.DateFormat)}-{DateTimeHelper.GetForDisplay(recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate, SpotExceptionsConstants.DateFormat)}",
                         ProgramName = recommendedPlanDetailsDone.ProgramName,
-                        ProgramAirDate = recommendedPlanDetailsDone.ProgramAirTime.ToString(programAirDateFormat),
-                        ProgramAirTime = recommendedPlanDetailsDone.ProgramAirTime.ToString(programAirTimeFormat),
+                        ProgramAirDate = DateTimeHelper.GetForDisplay(recommendedPlanDetailsDone.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                        ProgramAirTime = DateTimeHelper.GetForDisplay(recommendedPlanDetailsDone.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
                         InventorySourceName = recommendedPlanDetailsDone.InventorySource,
                         Plans = recommendedPlanDetailsDone.SpotExceptionsRecommendedPlanDetailsDone.Select(recommendedPlanDetail => new RecommendedPlanDetailResultDto
                         {
                             Id = recommendedPlanDetail.Id,
                             Name = recommendedPlanDetail.RecommendedPlanDetail.Name,
                             SpotLengthString = string.Join(", ", recommendedPlanDetail.RecommendedPlanDetail.SpotLengths.Select(spotLength => $":{spotLength.Length}")),
-                            FlightStartDate = $"{recommendedPlanDetail.RecommendedPlanDetail.FlightStartDate}",
-                            FlightEndDate = $"{recommendedPlanDetail.RecommendedPlanDetail.FlightEndDate}",
-                            FlightDateString = $"{recommendedPlanDetail.RecommendedPlanDetail.FlightStartDate.ToString(flightStartDateFormat)}-{recommendedPlanDetail.RecommendedPlanDetail.FlightEndDate.ToString(flightEndDateFormat)}",
+                            FlightStartDate = recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate.ToString(),
+                            FlightEndDate = recommendedPlanDetails.RecommendedPlanDetail.FlightEndDate.ToString(),
+                            FlightDateString = $"{DateTimeHelper.GetForDisplay(recommendedPlanDetail.RecommendedPlanDetail.FlightStartDate, SpotExceptionsConstants.DateFormat)}-{DateTimeHelper.GetForDisplay(recommendedPlanDetail.RecommendedPlanDetail.FlightEndDate, SpotExceptionsConstants.DateFormat)}",
                             IsRecommendedPlan = recommendedPlanDetail.IsRecommendedPlan,
                             IsSelected = recommendedPlanDetail.SpotExceptionsRecommendedPlanDoneDecisions != null,
                             Pacing = _CalculatePacing(recommendedPlanDetail.DeliveredImpressions, recommendedPlanDetail.ContractedImpressions) + "%",

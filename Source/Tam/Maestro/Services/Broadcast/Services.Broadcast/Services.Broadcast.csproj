@@ -1078,6 +1078,7 @@
     <Compile Include="Helpers\AsyncTaskHelper.cs" />
     <Compile Include="Helpers\BroadcastWeekHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\DaypartHelper.cs" />
     <Compile Include="Helpers\DaypartTimeHelper.cs" />
     <Compile Include="Helpers\FeatureToggleHelper.cs" />
@@ -1616,6 +1617,7 @@
     <Compile Include="Service\ScheduledServiceMethod.cs" />
     <Compile Include="Service\ScheduledWindowsServiceMethodRunner.cs" />
     <Compile Include="Service\WindowsServiceBase.cs" />
+    <Compile Include="SpotExceptionsConstants.cs" />
     <Compile Include="TemporalApplicationSettings.cs" />
     <Compile Include="Validators\CampaignValidator.cs" />
     <Compile Include="Validators\InventoryFileValidator.cs" />

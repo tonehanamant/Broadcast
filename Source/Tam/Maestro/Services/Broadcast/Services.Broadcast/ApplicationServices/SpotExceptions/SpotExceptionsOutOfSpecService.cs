@@ -15,6 +15,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.ProgramMapping;
 using System.Web.WebPages;
 using Tam.Maestro.Common.DataLayer;
+using Microsoft.VisualBasic;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -87,8 +88,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
     public class SpotExceptionsOutOfSpecService : BroadcastBaseClass, ISpotExceptionsOutOfSpecService
     {
-        const string flightStartDateFormat = "MM/dd";
-        const string flightEndDateFormat = "MM/dd/yyyy";
         const int fourHundred = 400;
 
         private readonly ISpotExceptionsOutOfSpecRepository _SpotExceptionsOutOfSpecRepository;
@@ -141,7 +140,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             SyncedTimestamp = null,
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
-                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                            FlightString = $"{DateTimeHelper.GetForDisplay(x.FlightStartDate, SpotExceptionsConstants.DateFormat)} - {DateTimeHelper.GetForDisplay(x.FlightEndDate, SpotExceptionsConstants.DateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
                     }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
                 }
@@ -157,10 +156,10 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             PlanName = x.PlanName,
                             AffectedSpotsCount = x.AffectedSpotsCount,
                             Impressions = Math.Floor(x.Impressions / 1000),
-                            SyncedTimestamp = x.SyncedTimestamp,
+                            SyncedTimestamp = DateTimeHelper.GetForDisplay(x.SyncedTimestamp, SpotExceptionsConstants.DateTimeFormat),
                             SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
                             AudienceName = x.AudienceName,
-                            FlightString = $"{Convert.ToDateTime(x.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(x.FlightEndDate).ToString(flightEndDateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                            FlightString = $"{DateTimeHelper.GetForDisplay(x.FlightStartDate, SpotExceptionsConstants.DateFormat)} - {DateTimeHelper.GetForDisplay(x.FlightEndDate, SpotExceptionsConstants.DateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
                         };
                     }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
                 }
@@ -208,8 +207,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             GenreName = activePlan.GenreName,
                             HouseIsci = activePlan.HouseIsci,
                             ClientIsci = activePlan.IsciName,
-                            ProgramAirDate = activePlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = activePlan.ProgramAirTime.ToLongTimeString(),
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
                             ProgramName = activePlan.ProgramName,
                             SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
                             DaypartCode = activePlan.DaypartCode,
@@ -246,9 +245,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             GenreName = queuedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName == null ? queuedPlan.GenreName : queuedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName,
                             HouseIsci = queuedPlan.HouseIsci,
                             ClientIsci = queuedPlan.IsciName,
-                            ProgramAirDate = queuedPlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = queuedPlan.ProgramAirTime.ToLongTimeString(),
-                            FlightEndDate = queuedPlan.FlightEndDate.ToString(),
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(queuedPlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(queuedPlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
+                            FlightEndDate = DateTimeHelper.GetForDisplay(queuedPlan.FlightEndDate, SpotExceptionsConstants.DateFormat),
                             ProgramName = queuedPlan.SpotExceptionsOutOfSpecDoneDecision.ProgramName == null ? queuedPlan.ProgramName : queuedPlan.SpotExceptionsOutOfSpecDoneDecision.ProgramName,
                             SpotLengthString = queuedPlan.SpotLength != null ? $":{queuedPlan.SpotLength.Length}" : null,
                             DaypartCode = queuedPlan.SpotExceptionsOutOfSpecDoneDecision.DaypartCode == null ? queuedPlan.DaypartCode : queuedPlan.SpotExceptionsOutOfSpecDoneDecision.DaypartCode,
@@ -278,14 +277,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             GenreName = syncedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName == null ? syncedPlan.GenreName : syncedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName,
                             HouseIsci = syncedPlan.HouseIsci,
                             ClientIsci = syncedPlan.IsciName,
-                            ProgramAirDate = syncedPlan.ProgramAirTime.ToShortDateString(),
-                            ProgramAirTime = syncedPlan.ProgramAirTime.ToLongTimeString(),
-                            FlightEndDate = syncedPlan.FlightEndDate.ToString(),
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(syncedPlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(syncedPlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
+                            FlightEndDate = DateTimeHelper.GetForDisplay(syncedPlan.FlightEndDate, SpotExceptionsConstants.DateFormat),
                             ProgramName = syncedPlan.SpotExceptionsOutOfSpecDoneDecision.ProgramName == null ? syncedPlan.ProgramName : syncedPlan.SpotExceptionsOutOfSpecDoneDecision.ProgramName,
                             SpotLengthString = syncedPlan.SpotLength != null ? $":{syncedPlan.SpotLength.Length}" : null,
                             DaypartCode = syncedPlan.SpotExceptionsOutOfSpecDoneDecision.DaypartCode == null ? syncedPlan.DaypartCode : syncedPlan.SpotExceptionsOutOfSpecDoneDecision.DaypartCode,
                             DecisionString = syncedPlan.SpotExceptionsOutOfSpecDoneDecision.DecisionNotes,
-                            SyncedTimestamp = syncedPlan.SpotExceptionsOutOfSpecDoneDecision.SyncedAt.ToString(),
+                            SyncedTimestamp = DateTimeHelper.GetForDisplay(syncedPlan.SpotExceptionsOutOfSpecDoneDecision.SyncedAt, SpotExceptionsConstants.DateTimeFormat),
                             Comments = syncedPlan.Comments,
                             PlanDaypartCodes = daypartsList.Where(d => d.PlanId == syncedPlan.PlanId).Select(s => s.Code).Distinct().ToList(),
                             InventorySourceName = syncedPlan.InventorySourceName

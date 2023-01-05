@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
+using Microsoft.VisualBasic;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -18,13 +19,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
     public class SpotExceptionsUnpostedService : BroadcastBaseClass, ISpotExceptionsUnpostedService
     {
-        const string flightStartDateFormat = "MM/dd";
-        const string flightEndDateFormat = "MM/dd/yyyy";
 
         private readonly ISpotExceptionsUnpostedRepository _SpotExceptionsUnpostedRepository;
         private readonly ISpotLengthRepository _SpotLengthRepository;
-
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public SpotExceptionsUnpostedService(
             IDataRepositoryFactory dataRepositoryFactory,
@@ -34,7 +31,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             _SpotExceptionsUnpostedRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionsUnpostedRepository>();
             _SpotLengthRepository = dataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
-            _FeatureToggleHelper = featureToggleHelper;
         }
 
         /// <inheritdoc />
@@ -53,7 +49,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     ClientIsci = x.ClientIsci,
                     ClientSpotLength = $":{_SpotLengthRepository.GetSpotLengthById(x.ClientSpotLengthId ?? 0)}" ?? null,
                     AffectedSpotsCount = x.Count,
-                    ProgramAirDate = x.ProgramAirTime.ToShortDateString(),
+                    ProgramAirDate = DateTimeHelper.GetForDisplay(x.ProgramAirTime, SpotExceptionsConstants.DateFormat),
                     EstimateId = x.EstimateID
                 }).ToList();
 
@@ -61,7 +57,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     HouseIsci = x.HouseIsci,
                     AffectedSpotsCount = x.Count,
-                    ProgramAirDate = x.ProgramAirTime.ToShortDateString(),
+                    ProgramAirDate = DateTimeHelper.GetForDisplay(x.ProgramAirTime, SpotExceptionsConstants.DateFormat),
                     EstimateId = x.EstimateId
                 }).ToList();
             }

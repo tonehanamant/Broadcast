@@ -18,8 +18,8 @@
         "ROSP",
         "TDNS"
       ],
-      "ProgramAirDate": "1/10/2020",
-      "ProgramAirTime": "11:45:00 PM",
+      "ProgramAirDate": "01/10/2020",
+      "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
       "SpotLengthString": ":45",
@@ -44,8 +44,8 @@
         "ROSP",
         "TDNS"
       ],
-      "ProgramAirDate": "1/10/2020",
-      "ProgramAirTime": "11:45:00 PM",
+      "ProgramAirDate": "01/10/2020",
+      "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
       "SpotLengthString": ":45",
@@ -63,7 +63,7 @@
       "DecisionString": "",
       "DMA": 58,
       "EstimateId": 191760,
-      "FlightEndDate": "12/9/2019 12:00:00 AM",
+      "FlightEndDate": "12/09/2019",
       "GenreName": null,
       "HouseIsci": "289J76GN16H",
       "Id": 2,
@@ -74,8 +74,8 @@
         "ROSP",
         "TDNS"
       ],
-      "ProgramAirDate": "1/10/2020",
-      "ProgramAirTime": "11:45:00 PM",
+      "ProgramAirDate": "01/10/2020",
+      "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
       "SpotLengthString": ":45",
@@ -94,7 +94,7 @@
       "DecisionString": "",
       "DMA": 58,
       "EstimateId": 191760,
-      "FlightEndDate": "12/9/2019 12:00:00 AM",
+      "FlightEndDate": "12/09/2019",
       "GenreName": null,
       "HouseIsci": "289J76GN16H",
       "Id": 1,
@@ -105,13 +105,13 @@
         "ROSP",
         "TDNS"
       ],
-      "ProgramAirDate": "1/10/2020",
-      "ProgramAirTime": "11:45:00 PM",
+      "ProgramAirDate": "01/10/2020",
+      "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
-      "SyncedTimestamp": "1/10/2020 11:45:00 PM",
+      "SyncedTimestamp": "01/10/2020 23:45:00",
       "TimeZone": "EST"
     }
   ]

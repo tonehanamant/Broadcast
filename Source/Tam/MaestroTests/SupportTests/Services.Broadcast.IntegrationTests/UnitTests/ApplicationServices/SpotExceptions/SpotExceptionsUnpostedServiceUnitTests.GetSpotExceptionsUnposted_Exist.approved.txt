@@ -6,7 +6,7 @@
       "ClientSpotLength": ":30",
       "EstimateId": 191757,
       "HouseIsci": "YB82TXT2H",
-      "ProgramAirDate": "1/10/2020"
+      "ProgramAirDate": "01/10/2020"
     },
     {
       "AffectedSpotsCount": 2,
@@ -14,7 +14,7 @@
       "ClientSpotLength": ":30",
       "EstimateId": 191758,
       "HouseIsci": "YB82TXT2H",
-      "ProgramAirDate": "1/10/2020"
+      "ProgramAirDate": "01/10/2020"
     }
   ],
   "NoReelRoster": [
@@ -22,13 +22,13 @@
       "AffectedSpotsCount": 2,
       "EstimateId": 191759,
       "HouseIsci": "YB82TXT2M",
-      "ProgramAirDate": "1/10/2020"
+      "ProgramAirDate": "01/10/2020"
     },
     {
       "AffectedSpotsCount": 2,
       "EstimateId": 191760,
       "HouseIsci": "YB82TXT2M",
-      "ProgramAirDate": "1/10/2020"
+      "ProgramAirDate": "01/10/2020"
     }
   ]
 }

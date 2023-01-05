@@ -597,6 +597,7 @@
     <Compile Include="UnitTests\Extensions\PlanDaypartExtensionsUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\QuarterDetailExtensionUnitTests.cs" />
     <Compile Include="UnitTests\Extensions\StringExtensionsUnitTests.cs" />
+    <Compile Include="UnitTests\Helpers\DateTimeHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\DaypartHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\FrequencyCapHelperUnitTests.cs" />
     <Compile Include="UnitTests\Helpers\GenreHelperUnitTests.cs" />

@@ -261,7 +261,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                             PlanName = first.plan.name,
                             AffectedSpotsCount = x.Count(),
                             Impressions = x.Sum(y => y.impressions),
-                            SyncedTimestamp = decisions.Max(d => d.Max(m => m.synced_at)).ToString(),
+                            SyncedTimestamp = decisions.Max(d => d.Max(m => m.synced_at)),
                             FlightStartDate = recommendedPlanVersion.flight_start_date,
                             FlightEndDate = recommendedPlanVersion.flight_end_date,
                             SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),

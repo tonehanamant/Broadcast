@@ -48,7 +48,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// Gets or sets the synced timestamp.
         /// </summary>
         /// <value>The synced timestamp.</value>
-        public string SyncedTimestamp { get; set; }
+        public DateTime? SyncedTimestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the spot length string.
