@@ -1047,11 +1047,19 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId)
         {
-            var uploadHistoryDates = _InventoryRepository.GetInventoryUploadHistoryDatesForInventorySource(inventorySourceId);
-            var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(uploadHistoryDates);
-
-            return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryApiClient.GetInventoryUploadHistoryQuarters(inventorySourceId);
+            }
+            else
+            {
+                var uploadHistoryDates = _InventoryRepository.GetInventoryUploadHistoryDatesForInventorySource(inventorySourceId);
+                var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(uploadHistoryDates);
+                return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();               
+            }
+           
         }
+
 
         /// <summary>
         /// For unit testing.  Abstracts from the static Configuration Service.

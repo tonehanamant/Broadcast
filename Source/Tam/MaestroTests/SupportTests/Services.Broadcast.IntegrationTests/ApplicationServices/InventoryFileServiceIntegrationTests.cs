@@ -1790,6 +1790,49 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             }
         }
 
+        private void _SetFeatureToggle(string feature, bool activate)
+        {
+            if (_LaunchDarklyClientStub.FeatureToggles.ContainsKey(feature))
+                _LaunchDarklyClientStub.FeatureToggles[feature] = activate;
+            else
+                _LaunchDarklyClientStub.FeatureToggles.Add(feature, activate);
+        }
+
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetInventoryUploadHistoryQuartersTest()
+        {
+            var inventorySourceId = 3;
+
+            using (new TransactionScopeWrapper())
+            {
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+
+                var result = _InventoryService.GetInventoryUploadHistoryQuarters(inventorySourceId);
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void GetInventoryUploadHistoryQuartersTest_ToggleOn()
+        {
+            var inventorySourceId = 3;
+            using (new TransactionScopeWrapper())
+            {
+                _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+                _InventoryFileTestHelper.UploadProprietaryInventoryFile("Barter_Q1_2025.xlsx", processInventoryRatings: true);
+                var result = _InventoryService.GetInventoryUploadHistoryQuarters(inventorySourceId);
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            }
+        }
+
+
         private InventoryFileSaveRequest _GetInventoryFileSaveRequest(string filePath)
         {
             return new InventoryFileSaveRequest

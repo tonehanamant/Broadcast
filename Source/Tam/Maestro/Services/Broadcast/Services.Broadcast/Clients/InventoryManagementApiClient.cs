@@ -105,6 +105,7 @@ namespace Services.Broadcast.Clients
         /// <param name="fileId">inventory source id</param>
         /// <returns>Returns scx file</returns>
         Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId);
+        List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId);
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -144,6 +145,29 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException(String.Format("Error occured while getting inventory sources, Error:{0}", ex.Message.ToString()));
             }
         }
+
+        public List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId)
+        {
+                try
+                {
+                    var requestUri = $"{coreApiVersion}/broadcast/Inventory/UploadHistoryQuarters?inventorySourceId={inventorySourceId}";
+                    var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                    var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                    if (apiResult.IsSuccessStatusCode)
+                    {
+                        _LogInfo("Successfully Called the api For get inventory upload history quarter api");
+                    }
+                    var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<QuarterDetailDto>>();
+                    List<QuarterDetailDto> InventoryUploadhistoryQuarters = result.Result.ResultList;
+                    _LogInfo("Successfully get inventory sources: " + JsonConvert.SerializeObject(InventoryUploadhistoryQuarters));
+                    return InventoryUploadhistoryQuarters;
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException(String.Format("Error occured while getting inventory sources, Error:{0}", ex.Message.ToString()));
+                }
+        }
+
         public List<LookupDto> GetInventorySourceTypes()
         {
             try
@@ -231,7 +255,6 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException(String.Format("Error occured while getting inventory units, Error:{0}", ex.Message.ToString()));
             }
         }
-
         public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter)
         {
             try
