@@ -6,7 +6,6 @@ using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -893,6 +892,951 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             // Assert
             Assert.AreEqual("Could not retrieve Spot Exceptions Recommended Plan Filters", result.Message);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsRecommendedPlanDecisions_PostOneToDoDecisionToIsRecommended()
+        {
+            // Arrange
+            var recommendedPlanDecisionsSaveRequest = new SpotExceptionsRecommendedPlanSaveDecisionsRequestDto
+            {
+                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
+                {
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        TodoId = 14,
+                        SelectedPlanId = 15
+                    }
+                }
+            };
+
+            var existingSpotExceptionRecommendedPlanToDo = new List<SpotExceptionsRecommendedPlanSpotsToDoDto>()
+            {
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "221216164429TQcO66uETE",
+                    EstimateId = 7523,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "523NVE0005H",
+                    ClientIsci = "RNVE0005000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    StationLegacyCallLetters = "WZBJ",
+                    Affiliate = "IND",
+                    MarketCode = 173,
+                    MarketRank = 71,
+                    ProgramName = "ToRemove",
+                    ProgramGenre = null,
+                    IngestedBy = "DatabricksDatalakeAcct",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    IngestedMediaWeekId = 989,
+                    SpotLength =
+                    {
+                        Id = 2,
+                        Length = 60
+                    },
+                    SpotExceptionsRecommendedPlanDetailsToDo = new List<SpotExceptionsRecommendedPlanDetailsToDoDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                        {
+                            Id = 14,
+                            SpotExceptionsRecommendedPlanId = 14,
+                            RecommendedPlanId = 14,
+                            ExecutionTraceId = 8854,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 13692000.0,
+                            DeliveredImpressions = 11528522.180647785,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "DAY",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 126836000.0,
+                            PlanTotalDeliveredImpressions = 70837755.548371226,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 14,
+                                Name = "4Q'22 Abbvie Daytime Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 8,
+                                        Length = 45
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        },
+                        {
+                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                            {
+                                Id = 15,
+                                SpotExceptionsRecommendedPlanId = 14,
+                                RecommendedPlanId = 14,
+                                ExecutionTraceId = 8853,
+                                Rate = 0,
+                                AudienceName = "Adults 25-54",
+                                ContractedImpressions = 6137000.0,
+                                DeliveredImpressions = 4641773.9953086916,
+                                IsRecommendedPlan = true,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "EM",
+                                StartTime = 14400,
+                                EndTime = 39599,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                SpotDeliveredImpressions = 270.87375,
+                                PlanTotalContractedImpressions = 70505000.0,
+                                PlanTotalDeliveredImpressions = 38555869.184943005,
+                                IngestedMediaWeekId = 989,
+                                IngestedBy = "Test User",
+                                IngestedAt = new DateTime(2022, 12, 12),
+                                SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ = ",
+                                ExecutionIdExternal = "221216164429TQcO66uETE",
+                                RecommendedPlanDetail =
+                                {
+                                    Id = 14,
+                                    Name = "4Q'22 Abbvie Early Morning Upfront",
+                                    FlightStartDate = new DateTime(2022, 12, 12),
+                                    FlightEndDate = new DateTime(2022, 12, 25),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 3,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 1,
+                                            Length = 30
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 2,
+                                            Length = 60
+                                        }
+                                    },
+                                    AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                    ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(s => s.GetRecommendedPlanSpotsToDoByIds(It.IsAny<List<int?>>()))
+                .Returns(Task.FromResult(existingSpotExceptionRecommendedPlanToDo));
+
+            // Act
+            var result = await _SpotExceptionsRecommendedPlanService.HandleSaveRecommendedPlanDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsRecommendedPlansDecisions_PostOneToDoDecisionToNotRecommended()
+        {
+            // Arrange
+            var recommendedPlanDecisionsSaveRequest = new SpotExceptionsRecommendedPlanSaveDecisionsRequestDto
+            {
+                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
+                {
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        TodoId = 15,
+                        SelectedPlanId = 14
+                    }
+                }
+            };
+
+            var existingSpotExceptionRecommendedPlanToDo = new List<SpotExceptionsRecommendedPlanSpotsToDoDto>()
+            {
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "221216164429TQcO66uETE",
+                    EstimateId = 7523,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "523NVE0005H",
+                    ClientIsci = "RNVE0005000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    StationLegacyCallLetters = "WZBJ",
+                    Affiliate = "IND",
+                    MarketCode = 173,
+                    MarketRank = 71,
+                    ProgramName = "ToRemove",
+                    ProgramGenre = null,
+                    IngestedBy = "DatabricksDatalakeAcct",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    IngestedMediaWeekId = 989,
+                    SpotLength =
+                    {
+                        Id = 2,
+                        Length = 60
+                    },
+                    SpotExceptionsRecommendedPlanDetailsToDo = new List<SpotExceptionsRecommendedPlanDetailsToDoDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                        {
+                            Id = 14,
+                            SpotExceptionsRecommendedPlanId = 14,
+                            RecommendedPlanId = 14,
+                            ExecutionTraceId = 8854,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 13692000.0,
+                            DeliveredImpressions = 11528522.180647785,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "DAY",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 126836000.0,
+                            PlanTotalDeliveredImpressions = 70837755.548371226,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 14,
+                                Name = "4Q'22 Abbvie Daytime Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 8,
+                                        Length = 45
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        },
+                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                        {
+                            Id = 15,
+                            SpotExceptionsRecommendedPlanId = 14,
+                            RecommendedPlanId = 14,
+                            ExecutionTraceId = 8853,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 6137000.0,
+                            DeliveredImpressions = 4641773.9953086916,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 14400,
+                            EndTime = 39599,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 70505000.0,
+                            PlanTotalDeliveredImpressions = 38555869.184943005,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ = ",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 14,
+                                Name = "4Q'22 Abbvie Early Morning Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        }
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(s => s.GetRecommendedPlanSpotsToDoByIds(It.IsAny<List<int?>>()))
+                .Returns(Task.FromResult(existingSpotExceptionRecommendedPlanToDo));
+
+            // Act
+            var result = await _SpotExceptionsRecommendedPlanService.HandleSaveRecommendedPlanDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_PostMultipleToDoDecisions()
+        {
+            // Arrange
+            var recommendedPlanDecisionsSaveRequest = new SpotExceptionsRecommendedPlanSaveDecisionsRequestDto
+            {
+                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
+                {
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        TodoId = 14,
+                        SelectedPlanId = 14
+                    },
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        TodoId = 15,
+                        SelectedPlanId = 15
+                    }
+                }
+            };
+
+            var existingSpotExceptionRecommendedPlanToDo = new List<SpotExceptionsRecommendedPlanSpotsToDoDto>()
+            {
+                new SpotExceptionsRecommendedPlanSpotsToDoDto
+                {
+                    Id = 15,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "221216164429TQcO66uETE",
+                    EstimateId = 7523,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "523NVE0005H",
+                    ClientIsci = "RNVE0005000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    StationLegacyCallLetters = "WZBJ",
+                    Affiliate = "IND",
+                    MarketCode = 173,
+                    MarketRank = 71,
+                    ProgramName = "ToRemove",
+                    ProgramGenre = null,
+                    IngestedBy = "DatabricksDatalakeAcct",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    IngestedMediaWeekId = 989,
+                    SpotLength =
+                    {
+                        Id = 2,
+                        Length = 60
+                    },
+                    SpotExceptionsRecommendedPlanDetailsToDo = new List<SpotExceptionsRecommendedPlanDetailsToDoDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsToDoDto
+                        {
+                            Id = 407309,
+                            SpotExceptionsRecommendedPlanId = 15,
+                            RecommendedPlanId = 15,
+                            ExecutionTraceId = 8854,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 13692000.0,
+                            DeliveredImpressions = 11528522.180647785,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "DAY",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 126836000.0,
+                            PlanTotalDeliveredImpressions = 70837755.548371226,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 15,
+                                Name = "4Q'22 Abbvie Daytime Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 8,
+                                        Length = 45
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        },
+                        {
+                            new SpotExceptionsRecommendedPlanDetailsToDoDto
+                            {
+                                Id = 407310,
+                                SpotExceptionsRecommendedPlanId = 15,
+                                RecommendedPlanId = 15,
+                                ExecutionTraceId = 8853,
+                                Rate = 0,
+                                AudienceName = "Adults 25-54",
+                                ContractedImpressions = 6137000.0,
+                                DeliveredImpressions = 4641773.9953086916,
+                                IsRecommendedPlan = true,
+                                PlanClearancePercentage = null,
+                                DaypartCode = "EM",
+                                StartTime = 14400,
+                                EndTime = 39599,
+                                Monday = 1,
+                                Tuesday = 1,
+                                Wednesday = 1,
+                                Thursday = 1,
+                                Friday = 1,
+                                Saturday = 1,
+                                Sunday = 1,
+                                SpotDeliveredImpressions = 270.87375,
+                                PlanTotalContractedImpressions = 70505000.0,
+                                PlanTotalDeliveredImpressions = 38555869.184943005,
+                                IngestedMediaWeekId = 989,
+                                IngestedBy = "Test User",
+                                IngestedAt = new DateTime(2022, 12, 12),
+                                SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ = ",
+                                ExecutionIdExternal = "221216164429TQcO66uETE",
+                                RecommendedPlanDetail =
+                                {
+                                    Id = 15,
+                                    Name = "4Q'22 Abbvie Early Morning Upfront",
+                                    FlightStartDate = new DateTime(2022, 12, 12),
+                                    FlightEndDate = new DateTime(2022, 12, 25),
+                                    SpotLengths = new List<SpotLengthDto>
+                                    {
+                                        new SpotLengthDto
+                                        {
+                                            Id = 3,
+                                            Length = 15
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 1,
+                                            Length = 30
+                                        },
+                                        new SpotLengthDto
+                                        {
+                                            Id = 2,
+                                            Length = 60
+                                        }
+                                    },
+                                    AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                    ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(s => s.GetRecommendedPlanSpotsToDoByIds(It.IsAny<List<int?>>()))
+                .Returns(Task.FromResult(existingSpotExceptionRecommendedPlanToDo));
+
+            // Act
+            var result = await _SpotExceptionsRecommendedPlanService.HandleSaveRecommendedPlanDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsRecommendedPlanDecisions_PostOneDoneDecisionToIsRecommended()
+        {
+            // Arrange
+            var recommendedPlanDecisionsSaveRequest = new SpotExceptionsRecommendedPlanSaveDecisionsRequestDto
+            {
+                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
+                {
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        DoneId = 14,
+                        SelectedPlanId = 15
+                    }
+                }
+            };
+
+            var existingSpotExceptionRecommendedPlanDone = new List<SpotExceptionsRecommendedPlanSpotsDoneDto>()
+            {
+                new SpotExceptionsRecommendedPlanSpotsDoneDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "221216164429TQcO66uETE",
+                    EstimateId = 7523,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "523NVE0005H",
+                    ClientIsci = "RNVE0005000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    StationLegacyCallLetters = "WZBJ",
+                    Affiliate = "IND",
+                    MarketCode = 173,
+                    MarketRank = 71,
+                    ProgramName = "ToRemove",
+                    ProgramGenre = null,
+                    IngestedBy = "DatabricksDatalakeAcct",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    IngestedMediaWeekId = 989,
+                    SpotLength =
+                    {
+                        Id = 2,
+                        Length = 60
+                    },
+                    SpotExceptionsRecommendedPlanDetailsDone = new List<SpotExceptionsRecommendedPlanDetailsDoneDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDoneDto
+                        {
+                            Id = 15,
+                            SpotExceptionsRecommendedPlanId = 14,
+                            RecommendedPlanId = 15,
+                            ExecutionTraceId = 8853,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 6137000.0,
+                            DeliveredImpressions = 4641773.9953086916,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "EM",
+                            StartTime = 14400,
+                            EndTime = 39599,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 70505000.0,
+                            PlanTotalDeliveredImpressions = 38555869.184943005,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ = ",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 15,
+                                Name = "4Q'22 Abbvie Early Morning Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        }
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(s => s.GetSpotExceptionPlanDetailsWithDecision(It.IsAny<List<int>>()))
+                .Returns(Task.FromResult(existingSpotExceptionRecommendedPlanDone));
+
+            // Act
+            var result = await _SpotExceptionsRecommendedPlanService.HandleSaveRecommendedPlanDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsRecommendedPlansDecisions_PostOneDoneDecisionToNotRecommended()
+        {
+            // Arrange
+            var recommendedPlanDecisionsSaveRequest = new SpotExceptionsRecommendedPlanSaveDecisionsRequestDto
+            {
+                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
+                {
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        DoneId = 14,
+                        SelectedPlanId = 14
+                    }
+                }
+            };
+
+            var existingSpotExceptionRecommendedPlanDone = new List<SpotExceptionsRecommendedPlanSpotsDoneDto>()
+            {
+                new SpotExceptionsRecommendedPlanSpotsDoneDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "221216164429TQcO66uETE",
+                    EstimateId = 7523,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "523NVE0005H",
+                    ClientIsci = "RNVE0005000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    StationLegacyCallLetters = "WZBJ",
+                    Affiliate = "IND",
+                    MarketCode = 173,
+                    MarketRank = 71,
+                    ProgramName = "ToRemove",
+                    ProgramGenre = null,
+                    IngestedBy = "DatabricksDatalakeAcct",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    IngestedMediaWeekId = 989,
+                    SpotLength =
+                    {
+                        Id = 2,
+                        Length = 60
+                    },
+                    SpotExceptionsRecommendedPlanDetailsDone = new List<SpotExceptionsRecommendedPlanDetailsDoneDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDoneDto
+                        {
+                            Id = 14,
+                            SpotExceptionsRecommendedPlanId = 14,
+                            RecommendedPlanId = 14,
+                            ExecutionTraceId = 8854,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 13692000.0,
+                            DeliveredImpressions = 11528522.180647785,
+                            IsRecommendedPlan = false,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "DAY",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 126836000.0,
+                            PlanTotalDeliveredImpressions = 70837755.548371226,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 14,
+                                Name = "4Q'22 Abbvie Daytime Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 8,
+                                        Length = 45
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        }
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(s => s.GetSpotExceptionPlanDetailsWithDecision(It.IsAny<List<int>>()))
+                .Returns(Task.FromResult(existingSpotExceptionRecommendedPlanDone));
+
+            // Act
+            var result = await _SpotExceptionsRecommendedPlanService.HandleSaveRecommendedPlanDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsRecommendedPlansDecisions_PostMultipleDoneDecisions()
+        {
+            // Arrange
+            var recommendedPlanDecisionsSaveRequest = new SpotExceptionsRecommendedPlanSaveDecisionsRequestDto
+            {
+                SpotExceptionsRecommendedPlans = new List<SpotExceptionsRecommendedPlanSaveDto>
+                {
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        DoneId = 14,
+                        SelectedPlanId = 14
+                    },
+                    new SpotExceptionsRecommendedPlanSaveDto
+                    {
+                        DoneId = 15,
+                        SelectedPlanId = 14
+                    }
+                }
+            };
+
+            var existingSpotExceptionRecommendedPlanDone = new List<SpotExceptionsRecommendedPlanSpotsDoneDto>()
+            {
+                new SpotExceptionsRecommendedPlanSpotsDoneDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                    AmbiguityCode = 1,
+                    ExecutionIdExternal = "221216164429TQcO66uETE",
+                    EstimateId = 7523,
+                    InventorySource = "Ference POD",
+                    HouseIsci = "523NVE0005H",
+                    ClientIsci = "RNVE0005000H",
+                    SpotLengthId = 2,
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    StationLegacyCallLetters = "WZBJ",
+                    Affiliate = "IND",
+                    MarketCode = 173,
+                    MarketRank = 71,
+                    ProgramName = "ToRemove",
+                    ProgramGenre = null,
+                    IngestedBy = "DatabricksDatalakeAcct",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    IngestedMediaWeekId = 989,
+                    SpotLength =
+                    {
+                        Id = 2,
+                        Length = 60
+                    },
+                    SpotExceptionsRecommendedPlanDetailsDone = new List<SpotExceptionsRecommendedPlanDetailsDoneDto>
+                    {
+                        new SpotExceptionsRecommendedPlanDetailsDoneDto
+                        {
+                            Id = 14,
+                            SpotExceptionsRecommendedPlanId = 14,
+                            RecommendedPlanId = 14,
+                            ExecutionTraceId = 8854,
+                            Rate = 0,
+                            AudienceName = "Adults 25-54",
+                            ContractedImpressions = 13692000.0,
+                            DeliveredImpressions = 11528522.180647785,
+                            IsRecommendedPlan = true,
+                            PlanClearancePercentage = null,
+                            DaypartCode = "DAY",
+                            StartTime = 28800,
+                            EndTime = 7199,
+                            Monday = 1,
+                            Tuesday = 1,
+                            Wednesday = 1,
+                            Thursday = 1,
+                            Friday = 1,
+                            Saturday = 1,
+                            Sunday = 1,
+                            SpotDeliveredImpressions = 270.87375,
+                            PlanTotalContractedImpressions = 126836000.0,
+                            PlanTotalDeliveredImpressions = 70837755.548371226,
+                            IngestedMediaWeekId = 989,
+                            IngestedBy = "Test User",
+                            IngestedAt = new DateTime(2022, 12, 12),
+                            SpotUniqueHashExternal = "TE9DQUwtNDY2ODMxMjQ=",
+                            ExecutionIdExternal = "221216164429TQcO66uETE",
+                            RecommendedPlanDetail =
+                            {
+                                Id = 14,
+                                Name = "4Q'22 Abbvie Daytime Upfront",
+                                FlightStartDate = new DateTime(2022, 12, 12),
+                                FlightEndDate = new DateTime(2022, 12, 25),
+                                SpotLengths = new List<SpotLengthDto>
+                                {
+                                    new SpotLengthDto
+                                    {
+                                        Id = 3,
+                                        Length = 15
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 1,
+                                        Length = 30
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 8,
+                                        Length = 45
+                                    },
+                                    new SpotLengthDto
+                                    {
+                                        Id = 2,
+                                        Length = 60
+                                    }
+                                },
+                                AdvertiserMasterId = new Guid("3a69600d-a8e8-4a11-8ed9-ff0e2054f492"),
+                                ProductMasterId = new Guid("143de5d8-919a-451d-a38e-c3312444acd7")
+                            }
+                        }
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsRecommendedPlanRepositoryMock
+                .Setup(s => s.GetSpotExceptionPlanDetailsWithDecision(It.IsAny<List<int>>()))
+                .Returns(Task.FromResult(existingSpotExceptionRecommendedPlanDone));
+
+            // Act
+            var result = await _SpotExceptionsRecommendedPlanService.HandleSaveRecommendedPlanDecisionsAsync(recommendedPlanDecisionsSaveRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
         }
 
         private List<SpotExceptionsRecommendedPlanGroupingDto> _GetRecommendedPlanGroupingToDoData()

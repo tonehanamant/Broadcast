@@ -97,7 +97,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IAabEngine _AabEngine;
         private readonly IGenreCache _GenreCache;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly Lazy<bool> _IsSpotExceptionEnabled;
 
         public SpotExceptionsOutOfSpecService(
@@ -114,7 +113,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _DateTimeEngine = dateTimeEngine;
             _AabEngine = aabEngine;
             _GenreCache = genreCache;
-            _FeatureToggleHelper = featureToggleHelper;
             _IsSpotExceptionEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS));
         }
 

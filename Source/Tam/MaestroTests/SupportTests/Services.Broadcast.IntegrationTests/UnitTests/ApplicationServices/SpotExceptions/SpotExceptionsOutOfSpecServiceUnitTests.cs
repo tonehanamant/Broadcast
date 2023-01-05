@@ -944,6 +944,612 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_SaveOneToDoComment()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 14,
+                        Comments = "Comment Saved By Unittests"
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.SaveOutOfSpecCommentsToDoAsync(It.IsAny<List<SpotExceptionsOutOfSpecsToDoDto>>()))
+                .Returns(Task.FromResult(expectedResult));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_SaveMultipleToDoComments()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 14,
+                        Comments = "Comment Saved By Unittests"
+                    },
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 15,
+                        Comments = "Comment Saved By Unittests"
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.SaveOutOfSpecCommentsToDoAsync(It.IsAny<List<SpotExceptionsOutOfSpecsToDoDto>>()))
+                .Returns(Task.FromResult(expectedResult));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_SaveOneDoneComment()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 14,
+                        Comments = "Comment Saved By Unittests"
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.SaveOutOfSpecCommentsDoneAsync(It.IsAny<List<SpotExceptionsOutOfSpecsDoneDto>>()))
+                .Returns(Task.FromResult(expectedResult));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_SaveMultipleDoneComments()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 14,
+                        Comments = "Comment Saved By Unittests"
+                    },
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 15,
+                        Comments = "Comment Saved By Unittests"
+                    }
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.SaveOutOfSpecCommentsDoneAsync(It.IsAny<List<SpotExceptionsOutOfSpecsDoneDto>>()))
+                .Returns(Task.FromResult(expectedResult));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecOneToDoDecision()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 14,
+                        AcceptAsInSpec = true
+                    }
+                }
+            };
+
+            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail = 
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+                .Returns(Task.FromResult(existingSpotExceptionOutOfSpecToDo));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_AcceptOutOfSpecOneToDoDecision()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 14,
+                        AcceptAsInSpec = false
+                    }
+                }
+            };
+
+            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail =
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+                .Returns(Task.FromResult(existingSpotExceptionOutOfSpecToDo));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_AcceptMultipleToDoDecisions()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 14,
+                        AcceptAsInSpec = true
+                    },
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        TodoId = 15,
+                        AcceptAsInSpec = true
+                    }
+                }
+            };
+
+            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail =
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                },
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 15,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail =
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+                .Returns(Task.FromResult(existingSpotExceptionOutOfSpecToDo));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecOneDoneDecision()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 14,
+                        AcceptAsInSpec = true
+                    }
+                }
+            };
+
+            var isSpotExceptionsOutOfSpecDoneDecisionSaved = true;
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2023, 01, 01));
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(x => x.SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(It.IsAny<List<SpotExceptionsOutOfSpecDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(isSpotExceptionsOutOfSpecDoneDecisionSaved));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_AcceptOutOfSpecOneDoneDecision()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 14,
+                        AcceptAsInSpec = false
+                    }
+                }
+            };
+
+            var isSpotExceptionsOutOfSpecDoneDecisionSaved = true;
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2023, 01, 01));
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(x => x.SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(It.IsAny<List<SpotExceptionsOutOfSpecDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(isSpotExceptionsOutOfSpecDoneDecisionSaved));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public async void SaveSpotExceptionsOutOfSpecsDecisions_AcceptMultipleDoneDecisions()
+        {
+            // Arrange
+            var spotExceptionsOutOfSpecDecisionsPostsRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto
+            {
+                Decisions = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
+                {
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 14,
+                        AcceptAsInSpec = true
+                    },
+                    new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
+                    {
+                        DoneId = 15,
+                        AcceptAsInSpec = true
+                    }
+                }
+            };
+
+            var isSpotExceptionsOutOfSpecDoneDecisionSaved = true;
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2023, 01, 01));
+
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(x => x.SaveSpotExceptionsOutOfSpecDoneDecisionsAsync(It.IsAny<List<SpotExceptionsOutOfSpecDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(isSpotExceptionsOutOfSpecDoneDecisionSaved));
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }        
+
+        [Test]
         [TestCase("ActionAdventure", 1, "ActionAdventure", "", "")]
         [TestCase("Action Adventure", 1, "Action Adventure", "", "")]
         [TestCase("Action/Adventure", 3, "Action", "Action/Adventure", "Adventure")]
