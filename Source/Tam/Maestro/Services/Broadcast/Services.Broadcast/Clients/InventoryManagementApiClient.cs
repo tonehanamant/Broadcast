@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Web;
 using Services.Broadcast.Entities.Scx;
+using Services.Broadcast.Entities.InventoryMarketAffiliates;
 
 namespace Services.Broadcast.Clients
 {
@@ -90,7 +91,18 @@ namespace Services.Broadcast.Clients
         /// <param name="fileIds">List of file ids to filter the files by</param>
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds);
+
+        /// <summary>
+        /// Gets the inventory Quarters
+        /// </summary>
+        /// <param name="inventorySourceId">source id</param>
+        /// <returns>Quarters</returns>
         InventoryQuartersDto GetOpenMarketExportInventoryQuarters(int inventorySourceId);
+
+        /// <summary>
+        /// get the inventory geners
+        /// </summary>
+        /// <returns>geners</returns>
         List<LookupDto> GetInventoryGenreTypes();
         int GenerateExportForOpenMarket(InventoryExportRequestDto request);
         /// <summary>
@@ -106,6 +118,20 @@ namespace Services.Broadcast.Clients
         /// <returns>Returns scx file</returns>
         Tuple<string, Stream, string> DownloadGeneratedScxFile(int fileId);
         List<QuarterDetailDto> GetInventoryUploadHistoryQuarters(int inventorySourceId);
+
+        /// <summary>
+        /// Download the inventory for open market
+        /// </summary>
+        /// <param name="fileId">file id</param>
+        /// <returns>Open market file</returns>
+        Tuple<string, Stream, string> DownloadInventoeyForOpenMarket(int fileId);
+
+        /// <summary>
+        /// Generate the open Market Affiliates
+        /// </summary>
+        /// <param name="request">quarter and source id</param>
+        /// <returns>open market report</returns>
+        Guid GenerateOpenMarketAffiliates(InventoryMarketAffiliatesRequest request);
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -545,6 +571,60 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(String.Format("Error occured while downloading scx file, Error:{0}", ex.Message.ToString()));
+            }
+        }
+
+        public Tuple<string, Stream, string> DownloadInventoeyForOpenMarket(int fileId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/InventoryExport/DownloadInventoryExportFile?fileId={fileId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For download Inventory for Open Market file");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryDownloadErrorFileDto>>().Result;
+                var rawFileName = result.Result.content.headers[1].value[0].ToString();
+                var fileMimeType = result.Result.content.headers[0].value[0].ToString();
+                var reg = new Regex("\".*?\"");
+                var fileName = reg.Matches(rawFileName)[0].Value.ToString().Replace('"', ' ').Trim();
+                string partialPath = @"\ScxFiles\";
+                string filePath = $"{ _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)}{partialPath}{fileName}";
+
+                Stream stream = new FileStream(filePath, FileMode.Open);
+                var errorFile = new Tuple<string, Stream, string>(fileName, stream, fileMimeType);
+                _LogInfo("Successfully get file: " + JsonConvert.SerializeObject(fileName));
+                return errorFile;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while downloading scx file, Error:{0}", ex.Message.ToString()));
+            }
+        }
+
+        public Guid GenerateOpenMarketAffiliates(InventoryMarketAffiliatesRequest request)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/InventoryExport/GenerateMarketAffiliatesReport";
+                var content = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.PostAsync(requestUri, content).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For get inventory summaries api");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<Guid>>();
+                Guid affiliateReport = result.Result.Result;
+
+                _LogInfo("Successfully get inventory export for open market");
+                return affiliateReport;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(string.Format("Error occured while getting inventory summaries, Error:{0}", ex.Message.ToString()));
             }
         }
     }

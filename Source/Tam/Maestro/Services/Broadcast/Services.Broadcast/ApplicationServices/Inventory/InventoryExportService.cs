@@ -310,20 +310,27 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         /// <inheritdoc />
         public Tuple<string, Stream, string> DownloadOpenMarketExportFile(int jobId)
         {
-            Tuple<string, Stream, string> result;
-            var job = _InventoryExportJobRepository.GetJob(jobId);
-
-            if (_EnableSharedFileServiceConsolidation.Value && job.SharedFolderFileId.HasValue)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                _LogInfo($"Translated jobId '{job.Id}' as sharedFolderFileId '{job.SharedFolderFileId.Value}'");
-                var file = _SharedFolderService.GetFile(job.SharedFolderFileId.Value);
-                result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
-                _SharedFolderService.RemoveFileFromFileShare(job.SharedFolderFileId.Value);
+                return _InventoryManagementApiClient.DownloadInventoeyForOpenMarket(jobId);
+            }
+            else
+            {
+                Tuple<string, Stream, string> result;
+                var job = _InventoryExportJobRepository.GetJob(jobId);
+
+                if (_EnableSharedFileServiceConsolidation.Value && job.SharedFolderFileId.HasValue)
+                {
+                    _LogInfo($"Translated jobId '{job.Id}' as sharedFolderFileId '{job.SharedFolderFileId.Value}'");
+                    var file = _SharedFolderService.GetFile(job.SharedFolderFileId.Value);
+                    result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                    _SharedFolderService.RemoveFileFromFileShare(job.SharedFolderFileId.Value);
+                    return result;
+                }
+
+                result = _GetFileFromFileService(job);
                 return result;
             }
-
-            result = _GetFileFromFileService(job);
-            return result;
         }
 
         private Tuple<string, Stream, string> _BuildPackageReturn(Stream fileStream, string fileName)

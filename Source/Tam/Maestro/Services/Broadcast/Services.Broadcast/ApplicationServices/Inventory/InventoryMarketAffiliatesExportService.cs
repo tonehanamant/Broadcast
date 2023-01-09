@@ -1,6 +1,7 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Enums.Inventory;
@@ -46,6 +47,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly IMediaMonthAndWeekAggregateCache _MediaMonthAndWeekAggregateCache;
         private readonly IGenreRepository _GenreRepository;
         protected readonly IMarketCoverageRepository _MarketCoverageRepository;
+        private readonly IInventoryManagementApiClient _InventoryManagementApiClient;
+        protected Lazy<bool> _IsInventoryServiceMigrationEnabled;
 
         public InventoryMarketAffiliatesExportService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
@@ -53,7 +56,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             IDateTimeEngine dateTimeEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IFeatureToggleHelper featureToggleHelper,
-            IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+            IConfigurationSettingsHelper configurationSettingsHelper,
+            IInventoryManagementApiClient inventoryManagementApiClient) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SharedFolderService = sharedFolderService;
             _DateTimeEngine = dateTimeEngine;
@@ -61,11 +65,18 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _GenreRepository = broadcastDataRepositoryFactory.GetDataRepository<IGenreRepository>();
             _MarketCoverageRepository = broadcastDataRepositoryFactory.GetDataRepository<IMarketCoverageRepository>();
+            _InventoryManagementApiClient = inventoryManagementApiClient;
+            _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
         }
 
         /// <inheritdoc />
         public Guid GenerateMarketAffiliatesReport(InventoryMarketAffiliatesRequest request, string userName, DateTime currentDate, string templatesFilePath)
         {
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                return _InventoryManagementApiClient.GenerateOpenMarketAffiliates(request);
+            }
             _LogInfo($"Gathering the report data...");
             var marketAffiliateReportData = GetMarketAffiliatesReportData(request);
             var reportGenerator = new InventoryMarketAffiliatesReportGenerator(templatesFilePath);

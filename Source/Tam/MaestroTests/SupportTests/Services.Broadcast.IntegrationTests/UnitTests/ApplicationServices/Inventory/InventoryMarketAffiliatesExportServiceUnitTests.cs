@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Services.Broadcast.Repositories.Inventory;
+using Services.Broadcast.Clients;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Inventory
 {
@@ -33,6 +34,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Inve
         private Mock<IInventoryMarketAffiliatesExportRepository> _InventoryMarketAffiliatesExportRepository;
         private InventoryMarketAffiliatesExportService _InventoryMarketAffiliatesExportService;
         private Mock<IMarketCoverageRepository> _MarketCoverageRepositoryMock;
+        private Mock<IInventoryManagementApiClient> _inventoryManagementClient;
 
         [SetUp]
         public void SetUp()
@@ -46,6 +48,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Inve
             _GenreRepository = new Mock<IGenreRepository>();
             _InventoryMarketAffiliatesExportRepository = new Mock<IInventoryMarketAffiliatesExportRepository>();
             _MarketCoverageRepositoryMock = new Mock<IMarketCoverageRepository>();
+            _inventoryManagementClient = new Mock<IInventoryManagementApiClient>();
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<IGenreRepository>())
@@ -69,7 +72,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Inve
                 _DateTimeEngineMock.Object,
                 _MediaMonthAndWeekAggregateCacheMock.Object,
                 _FeatureToggleMock.Object,
-                _ConfigurationSettingsHelperMock.Object);
+                _ConfigurationSettingsHelperMock.Object,
+                _inventoryManagementClient.Object);
         }
 
         [Test]
