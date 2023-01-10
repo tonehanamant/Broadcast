@@ -66,7 +66,7 @@ namespace Services.Broadcast.Clients
         /// <param name="startDate">Start date of the period for which inventory needs to be found</param>
         /// <param name="endDate">End date of the period for which inventory needs to be found</param>
         List<string> GetInventoryUnits(int inventorySourceId, int standardDaypartId, DateTime startDate, DateTime endDate);
-        List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter);
+        List<InventorySummaryApiResponse> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter);
         /// <summary>Saves an open market inventory file </summary>      
         /// <param name="saveRequest">InventoryFileSaveRequest object containing an open market inventory file</param>
         /// <returns>InventoryFileSaveResult object</returns>
@@ -281,11 +281,13 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException(String.Format("Error occured while getting inventory units, Error:{0}", ex.Message.ToString()));
             }
         }
-        public List<InventorySummaryDto> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter)
+        /// <summary>
+        /// Get list of inventory summaries
+        /// </summary>
+        public List<InventorySummaryApiResponse> GetInventorySummaries(InventorySummaryFilterDto inventorySourceCardFilter)
         {
             try
             {
-                List<InventorySummaryDto> inventorySummaries = new List<InventorySummaryDto>();
                 List<InventorySummaryApiResponse> inventorySummaryApiResponses = new List<InventorySummaryApiResponse>();
                 var requestUri = $"{coreApiVersion}/broadcast/Inventory/Summaries";
                 var content = new StringContent(JsonConvert.SerializeObject(inventorySourceCardFilter), Encoding.UTF8, "application/json");
@@ -297,13 +299,8 @@ namespace Services.Broadcast.Clients
                 }
                 var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<InventorySummaryApiResponse>>();
                 inventorySummaryApiResponses = result.Result.ResultList;
-                foreach (var items in inventorySummaryApiResponses)
-                {
-                    InventorySummaryDto item = items;
-                    inventorySummaries.Add(item);
-                }
-                _LogInfo("Successfully get inventory summaries: " + JsonConvert.SerializeObject(inventorySummaries));
-                return inventorySummaries;
+                _LogInfo("Successfully get inventory summaries: " + JsonConvert.SerializeObject(inventorySummaryApiResponses));
+                return inventorySummaryApiResponses;
             }
             catch (Exception ex)
             {

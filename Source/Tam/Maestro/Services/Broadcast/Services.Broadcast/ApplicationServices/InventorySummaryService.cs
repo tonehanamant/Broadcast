@@ -191,7 +191,8 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetInventorySummaries(inventorySummaryFilterDto);
+                List<InventorySummaryDto> inventorySummaries = _LoadInventorySummaries(inventorySummaryFilterDto);
+                return inventorySummaries;
             }
             else
             {
@@ -199,6 +200,200 @@ namespace Services.Broadcast.ApplicationServices
                 inventorySummaryFilterDto.LatestInventoryUpdatesBySourceId = _InventorySummaryRepository.GetLatestSummaryUpdatesBySource();
                 return _InventorySummaryCache.GetOrCreate(inventorySummaryFilterDto, GetInventorySummariesFunc);
             }
+        }
+        private List<InventorySummaryDto> _LoadInventorySummaries(InventorySummaryFilterDto inventorySummaryFilterDto)
+        {
+            List<InventorySummaryDto> inventorySummaries = new List<InventorySummaryDto>();
+            List<InventorySummaryApiResponse> summaryApisResponses = _InventoryManagementApiClient.GetInventorySummaries(inventorySummaryFilterDto);
+            List<InventorySource> inventorySources = _InventoryManagementApiClient.GetInventorySources();
+            foreach (var items in summaryApisResponses)
+            {
+                var inventorySource = inventorySources.FirstOrDefault(x => x.Id == items.InventorySourceId);
+                if (inventorySource.InventoryType == InventorySourceTypeEnum.OpenMarket)
+                {
+                    inventorySummaries.Add(_LoadOpenMarketInventorySummary(items));
+                }
+                else if(inventorySource.InventoryType == InventorySourceTypeEnum.Barter)
+                {
+                    inventorySummaries.Add(_LoadBaterInventorySummary(items));
+                }
+                else if (inventorySource.InventoryType == InventorySourceTypeEnum.ProprietaryOAndO)
+                {
+                    inventorySummaries.Add(_LoadProprietaryInventorySummary(items));
+                }
+                else if (inventorySource.InventoryType == InventorySourceTypeEnum.Syndication)
+                {
+                    inventorySummaries.Add(_LoadSyndicationInventorySummary(items));
+                }
+                else if(inventorySource.InventoryType == InventorySourceTypeEnum.Diginet)
+                {
+                    inventorySummaries.Add(_LoadDiginetInventorySummary(items));
+                }
+
+            }
+            return inventorySummaries;
+        }
+        private InventorySummaryDto _LoadOpenMarketInventorySummary(InventorySummaryApiResponse openMarketData)
+        {
+            var result = new OpenMarketInventorySummaryDto
+            {
+                Quarter = openMarketData.Quarter,
+                InventorySourceId = openMarketData.InventorySourceId,
+                InventorySourceName = openMarketData.InventorySourceName,
+                Details = null // OpenMarket does not have details
+            };
+            result.HasInventoryGaps = openMarketData.InventoryGaps.Any();
+            result.InventoryGaps = openMarketData.InventoryGaps;
+            result.LastUpdatedDate = openMarketData.LastUpdatedDate;
+            result.RatesAvailableFromQuarter = openMarketData.RatesAvailableFromQuarter;
+            result.RatesAvailableToQuarter = openMarketData.RatesAvailableToQuarter;
+            result.HutBook = openMarketData.HutBook;
+            result.ShareBook = openMarketData.ShareBook;
+            result.HouseholdImpressions = openMarketData.HouseholdImpressions; 
+            result.TotalMarkets = openMarketData.TotalMarkets;
+            result.TotalStations = openMarketData.TotalStations;
+            result.TotalPrograms = openMarketData.TotalPrograms;
+            result.HasRatesAvailableForQuarter = openMarketData.HasRatesAvailableForQuarter;
+            result.HasLogo = openMarketData.HasLogo;
+            result.HasInventoryForSource = openMarketData.HasInventoryForSource;
+            return result;
+        }
+        private InventorySummaryDto _LoadBaterInventorySummary(InventorySummaryApiResponse barterData)
+        {
+            var result = new BarterInventorySummaryDto
+            {                   
+                InventorySourceId= barterData.InventorySourceId,
+                InventorySourceName = barterData.InventorySourceName,
+                Quarter = barterData.Quarter
+            };
+            result.HasRatesAvailableForQuarter = barterData.HasRatesAvailableForQuarter;
+            result.TotalMarkets = barterData.TotalMarkets;
+            result.TotalStations = barterData.TotalStations;
+            result.HouseholdImpressions = barterData.HouseholdImpressions;
+            result.LastUpdatedDate = barterData.LastUpdatedDate;
+            result.IsUpdating = barterData.IsUpdating;
+            result.RatesAvailableFromQuarter = barterData.RatesAvailableFromQuarter;
+            result.RatesAvailableToQuarter = barterData.RatesAvailableToQuarter;
+            result.HasInventoryGaps = barterData.InventoryGaps.Any();
+            result.HutBook = barterData.HutBook;
+            result.ShareBook = barterData.ShareBook;
+            result.InventoryGaps = barterData.InventoryGaps;
+            result.HasLogo = barterData.HasLogo;
+            result.HasInventoryForSource = barterData.HasInventoryForSource;
+           
+            result.TotalUnits = barterData.TotalUnits;
+            result.TotalDaypartCodes = barterData.TotalDaypartCodes;
+            result.Details = barterData.Details.Select(x => new BarterInventorySummaryDto.Detail
+            {
+                CPM = x.CPM,
+                TotalUnits = x.TotalUnits,
+                Daypart = x.Daypart,
+                HouseholdImpressions = x.HouseholdImpressions,
+                TotalCoverage = x.TotalCoverage,
+                TotalMarkets = x.TotalMarkets
+            }).ToList();
+
+            return result;
+        }
+        private InventorySummaryDto _LoadProprietaryInventorySummary(InventorySummaryApiResponse proprietaryData)
+        {
+            var result = new ProprietaryOAndOInventorySummaryDto
+            {
+                InventorySourceId = proprietaryData.InventorySourceId,
+                InventorySourceName = proprietaryData.InventorySourceName,
+                Quarter = proprietaryData.Quarter
+            };
+            result.HasRatesAvailableForQuarter = proprietaryData.HasRatesAvailableForQuarter;
+            result.TotalMarkets = proprietaryData.TotalMarkets;
+            result.TotalStations = proprietaryData.TotalStations;
+            result.HouseholdImpressions = proprietaryData.HouseholdImpressions;
+            result.LastUpdatedDate = proprietaryData.LastUpdatedDate;
+            result.IsUpdating = proprietaryData.IsUpdating;
+            result.RatesAvailableFromQuarter = proprietaryData.RatesAvailableFromQuarter;
+            result.RatesAvailableToQuarter = proprietaryData.RatesAvailableToQuarter;
+            result.HasInventoryGaps = proprietaryData.InventoryGaps.Any();
+            result.HutBook = proprietaryData.HutBook;
+            result.ShareBook = proprietaryData.ShareBook;
+            result.InventoryGaps = proprietaryData.InventoryGaps;
+            result.HasLogo = proprietaryData.HasLogo;
+            result.HasInventoryForSource = proprietaryData.HasInventoryForSource;
+
+            result.TotalPrograms = proprietaryData.TotalPrograms;
+            result.TotalDaypartCodes = proprietaryData.TotalDaypartCodes;
+            result.Details = proprietaryData.Details.Select(x => new ProprietaryOAndOInventorySummaryDto.Detail
+            {
+                CPM = x.CPM,
+                Daypart = x.Daypart,
+                HouseholdImpressions = x.HouseholdImpressions,
+                TotalCoverage = x.TotalCoverage,
+                TotalMarkets = x.TotalMarkets,
+                TotalPrograms= x.TotalPrograms,
+                MinSpotsPerWeek = x.MinSpotsPerWeek,
+                MaxSpotsPerWeek = x.MaxSpotsPerWeek
+           }).ToList();
+
+            return result;
+        }
+        private InventorySummaryDto _LoadSyndicationInventorySummary(InventorySummaryApiResponse syndicationData)
+        {
+            var result = new SyndicationInventorySummaryDto
+            {
+                InventorySourceId = syndicationData.InventorySourceId,
+                InventorySourceName = syndicationData.InventorySourceName,
+                Quarter = syndicationData.Quarter,
+                Details = null // Syndication does not have details
+            };
+            result.HasRatesAvailableForQuarter = syndicationData.HasRatesAvailableForQuarter;
+            result.TotalMarkets = syndicationData.TotalMarkets;
+            result.TotalStations = syndicationData.TotalStations;
+            result.HouseholdImpressions = syndicationData.HouseholdImpressions;
+            result.LastUpdatedDate = syndicationData.LastUpdatedDate;
+            result.IsUpdating = syndicationData.IsUpdating;
+            result.RatesAvailableFromQuarter = syndicationData.RatesAvailableFromQuarter;
+            result.RatesAvailableToQuarter = syndicationData.RatesAvailableToQuarter;
+            result.HasInventoryGaps = syndicationData.InventoryGaps.Any();
+            result.HutBook = syndicationData.HutBook;
+            result.ShareBook = syndicationData.ShareBook;
+            result.InventoryGaps = syndicationData.InventoryGaps;
+            result.HasLogo = syndicationData.HasLogo;
+            result.HasInventoryForSource = syndicationData.HasInventoryForSource;
+            result.TotalPrograms = syndicationData.TotalPrograms;
+            return result;
+        }
+        private InventorySummaryDto _LoadDiginetInventorySummary(InventorySummaryApiResponse diginetData)
+        {
+            var result = new DiginetInventorySummaryDto
+            {
+                InventorySourceId = diginetData.InventorySourceId,
+                InventorySourceName = diginetData.InventorySourceName,
+                Quarter = diginetData.Quarter
+            };
+            result.HasRatesAvailableForQuarter = diginetData.HasRatesAvailableForQuarter;
+            result.TotalMarkets = diginetData.TotalMarkets;
+            result.TotalStations = diginetData.TotalStations;
+            result.HouseholdImpressions = diginetData.HouseholdImpressions;
+            result.LastUpdatedDate = diginetData.LastUpdatedDate;
+            result.IsUpdating = diginetData.IsUpdating;
+            result.RatesAvailableFromQuarter = diginetData.RatesAvailableFromQuarter;
+            result.RatesAvailableToQuarter = diginetData.RatesAvailableToQuarter;
+            result.HasInventoryGaps = diginetData.InventoryGaps.Any();
+            result.HutBook = diginetData.HutBook;
+            result.ShareBook = diginetData.ShareBook;
+            result.InventoryGaps = diginetData.InventoryGaps;
+            result.HasLogo = diginetData.HasLogo;
+            result.HasInventoryForSource = diginetData.HasInventoryForSource;
+
+            result.CPM = diginetData.CPM;
+            result.TotalDaypartCodes = diginetData.TotalDaypartCodes;
+            result.Details = diginetData.Details.Select(x => new DiginetInventorySummaryDto.Detail
+            {
+                CPM = x.CPM,
+                Daypart = x.Daypart,
+                HouseholdImpressions = x.HouseholdImpressions
+            }).ToList();
+
+
+            return result;
         }
 
         private IEnumerable<InventorySummaryDto> _LoadInventorySummaryForQuarter(InventorySummaryFilterDto inventorySummaryFilterDto)
@@ -225,6 +420,8 @@ namespace Services.Broadcast.ApplicationServices
                 yield return _LoadInventorySummary(inventorySource, data, quarterDetail);
             }
         }
+
+       
 
         private IEnumerable<InventorySummaryDto> _LoadInventorySummariesForSource(InventorySummaryFilterDto inventorySummaryFilterDto, DateTime currentDate)
         {
