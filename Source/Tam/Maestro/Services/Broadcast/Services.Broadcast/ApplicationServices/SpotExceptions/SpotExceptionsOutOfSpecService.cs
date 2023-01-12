@@ -15,7 +15,7 @@ using Services.Broadcast.Cache;
 using Services.Broadcast.Entities.ProgramMapping;
 using System.Web.WebPages;
 using Tam.Maestro.Common.DataLayer;
-using Microsoft.VisualBasic;
+using Tam.Maestro.Common;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -386,16 +386,18 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             searchRequest.ProgramName = programNameQuery;
             var programList = new List<SpotExceptionsOutOfSpecProgramsDto>();
 
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Programs");
             try
             {
                 programList = await _LoadProgramFromProgramsAsync(searchRequest);
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve the data from the Database";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Programs";
                 throw new CadentException(msg, ex);
             }
 
+            _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Programs");
             return programList;
         }
 
@@ -800,7 +802,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         private async Task<List<SpotExceptionsOutOfSpecProgramsDto>> _LoadProgramFromProgramsAsync(SearchRequestProgramDto searchRequest)
         {
-            List<string> programNames = new List<string>();
+            List<string> combinedProgramNames = new List<string>();
+            List<ProgramNameDto> combinedPrograms = new List<ProgramNameDto>();
             var result = new List<SpotExceptionsOutOfSpecProgramsDto>();
 
             try
@@ -808,21 +811,15 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 var programs = await _SpotExceptionsOutOfSpecRepository.FindProgramFromProgramsAsync(searchRequest.ProgramName);
                 var programsSpotExceptionDecisions = await _SpotExceptionsOutOfSpecRepository.FindProgramFromSpotExceptionDecisionsAsync(searchRequest.ProgramName);
 
-                if (programsSpotExceptionDecisions != null)
+                if (programsSpotExceptionDecisions.Any())
                 {
-                    foreach(var decision in programsSpotExceptionDecisions)
-                    {
-                        if(!programs.Any(x => x.OfficialProgramName.ToLower().Contains(decision.OfficialProgramName.ToLower())))
-                        {
-                            programs.Add(decision);
-                        }
-                    }
+                    programs = programs.Union(programsSpotExceptionDecisions).DistinctBy(x => x.OfficialProgramName).ToList();
                 }
-
+                                
                 _RemoveVariousAndUnmatchedFromPrograms(programs);
 
-                programNames = programs.Select(x => x.OfficialProgramName).Distinct().ToList();
-                foreach (var program in programNames)
+                combinedProgramNames = programs.Select(x => x.OfficialProgramName).ToList();
+                foreach (var program in combinedProgramNames)
                 {
                     var listOfProgramNames = programs.Where(x => x.OfficialProgramName.ToLower() == program.ToLower()).ToList();
                     SpotExceptionsOutOfSpecProgramsDto spotExceptionsOutOfSpecProgram = new SpotExceptionsOutOfSpecProgramsDto();

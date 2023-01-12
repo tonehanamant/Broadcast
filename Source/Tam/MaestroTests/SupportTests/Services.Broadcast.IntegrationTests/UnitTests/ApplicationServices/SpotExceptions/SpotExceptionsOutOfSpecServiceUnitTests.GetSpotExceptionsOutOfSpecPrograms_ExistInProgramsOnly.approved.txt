@@ -3,6 +3,6 @@
     "Genres": [
       "GENRE"
     ],
-    "ProgramName": "#HTOWNRUSH"
+    "ProgramName": "WNRUSH"
   }
 ]
