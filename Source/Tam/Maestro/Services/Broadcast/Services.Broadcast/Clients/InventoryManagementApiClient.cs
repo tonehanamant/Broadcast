@@ -132,6 +132,13 @@ namespace Services.Broadcast.Clients
         /// <param name="request">quarter and source id</param>
         /// <returns>open market report</returns>
         Guid GenerateOpenMarketAffiliates(InventoryMarketAffiliatesRequest request);
+
+        /// <summary>
+        /// process scx download job
+        /// </summary>
+        /// <param name="jobId">scx download job id</param>
+        /// <returns></returns>
+        void ProcessScxGenerationJob(int jobId);
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -622,6 +629,27 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(string.Format("Error occured while getting inventory summaries, Error:{0}", ex.Message.ToString()));
+            }
+        }
+
+        public void ProcessScxGenerationJob( int jobId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/ScxDownloadJob?jobId={jobId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api scx download job");
+                }
+               
+                _LogInfo("Successfully processed scx download job");
+             
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while processing scx download job, Error:{0}", ex.Message.ToString()));
             }
         }
     }

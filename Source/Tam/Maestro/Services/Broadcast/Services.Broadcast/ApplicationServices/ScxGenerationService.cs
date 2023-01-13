@@ -131,7 +131,7 @@ namespace Services.Broadcast.ApplicationServices
                 job.InventoryScxDownloadRequest.UnitNames = new List<string>();
 
             var jobId = _ScxGenerationJobRepository.AddJob(job);
-
+           
             _BackgroundJobClient.Enqueue<IScxGenerationService>(x => x.ProcessScxGenerationJob(jobId));
 
               return jobId;
@@ -145,8 +145,14 @@ namespace Services.Broadcast.ApplicationServices
         public void ProcessScxGenerationJob(int jobId)
         {
             var job = _ScxGenerationJobRepository.GetJobById(jobId);
-
-            ProcessScxGenerationJob(job, DateTime.Now);
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+                 _InventoryApiClient.ProcessScxGenerationJob(jobId);
+            }
+            else
+            {
+                ProcessScxGenerationJob(job, DateTime.Now);
+            }           
         }
 
         public void ProcessScxGenerationJob(ScxGenerationJob job, DateTime currentDate)
