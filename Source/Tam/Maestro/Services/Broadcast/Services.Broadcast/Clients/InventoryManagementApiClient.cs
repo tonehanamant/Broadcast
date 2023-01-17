@@ -617,18 +617,18 @@ namespace Services.Broadcast.Clients
                 var apiResult = httpClient.PostAsync(requestUri, content).GetAwaiter().GetResult();
                 if (apiResult.IsSuccessStatusCode)
                 {
-                    _LogInfo("Successfully Called the api For get inventory summaries api");
+                    _LogInfo("Successfully Called the api for Generate Open Market Affiliates report");
                 }
                 
                 var result = apiResult.Content.ReadAsAsync<InventoryExportApiResponse>();                
                 Guid affiliateReport =new Guid(result.Result.Data);
 
-                _LogInfo("Successfully get inventory export for open market");
+                _LogInfo("Successfully get Generate Open Market Affiliates report");
                 return affiliateReport;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(string.Format("Error occured while getting inventory summaries, Error:{0}", ex.Message.ToString()));
+                throw new InvalidOperationException(string.Format("Error occured while Generating Open Market Affiliates report, Error:{0}", ex.Message.ToString()));
             }
         }
 
