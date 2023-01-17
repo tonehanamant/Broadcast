@@ -138,6 +138,23 @@ namespace Services.Broadcast.Clients
         /// <param name="jobId">scx download job id</param>
         /// <returns></returns>
         void ProcessScxGenerationJob(int jobId);
+        /// <summary>
+        /// Process Scx Open Market Job.
+        /// </summary>
+        /// <param name="jobId">The source identifier.</param>
+        /// <returns></returns>
+        void ProcessScxOpenMarketGenerationJob(int jobId);
+        /// <summary>
+        /// Gets the open market History Details
+        /// </summary>
+        /// <returns>Open market History</returns>
+        List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory();
+        /// <summary>
+        /// Download the open market scx file
+        /// </summary>
+        /// <param name="fileId">file id</param>
+        /// <returns></returns>
+        Tuple<string, Stream, string> DownloadGeneratedScxFileForOpenMarket(int fileId);
     }
     public class InventoryManagementApiClient : CadentSecuredClientBase, IInventoryManagementApiClient
     {
@@ -650,6 +667,77 @@ namespace Services.Broadcast.Clients
             catch (Exception ex)
             {
                 throw new InvalidOperationException(String.Format("Error occured while processing scx download job, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        
+        public void ProcessScxOpenMarketGenerationJob(int jobId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/ScxDownloadJob-OpenMarkets?jobId={jobId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api scx open market download job");
+                }
+
+                _LogInfo("Successfully processed scx open market download job");
+
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while processing scx open market download job, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        public List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory()
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/ScxOpenMarketFileGenerationHistory";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For SCX open market file Genedration history");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiListResponseTyped<ScxOpenMarketFileGenerationDetail>>();
+                var resultList = result.Result.ResultList;
+                _LogInfo("Successfully get list of SCX open market file Genedration history: " + JsonConvert.SerializeObject(resultList));
+                return resultList;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while getting scx open market file generation history, Error:{0}", ex.Message.ToString()));
+            }
+        }
+        public Tuple<string, Stream, string> DownloadGeneratedScxFileForOpenMarket(int fileId)
+        {
+            try
+            {
+                var requestUri = $"{coreApiVersion}/broadcast/Inventory/DownloadOpenMarketScxFile?fileId={fileId}";
+                var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();
+                var apiResult = httpClient.GetAsync(requestUri).GetAwaiter().GetResult();
+                if (apiResult.IsSuccessStatusCode)
+                {
+                    _LogInfo("Successfully Called the api For download scx open market file");
+                }
+                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryDownloadErrorFileDto>>().Result;
+                var rawFileName = result.Result.content.headers[1].value[0].ToString();
+                var fileMimeType = result.Result.content.headers[0].value[0].ToString();
+                var reg = new Regex("\".*?\"");
+                var fileName = reg.Matches(rawFileName)[0].Value.ToString().Replace('"', ' ').Trim();
+                string partialPath = @"\ScxFiles\";
+                string filePath = $"{ _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder)}{partialPath}{fileName}";
+
+                Stream stream = new FileStream(filePath, FileMode.Open);
+                var errorFile = new Tuple<string, Stream, string>(fileName, stream, fileMimeType);
+                _LogInfo("Successfully get scx open market file: " + JsonConvert.SerializeObject(fileName));
+                return errorFile;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException(String.Format("Error occured while downloading scx open market file, Error:{0}", ex.Message.ToString()));
             }
         }
     }

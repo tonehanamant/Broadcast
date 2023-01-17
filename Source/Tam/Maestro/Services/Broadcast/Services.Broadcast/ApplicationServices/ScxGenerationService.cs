@@ -413,10 +413,17 @@ namespace Services.Broadcast.ApplicationServices
 
         public List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory()
         {
-            const int sourceId = 1;
-            var detailDtos = _ScxGenerationJobRepository.GetOpenMarketScxFileGenerationDetails(sourceId);
-            var result = TransformFromDtoToOpenMarketEntities(detailDtos);
-            return result;
+            if (_IsInventoryServiceMigrationEnabled.Value)
+            {
+               return _InventoryApiClient.GetOpenMarketScxFileGenerationHistory();
+            }
+            else
+            {
+                const int sourceId = 1;
+                var detailDtos = _ScxGenerationJobRepository.GetOpenMarketScxFileGenerationDetails(sourceId);
+                var result = TransformFromDtoToOpenMarketEntities(detailDtos);
+                return result;
+            }
         }
 
         private List<ScxOpenMarketFileGenerationDetail> TransformFromDtoToOpenMarketEntities(List<ScxOpenMarketFileGenerationDetailDto> dtos)
@@ -455,9 +462,17 @@ namespace Services.Broadcast.ApplicationServices
         #endregion // #region Helpers
         public void ProcessScxOpenMarketGenerationJob(int jobId)
         {
-            var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
+            if (_IsInventoryServiceMigrationEnabled.Value)  
+            {
+                _InventoryApiClient.ProcessScxOpenMarketGenerationJob(jobId);
+            }
+            else
+            {
+                var job = _ScxGenerationJobRepository.GetOpenMarketsJobById(jobId);
 
-            ProcessScxOpenMarketGenerationJob(job, DateTime.Now);
+                ProcessScxOpenMarketGenerationJob(job, DateTime.Now);
+            }
+           
         }
         public void ProcessScxOpenMarketGenerationJob(ScxOpenMarketsGenerationJob job, DateTime currentDate)
         {
@@ -581,26 +596,32 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new Exception("No file id was supplied!");
             }
-
-            Tuple<string, Stream, string> result;
-
-            if (_EnableSharedFileServiceConsolidation.Value)
+            if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderForOpenMarketFile(fileId);
+               return _InventoryApiClient.DownloadGeneratedScxFileForOpenMarket(fileId);
+            }
+            else
+            {
+                Tuple<string, Stream, string> result;
 
-                if (sharedFileId.HasValue)
+                if (_EnableSharedFileServiceConsolidation.Value)
                 {
-                    _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
-                    var file = _SharedFolderService.GetFile(sharedFileId.Value);
-                    result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
-                    return result;
+                    var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderForOpenMarketFile(fileId);
+
+                    if (sharedFileId.HasValue)
+                    {
+                        _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
+                        var file = _SharedFolderService.GetFile(sharedFileId.Value);
+                        result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                        return result;
+                    }
+
+                    _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
                 }
 
-                _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
+                result = _GetOpenMarketFileFromFileService(fileId);
+                return result;
             }
-
-            result = _GetOpenMarketFileFromFileService(fileId);
-            return result;
         }
 
         private Tuple<string, Stream, string> _GetOpenMarketFileFromFileService(int fileId)
