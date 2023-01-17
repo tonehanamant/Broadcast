@@ -18,4 +18,10 @@ namespace Services.Broadcast.Entities
         [JsonProperty("transactionId")]
         public string TransactionId { get; set; }
     }
+    public class InventoryExportApiResponse
+    {
+        public bool Success { get; set; }
+        public object Message { get; set; }
+        public string Data { get; set; }
+    }
 }

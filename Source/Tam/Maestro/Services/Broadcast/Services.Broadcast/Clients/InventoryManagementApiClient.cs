@@ -20,7 +20,6 @@ using System.Linq;
 using System.Web;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.InventoryMarketAffiliates;
-
 namespace Services.Broadcast.Clients
 {
     public interface IInventoryManagementApiClient
@@ -620,8 +619,9 @@ namespace Services.Broadcast.Clients
                 {
                     _LogInfo("Successfully Called the api For get inventory summaries api");
                 }
-                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<Guid>>();
-                Guid affiliateReport = result.Result.Result;
+                
+                var result = apiResult.Content.ReadAsAsync<InventoryExportApiResponse>();                
+                Guid affiliateReport =new Guid(result.Result.Data);
 
                 _LogInfo("Successfully get inventory export for open market");
                 return affiliateReport;
