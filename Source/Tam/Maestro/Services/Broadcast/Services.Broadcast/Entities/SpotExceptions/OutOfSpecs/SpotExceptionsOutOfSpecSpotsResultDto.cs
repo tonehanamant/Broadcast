@@ -55,6 +55,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         public string Reason { get; set; }
 
         /// <summary>
+        /// Gets or sets the reason label.
+        /// </summary>
+        /// <value>The reason label.</value>
+        public string ReasonLabel { get; set; }
+
+        /// <summary>
         /// Gets or sets the market rank.
         /// </summary>
         /// <value>The market rank.</value>
@@ -183,6 +189,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// </summary>
         /// <value>The reason.</value>
         public string Reason { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reason label.
+        /// </summary>
+        /// <value>The reason label.</value>
+        public string ReasonLabel { get; set; }
 
         /// <summary>
         /// Gets or sets the market rank.

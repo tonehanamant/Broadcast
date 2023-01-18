@@ -22,6 +22,7 @@
       "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
+      "ReasonLabel": "Daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "TimeZone": "EST"
@@ -48,6 +49,7 @@
       "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
+      "ReasonLabel": "Daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "TimeZone": "EST"
@@ -78,6 +80,7 @@
       "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
+      "ReasonLabel": "Daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "SyncedTimestamp": null,
@@ -109,6 +112,7 @@
       "ProgramAirTime": "23:45:00",
       "ProgramName": "Reckitt HYHO",
       "Reason": "spot aired outside daypart",
+      "ReasonLabel": "Daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "SyncedTimestamp": "01/10/2020 23:45:00",
