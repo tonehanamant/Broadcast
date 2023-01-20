@@ -3,8 +3,10 @@ using Common.Services.ApplicationServices;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.spotcableXML;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Services.Broadcast.Converters.Scx
@@ -93,6 +95,7 @@ namespace Services.Broadcast.Converters.Scx
 
                 string xml = a.Serialize();
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(xml));
+                string marketRank = _ConvertToRange(scxDataObject.MarketRank);
                 scxFiles.Add(new OpenMarketInventoryScxFile
                 {
                     ScxStream = stream,
@@ -100,7 +103,7 @@ namespace Services.Broadcast.Converters.Scx
                     DaypartIds = scxDataObject.DaypartIds,
                     StartDate = scxDataObject.StartDate,
                     EndDate = scxDataObject.EndDate,
-                    MarketRank = scxDataObject.MarketRank,
+                    MarketRank = marketRank,
                     Affiliate = scxDataObject.Affiliate
                 });
             }
@@ -111,6 +114,21 @@ namespace Services.Broadcast.Converters.Scx
         public adx CreateAdxObjectForOpenMarket(OpenMarketScxData data)
         {
             return CreateAdxObjectForOpenMarket(data, filterUnallocated: true);
+        }
+        private string _ConvertToRange(string marketRank)
+        {
+            List<int> marketRanks = marketRank.Split(',').Select(int.Parse).ToList();
+
+            List<string> items = marketRanks
+              .Select((n, i) => new { number = n, group = n - i })
+              .GroupBy(n => n.group)
+              .Select(g =>
+                g.Count() >= 3 ?g.First().number + "-" + g.Last().number : String.Join(",", g.Select(x => x.number))
+              )
+              .ToList();
+
+            var stringOfMarketRanks = String.Join(",", items);
+            return stringOfMarketRanks.Replace("-", "_").Replace(";", ",");
         }
     }
 }

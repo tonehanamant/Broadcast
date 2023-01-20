@@ -23,11 +23,7 @@ namespace Services.Broadcast.Entities.Scx
             {
                 return string.Concat(string.Join("_",
                     new string[] { InventorySource.Name,
-                        MarketRank.ToString(),
-                        GenreType.ToString(),
-                        Affiliate,
-                        StartDate.ToString("yyyyMMdd"),
-                        EndDate.ToString("yyyyMMdd"), }), ".scx");
+                        MarketRank.ToString(), }), ".scx");
             }
         }
     }

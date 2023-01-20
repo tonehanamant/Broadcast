@@ -429,7 +429,7 @@ namespace Services.Broadcast.Repositories
                         var newRange = range.Split('-');
                         if (newRange[0].Length > 0 && newRange[1].Length > 0)
                         {
-                            subList = Enumerable.Range(Convert.ToInt32(newRange[0]), Convert.ToInt32(newRange[1])).ToList<int>();
+                            subList = Enumerable.Range(Convert.ToInt32(newRange[0]), (Convert.ToInt32(newRange[1]) - Convert.ToInt32(newRange[0]) + 1)).ToList<int>();
                             completeRange.AddRange(subList);
                         }
                         else if (newRange[0].Length > 0 && newRange[1].Length == 0)
