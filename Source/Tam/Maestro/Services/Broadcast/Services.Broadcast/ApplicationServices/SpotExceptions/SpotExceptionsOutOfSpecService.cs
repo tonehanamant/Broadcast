@@ -829,7 +829,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     spotExceptionsOutOfSpecProgram.ProgramName = program;
                     foreach (var programName in listOfProgramNames)
                     {
-                        var genre = _GenreCache.GetGenreLookupDtoById(programName.GenreId).Display.ToUpper();
+                        var genre = programName.GenreId.HasValue ? _GenreCache.GetGenreLookupDtoById(programName.GenreId.Value).Display.ToUpper() : null;
                         var genres = HandleFlexGenres(genre);
                         spotExceptionsOutOfSpecProgram.Genres.AddRange(genres);
                     }
@@ -849,7 +849,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             const string flexGenreToken = "/";
             var genres = new List<string> { genre };
 
-            if (genre.Contains(flexGenreToken))
+            if (genre != null && genre.Contains(flexGenreToken))
             {
                 var split = genre.Split(flexGenreToken.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
                 genres.AddRange(split.Select(s => s.Trim()).ToList());
@@ -860,8 +860,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         private void _RemoveVariousAndUnmatchedFromPrograms(List<ProgramNameDto> result)
         {
-            result.RemoveAll(x => _GenreCache.GetGenreLookupDtoById(x.GenreId).Display.Equals("Various", StringComparison.OrdinalIgnoreCase)
-                    || x.OfficialProgramName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
+            result.Where(x => x.GenreId.HasValue).ToList().RemoveAll(x => _GenreCache.GetGenreLookupDtoById(x.GenreId.Value).Display.Equals("Various", StringComparison.OrdinalIgnoreCase)
+                    || x.OfficialProgramName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase)); 
         }
     }
 }

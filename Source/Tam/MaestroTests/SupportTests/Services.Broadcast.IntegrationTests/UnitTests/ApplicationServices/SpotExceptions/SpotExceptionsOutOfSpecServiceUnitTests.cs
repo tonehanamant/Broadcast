@@ -715,6 +715,78 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
+        public async void GetSpotExceptionsOutOfSpecPrograms_ExistInProgramsOnly_NoGenre()
+        {
+            // Arrange
+            string programNameQuery = "WNRUSH";
+
+            _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                    {
+                        new ProgramNameDto
+                        {
+                           OfficialProgramName = "WNRUSH",
+                           GenreId = null
+                        }
+                    }
+                ));
+
+            _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
+
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                });
+
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecProgramsAsync(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public async void GetSpotExceptionsOutOfSpecPrograms_ExistInDecisionsOnly_NoGenre()
+        {
+            // Arrange
+            string programNameQuery = "WNRUSH";
+
+            _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
+
+            _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                    {
+                        new ProgramNameDto
+                        {
+                           OfficialProgramName = "#WNRUSH",
+                           GenreId = null
+                        }
+                    }
+                ));
+
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                });
+
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecProgramsAsync(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
         public async void GetSpotExceptionsOutOfSpecPrograms_DoesNotExist()
         {
             // Arrange

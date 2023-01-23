@@ -489,11 +489,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     return context.spot_exceptions_out_of_spec_done_decisions
                         .Where(p => p.program_name.ToLower().Contains(programSearchString.ToLower()))
                         .OrderBy(p => p.program_name)
+                        .Distinct()
                         .Select(
                             p => new ProgramNameDto
                             {
                                 OfficialProgramName = p.program_name,
-                                GenreId = context.genres.FirstOrDefault(x => x.name == p.genre_name).id
+                                GenreId = p.genre_name == null ? context.genres.FirstOrDefault(x => x.name == p.genre_name).id : (int?)null
                             }).ToList();
                 });
         }
