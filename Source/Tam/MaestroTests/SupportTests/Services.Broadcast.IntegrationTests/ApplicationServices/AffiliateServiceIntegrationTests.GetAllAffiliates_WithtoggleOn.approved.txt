@@ -69,7 +69,7 @@
   },
   {
     "Display": "MyNet",
-    "Id": 24
+    "Id": 23
   },
   {
     "Display": "NBC",

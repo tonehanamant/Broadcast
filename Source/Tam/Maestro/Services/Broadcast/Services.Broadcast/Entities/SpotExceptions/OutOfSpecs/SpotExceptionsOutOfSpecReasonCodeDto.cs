@@ -32,5 +32,9 @@
         /// </summary>
         /// <value>The label.</value>
         public string Label { get; set; }
+        /// <summary>
+        /// Gets or sets the count of reason codes
+        /// </summary>
+        public int Count { get; set; }
     }
 }

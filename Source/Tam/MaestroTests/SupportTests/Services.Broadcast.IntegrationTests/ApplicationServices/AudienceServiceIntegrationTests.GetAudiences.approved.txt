@@ -400,16 +400,6 @@
     "Id": 15
   },
   {
-    "Code": "C2-5",
-    "Display": "Children 2-5",
-    "Id": 339
-  },
-  {
-    "Code": "C6-11",
-    "Display": "Children 6-11",
-    "Id": 46
-  },
-  {
     "Code": "P2+",
     "Display": "Persons 2+",
     "Id": 419
@@ -423,5 +413,15 @@
     "Code": "P15-17",
     "Display": "Persons 15-17",
     "Id": 417
+  },
+  {
+    "Code": "K2-5",
+    "Display": "Kids 2-5",
+    "Id": 339
+  },
+  {
+    "Code": "K6-11",
+    "Display": "Kids 6-11",
+    "Id": 46
   }
 ]

@@ -1,0 +1,23 @@
+[
+  {
+    "Count": 30,
+    "Description": "affiliate content restriction",
+    "Id": 4,
+    "Label": "Affiliate",
+    "ReasonCode": 3
+  },
+  {
+    "Count": 10,
+    "Description": "spot aired outside daypart",
+    "Id": 2,
+    "Label": "Daypart",
+    "ReasonCode": 1
+  },
+  {
+    "Count": 20,
+    "Description": "genre content restriction",
+    "Id": 3,
+    "Label": "Genre",
+    "ReasonCode": 2
+  }
+]

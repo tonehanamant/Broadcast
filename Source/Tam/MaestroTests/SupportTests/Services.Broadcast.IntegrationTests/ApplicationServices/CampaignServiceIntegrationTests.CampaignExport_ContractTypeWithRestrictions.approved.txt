@@ -821,7 +821,7 @@
         [
           null,
           "2020-03-09T00:00:00",
-          133.33333333,
+          "ADU",
           "45 eq.",
           "ADU",
           "ADU",
@@ -832,7 +832,7 @@
         [
           null,
           "2020-03-16T00:00:00",
-          133.33333333,
+          "ADU",
           "45 eq.",
           "ADU",
           "ADU",
@@ -843,7 +843,7 @@
         [
           null,
           "2020-03-23T00:00:00",
-          133.33333333,
+          "ADU",
           "45 eq.",
           "ADU",
           "ADU",
@@ -855,7 +855,7 @@
       "Title": "Q1 2020",
       "TotalRow": [
         "1Q '20 Totals",
-        400.0,
+        "ADU",
         "-",
         "-",
         "-",
@@ -1480,7 +1480,7 @@
         [
           null,
           "2020-03-30T00:00:00",
-          133.33333333,
+          "ADU",
           "45 eq.",
           "ADU",
           "ADU",
@@ -1491,7 +1491,7 @@
         [
           null,
           "2020-03-30T00:00:00",
-          1.0,
+          "ADU",
           "15 eq.",
           "ADU",
           "ADU",
@@ -1502,7 +1502,7 @@
         [
           null,
           "2020-03-30T00:00:00",
-          1.0,
+          "ADU",
           "30",
           "ADU",
           "ADU",
@@ -1513,7 +1513,7 @@
         [
           null,
           "2020-03-30T00:00:00",
-          1.0,
+          "ADU",
           "60 eq.",
           "ADU",
           "ADU",
@@ -1524,7 +1524,7 @@
         [
           null,
           "2020-04-06T00:00:00",
-          133.33333333,
+          "ADU",
           "45 eq.",
           "ADU",
           "ADU",
@@ -1535,7 +1535,7 @@
         [
           null,
           "2020-04-06T00:00:00",
-          9.0,
+          "ADU",
           "60 eq.",
           "ADU",
           "ADU",
@@ -1547,7 +1547,7 @@
       "Title": "Q2 2020",
       "TotalRow": [
         "2Q '20 Totals",
-        278.66666667,
+        "ADU",
         "-",
         "-",
         "-",
@@ -1878,7 +1878,11 @@
         571.4,
         2857.2
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        71430.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2032,7 +2036,11 @@
         1600.0,
         4800.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        120000.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2186,7 +2194,11 @@
         528.0,
         1584.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        39600.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2340,7 +2352,11 @@
         544.0,
         1632.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        40800.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2494,7 +2510,11 @@
         528.0,
         1584.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        39600.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2652,7 +2672,11 @@
         3771.4,
         12457.2
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        311430.0
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2799,7 +2823,11 @@
         571.4,
         2857.2
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        71430.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -2953,7 +2981,11 @@
         1600.0,
         4800.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        120000.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -3107,7 +3139,11 @@
         528.0,
         1584.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        39600.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -3261,7 +3297,11 @@
         544.0,
         1632.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        40800.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -3415,7 +3455,11 @@
         528.0,
         1584.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        39600.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -3573,7 +3617,11 @@
         3771.4,
         12457.2
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        311430.0
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -3720,7 +3768,11 @@
         2098.7,
         13573.1
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        38525.0000,
+        38450.0000,
+        262352.5000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -3874,7 +3926,11 @@
         800.0,
         2400.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        60000.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4028,7 +4084,11 @@
         264.0,
         792.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        19800.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4182,7 +4242,11 @@
         272.0,
         816.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        20400.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4336,7 +4400,11 @@
         264.0,
         792.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        19800.0000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4494,7 +4562,11 @@
         3698.7,
         18373.1
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        38525.0,
+        38450.0,
+        382352.5
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4641,7 +4713,11 @@
         384.5,
         5001.5
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        38525.0000,
+        38450.0000,
+        48062.5000
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4788,7 +4864,11 @@
         384.5,
         5001.5
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        38525.0,
+        38450.0,
+        48062.5
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -4975,10 +5055,10 @@
         null,
         null,
         null,
-        133.33333333,
-        133.33333333,
-        133.33333333,
-        399
+        "ADU",
+        "ADU",
+        "ADU",
+        "ADU"
       ],
       "WeeksStartDate": [
         "2019-12-30T00:00:00",
@@ -5104,7 +5184,11 @@
         11626.0,
         48289.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        77050.0,
+        76900.0,
+        1053275.0
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -5251,7 +5335,11 @@
         0.0,
         1142.8
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        28570.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -5402,7 +5490,11 @@
         0.0,
         3200.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        80000.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -5553,7 +5645,11 @@
         0.0,
         1056.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        26400.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -5704,7 +5800,11 @@
         0.0,
         1088.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        27200.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -5855,7 +5955,11 @@
         0.0,
         1056.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        26400.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6007,7 +6111,11 @@
         0.0,
         7542.8
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        188570.0,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6154,7 +6262,11 @@
         0.0,
         1142.8
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        28570.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6305,7 +6417,11 @@
         0.0,
         3200.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        80000.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6456,7 +6572,11 @@
         0.0,
         1056.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        26400.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6607,7 +6727,11 @@
         0.0,
         1088.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        27200.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6758,7 +6882,11 @@
         0.0,
         1056.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        26400.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -6910,7 +7038,11 @@
         0.0,
         7542.8
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        188570.0,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7057,7 +7189,11 @@
         384.5,
         8426.9
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        124160.0000,
+        48062.5000,
+        38450.0000
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7208,7 +7344,11 @@
         0.0,
         1600.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        40000.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7359,7 +7499,11 @@
         0.0,
         528.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        13200.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7510,7 +7654,11 @@
         0.0,
         544.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        13600.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7661,7 +7809,11 @@
         0.0,
         528.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        13200.0000,
+        0.0,
+        0.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7813,7 +7965,11 @@
         384.5,
         11626.9
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        204160.0,
+        48062.5,
+        38450.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -7960,7 +8116,11 @@
         384.5,
         4998.5
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        38450.0000,
+        48062.5000,
+        38450.0000
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -8107,7 +8267,11 @@
         384.5,
         4998.5
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        38450.0,
+        48062.5,
+        38450.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -8278,8 +8442,8 @@
       "TableTitle": "2Q '20 ADU",
       "TotalWeeksInQuarter": 13,
       "UnitsValues": [
-        136.33333333,
-        142.33333333,
+        "ADU",
+        "ADU",
         null,
         null,
         null,
@@ -8291,7 +8455,7 @@
         null,
         null,
         null,
-        278
+        "ADU"
       ],
       "WeeksStartDate": [
         "2020-03-30T00:00:00",
@@ -8411,7 +8575,11 @@
         769.0,
         31711.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        619750.0,
+        96125.0,
+        76900.0
+      ],
       "Months": [
         {
           "Item1": "April",
@@ -8481,7 +8649,7 @@
       "Binghamton"
     ]
   },
-  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n",
   "PostingType": "NTI",
   "ProposalCampaignTotalsTable": {
     "HasSecondaryAudiences": false,

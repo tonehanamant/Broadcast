@@ -1,7 +1,12 @@
-﻿namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
-    /// <summary></summary>
-    public class SpotExceptionsOutOfSpecReasonCodeResultDto
+    public class SpotExceptionsOutOfSpecReasonCodeResultDto_V2
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -25,6 +30,10 @@
         /// Gets or sets the label.
         /// </summary>
         /// <value>The label.</value>
-        public string Label { get; set; }        
+        public string Label { get; set; }
+        /// <summary>
+        /// Gets or sets the count of spot exceptions oos
+        /// </summary>
+        public int Count { get; set; }
     }
 }

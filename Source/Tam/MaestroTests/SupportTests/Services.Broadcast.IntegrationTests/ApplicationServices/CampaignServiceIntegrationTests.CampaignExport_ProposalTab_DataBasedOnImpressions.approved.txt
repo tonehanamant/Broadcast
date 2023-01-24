@@ -132,7 +132,11 @@
         1104.0,
         2209.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        221999.9999
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -287,7 +291,11 @@
         1104.0,
         2209.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        221999.9999
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -442,7 +450,11 @@
         1104.0,
         2209.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        221999.9999
+      ],
       "Months": [
         {
           "Item1": "January",
@@ -503,7 +515,7 @@
     "CoveragePercentage": 80.0,
     "PreferentialMarketsName": []
   },
-  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n",
   "PostingType": "NTI",
   "ProposalCampaignTotalsTable": {
     "HasSecondaryAudiences": false,

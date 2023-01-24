@@ -295,6 +295,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ISpotExceptionsUnpostedService, SpotExceptionsUnpostedService>();
             unityContainer.RegisterType<ISpotExceptionsSyncService, SpotExceptionsSyncService>();
             unityContainer.RegisterType<ISpotExceptionsApiClient, SpotExceptionsApiClient>();
+            unityContainer.RegisterType<ISpotExceptionsOutOfSpecServiceV2, SpotExceptionsOutOfSpecServiceV2>();
 
             //locking service
             unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();

@@ -31,7 +31,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<ISpotExceptionsOutOfSpecRepository> _SpotExceptionsOutOfSpecRepositoryMock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
-        
+
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IAabEngine> _AabEngine;
         private Mock<IGenreCache> _GenreCacheMock;
@@ -657,8 +657,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new List<ProgramNameDto>
-                    {
-                    }
+                {
+                }
                 ));
 
             _GenreCacheMock
@@ -684,8 +684,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new List<ProgramNameDto>
-                    {
-                    }
+                {
+                }
                 ));
 
             _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
@@ -793,14 +793,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             string programNameQuery = "WNRUSH";
             _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new List<ProgramNameDto>
-                    {
-                    }
+                {
+                }
                 ));
 
             _SpotExceptionsOutOfSpecRepositoryMock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new List<ProgramNameDto>
-                    {
-                    }
+                {
+                }
                 ));
 
             _GenreCacheMock
@@ -1021,7 +1021,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _SpotExceptionsOutOfSpecRepositoryMock
                 .Setup(x => x.GetOutOfSpecSpotsDoneStationsAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecToDoStations));
-            
+
             // Act           
             var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecStationsAsync(spotExceptionsOutofSpecsStationRequest);
 
@@ -1300,7 +1300,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     FlightEndDate = new DateTime(2022, 12, 25),
                     DaypartCode = "EMN",
                     GenreName = "INFORMATIONAL/NEWS",
-                    DaypartDetail = 
+                    DaypartDetail =
                     {
                         Id = 0,
                         Code = null,
@@ -1722,7 +1722,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             // Assert
             Assert.AreEqual(expectedResult, result);
-        }        
+        }
 
         [Test]
         [TestCase("ActionAdventure", 1, "ActionAdventure", "", "")]
@@ -1827,7 +1827,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         private List<SpotExceptionsOutOfSpecGroupingDto> _GetOutOfSpecGroupingDoneData()
         {
             return new List<SpotExceptionsOutOfSpecGroupingDto>()
-            {                
+            {
                 new SpotExceptionsOutOfSpecGroupingDto
                 {
                     PlanId = 334,

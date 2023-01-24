@@ -450,6 +450,7 @@
     <Compile Include="UnitTests\ApplicationServices\InventoryErrorFilesMigrationServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptionsSyncServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecServiceUnitTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecServiceUnitTestsV2.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsRecommendedPlanServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsUnpostedServiceUnitTests.cs" />

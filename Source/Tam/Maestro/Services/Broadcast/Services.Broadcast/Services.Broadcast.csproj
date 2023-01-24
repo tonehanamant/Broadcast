@@ -541,6 +541,7 @@
     <Compile Include="ApplicationServices\Plan\PlanIsciService.cs" />
     <Compile Include="ApplicationServices\SpotExceptionsSyncService.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecService.cs" />
+    <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecServiceV2.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsRecommendedPlanService.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsService.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsUnpostedService.cs" />
@@ -659,6 +660,8 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingResults.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecReasonCodeDtoV2.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecReasonCodeResultDtoV2.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecsDoneDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\RecommendedPlans\SpotExceptionsRecommendedPlanGroupingResults.cs" />
@@ -1567,6 +1570,7 @@
     <Compile Include="Repositories\SharedFolderFilesRepository.cs" />
     <Compile Include="Repositories\SpotExceptionsIngestJobRepository.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsOutOfSpecRepository.cs" />
+    <Compile Include="Repositories\SpotExceptions\SpotExceptionsOutOfSpecRepositoryV2.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsRecommendedPlanRepository.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsRepository.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsUnpostedRepository.cs" />

@@ -198,8 +198,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             EstimateId = activePlan.EstimateId,
                             Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             ReasonLabel = activePlan.SpotExceptionsOutOfSpecReasonCode.Label,
-                            MarketRank = activePlan.MarketRank,                            
-                            DMA = _IsSpotExceptionEnabled.Value? marketRank + fourHundred: activePlan.DMA,
+                            MarketRank = activePlan.MarketRank,
+                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA,
                             Market = activePlan.Market,
                             Station = activePlan.StationLegacyCallLetters,
                             TimeZone = activePlan.TimeZone,
@@ -465,7 +465,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _LogInfo($"Starting: Saving Decisions to Out of Spec");
             try
             {
-                if(spotExceptionsOutOfSpecSaveRequest.Decisions.All(x => x.TodoId != null))
+                if (spotExceptionsOutOfSpecSaveRequest.Decisions.All(x => x.TodoId != null))
                 {
                     isSaved = await _SaveOutOfSpecToDoDecisionsAsync(spotExceptionsOutOfSpecSaveRequest, userName);
                 }
@@ -525,7 +525,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _LogInfo($"Starting: Saving Decisions to Out of Spec Done");
             try
             {
-                if(!spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.Comments).First().IsEmpty())
+                if (!spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.Comments).First().IsEmpty())
                 {
                     isSaved = await _SaveOutOfSpecCommentsDoneAsync(spotExceptionsOutOfSpecSaveRequest);
                 }
@@ -775,7 +775,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
 
             return isSpotExceptionsOutOfSpecDoneDecisionSaved;
-        }             
+        }
 
         private string _GetAdvertiserName(Guid? masterId)
         {
@@ -818,7 +818,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     programs = programs.Union(programsSpotExceptionDecisions).DistinctBy(x => x.OfficialProgramName).ToList();
                 }
-                                
+
                 _RemoveVariousAndUnmatchedFromPrograms(programs);
 
                 combinedProgramNames = programs.Select(x => x.OfficialProgramName).ToList();
@@ -861,7 +861,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private void _RemoveVariousAndUnmatchedFromPrograms(List<ProgramNameDto> result)
         {
             result.Where(x => x.GenreId.HasValue).ToList().RemoveAll(x => _GenreCache.GetGenreLookupDtoById(x.GenreId.Value).Display.Equals("Various", StringComparison.OrdinalIgnoreCase)
-                    || x.OfficialProgramName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase)); 
+                    || x.OfficialProgramName.Equals("Unmatched", StringComparison.OrdinalIgnoreCase));
         }
     }
 }

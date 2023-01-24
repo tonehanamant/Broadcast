@@ -234,7 +234,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 return outOfSpecGroupingToDo;
             }));
         }
-               
+
         /// <inheritdoc />
         public Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecGroupingDoneAsync(DateTime weekStartDate, DateTime weekEndDate)
         {
@@ -347,17 +347,17 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
             return _InReadUncommitedTransaction(context =>
             {
-                 spotExceptionsToDoInventorySources = context.spot_exceptions_out_of_specs
-                    .Where(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.recommended_plan_id == planId &&
-                            spotExceptionsOutOfSpecDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDb.program_air_time <= weekEndDate)
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
-                    .Select(r => r.SpotExceptionsOutOfSpec.inventory_source_name ?? "Unknown")
-                    .ToList();
+                spotExceptionsToDoInventorySources = context.spot_exceptions_out_of_specs
+                   .Where(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.recommended_plan_id == planId &&
+                           spotExceptionsOutOfSpecDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDb.program_air_time <= weekEndDate)
+                   .GroupJoin(
+                       context.stations
+                       .Include(stationDb => stationDb.market),
+                       spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.station_legacy_call_letters,
+                       stationDb => stationDb.legacy_call_letters,
+                       (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
+                   .Select(r => r.SpotExceptionsOutOfSpec.inventory_source_name ?? "Unknown")
+                   .ToList();
 
                 return spotExceptionsToDoInventorySources;
 
@@ -803,7 +803,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 var foundDecisions = context.spot_exceptions_out_of_spec_done_decisions.Where(x => decisionIds.Contains(x.spot_exceptions_out_of_spec_done_id)).ToList();
                 foundDecisions.ForEach(decision =>
                 {
-                   var request = spotExceptionsOutOfSpecDoneDecisions.Where(x => x.Id == decision.spot_exceptions_out_of_spec_done_id).Single();
+                    var request = spotExceptionsOutOfSpecDoneDecisions.Where(x => x.Id == decision.spot_exceptions_out_of_spec_done_id).Single();
 
                     if (!(string.IsNullOrEmpty(request.ProgramName) && string.IsNullOrEmpty(request.GenreName) && string.IsNullOrEmpty(request.DaypartCode)))
                     {
