@@ -242,7 +242,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IPlanValidator planValidator,
                                   ISharedFolderService sharedFolderService,
                                   IAudienceService audienceService,
-                                  ICreativeLengthEngine creativeLengthEngine,
+                                  ICreativeLengthEngine creativeLengthEngine,                                  
                                   IAsyncTaskHelper asyncTaskHelper,
                                   IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
@@ -546,6 +546,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     throw new CadentException("The current plan that you are viewing has been updated. Please close the plan and reopen in order to view the most current information");
                 }
+
+                _PlanValidator.ValidatePlanNotCrossQuartersForPricing(plan);
 
                 var job = new PlanPricingJob
                 {

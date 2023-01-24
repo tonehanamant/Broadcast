@@ -26,6 +26,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.IntegrationTests.TestData;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,6 +81,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IAabEngine> _AabEngine;
         private Mock<IAudienceService> _AudienceServiceMock;
         private Mock<IDaypartCache> _DaypartCacheMock;
+        private Mock<IPlanValidator> _PlanValidator;
+
         private Mock<ISpotLengthRepository> _SpotLengthRepositoryMock;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IConfigurationSettingsHelper> _IConfigurationSettingsHelperMock;
@@ -122,7 +125,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 _AabEngine.Object,
                 _AudienceServiceMock.Object,
                 _DaypartCacheMock.Object,
-                _IConfigurationSettingsHelperMock.Object
+                _PlanValidator.Object,
+                _IConfigurationSettingsHelperMock.Object                
             );
         }
 
@@ -164,6 +168,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _AudienceServiceMock = new Mock<IAudienceService>();
             _DaypartCacheMock = new Mock<IDaypartCache>();
             _IConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
+            _PlanValidator = new Mock<IPlanValidator>();
 
             _MarketCoverageRepositoryMock
                 .Setup(x => x.GetLatestMarketCoverages(It.IsAny<IEnumerable<int>>()))
@@ -231,6 +236,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeekById(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeek);
+
+            _DataRepositoryFactoryMock
+               .Setup(x => x.GetDataRepository<ISpotLengthRepository>())
+               .Returns(_SpotLengthRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                .Setup(x => x.GetDataRepository<ISpotLengthRepository>())

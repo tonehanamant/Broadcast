@@ -20,6 +20,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.BuyingResults;
 using Services.Broadcast.ReportGenerators.ProgramLineup;
 using Services.Broadcast.Repositories;
+using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -281,6 +282,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IAudienceService _AudienceService;
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDaypartCache _DaypartCache;
+        private readonly IPlanValidator _PlanValidator;
+
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
@@ -310,7 +313,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                                   IFeatureToggleHelper featureToggleHelper,
                                   IAabEngine aabEngine,
                                   IAudienceService audienceService,
-                                  IDaypartCache daypartCache, IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
+                                  IDaypartCache daypartCache, 
+                                  IPlanValidator planValidator,
+                                  IConfigurationSettingsHelper configurationSettingsHelper) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _PlanBuyingRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanBuyingRepository>();
@@ -345,6 +350,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _AudienceService = audienceService;
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _DaypartCache = daypartCache;
+            _PlanValidator = planValidator;
+
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
@@ -463,6 +470,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UsePlanForBuyingJob(planBuyingParametersDto, plan);
 
                 ValidateAndApplyMargin(planBuyingParametersDto);
+
+                _PlanValidator.ValidatePlanNotCrossQuartersForPricing(plan);
 
                 var job = new PlanBuyingJob
                 {

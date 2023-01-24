@@ -36,6 +36,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
         private Mock<IFeatureToggleHelper> _FeatureToggleHelper;
         private Mock<IAabEngine> _AabEngine;
 
+        private Mock<IQuarterCalculationEngine> _QuartersCalculationEngine;
+
         private const int HUT_BOOK_ID = 55;
         private const int SHARE_BOOK_ID = 79;
 
@@ -88,13 +90,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             _AabEngine = new Mock<IAabEngine>();
 
+            _QuartersCalculationEngine = new Mock<IQuarterCalculationEngine>();
+
             _planValidator = new PlanValidator(_broadcastAudiencesCacheMock.Object,
                 _ratingForecastServiceMock.Object
                 , _broadcastDataRepositoryFactoryMock.Object
                 , _creativeLengthEngineMock.Object
                 , _AabEngine.Object
                 , _FeatureToggleHelper.Object
-                , _PlanMarketSovCalculator.Object);
+                , _PlanMarketSovCalculator.Object
+                , _QuartersCalculationEngine.Object);
         }
 
         [Test]
@@ -1767,5 +1772,105 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
             Assert.That(() => _planValidator.ValidatePlan(plan),
                 Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Weekdays weighting and weekend weighting must sum up to 100"));
         }        
+
+        [Test]
+        [TestCase(false, false, 0, true)]
+        [TestCase(true, false, 0, true)]
+        [TestCase(false, true, 0, true)]
+        [TestCase(true, true, 1, true)]
+        [TestCase(true, true, 2, false)]
+        public void ValidatePlanNotCrossQuartersForPricing(bool hasStartDate, bool hasEndDate, int quarterCount, bool expectSuccess)
+        {
+            // Arrange
+            var plan = new PlanDto();
+            if (hasStartDate)
+            {
+                plan.FlightStartDate = new DateTime();
+            }
+            if (hasEndDate)
+            {
+                plan.FlightEndDate = new DateTime();
+            }
+
+            var quarters = new List<QuarterDetailDto>();
+            for(int i = 0; i< quarterCount; i++)
+            {
+                quarters.Add(new QuarterDetailDto());
+            }
+            _QuartersCalculationEngine.Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(quarters);
+
+            Exception caught = null;
+
+            try
+            {
+                _planValidator.ValidatePlanNotCrossQuartersForPricing(plan);
+            }
+            catch(Exception ex)
+            {
+                caught = ex;
+            }
+
+            if (expectSuccess)
+            {
+                Assert.IsNull(caught);
+            }
+            else
+            {
+                Assert.NotNull(caught);
+                Assert.IsTrue(caught is CadentException);
+                Assert.AreEqual("Cross-Quarter flighting is invalid for Pricing.", caught.Message);
+            }
+        }
+
+        [Test]
+        [TestCase(false, false, 0, true)]
+        [TestCase(true, false, 0, true)]
+        [TestCase(false, true, 0, true)]
+        [TestCase(true, true, 1, true)]
+        [TestCase(true, true, 2, false)]
+        public void ValidatePlanNotCrossQuartersForBuying(bool hasStartDate, bool hasEndDate, int quarterCount, bool expectSuccess)
+        {
+            // Arrange
+            var plan = new PlanDto();
+            if (hasStartDate)
+            {
+                plan.FlightStartDate = new DateTime();
+            }
+            if (hasEndDate)
+            {
+                plan.FlightEndDate = new DateTime();
+            }
+
+            var quarters = new List<QuarterDetailDto>();
+            for (int i = 0; i < quarterCount; i++)
+            {
+                quarters.Add(new QuarterDetailDto());
+            }
+            _QuartersCalculationEngine.Setup(s => s.GetAllQuartersBetweenDates(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(quarters);
+
+            Exception caught = null;
+
+            try
+            {
+                _planValidator.ValidatePlanNotCrossQuartersForBuying(plan);
+            }
+            catch (Exception ex)
+            {
+                caught = ex;
+            }
+
+            if (expectSuccess)
+            {
+                Assert.IsNull(caught);
+            }
+            else
+            {
+                Assert.NotNull(caught);
+                Assert.IsTrue(caught is CadentException);
+                Assert.AreEqual("Cross-Quarter flighting is invalid for Buying.", caught.Message);
+            }
+        }
     }
 }

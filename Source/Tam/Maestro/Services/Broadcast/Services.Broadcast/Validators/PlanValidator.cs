@@ -44,6 +44,7 @@ namespace Services.Broadcast.Validators
         /// <param name="totalImpressions">The total impressions.</param>
         void ValidateImpressionsPerUnit(double impressionsPerUnit, double totalImpressions);
 
+
         /// <summary>
         /// Validates the plan in pricing.
         /// </summary>
@@ -57,12 +58,26 @@ namespace Services.Broadcast.Validators
         void ValidatePlanForBuying(PlanDto plan);
 
         /// <summary>
+        /// Validates the plan does not cross quarters.
+        /// For use within the Pricing context.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void ValidatePlanNotCrossQuartersForPricing(PlanDto plan);
+
+        /// <summary>
+        /// Validates the plan does not cross quarters.
+        /// For use within the Buying context.
+        /// </summary>
+        /// <param name="plan">The plan.</param>
+        void ValidatePlanNotCrossQuartersForBuying(PlanDto plan);
+
+        /// <summary>
         /// Validates the weekly breakdown item weights are 100% each.
         /// </summary>
         /// <param name="dayparts">The dayparts.</param>
         /// <param name="creativeLengths">The creative lengths.</param>
         /// <param name="deliveryType">Type of the delivery.</param>
-        void ValidateWeeklyBreakdownItemWeights(List<StandardDaypartWeightingGoal> dayparts, List<CreativeLength> creativeLengths, PlanGoalBreakdownTypeEnum deliveryType);
+        void ValidateWeeklyBreakdownItemWeights(List<StandardDaypartWeightingGoal> dayparts, List<CreativeLength> creativeLengths, PlanGoalBreakdownTypeEnum deliveryType);        
     }
 
     public class PlanValidator : IPlanValidator
@@ -76,6 +91,8 @@ namespace Services.Broadcast.Validators
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
         private readonly IRatingForecastService _RatingForecastService;
+
+        private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
 
         const string INVALID_PLAN_NAME = "Invalid plan name.";
         const string INVALID_PRODUCT = "Invalid product";
@@ -122,6 +139,9 @@ namespace Services.Broadcast.Validators
         const string INVALID_CUSTOM_DAYPART_NAME = "Invalid daypart name";
         const string INVALID_DAYPART_WEIGHT_TOTAL = "Sum Weight of all Dayparts must equal 100%.";
 
+        const string INVALID_FLIGHT_CROSS_QUARTERS_PRICING = "Cross-Quarter flighting is invalid for Pricing.";
+        const string INVALID_FLIGHT_CROSS_QUARTERS_BUYING = "Cross-Quarter flighting is invalid for Buying.";
+
         public PlanValidator(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
             , IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -129,6 +149,7 @@ namespace Services.Broadcast.Validators
             , IAabEngine aabEngine
             , IFeatureToggleHelper featureToggleHelper
             , IPlanMarketSovCalculator planMarketSovCalculator
+            , IQuarterCalculationEngine quarterCalculationEngine
             )
         {
             _RatingForecastService = ratingForecastService;
@@ -144,6 +165,7 @@ namespace Services.Broadcast.Validators
             _AabEngine = aabEngine;
             _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
+            _QuarterCalculationEngine = quarterCalculationEngine;
         }
 
         /// <inheritdoc/>
@@ -204,6 +226,36 @@ namespace Services.Broadcast.Validators
             _ValidatePrimaryAudience(plan);
             //_ValidateWeeklyBreakdownWeeks(plan);
             _ValidateMarkets(plan);
+        }
+
+        /// <inheritdoc/>
+        public void ValidatePlanNotCrossQuartersForPricing(PlanDto plan)
+        {
+            if (!plan.FlightStartDate.HasValue || !plan.FlightEndDate.HasValue)
+            {
+                return;
+            }
+
+            var quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
+            if (quarters.Count > 1)
+            {
+                throw new PlanValidationException(INVALID_FLIGHT_CROSS_QUARTERS_PRICING);
+            }
+        }
+
+        /// <inheritdoc/>
+        public void ValidatePlanNotCrossQuartersForBuying(PlanDto plan)
+        {
+            if (!plan.FlightStartDate.HasValue || !plan.FlightEndDate.HasValue)
+            {
+                return;
+            }
+
+            var quarters = _QuarterCalculationEngine.GetAllQuartersBetweenDates(plan.FlightStartDate.Value, plan.FlightEndDate.Value);
+            if (quarters.Count > 1)
+            {
+                throw new PlanValidationException(INVALID_FLIGHT_CROSS_QUARTERS_BUYING);
+            }
         }
 
         private void _ValidateStopWord(PlanDto plan)
