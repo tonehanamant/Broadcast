@@ -44,6 +44,8 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         public async Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
             return _InReadUncommitedTransaction(context =>
             {
                 var spotExceptionsOutOfSpecReasonCodesEntities = from oos in context.spot_exceptions_out_of_specs

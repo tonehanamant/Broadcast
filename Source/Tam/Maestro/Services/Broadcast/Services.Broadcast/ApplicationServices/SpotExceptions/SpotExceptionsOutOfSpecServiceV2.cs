@@ -60,11 +60,11 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
                     Count = spotExceptionsOutOfSpecReasonCode.Count
                 }).OrderBy(x => x.Label).ToList();
 
-                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Reason Codes V2");
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Spot Reason Codes V2");
             }
             catch (Exception ex)
             {
-                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Reason Codes V2";
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Spot Reason Codes V2";
                 throw new CadentException(msg, ex);
             }
 

@@ -165,7 +165,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecReasonCodesAsyncV2(request));
 
             // Assert
-            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Reason Codes V2", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spot Reason Codes V2", result.Message);
         }
     }
 }
