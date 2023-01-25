@@ -312,10 +312,13 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.DownloadInventoeyForOpenMarket(jobId);
+                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
+                // at that time this API will be directly called by FE from inventory microservice
+
+               // return _InventoryManagementApiClient.DownloadInventoeyForOpenMarket(jobId);
             }
-            else
-            {
+            //else
+            //{
                 Tuple<string, Stream, string> result;
                 var job = _InventoryExportJobRepository.GetJob(jobId);
 
@@ -330,7 +333,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
 
                 result = _GetFileFromFileService(job);
                 return result;
-            }
+           // }
         }
 
         private Tuple<string, Stream, string> _BuildPackageReturn(Stream fileStream, string fileName)

@@ -289,10 +289,12 @@ namespace Services.Broadcast.ApplicationServices
             }
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-               return _InventoryApiClient.DownloadGeneratedScxFile(fileId);
+                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
+                // at that time this API will be directly called by FE from inventory microservice
+                
+                // return _InventoryApiClient.DownloadGeneratedScxFile(fileId);
             }
-            else
-            {
+            
                 Tuple<string, Stream, string> result;
 
                 if (_EnableSharedFileServiceConsolidation.Value)
@@ -311,8 +313,7 @@ namespace Services.Broadcast.ApplicationServices
                 }
 
                 result = _GetFileFromFileService(fileId);
-                return result;
-            }
+                return result;            
         }
 
         public int QueueScxOpenMarketsGenerationJob(InventoryScxOpenMarketsDownloadRequest inventoryScxOpenMarketsDownloadRequest, string userName, DateTime currentDate)
@@ -598,10 +599,13 @@ namespace Services.Broadcast.ApplicationServices
             }
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-               return _InventoryApiClient.DownloadGeneratedScxFileForOpenMarket(fileId);
+                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
+                // at that time this API will be directly called by FE from inventory microservice
+
+                //return _InventoryApiClient.DownloadGeneratedScxFileForOpenMarket(fileId);
             }
-            else
-            {
+           // else
+            //{
                 Tuple<string, Stream, string> result;
 
                 if (_EnableSharedFileServiceConsolidation.Value)
@@ -621,7 +625,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 result = _GetOpenMarketFileFromFileService(fileId);
                 return result;
-            }
+            //}
         }
 
         private Tuple<string, Stream, string> _GetOpenMarketFileFromFileService(int fileId)

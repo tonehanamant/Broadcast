@@ -909,10 +909,13 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryApiClient.DownloadErrorFile(fileId);
+                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
+                // at that time this API will be directly called by FE from inventory microservice
+
+               // return _InventoryApiClient.DownloadErrorFile(fileId);
             }
-            else
-            {
+            //else
+            //{
                 Tuple<string, Stream, string> result;
                 if (_EnableSharedFileServiceConsolidation.Value)
                 {
@@ -929,7 +932,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 result = _RetrieveErrorFileWithFileService(fileId);
                 return result;
-            }
+            //}
         }
 
         private Tuple<string, Stream, string> _RetrieveErrorFileWithFileService(int fileId)
