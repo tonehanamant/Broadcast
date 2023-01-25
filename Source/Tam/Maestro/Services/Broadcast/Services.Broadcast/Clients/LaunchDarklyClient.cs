@@ -1,5 +1,8 @@
-﻿using Cadent.Library.Utilities.Standard.Common.Launch_Darkly;
+﻿using BroadcastLogging;
+using Cadent.Library.Utilities.Standard.Common.Launch_Darkly;
+using log4net;
 using System;
+using System.Runtime.CompilerServices;
 using Tam.Maestro.Common;
 
 namespace Services.Broadcast.Clients
@@ -38,9 +41,11 @@ namespace Services.Broadcast.Clients
     /// <inheritdoc />
     public class LaunchDarklyClient : ILaunchDarklyClient
     {
+        private readonly ILog _Log;
         private readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
         public LaunchDarklyClient(IConfigurationSettingsHelper configurationSettingsHelper)
         {
+            _Log = LogManager.GetLogger(GetType());
             _ConfigurationSettingsHelper = configurationSettingsHelper;
         }
         /// <inheritdoc />
@@ -85,15 +90,44 @@ namespace Services.Broadcast.Clients
         private string _GetSdkKey()
         {
             var globalKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.LaunchDarklyProjectSdkKey);
+
             if (!string.IsNullOrEmpty(globalKey))
             {
                 return globalKey;
-            } else
-            {
-                var encryptedKey = _ConfigurationSettingsHelper.GetConfigValue<string>(ConfigKeys.LaunchDarklySdkKey);
-                var decryptedKey = EncryptionHelper.DecryptString(encryptedKey, EncryptionHelper.EncryptionKey);
-                return decryptedKey;
             }
+
+            // maybe we are in a debug...
+            var encryptedDebugLaunchDarklyProjectSdkKey = _ConfigurationSettingsHelper.GetConfigValue<string>("encryptedDebugLaunchDarklyProjectSdkKey");
+            globalKey = EncryptionHelper.DecryptString(encryptedDebugLaunchDarklyProjectSdkKey, EncryptionHelper.EncryptionKey);
+
+            if (!string.IsNullOrEmpty(globalKey))
+            {
+                _LogWarning("*** WARNING *** Using a debug LaunchDarkly SDK Key.");
+                return globalKey;
+            }
+
+            // this means we don't have one at all
+            var msg = $"*** ERROR *** Missing the LaunchDarkly SDK Key : '{ConfigKeys.LaunchDarklyProjectSdkKey}'";
+            _LogError(msg);
+            throw new InvalidOperationException(msg);
+        }
+
+        /// <summary>
+        /// Logs the warning.
+        /// </summary>
+        protected virtual void _LogWarning(string message, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Warn(logMessage.ToJson());
+        }
+
+        /// <summary>
+        /// Logs the error.
+        /// </summary>
+        protected virtual void _LogError(string message, Exception ex = null, [CallerMemberName] string memberName = "")
+        {
+            var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
+            _Log.Error(logMessage.ToJson(), ex);
         }
     }
 }
