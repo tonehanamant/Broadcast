@@ -30,7 +30,7 @@ namespace Services.Broadcast.BusinessEngines
         private const double _DefaultImpressionsPerUnitForOldPlans = 500000;
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
-        private IStandardDaypartRepository _StandardDaypartRepository;
+        private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public WeeklyBreakdownEngineV2(IPlanValidator planValidator,
@@ -333,7 +333,7 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var item in weeklyBreakdownByWeekByDaypart)
             {
-                var planDaypart = plan.Dayparts.Where(x => x.DaypartUniquekey == item.DaypartUniquekey).FirstOrDefault();
+                var planDaypart = plan.Dayparts.FirstOrDefault(x => x.DaypartUniquekey == item.DaypartUniquekey);
                 if (planDaypart != null)
                 {
                     planDaypartId = planDaypart.PlanDaypartId;
@@ -561,9 +561,8 @@ namespace Services.Broadcast.BusinessEngines
                     d.WeightingGoalPercent = weightedDayparts.Single(w => w.DaypartUniquekey == d.DaypartUniquekey).WeightingGoalPercent;
                 });
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-
                 throw new CadentException("Same Daypart with same Organization and Name are not allowed");
             }
 
@@ -659,7 +658,7 @@ namespace Services.Broadcast.BusinessEngines
             }
                 foreach (var week in request.Weeks)
                 {
-                    if (week.IsLocked != true)
+                    if (!week.IsLocked)
                     {
                         week.WeeklyBudget = 0;
                         week.WeeklyUnits = 0;
@@ -682,7 +681,7 @@ namespace Services.Broadcast.BusinessEngines
             result.TotalActiveDays = request.Weeks.Sum(x => x.NumberOfActiveDays);
             result.TotalBudget = request.Weeks.Sum(x => x.WeeklyBudget);
             result.TotalUnits = request.Weeks.Sum(x => x.WeeklyUnits);
-            result.TotalImpressions = request.Weeks.Sum(x => x.WeeklyImpressions); ;
+            result.TotalImpressions = request.Weeks.Sum(x => x.WeeklyImpressions);
             result.TotalRatingPoints = request.Weeks.Sum(x => x.WeeklyRatings);
             result.TotalImpressionsPercentage = totalImpressionsPercentage;
 
@@ -1326,7 +1325,7 @@ namespace Services.Broadcast.BusinessEngines
                 List<int> daypartDayIds = _GetDaypartDayIds(request.Dayparts);
                 var activeDays = CalculatorHelper.CalculateActiveDays(week.WeekStartDate, week.WeekEndDate, request.FlightDays, request.FlightHiatusDays, daypartDayIds, out string activeDaysString);
 
-                foreach (var creativeLength in creativeLengths)
+                foreach (var spotLenghtId in creativeLengths.Select(c => c.SpotLengthId))
                 {
                     resultWeeks.Add(new WeeklyBreakdownWeek
                     {
@@ -1335,8 +1334,8 @@ namespace Services.Broadcast.BusinessEngines
                         StartDate = week.WeekStartDate,
                         EndDate = week.WeekEndDate,
                         MediaWeekId = week.Id,
-                        SpotLengthId = creativeLength.SpotLengthId,
-                        SpotLengthDuration = _GetWeeklySpotLengthDuration(creativeLength.SpotLengthId)
+                        SpotLengthId = spotLenghtId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(spotLenghtId)
                     });
                 }
             }
@@ -1394,7 +1393,7 @@ namespace Services.Broadcast.BusinessEngines
            List<WeeklyBreakdownWeek> weeks,
            double totalImpressions)
         {
-            var availableWeeks = weeks.Where(w => w.IsLocked == false && w.NumberOfActiveDays > 0).ToList();
+            var availableWeeks = weeks.Where(w => !w.IsLocked && w.NumberOfActiveDays > 0).ToList();
             if (!availableWeeks.Any())
             {
                 return;
@@ -1459,7 +1458,7 @@ namespace Services.Broadcast.BusinessEngines
 
             foreach (var existingWeek in existingWeeks)
             {
-                foreach (var creativeLength in creativeLengths)
+                foreach (var spotLengthId in creativeLengths.Select(c => c.SpotLengthId))
                 {
                     weeks.Add(new WeeklyBreakdownWeek
                     {
@@ -1468,8 +1467,8 @@ namespace Services.Broadcast.BusinessEngines
                         StartDate = existingWeek.StartDate,
                         EndDate = existingWeek.EndDate,
                         MediaWeekId = existingWeek.MediaWeekId,
-                        SpotLengthId = creativeLength.SpotLengthId,
-                        SpotLengthDuration = _GetWeeklySpotLengthDuration(creativeLength.SpotLengthId),
+                        SpotLengthId = spotLengthId,
+                        SpotLengthDuration = _GetWeeklySpotLengthDuration(spotLengthId),
                         IsLocked = existingWeek.IsLocked
                     });
                 }
@@ -1515,14 +1514,14 @@ namespace Services.Broadcast.BusinessEngines
             if (!weekIds.Any())
                 return result;
 
-            var totalWeeks = weekIds.Count();
+            var totalWeeks = weekIds.Count;
             var impressionsPerWeek = Math.Floor(totalImpressions / totalWeeks);
 
             // add undistributed impressions to the first week
             var undistributedImpressions = totalImpressions - (totalWeeks * impressionsPerWeek);
             var impressionsForFirstWeek = Math.Floor(impressionsPerWeek + undistributedImpressions);
 
-            for (var i = 0; i < weekIds.Count(); i++)
+            for (var i = 0; i < weekIds.Count; i++)
             {
                 var impressions = i == 0 ? impressionsForFirstWeek : impressionsPerWeek;
                 var weekId = weekIds[i];

@@ -1,6 +1,5 @@
 ﻿using System;
 
-/// <summary></summary>
 namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
 {
     /// <summary></summary>

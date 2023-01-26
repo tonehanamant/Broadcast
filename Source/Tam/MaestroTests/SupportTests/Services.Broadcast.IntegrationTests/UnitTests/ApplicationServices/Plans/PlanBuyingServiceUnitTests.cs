@@ -2025,10 +2025,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
             // Act
-            service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
+            await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
 
             // Assert
-            Assert.IsTrue(planVersionBuyingResultIds.Count(x => x <= 100) == 0);
+            Assert.IsFalse(planVersionBuyingResultIds.Any(x => x <= 100));
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
         }
 

@@ -45,8 +45,8 @@ namespace Services.Broadcast
         }
         public T GetConfigValueWithDefault<T>(string key, T defaultValue)
         {
-          
-            T result = default(T);
+
+            T result;
            
             object value;
             if (_ConfigDataDictionary.Value.ContainsKey(key))
@@ -57,7 +57,7 @@ namespace Services.Broadcast
                      result = (T)TypeDescriptor.GetConverter(typeof(T)).ConvertFrom(value.ToString());
                      
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     result = defaultValue;
                     _LogWarning($"The key '{key}' doesn't contain any value hence default value is returned");
@@ -75,7 +75,7 @@ namespace Services.Broadcast
         }
         public T GetConfigValue<T>(string key)
         {
-            T result = default(T);
+            T result;
           
             object value;
             if (_ConfigDataDictionary.Value.ContainsKey(key))
@@ -110,7 +110,6 @@ namespace Services.Broadcast
             using (StreamReader reader = new StreamReader(filePath))
             {
                 var json = reader.ReadToEnd();
-                dynamic jsonResults = JsonConvert.DeserializeObject(json);
                 JObject parantNode = JObject.Parse(json);
                 foreach (var node in parantNode)
                 {

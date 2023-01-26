@@ -796,7 +796,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var service = _GetService();
 
-            var exception = Assert.Throws<CadentException>(async () => await service.QueuePricingJobAsync(
+            var exception = Assert.Throws<CadentException>(async () => service.QueuePricingJob(
                 new PlanPricingParametersDto() { PlanId = 1 }
                 , new DateTime(2019, 10, 23)
                 , "test user"));
@@ -5281,7 +5281,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            await service.QueuePricingJobAsync(parameters, now, user);
+            service.QueuePricingJob(parameters, now, user);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -5289,7 +5289,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
 
         [Test]
-        public async Task QueuePricingJobAsync_WhenVerionIdMismatchWithDb()
+        public async Task QueuePricingJob_WhenVerionIdMismatchWithDb()
         {
             // Arrange
             const string user = "test user";
@@ -5403,7 +5403,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                await service.QueuePricingJobAsync(parameters, now, user);
+                service.QueuePricingJob(parameters, now, user);
             }
             catch (CadentException ex)
             {
@@ -5541,7 +5541,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            await service.QueuePricingJobAsync(parameters, now, user);
+            service.QueuePricingJob(parameters, now, user);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -5671,7 +5671,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                await service.QueuePricingJobAsync(parameters, now, user);
+                service.QueuePricingJob(parameters, now, user);
             }
             catch (Exception e)
             {
@@ -5713,7 +5713,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                await service.QueuePricingJobAsync(parameters, now, user);
+                service.QueuePricingJob(parameters, now, user);
             }
             catch (Exception e)
             {
@@ -5757,7 +5757,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Act
             try
             {
-                await service.QueuePricingJobAsync(parameters, now, user);
+                service.QueuePricingJob(parameters, now, user);
             }
             catch (Exception e)
             {
@@ -5970,7 +5970,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            await service.QueuePricingJobAsync(parameters, now, user);
+            service.QueuePricingJob(parameters, now, user);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(passedParameters));
@@ -6097,7 +6097,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             var service = _GetService();
 
             // Act
-            await service.QueuePricingJobAsync(parameters, now, user);
+            service.QueuePricingJob(parameters, now, user);
 
             // Assert
             // Verify these since they're excluded from the json due version increments

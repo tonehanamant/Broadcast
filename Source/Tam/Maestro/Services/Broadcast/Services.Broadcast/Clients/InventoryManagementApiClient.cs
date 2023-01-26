@@ -29,6 +29,7 @@ namespace Services.Broadcast.Clients
         /// </summary>
         /// <remarks>
         /// Get a list of inventory sources available for summary
+        /// </remarks>
         List<LookupDto> GetInventorySourceTypes();
         /// <summary>
         ///  Get all inventory source types
@@ -311,7 +312,7 @@ namespace Services.Broadcast.Clients
         {
             try
             {
-                List<InventorySummaryApiResponse> inventorySummaryApiResponses = new List<InventorySummaryApiResponse>();
+                List<InventorySummaryApiResponse> inventorySummaryApiResponses;
                 var requestUri = $"{coreApiVersion}/broadcast/Inventory/Summaries";
                 var content = new StringContent(JsonConvert.SerializeObject(inventorySourceCardFilter), Encoding.UTF8, "application/json");
                 var httpClient = _GetSecureHttpClientAsync().GetAwaiter().GetResult();

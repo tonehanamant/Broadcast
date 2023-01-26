@@ -34,11 +34,10 @@ namespace BroadcastComposerWeb.Controllers
         /// </param>
         [HttpPost]
         [Route("Queue")]
-        public async Task<BaseResponse<PlanPricingJob>> Queue(PlanPricingParametersDto planPricingRequestDto)
+        public BaseResponse<PlanPricingJob> Queue(PlanPricingParametersDto planPricingRequestDto)
         {
-
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
-                    .QueuePricingJobAsync(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()).Result);
+            return _ConvertToBaseResponseWithStackTrace(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
+                    .QueuePricingJob(planPricingRequestDto, DateTime.Now, _GetCurrentUserFullName()));
         }
 
         [HttpPost]
@@ -130,7 +129,7 @@ namespace BroadcastComposerWeb.Controllers
 
         [HttpGet]
         [Route("Markets/{planId}/{planVersionId}")]
-        public BaseResponse<PlanPricingResultMarketsDto> GetPricingMarkets(int planId, int planVersionId, SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality)
+        public BaseResponse<PlanPricingResultMarketsDto> GetPricingMarkets(int planId, int planVersionId)
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>().GetMarketsForVersion(planId, planVersionId));
         }

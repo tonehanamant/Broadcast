@@ -34,8 +34,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 {
     public interface IPlanPricingService : IApplicationService
     {
-        Task<PlanPricingJob> QueuePricingJobAsync(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
-        Task<PlanPricingJob> QueuePricingJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
+        PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
+        PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
         CurrentPricingExecution GetCurrentPricingExecution(int planId, int? planVersionId);
         CurrentPricingExecutions GetAllCurrentPricingExecutions(int planId, int? planVersionId);
@@ -394,7 +394,64 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 reportPostingType);
         }
 
-        public async Task<PlanPricingJob> QueuePricingJobAsync(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto
+        public PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto
+            , DateTime currentDate, string username)
+        {
+            // lock the plan so that two requests for the same plan can not get in this area concurrently
+            var key = KeyHelper.GetPlanLockingKey(planPricingParametersDto.PlanId.Value);
+            var lockObject = _LockingManagerApplicationService.GetNotUserBasedLockObjectForKey(key);
+
+            lock (lockObject)
+            {
+                if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId.Value))
+                {
+                    throw new CadentException("The pricing model is already running for the plan");
+                }
+
+                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
+
+                ValidateAndApplyMargin(planPricingParametersDto);
+                _ValidateDaypart(plan.Dayparts);
+                int planVersionId;
+
+                // For drafts, we use the plan version id sent as parameter.
+                // This is because a draft is not considered the latest version of a plan.
+                if (planPricingParametersDto.PlanVersionId.HasValue)
+                    planVersionId = planPricingParametersDto.PlanVersionId.Value;
+                else
+                    planVersionId = plan.VersionId;
+
+                if (plan.IsDraft == false && planPricingParametersDto?.PlanVersionId.Value != plan.VersionId)
+                {
+                    throw new CadentException("The current plan that you are viewing has been updated. Please close the plan and reopen in order to view the most current information");
+                }
+
+                _PlanValidator.ValidatePlanNotCrossQuartersForPricing(plan);
+
+                var job = new PlanPricingJob
+                {
+                    PlanVersionId = planVersionId,
+                    Status = BackgroundJobProcessingStatus.Queued,
+                    Queued = currentDate
+                };
+
+                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
+                {
+                    planPricingParametersDto.PlanVersionId = planVersionId;
+                    _SavePricingJobAndParameters(job, planPricingParametersDto);
+                    _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
+                    transaction.Complete();
+                }
+
+                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJobAsync(planPricingParametersDto, job.Id, CancellationToken.None));
+
+                _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
+
+                return job;
+            }
+        }
+
+        public PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto
             , DateTime currentDate, string username)
         {
             if (pricingParametersWithoutPlanDto.JobId.HasValue && IsPricingModelRunningForJob(pricingParametersWithoutPlanDto.JobId.Value))
@@ -513,64 +570,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var savedFileGuid = _SharedFolderService.SaveFile(sharedFile);
 
             return savedFileGuid;
-        }
-
-        public async Task<PlanPricingJob> QueuePricingJobAsync(PlanPricingParametersDto planPricingParametersDto
-            , DateTime currentDate, string username)
-        {
-            // lock the plan so that two requests for the same plan can not get in this area concurrently
-            var key = KeyHelper.GetPlanLockingKey(planPricingParametersDto.PlanId.Value);
-            var lockObject = _LockingManagerApplicationService.GetNotUserBasedLockObjectForKey(key);
-
-            lock (lockObject)
-            {
-                if (IsPricingModelRunningForPlan(planPricingParametersDto.PlanId.Value))
-                {
-                    throw new CadentException("The pricing model is already running for the plan");
-                }
-
-                var plan = _PlanRepository.GetPlan(planPricingParametersDto.PlanId.Value);
-
-                ValidateAndApplyMargin(planPricingParametersDto);
-                _ValidateDaypart(plan.Dayparts);
-                int planVersionId;
-
-                // For drafts, we use the plan version id sent as parameter.
-                // This is because a draft is not considered the latest version of a plan.
-                if (planPricingParametersDto.PlanVersionId.HasValue)
-                    planVersionId = planPricingParametersDto.PlanVersionId.Value;
-                else
-                    planVersionId = plan.VersionId;
-
-                if(plan.IsDraft==false && planPricingParametersDto?.PlanVersionId.Value!= plan.VersionId)
-                {
-                    throw new CadentException("The current plan that you are viewing has been updated. Please close the plan and reopen in order to view the most current information");
-                }
-
-                _PlanValidator.ValidatePlanNotCrossQuartersForPricing(plan);
-
-                var job = new PlanPricingJob
-                {
-                    PlanVersionId = planVersionId,
-                    Status = BackgroundJobProcessingStatus.Queued,
-                    Queued = currentDate
-                };
-
-                using (var transaction = TransactionScopeHelper.CreateTransactionScopeWrapper(TimeSpan.FromMinutes(20)))
-                {
-                    planPricingParametersDto.PlanVersionId = planVersionId;
-                    _SavePricingJobAndParameters(job, planPricingParametersDto);
-                    _CampaignRepository.UpdateCampaignLastModified(plan.CampaignId, currentDate, username);
-                    transaction.Complete();
-                }
-
-                job.HangfireJobId = _BackgroundJobClient.Enqueue<IPlanPricingService>(x => x.RunPricingJobAsync(planPricingParametersDto, job.Id, CancellationToken.None));
-
-                _PlanRepository.UpdateJobHangfireId(job.Id, job.HangfireJobId);
-
-                return job;
-            }
-        }
+        }        
 
         private int _SavePricingJobAndParameters(PlanPricingJob job, PlanPricingParametersDto planPricingParametersDto)
         {
@@ -587,13 +587,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const double allowedMinValue = .01;
             const double allowedMaxValue = 100;
 
-            if (parameters.Margin.HasValue)
+            if (parameters.Margin.HasValue && (parameters.Margin.Value > allowedMaxValue ||
+                    parameters.Margin.Value < allowedMinValue))
             {
-                if (parameters.Margin.Value > allowedMaxValue ||
-                    parameters.Margin.Value < allowedMinValue)
-                {
-                    throw new CadentException("A provided Margin value must be between .01% And 100%.");
-                }
+                throw new CadentException("A provided Margin value must be between .01% And 100%.");
             }
 
             if (parameters.Margin > 0)
@@ -817,13 +814,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         internal CurrentPricingExecutions ValidatePricingExecutionResult(CurrentPricingExecutions result, int expectedResult)
         {
-            if (result.IsPricingModelRunning == false)
+            if (!result.IsPricingModelRunning && 
+                result.Results.Count != expectedResult)
             {
-                if (result.Results.Count != expectedResult)
-                {
-                    result.IsPricingModelRunning = true;
-                    result.Results = _GetDefaultPricingResultsList();
-                }
+                result.IsPricingModelRunning = true;
+                result.Results = _GetDefaultPricingResultsList();
             }
             return result;
         }
@@ -909,7 +904,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new CadentException("Error encountered while canceling Pricing Model, process is not running");
             }
 
-            if (string.IsNullOrEmpty(job?.HangfireJobId) == false)
+            if (!string.IsNullOrEmpty(job?.HangfireJobId))
             {
                 try
                 {
@@ -1615,8 +1610,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             // take only those weeks that have some goals
             var numberOfPlanWeeksWithGoals = plan.WeeklyBreakdownWeeks
                 .GroupBy(x => x.MediaWeekId)
-                .Where(x => x.Any(w => w.WeeklyImpressions > 0))
-                .Count();
+                .Count(x => x.Any(w => w.WeeklyImpressions > 0));
 
             // multiply proprietary inventory by the number of weeks with goals
             proprietaryInventoryData.ProprietarySummaries

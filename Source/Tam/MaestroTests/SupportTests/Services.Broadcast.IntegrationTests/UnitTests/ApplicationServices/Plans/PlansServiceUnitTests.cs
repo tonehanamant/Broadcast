@@ -288,7 +288,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var queuePricingJobCallCount = 0;
             _PlanPricingServiceMock.Setup(s =>
-                    s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCallCount++);
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
@@ -517,7 +517,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var queuePricingJobCallCount = 0;
             _PlanPricingServiceMock.Setup(s =>
-                    s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCallCount++);
 
             var setPricingPlanVersionIdCallCount = 0;
@@ -640,7 +640,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var queuePricingJobCallCount = 0;
             _PlanPricingServiceMock.Setup(s =>
-                    s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCallCount++);
 
             var setPricingPlanVersionIdCallCount = 0;
@@ -755,7 +755,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var queuePricingJobCallCount = 0;
             _PlanPricingServiceMock.Setup(s =>
-                    s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCallCount++);
 
             var setPricingPlanVersionIdCallCount = 0;
@@ -902,7 +902,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Callback(() => updatePlanPricingVersionIdCalled++);
 
             var queuePricingJobCalled = 0;
-            _PlanPricingServiceMock.Setup(s => s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+            _PlanPricingServiceMock.Setup(s => s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCalled++);
 
             var savePlanPricingParametersCallsed = 0;
@@ -3439,7 +3439,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             var queuePricingJobCallCount = 0;
             _PlanPricingServiceMock.Setup(s =>
-                    s.QueuePricingJobAsync(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
                 .Callback(() => queuePricingJobCallCount++);
 
             _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))

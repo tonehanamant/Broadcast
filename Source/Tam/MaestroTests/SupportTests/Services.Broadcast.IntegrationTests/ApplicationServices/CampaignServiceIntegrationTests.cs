@@ -46,7 +46,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static readonly bool WRITE_FILE_TO_DISK = false;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private static IFeatureToggleHelper _FeatureToggleHelper;
-        private readonly IAttachmentMicroServiceApiClient _AttachmentMicroServiceApiClient;
 
         [SetUp]
         public void SetUpCampaignServiceIntegrationTests()
@@ -1014,7 +1013,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     UnitCapsType = UnitCapEnum.Per30Min
                 };
 
-                var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
+                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");
                 await planPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 var reportData = _CampaignService.GetProgramLineupReportData(new ProgramLineupReportRequest

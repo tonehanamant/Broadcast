@@ -72,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = await _PlanPricingService.QueuePricingJobAsync(new PlanPricingParametersDto
+                var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
                     Margin = 20,
@@ -102,7 +102,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
-                var result = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
+                var result = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
 
                 var jsonResolver = new IgnorableSerializerContractResolver();
                 jsonResolver.Ignore(typeof(PlanPricingJob), "Id");
@@ -124,7 +124,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                await _PlanPricingService.QueuePricingJobAsync(new PlanPricingParametersDto
+                _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
                     Budget = 1000,
@@ -154,7 +154,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var job = await _PlanPricingService.QueuePricingJobAsync(_GetPricingParametersWithoutPlanDto(), new DateTime(2019, 11, 4)
+                var job = _PlanPricingService.QueuePricingJob(_GetPricingParametersWithoutPlanDto(), new DateTime(2019, 11, 4)
                 , "test user");
 
                 var result = _PlanPricingService.GetCurrentPricingExecutionByJobId(job.Id);
@@ -179,7 +179,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = await _PlanPricingService.QueuePricingJobAsync(new PlanPricingParametersDto
+                var result = _PlanPricingService.QueuePricingJob(new PlanPricingParametersDto
                 {
                     PlanId = 1196,
                     Budget = 1000,
@@ -212,7 +212,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             using (new TransactionScopeWrapper())
             {
-                var result = await _PlanPricingService.QueuePricingJobAsync(_GetPricingParametersWithoutPlanDto(), new DateTime(2020, 3, 3)
+                var result = _PlanPricingService.QueuePricingJob(_GetPricingParametersWithoutPlanDto(), new DateTime(2020, 3, 3)
                 , "test user");
 
                 _PlanPricingService.ForceCompletePlanPricingJob(result.Id, "Test User");
@@ -287,7 +287,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     UnitCapsType = UnitCapEnum.Per30Min
                 };
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test user");
 
                 var result = _PlanPricingService.GetPricingApiRequestPrograms_v3(1197, new PricingInventoryGetRequestParametersDto());
 
@@ -428,14 +428,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     MarketGroup = MarketGroupEnum.None
                 };
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 planPricingRequestDto.Budget = 1200;
                 planPricingRequestDto.UnitCapsType = UnitCapEnum.Per30Min;
 
-                var job2 = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job2 = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job2.Id, CancellationToken.None);
 
@@ -496,14 +496,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     PostingType = PostingTypeEnum.NTI
                 };
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
                 planPricingRequestDto.UnitCapsType = UnitCapEnum.PerWeek;
                 planPricingRequestDto.Budget = 1200;
 
-                await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 var result = _PlanService.GetPlan(1849);
 
@@ -552,7 +552,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -583,7 +583,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
@@ -614,7 +614,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -643,7 +643,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
@@ -672,7 +672,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -701,7 +701,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
@@ -730,7 +730,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var parameters = _GetPricingParametersWithoutPlanDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(parameters, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(parameters, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingWithoutPlanJobAsync(parameters, job.Id, CancellationToken.None);
 
@@ -759,11 +759,11 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 var planPricingRequestDto = _GetPricingRequestDto();
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
-                var secondJob = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var secondJob = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, secondJob.Id, CancellationToken.None);
 
@@ -796,7 +796,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 // and verified by eye that the counts are different between the tests.
                 planPricingRequestDto.Margin = null;
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -840,7 +840,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     MarketGroup = MarketGroupEnum.None
                 };
 
-                var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -889,7 +889,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     MarketGroup = MarketGroupEnum.Top25
                 };
 
-                var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await planPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -981,7 +981,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ProprietaryInventory = proprietaryInventorySummaryIds.Select(x => new InventoryProprietarySummary { Id = x }).ToList()
                 };
 
-                var job = await planPricingService.QueuePricingJobAsync(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
+                var job =  planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "test user");
 
                 await planPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 
@@ -1168,7 +1168,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 UnitCaps = 10,
                 UnitCapsType = UnitCapEnum.Per30Min
             };
-            var job = await _PlanPricingService.QueuePricingJobAsync(pricingParameters, currentDate, username);
+            var job = _PlanPricingService.QueuePricingJob(pricingParameters, currentDate, username);
 
             await _PlanPricingService.RunPricingJobAsync(pricingParameters, job.Id, CancellationToken.None);
 
@@ -1184,7 +1184,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             pricingParameters.DeliveryImpressions = 2000;
             pricingParameters.PlanVersionId = draftVersionId;
 
-            var draftJob = await  _PlanPricingService.QueuePricingJobAsync(pricingParameters, currentDate, username);
+            var draftJob = _PlanPricingService.QueuePricingJob(pricingParameters, currentDate, username);
 
             await _PlanPricingService.RunPricingJobAsync(pricingParameters, draftJob.Id, CancellationToken.None);
 
@@ -1869,7 +1869,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 MarketGroup = MarketGroupEnum.None
             };
 
-            var job = await _PlanPricingService.QueuePricingJobAsync(planPricingRequestDto, savedDate, "test user");
+            var job = _PlanPricingService.QueuePricingJob(planPricingRequestDto, savedDate, "test user");
 
             await _PlanPricingService.RunPricingJobAsync(planPricingRequestDto, job.Id, CancellationToken.None);
 

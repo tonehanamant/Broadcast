@@ -38,7 +38,7 @@ namespace Services.Broadcast.Clients
         { 
         }
 
-        /// </inheritDoc>
+        /// <inheritDoc />
         public async Task NotifyFluidityPlanAsync(int planId, int planVersionId)
         {
             _LogInfo("Attempting to call the CampaignServiceApi to publish a message for Fluidity.");
@@ -62,7 +62,7 @@ namespace Services.Broadcast.Clients
             }
         }
 
-        /// </inheritDoc>
+        /// <inheritDoc />
         public async Task<UnifiedCampaignResponseDto> NotifyCampaignAsync(string unifiedCampaignId)
         {
             try
@@ -87,7 +87,7 @@ namespace Services.Broadcast.Clients
                 UnifiedCampaignResponseDto unifiedCampaignResponse = new UnifiedCampaignResponseDto()
                 {
                     Success = result.Result.Success,
-                    Message = result.Result.Success == true ?  result.Result.Message : "Failed to publish the Unified Campaign."
+                    Message = result.Result.Success ?  result.Result.Message : "Failed to publish the Unified Campaign."
                 };
                 return unifiedCampaignResponse;
             }

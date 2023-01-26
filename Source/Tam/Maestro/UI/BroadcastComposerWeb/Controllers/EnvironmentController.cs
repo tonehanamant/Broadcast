@@ -4,6 +4,7 @@ using Services.Broadcast.Entities.DTO;
 using Services.Broadcast.Entities.ReelRosterIscis;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Tam.Maestro.Data.Entities;
@@ -157,13 +158,19 @@ namespace BroadcastComposerWeb.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Tests the notify fluidity plan asynchronous.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="planVersionId">The plan version identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("test-notify-fluidity")]
-        public BaseResponse<string> TestNotifyFluidityPlanAsync(int planId, int planVersionId)
+        public async Task<BaseResponse<string>> TestNotifyFluidityPlanAsync(int planId, int planVersionId)
         {
-            return
-                _ConvertToBaseResponse(
-                    () => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().TestNotifyFluidityPlanAsync(planId, planVersionId).Result);
+            return await _ConvertToBaseResponseAsync(
+                    () => _ApplicationServiceFactory.GetApplicationService<IEnvironmentService>().TestNotifyFluidityPlanAsync(planId, planVersionId));
+
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿/// <summary></summary>
-namespace Services.Broadcast.Entities.DTO.SpotExceptionsApi
+﻿namespace Services.Broadcast.Entities.DTO.SpotExceptionsApi
 {
     public class ResultsSyncResponse
     {

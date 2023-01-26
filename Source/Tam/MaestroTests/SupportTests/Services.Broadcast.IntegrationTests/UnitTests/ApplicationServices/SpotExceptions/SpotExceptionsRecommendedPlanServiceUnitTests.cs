@@ -182,7 +182,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         {
             // Arrange
             var ingestedAt = new DateTime(2010, 10, 12);
-            var ingestedBy = "Repository Test User";
 
             SpotExceptionsRecommendedPlansRequestDto recommendedPlansRequest = new SpotExceptionsRecommendedPlansRequestDto
             {
