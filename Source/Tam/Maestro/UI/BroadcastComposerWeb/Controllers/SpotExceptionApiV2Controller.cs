@@ -34,5 +34,18 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => result);
         }
+
+        /// <summary>
+        /// Gets the count and inventory sources
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("~/api/v2/spot-exceptions/out-of-spec-spot-inventory-sources")]
+        public async Task<BaseResponse<List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2>>> GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest);
+            return _ConvertToBaseResponse(() => result);
+        }
     }
 }

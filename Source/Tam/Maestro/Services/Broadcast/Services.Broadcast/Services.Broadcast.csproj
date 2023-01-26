@@ -657,6 +657,7 @@
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetail.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetailDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionOutOfSpecSpotInventorySourcesDtoV2.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingResults.cs" />
