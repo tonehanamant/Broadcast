@@ -471,7 +471,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 ValidateAndApplyMargin(planBuyingParametersDto);
 
-                _PlanValidator.ValidatePlanNotCrossQuartersForPricing(plan);
+                _PlanValidator.ValidatePlanNotCrossQuartersForBuying(plan);
 
                 var job = new PlanBuyingJob
                 {
