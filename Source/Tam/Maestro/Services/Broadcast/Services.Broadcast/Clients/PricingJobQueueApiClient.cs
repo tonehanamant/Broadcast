@@ -112,25 +112,29 @@ namespace Services.Broadcast.Clients
 
             if (_IsZippedPricingEnabled.Value)
             {
-                _HttpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(gZipHeader));
-
-                var fetchResult = await _HttpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, content);
-
-                var fetchResponse = await fetchResult.Content.ReadAsByteArrayAsync();
-                var uncommpressedResult = CompressionHelper.GetGzipUncompress(fetchResponse);
-                var response = JsonConvert.DeserializeObject<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>(uncommpressedResult);
-
-                if (response.error != null)
+                // To accept compressed we must tell the HttpClient, not just a content.
+                // This affects everyone who uses that HttpClient and they get compressed responses unexpectedly and error.
+                // In this case then, keep the HttpClient local.
+                using (var httpClient = new HttpClient())
                 {
-                    var msgs = string.Join(",", response.error.Messages);
-                    throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{response.error.Name}';  Messages : '{msgs}'");
+                    httpClient.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(gZipHeader));
+
+                    var fetchResult = await httpClient.PostAsync(_PlanPricingAllocationsEfficiencyModelFetchUrl.Value, content);
+
+                    var fetchResponse = await fetchResult.Content.ReadAsByteArrayAsync();
+                    var uncommpressedResult = CompressionHelper.GetGzipUncompress(fetchResponse);
+                    var response = JsonConvert.DeserializeObject<PricingJobFetchResponse<PlanPricingApiSpotsResultDto_v3>>(uncommpressedResult);
+
+                    if (response.error != null)
+                    {
+                        var msgs = string.Join(",", response.error.Messages);
+                        throw new InvalidOperationException($"Error returned from the pricing api fetch. Name : '{response.error.Name}';  Messages : '{msgs}'");
+                    }
+
+                    _LogInfo($"Fetching the pricing request with a gzip payload");
+                    _LogInfo($"Finished: Fetching the pricing results");
+                    return response;
                 }
-
-                _HttpClient.DefaultRequestHeaders.AcceptEncoding.Remove(new StringWithQualityHeaderValue(gZipHeader));
-
-                _LogInfo($"Fetching the pricing request with a gzip payload");
-                _LogInfo($"Finished: Fetching the pricing results");
-                return response;
             }
             else
             {
