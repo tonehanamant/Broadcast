@@ -144,7 +144,9 @@ namespace Services.Broadcast.Repositories
                 unified_id = campaignDto.UnifiedId,
                 max_fluidity_percent = campaignDto.MaxFluidityPercent,
                 unified_campaign_last_sent_at = campaignDto.UnifiedCampaignLastSentAt,
-                unified_campaign_last_received_at = campaignDto.UnifiedCampaignLastReceivedAt
+                unified_campaign_last_received_at = campaignDto.UnifiedCampaignLastReceivedAt,
+                account_executive = campaignDto.AccountExecutive,
+                client_contact = campaignDto.ClientContact
             };
 
             return _InReadUncommitedTransaction(
@@ -176,6 +178,8 @@ namespace Services.Broadcast.Repositories
                    existingCampaign.max_fluidity_percent = campaignDto.MaxFluidityPercent;
                    existingCampaign.unified_campaign_last_sent_at = campaignDto.UnifiedCampaignLastSentAt;
                    existingCampaign.unified_campaign_last_received_at = campaignDto.UnifiedCampaignLastReceivedAt;
+                   existingCampaign.account_executive = campaignDto.AccountExecutive;
+                   existingCampaign.client_contact = campaignDto.ClientContact;
 
                    context.SaveChanges();
 
@@ -358,6 +362,8 @@ namespace Services.Broadcast.Repositories
                 UnifiedId = campaign.unified_id,
                 UnifiedCampaignLastSentAt = campaign.unified_campaign_last_sent_at,
                 UnifiedCampaignLastReceivedAt = campaign.unified_campaign_last_received_at,
+                AccountExecutive = campaign.account_executive,
+                ClientContact = campaign.client_contact,
                 Plans = planVersions.Where(y => y.plan_version_summaries.Any(s => s.processing_status == (int)PlanAggregationProcessingStatusEnum.Idle) && y.id == (IsCampaignAndCampaignSummary == false ? y.plan.latest_version_id : y.id))
                     .Select(version =>
                     {

@@ -38,6 +38,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<System.DateTime> unified_campaign_last_sent_at { get; set; }
         public Nullable<System.DateTime> unified_campaign_last_received_at { get; set; }
         public string view_details_url { get; set; }
+        public string account_executive { get; set; }
+        public string client_contact { get; set; }
     
         public virtual ICollection<proposal> proposals { get; set; }
         public virtual ICollection<campaign_summaries> campaign_summaries { get; set; }

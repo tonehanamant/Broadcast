@@ -148,7 +148,11 @@
         5000.0,
         5000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        125000.0000
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -295,7 +299,11 @@
         5000.0,
         5000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        125000.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -442,7 +450,11 @@
         5000.0,
         5000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        125000.0000
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -589,7 +601,11 @@
         5000.0,
         5000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        125000.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -736,7 +752,11 @@
         10000.0,
         10000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        250000.0000
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -883,7 +903,11 @@
         10000.0,
         10000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        250000.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -1029,7 +1053,11 @@
         20000.0,
         20000.0
       ],
-      "MonthlyCostValues": [],
+      "MonthlyCostValues": [
+        0.0,
+        0.0,
+        500000.0
+      ],
       "Months": [
         {
           "Item1": "October",
@@ -1090,7 +1118,7 @@
     "CoveragePercentage": 80.0,
     "PreferentialMarketsName": []
   },
-  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.",
+  "Notes": "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n",
   "PostingType": "NTI",
   "ProposalCampaignTotalsTable": {
     "HasSecondaryAudiences": true,

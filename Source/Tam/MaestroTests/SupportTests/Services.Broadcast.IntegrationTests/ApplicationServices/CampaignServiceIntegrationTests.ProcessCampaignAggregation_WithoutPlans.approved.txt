@@ -1,10 +1,12 @@
 ﻿{
+  "AccountExecutive": null,
   "AdvertiserId": 1,
   "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
   "AgencyId": 5,
   "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
   "Budget": 6500.0,
   "CampaignStatus": 1,
+  "ClientContact": null,
   "FlightActiveDays": 35,
   "FlightEndDate": "2020-03-29T00:00:00",
   "FlightHiatusDays": 0,

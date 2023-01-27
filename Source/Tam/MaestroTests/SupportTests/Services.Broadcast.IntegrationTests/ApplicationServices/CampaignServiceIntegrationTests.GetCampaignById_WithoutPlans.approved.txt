@@ -1,10 +1,12 @@
 ﻿{
+  "AccountExecutive": null,
   "AdvertiserId": 37444,
   "AdvertiserMasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
   "AgencyId": 5,
   "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
   "Budget": null,
   "CampaignStatus": null,
+  "ClientContact": null,
   "FlightActiveDays": null,
   "FlightEndDate": null,
   "FlightHiatusDays": null,
@@ -24,5 +26,5 @@
   "UnifiedCampaignLastReceivedAt": null,
   "UnifiedCampaignLastSentAt": null,
   "UnifiedId": null,
-  "ViewDetailsUrl": "https://cd.cadent.tv/dashboard/campaigns/details/VW5pZmllZFYyLTM0NmI5ZDY5NjAxNjRiOTNiOTZjMTBjOTg4NDhhZDAx"
+  "ViewDetailsUrl": null
 }

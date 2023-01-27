@@ -1,10 +1,12 @@
 {
+  "AccountExecutive": null,
   "AdvertiserId": null,
   "AdvertiserMasterId": "1806450a-e0a3-416d-b38d-913fb5cf3879",
   "AgencyId": null,
   "AgencyMasterId": "89ab30c5-23a7-41c1-9b7d-f5d9b41dbe8b",
   "Budget": null,
   "CampaignStatus": null,
+  "ClientContact": null,
   "FlightActiveDays": null,
   "FlightEndDate": null,
   "FlightHiatusDays": null,

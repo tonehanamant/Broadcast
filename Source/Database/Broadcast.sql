@@ -1565,6 +1565,16 @@ GO
 
 /*************************************** END-6104 ************************************/
 
+/*************************************** START BS-125 ************************************/
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'campaigns' AND COLUMN_NAME= 'account_executive')
+BEGIN
+	ALTER TABLE campaigns
+		ADD account_executive varchar(40) NULL,
+			client_contact varchar(40) NULL
+END
+GO
+/*************************************** END BS-125 ************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

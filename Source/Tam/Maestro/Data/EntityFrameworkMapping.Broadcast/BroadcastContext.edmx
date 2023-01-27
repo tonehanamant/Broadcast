@@ -232,6 +232,8 @@
           <Property Name="unified_campaign_last_sent_at" Type="datetime2" Precision="7" />
           <Property Name="unified_campaign_last_received_at" Type="datetime2" Precision="7" />
           <Property Name="view_details_url" Type="varchar" MaxLength="250" />
+          <Property Name="account_executive" Type="varchar" MaxLength="40" />
+          <Property Name="client_contact" Type="varchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="custom_daypart_organizations">
           <Key>
@@ -14488,6 +14490,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="campaign_plan_secondary_audiences" Relationship="BroadcastModel.FK_campaign_plan_secondary_audiences_campaigns" FromRole="campaign" ToRole="campaign_plan_secondary_audiences" />
           <Property Name="view_details_url" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="plans" Relationship="BroadcastModel.FK_plans_campaigns" FromRole="campaign" ToRole="plan" />
+          <Property Name="account_executive" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="client_contact" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_proposals_campaigns">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="0..1" />
@@ -21017,6 +21021,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaigns">
             <EntityTypeMapping TypeName="BroadcastModel.campaign">
               <MappingFragment StoreEntitySet="campaigns">
+                <ScalarProperty Name="client_contact" ColumnName="client_contact" />
+                <ScalarProperty Name="account_executive" ColumnName="account_executive" />
                 <ScalarProperty Name="view_details_url" ColumnName="view_details_url" />
                 <ScalarProperty Name="unified_campaign_last_received_at" ColumnName="unified_campaign_last_received_at" />
                 <ScalarProperty Name="unified_campaign_last_sent_at" ColumnName="unified_campaign_last_sent_at" />

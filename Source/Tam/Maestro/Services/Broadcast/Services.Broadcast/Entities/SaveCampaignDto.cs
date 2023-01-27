@@ -74,5 +74,19 @@ namespace Services.Broadcast.Entities
         public int? MaxFluidityPercent { get; set; }
         public DateTime? UnifiedCampaignLastSentAt { get; set; }
         public DateTime? UnifiedCampaignLastReceivedAt { get; set; }
+        /// <summary>
+        /// Gets or sets the campaigns Account Executive.
+        /// </summary>
+        /// <value>
+        /// The Account Executive.
+        /// </value>
+        public string AccountExecutive { get; set; }
+        /// <summary>
+        /// Gets or sets the campaigns Client Contact.
+        /// </summary>
+        /// <value>
+        /// The Client Contact.
+        /// </value>
+        public string ClientContact { get; set; }
     }
 }
