@@ -41,5 +41,6 @@
 
         public static string ENABLE_ZIPPED_PRICING = "broadcast-enable-zipped-pricing";
         public static string ENABLE_INVENTORY_SERVICE_MIGRATION = "enable-inventory-service-migration";
+        public static string ENABLE_OPEN_MARKET_INVENTORY_INGEST_CREATES_UNKNOWN_STATIONS = "open-market-inventory-ingest-creates-unknown-stations";
     }
 }

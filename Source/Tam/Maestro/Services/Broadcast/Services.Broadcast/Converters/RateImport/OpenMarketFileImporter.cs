@@ -10,6 +10,7 @@ using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Concurrent;
@@ -67,6 +68,9 @@ namespace Services.Broadcast.Converters.RateImport
         /// Spot lengths dictionary where key is the id and value is the duration
         /// </summary>
         private readonly Lazy<Dictionary<int, int>> _SpotLengthDurationsById;
+        protected readonly IFeatureToggleHelper _FeatureToggleHelper;
+        protected readonly IConfigurationSettingsHelper _ConfigurationSettingsHelper;
+        protected Lazy<bool> _IsOpenMarketInventoryIngestCreatesUnknownStationsEnabled;
 
         public OpenMarketFileImporter(IDataRepositoryFactory dataRepositoryFactory
             , IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache
@@ -74,7 +78,9 @@ namespace Services.Broadcast.Converters.RateImport
             , IInventoryDaypartParsingEngine inventoryDaypartParsingEngine
             , IBroadcastAudiencesCache broadcastAudiencesCache
             , IStationProcessingEngine stationProcessingEngine
-            , IStationMappingService stationMappingService)
+            , IStationMappingService stationMappingService,
+            IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper
+            ) 
         {
             _BroadcastDataRepositoryFactory = dataRepositoryFactory;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
@@ -87,6 +93,10 @@ namespace Services.Broadcast.Converters.RateImport
 
             _SpotLengthIdsByDuration = new Lazy<Dictionary<int, int>>(() => _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthIdsByDuration());
             _SpotLengthDurationsById = new Lazy<Dictionary<int, int>>(() => _BroadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>().GetSpotLengthDurationsById());
+            _FeatureToggleHelper = featureToggleHelper;
+            _ConfigurationSettingsHelper = configurationSettingsHelper;
+            _IsOpenMarketInventoryIngestCreatesUnknownStationsEnabled = new Lazy<bool>(() =>
+              _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_OPEN_MARKET_INVENTORY_INGEST_CREATES_UNKNOWN_STATIONS));
         }
 
         protected Dictionary<int, decimal> _SpotLengthMultipliers;
@@ -159,6 +169,7 @@ namespace Services.Broadcast.Converters.RateImport
                     return processed;
                 }));
             }
+
 
             var totalRowsProcessed = Task.WhenAll(taskList).GetAwaiter().GetResult().Sum();
 
@@ -255,9 +266,15 @@ namespace Services.Broadcast.Converters.RateImport
                         .Where(a => a.outletId == outletRef)
                         .Select(a => a.callLetters)
                         .First();
-
-                    var station = _StationMappingService.GetStationByCallLetters(callLetters);
-
+                    DisplayBroadcastStation station = new DisplayBroadcastStation();
+                    if (_IsOpenMarketInventoryIngestCreatesUnknownStationsEnabled.Value)
+                    {
+                         station = _StationMappingService.GetStationByCallLetterWithoutError(callLetters);
+                    }
+                    else
+                    {
+                         station = _StationMappingService.GetStationByCallLetters(callLetters);
+                    }
                     var spotLength = availLine.SpotLength.Minute * SecondsPerMinute + availLine.SpotLength.Second;
                     var spotLengthProblem = _CheckSpotLength(spotLength, callLetters, programName);
 

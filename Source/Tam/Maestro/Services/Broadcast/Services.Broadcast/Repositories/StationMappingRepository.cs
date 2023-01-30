@@ -65,6 +65,10 @@ namespace Services.Broadcast.Repositories
         /// <param name="throwIfNotFound">Boolean value. When set to true exception is thrown if station not found</param>
         /// <returns></returns>
         DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters, bool throwIfNotFound = true);
+        /// <summary>
+        /// Gets the broadcast station starting with call letters.
+        /// </summary>
+        DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters);
     }
 
     public class StationMappingRepository : BroadcastRepositoryBase, IStationMappingRepository
@@ -281,6 +285,37 @@ namespace Services.Broadcast.Repositories
             {
                 throw new Exception($"Could not determine station for call letters {callLetters}");
             }
+
+            return result;
+        }
+
+        public DisplayBroadcastStation GetBroadcastStationStartingWithCallLetters(string callLetters)
+        {
+            var variant1 = $"{callLetters} ";
+            var variant2 = $"{callLetters}-";
+            var variant3 = $"{callLetters}_";
+            var variant4 = $"{callLetters}.";
+
+            var result = _InReadUncommitedTransaction(context =>
+            {
+                var found = context.stations
+                    .Include(x => x.station_mappings)
+                    .Include(x => x.market)
+                    .Where(station =>
+                        station.station_mappings.Any(mapping =>
+                            mapping.mapped_call_letters.StartsWith(variant1) ||
+                            mapping.mapped_call_letters.StartsWith(variant2) ||
+                            mapping.mapped_call_letters.StartsWith(variant3) ||
+                            mapping.mapped_call_letters.StartsWith(variant4)))
+                    .ToList();
+
+                if (found.Count > 1)
+                {
+                    throw new Exception($"Call letters {callLetters} yielded more than 1 match. Match Count : {found.Count}");
+                }
+
+                return _MapToDisplayBroadcastStationDto(found.SingleOrDefault());
+            });
 
             return result;
         }

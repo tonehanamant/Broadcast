@@ -62,6 +62,10 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="throwIfNotFound">Boolean value. When set to true exception is thrown if station not found</param>
         /// <returns></returns>
         DisplayBroadcastStation GetStationByCallLetters(string stationCallLetters, bool throwIfNotFound = true);
+        /// <summary>
+        /// Gets the station by call letters.
+        /// </summary>
+        DisplayBroadcastStation GetStationByCallLetterWithoutError(string stationCallLetters);
     }
 
     public class StationMappingService : IStationMappingService
@@ -300,6 +304,39 @@ namespace Services.Broadcast.ApplicationServices
                 station = _StationMappingRepository.GetBroadcastStationStartingWithCallLetters(stationCallLetters, throwIfNotFound);
             }
 
+            return station;
+        }
+
+        public DisplayBroadcastStation GetStationByCallLetterWithoutError(string stationCallLetters)
+        {
+            // Check station (Cadent Call Letters, a.k.a. legacy call letters)
+            var station = _StationRepository.GetBroadcastStationByLegacyCallLetters(stationCallLetters);
+
+            // If not found, check exact match in mappings
+            if (station == null)
+            {
+                station = _StationMappingRepository.GetBroadcastStationByCallLetters(stationCallLetters);
+            }
+
+            // If not found, check starts with in mappings
+            // If not found or multiple stations found, throw an error
+            if (station == null)
+            {               
+               station = _StationMappingRepository.GetBroadcastStationStartingWithCallLetters(stationCallLetters);
+            }
+
+            //Insert into staion table
+            if(station == null)
+            {
+                var createStation = new DisplayBroadcastStation
+                {
+                    CallLetters = stationCallLetters,
+                    LegacyCallLetters = stationCallLetters,
+                    ModifiedDate = DateTime.Now,
+                    IsTrueInd = false
+                };
+                station = _StationRepository.CreateStation(createStation, "Inventory Ingest Process");
+            }
             return station;
         }
     }

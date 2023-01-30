@@ -295,6 +295,107 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         }
 
         [Test]
+        public void CanGetStationByCallLettersWithoutError()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var result = _StationMappingService.GetStationByCallLetterWithoutError("KOB+");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OriginMarket");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Affiliation");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Code");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OwnershipGroupName");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RepFirmName");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        public void CanGetStationByCadentCallLettersWithoutError()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                // Use an existing station
+                var result = _StationMappingService.GetStationByCallLetterWithoutError("OOCO");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OriginMarket");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Affiliation");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Code");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OwnershipGroupName");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RepFirmName");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
+        public void CanGetStationStartingWithCallLettersWithoutError()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                var stationMappings = (new List<StationMappingsFileRequestDto>
+                {
+                    new StationMappingsFileRequestDto
+                    {
+                        CadentCallLetters = "TOOCO",
+                        ExtendedCallLetters = "TOOCO-DT2",
+                        NSICallLetters = "TKOCO-TV 5.2",
+                        NSILegacyCallLetters = "TKOCO",
+                        SigmaCallLetters = "TOOCO"
+                    }
+                }).GroupBy(x => x.CadentCallLetters).First();
+
+                _StationMappingService.SaveStationMappings(stationMappings, "integration_test", DateTime.Now);
+                var result = _StationMappingService.GetStationByCallLetters("TKOCO-TV");
+
+                var jsonResolver = new IgnorableSerializerContractResolver();
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Id");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RateDataThrough");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ModifiedDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "ManifestMaxEndDate");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OriginMarket");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Affiliation");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "Code");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "MarketCode");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "OwnershipGroupName");
+                jsonResolver.Ignore(typeof(DisplayBroadcastStation), "RepFirmName");
+
+                var jsonSettings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    ContractResolver = jsonResolver,
+                };
+
+                Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+            }
+        }
+
+        [Test]
         [Ignore("This was only used to introduce the mappings to the integration database")]
         public void UploadStationMappingsExcelFile()
         {
