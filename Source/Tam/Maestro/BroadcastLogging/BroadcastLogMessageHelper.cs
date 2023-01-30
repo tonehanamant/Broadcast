@@ -1,5 +1,4 @@
-﻿using Cadent.Library.Logging.Standard.Common;
-using Cadent.Library.Logging.Standard.Common.LoggingModels;
+﻿using Cadent.Library.Models.Standard.Common.Logging;
 using System;
 
 namespace BroadcastLogging
@@ -14,26 +13,26 @@ namespace BroadcastLogging
         public static LogMessage GetApplicationLogMessage(string message, Type callingType, string callingMemberName, string userName = null)
         {
             var additionalInfo = $"{callingType.FullName}.{callingMemberName}";
-            var logMessage = _CreateLogMessage(message, LogType.STANDARD, null, additionalInfo, userName);
+            var logMessage = _CreateLogMessage(message, LogEventTypes.STANDARD, null, additionalInfo, userName);
             return logMessage;
         }
 
         public static LogMessage GetApplicationLogMessage(string message, Guid transactionId, Type callingType, string callingMemberName, string userName = null)
         {
             var additionalInfo = $"{callingType.FullName}.{callingMemberName}";
-            var logMessage = _CreateLogMessage(message, LogType.STANDARD, transactionId, additionalInfo, userName);
+            var logMessage = _CreateLogMessage(message, LogEventTypes.STANDARD, transactionId, additionalInfo, userName);
             return logMessage;
         }
 
         public static LogMessage GetHttpRequestLogMessage(string message, Guid transactionId, string requestInfo)
         {
-            var logMessage = _CreateLogMessage(message, LogType.HTTP_REQUEST, transactionId, null, null);
+            var logMessage = _CreateLogMessage(message, LogEventTypes.HTTP_REQUEST, transactionId, null, null);
             return logMessage;
         }
 
         public static LogMessage GetHttpResponseLogMessage(string message, Guid transactionId, string requestInfo)
         {
-            var logMessage = _CreateLogMessage(message, LogType.HTTP_RESPONSE, transactionId, null, null);
+            var logMessage = _CreateLogMessage(message, LogEventTypes.HTTP_RESPONSE, transactionId, null, null);
             return logMessage;
         }
 

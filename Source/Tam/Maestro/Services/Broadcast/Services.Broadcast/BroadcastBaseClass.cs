@@ -1,5 +1,5 @@
 ﻿using BroadcastLogging;
-using Cadent.Library.Logging.Standard.Common.LoggingModels;
+using Cadent.Library.Models.Standard.Common.Logging;
 using log4net;
 using Services.Broadcast.Helpers;
 using System;

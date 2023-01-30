@@ -1,7 +1,6 @@
 ﻿using BroadcastLogging;
-using Cadent.Library.Logging.Standard.Common.LoggingModels;
+using Cadent.Library.Models.Standard.Common.Logging;
 using Common.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,8 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast
 {
