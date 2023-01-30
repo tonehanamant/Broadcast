@@ -1,10 +1,12 @@
 ﻿{
+  "AccountExecutive": null,
   "AgencyName": "Agency1",
   "CampaignEndQuarter": "Q4'19",
   "CampaignFlightEndDate": "12/29/19",
   "CampaignFlightStartDate": "12/23/19",
   "CampaignName": "Campaign with all types of plans",
   "CampaignStartQuarter": "Q4'19",
+  "ClientContact": null,
   "ClientName": "Advertiser1",
   "ContractQuarterTables": [],
   "ContractTotals": [],

@@ -1010,7 +1010,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     InflationFactor = 0.5,
                     ProprietaryBlend = 0.2,
                     UnitCaps = 10,
-                    UnitCapsType = UnitCapEnum.Per30Min
+                    UnitCapsType = UnitCapEnum.Per30Min,
+                    PlanVersionId = 47
                 };
 
                 var job = planPricingService.QueuePricingJob(planPricingRequestDto, new DateTime(2019, 11, 4), "integration test");

@@ -31,6 +31,8 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private readonly (int ColumnIndex, int RowIndex) POSTING_TYPE_CELL = (14, 5);
         private readonly (int ColumnIndex, int RowIndex) STATUS_CELL = (19, 5);
         private readonly (int ColumnIndex, int RowIndex) Fluidity_CELL = (15, 5);
+        private readonly (int ColumnIndex, int RowIndex) Account_Executive_CELL = (16, 5);
+        private readonly (int ColumnIndex, int RowIndex) Client_Contact_CELL = (17, 5);
         private readonly string PLAN_NAME_COLUMN = "C";
         private readonly string GUARANTEED_DEMO_COLUMN = "N";
         private readonly string FOOTER_INFO_COLUMN_INDEX = "F";
@@ -199,6 +201,11 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
                 .Value = data.Status;
             WORKSHEET.Cells[Fluidity_CELL.RowIndex, Fluidity_CELL.ColumnIndex + SecondaryAudiencesOffset]
                 .Value = data.Fluidity;
+            WORKSHEET.Cells[Account_Executive_CELL.RowIndex, Account_Executive_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = data.AccountExecutive;
+            WORKSHEET.Cells[Client_Contact_CELL.RowIndex, Client_Contact_CELL.ColumnIndex + SecondaryAudiencesOffset]
+                .Value = data.ClientContact;
+
         }
 
         private void _PutDataIntoPlanQuarterTables(CampaignReportData campaignReportData)

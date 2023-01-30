@@ -1,4 +1,5 @@
 {
+  "AccountExecutive": null,
   "AgencyName": "Agent1",
   "CampaignEndQuarter": "Q4'20",
   "CampaignExportFileName": "Advertiser1 DAY PA Q4'20 Plan Rev - 01-01.xlsx",
@@ -6,6 +7,7 @@
   "CampaignFlightStartDate": "10/12/20",
   "CampaignName": null,
   "CampaignStartQuarter": "Q4'20",
+  "ClientContact": null,
   "ClientName": "Advertiser1",
   "ContractQuarterTables": [],
   "ContractTotals": [],

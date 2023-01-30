@@ -30,6 +30,8 @@ namespace Services.Broadcast.Entities.Campaign
         public string PostingType { get; set; }
         public string Fluidity { get; set; }
         public string Status { get; set; }
+        public string AccountExecutive { get; set; }
+        public string ClientContact { get; set; }
         public List<ProposalQuarterTableData> ProposalQuarterTables { get; set; } = new List<ProposalQuarterTableData>();
         public ProposalQuarterTableData ProposalCampaignTotalsTable { get; set; } = new ProposalQuarterTableData();
         public MarketCoverageData MarketCoverageData { get; set; }
@@ -1295,6 +1297,8 @@ namespace Services.Broadcast.Entities.Campaign
             CreatedDate = dateTimeEngine.GetCurrentMoment().ToString(DATE_FORMAT_SHORT_YEAR);
             AgencyName = agency.Name;
             ClientName = advertiser.Name;
+            AccountExecutive = campaign.AccountExecutive;
+            ClientContact = campaign.ClientContact;
             _SetCampaignFlightDate(plans);
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
