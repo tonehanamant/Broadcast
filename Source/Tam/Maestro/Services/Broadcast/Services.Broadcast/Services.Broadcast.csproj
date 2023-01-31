@@ -172,14 +172,14 @@
     <Reference Include="AWSSDK.S3, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\AWSSDK.S3.3.7.0\lib\net45\AWSSDK.S3.dll</HintPath>
     </Reference>
-    <Reference Include="Cadent.Library.Utilities.Standard.Common, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Utilities.Standard.Common.1.0.1\lib\netstandard2.0\Cadent.Library.Utilities.Standard.Common.dll</HintPath>
-    </Reference>
     <Reference Include="CadentLoggingStdCommon, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Logging.Standard.Common.2.0.0\lib\netstandard2.0\CadentLoggingStdCommon.dll</HintPath>
     </Reference>
     <Reference Include="CadentModelsStdCommon, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Models.Standard.Common.2.0.1\lib\netstandard2.0\CadentModelsStdCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="CadentUtilitiesStdCommon, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Cadent.Library.Utilities.Standard.Common.1.0.2\lib\netstandard2.0\CadentUtilitiesStdCommon.dll</HintPath>
     </Reference>
     <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\..\Solutions\BroadcastComposerWeb\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
