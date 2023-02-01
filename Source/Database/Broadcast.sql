@@ -1575,6 +1575,25 @@ END
 GO
 /*************************************** END BS-125 ************************************/
 
+/*************************************** START BP-6385 ************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'spot_exceptions_results_jobs')
+BEGIN
+
+	CREATE TABLE spot_exceptions_results_jobs(
+		id int IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		databricks_job_id bigint NOT NULL,
+		databricks_run_id int NOT NULL,
+		queued_at datetime2(7) NOT NULL,
+		queued_by varchar(100) NOT NULL,
+		completed_at datetime2(7) NULL,
+		result nvarchar(200) NULL
+	);
+END
+GO
+
+/*************************************** END BP-6385 ************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

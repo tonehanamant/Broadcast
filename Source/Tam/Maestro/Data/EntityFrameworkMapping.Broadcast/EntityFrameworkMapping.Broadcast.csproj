@@ -900,6 +900,9 @@
     <Compile Include="spot_exceptions_recommended_plan_done_decisions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="spot_exceptions_results_jobs.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="spot_exceptions_unposted_no_plan.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

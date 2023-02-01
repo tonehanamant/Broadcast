@@ -2673,6 +2673,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.spot_exceptions_
           <Property Name="ingested_at" Type="datetime" Nullable="false" />
           <Property Name="ingested_media_week_id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="spot_exceptions_results_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="databricks_job_id" Type="bigint" Nullable="false" />
+          <Property Name="databricks_run_id" Type="int" Nullable="false" />
+          <Property Name="queued_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="queued_by" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="result" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_plan">
           <Key>
             <PropertyRef Name="id" />
@@ -8024,6 +8036,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySet Name="spot_exceptions_recommended_plan_done_decisions" EntityType="Self.spot_exceptions_recommended_plan_done_decisions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_exceptions_recommended_plans" EntityType="Self.spot_exceptions_recommended_plans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_exceptions_recommended_plans_done" EntityType="Self.spot_exceptions_recommended_plans_done" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="spot_exceptions_results_jobs" EntityType="Self.spot_exceptions_results_jobs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_exceptions_unposted_no_plan" EntityType="Self.spot_exceptions_unposted_no_plan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_exceptions_unposted_no_reel_roster" EntityType="Self.spot_exceptions_unposted_no_reel_roster" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="spot_length_cost_multipliers" EntityType="Self.spot_length_cost_multipliers" Schema="dbo" store:Type="Tables" />
@@ -11198,6 +11211,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="scx_generation_open_market_jobs" EntitySet="scx_generation_open_market_jobs" />
             <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
           </AssociationSet>
+          <EntitySet Name="spot_exceptions_results_jobs" EntityType="BroadcastModel.spot_exceptions_results_jobs" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -19655,6 +19669,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="spot_exceptions_results_jobs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="databricks_job_id" Type="Int64" Nullable="false" />
+          <Property Name="databricks_run_id" Type="Int32" Nullable="false" />
+          <Property Name="queued_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="queued_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="result" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -23117,6 +23143,19 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               <MappingFragment StoreEntitySet="scx_generation_open_market_job_markets">
                 <ScalarProperty Name="rank" ColumnName="rank" />
                 <ScalarProperty Name="scx_generation_open_market_job_id" ColumnName="scx_generation_open_market_job_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_results_jobs">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_results_jobs">
+              <MappingFragment StoreEntitySet="spot_exceptions_results_jobs">
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="queued_by" ColumnName="queued_by" />
+                <ScalarProperty Name="queued_at" ColumnName="queued_at" />
+                <ScalarProperty Name="databricks_run_id" ColumnName="databricks_run_id" />
+                <ScalarProperty Name="databricks_job_id" ColumnName="databricks_job_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
