@@ -1119,7 +1119,7 @@
       ]
     }
   ],
-  "Fluidity": "Allowed",
+  "Fluidity": "40%",
   "GuaranteedDemo": [
     "A25-54"
   ],

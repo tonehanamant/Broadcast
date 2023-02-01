@@ -57,7 +57,7 @@ namespace Services.Broadcast.Entities.Campaign
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         internal List<LookupDto> _AllSpotLengths;
         private readonly Dictionary<int, double> _SpotLengthDeliveryMultipliers;
-        private static List<StandardDaypartDto> _StandardDaypartList;                      
+        private static List<StandardDaypartDto> _StandardDaypartList;
 
         /// <summary>
         /// DO NOT CONSUME outside of Unit Tests.
@@ -87,7 +87,7 @@ namespace Services.Broadcast.Entities.Campaign
             _AllSpotLengths = spotLengths;
             _SpotLengthDeliveryMultipliers = spotLengthDeliveryMultipliers;
             _StandardDaypartList = standardDayparts;
-            HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());            
+            HasSecondaryAudiences = plans.Any(x => x.SecondaryAudiences.Any());
             List<PlanProjectionForCampaignExport> projectedPlans = _ProjectPlansForProposalExport(plans, planPricingResultsDayparts);
             _PopulateHeaderData(exportType, campaign, plans, agency, advertiser
                 , guaranteedDemos, orderedAudiences, dateTimeEngine);
@@ -121,18 +121,18 @@ namespace Services.Broadcast.Entities.Campaign
 
         internal void _PopulateNotes(List<PlanDto> plans)
         {
-           
-                Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n";
-                foreach (var plan in plans)
+
+            Notes = "All CPMs are derived from 100% broadcast deliveries, no cable unless otherwise noted.\r\n";
+            foreach (var plan in plans)
+            {
+                var planID = plan.Id;
+                var externalNotes = plan.FlightNotes;
+                if (externalNotes != null)
                 {
-                    var planID = plan.Id;
-                    var externalNotes = plan.FlightNotes;
-                    if (externalNotes != null)
-                    {
-                        string planExternalnotesFormat = $"{externalNotes} (Plan ID {planID}); ";
-                        Notes = string.Concat(Notes, planExternalnotesFormat);
-                    }
+                    string planExternalnotesFormat = $"{externalNotes} (Plan ID {planID}); ";
+                    Notes = string.Concat(Notes, planExternalnotesFormat);
                 }
+            }
         }
 
         private void _PopulateFlightHiatuses(List<DateTime> plansHiatuses)
@@ -534,7 +534,7 @@ namespace Services.Broadcast.Entities.Campaign
                         string spotLengthLabel = $"{daypartGroup.Key.SpotLength}{_GetEquivalizedStatus(daypartGroup.Key.Equivalized, daypartGroup.Key.SpotLength)}";
                         double vpvh = 0;
                         vpvh = items.Average(x => x.GuaranteedAudience.VPVH > 0 ? x.GuaranteedAudience.VPVH : ProposalMath.CalculateVpvh(totalImpressions, totalHHImpressions));
-                        
+
                         var row = new ProposalQuarterTableRowData
                         {
                             DaypartCode = daypartGroup.Key.DaypartCode,
@@ -661,7 +661,7 @@ namespace Services.Broadcast.Entities.Campaign
             for (int i = 0; i < firstTable.Months.Count; i++)
             {
                 tableData.MonthlyCostValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
-            }           
+            }
             for (int i = 0; i < tableData.TotalWeeksInQuarter; i++)
             {
                 tableData.UnitsValues.Add(tablesInQuarterDaypart.Sum(x => Convert.ToDouble(x.UnitsValues[i])));
@@ -759,7 +759,7 @@ namespace Services.Broadcast.Entities.Campaign
             for (int i = 0; i < tableData.Months.Count; i++)
             {
                 tableData.MonthlyCostValues.Add(afterQuaterFilterSummaryTable.Sum(x => Convert.ToDouble(x.MonthlyCostValues[i])));
-            }            
+            }
             FlowChartQuarterTables.Add(tableData);
 
         }
@@ -1302,9 +1302,25 @@ namespace Services.Broadcast.Entities.Campaign
             _SetCampaignFlightDate(plans);
             PostingType = plans.Select(x => x.PostingType).Distinct().Single().ToString();
             Status = exportType.Equals(CampaignExportTypeEnum.Contract) ? "Order" : "Proposal";
-            Fluidity = plans.Any(x => x.FluidityPercentage > 0) ? "Allowed" : "Not Allowed";
+            Fluidity = _CalculateFluidityPercentage(plans);
             _SetGuaranteeedDemo(guaranteedDemos, orderedAudiences);
             _SetSpotLengths(plans);
+        }
+
+        private string _CalculateFluidityPercentage(List<PlanDto> plans)
+        {
+            int fluidityPresentPlans = plans.Where(x => x.FluidityPercentage != 0 && x.FluidityPercentage != null).Count();
+            double? sum = plans.Sum(x => x.FluidityPercentage);
+            if (fluidityPresentPlans != 0 && sum != 0)
+            {
+                double? output = Math.Round((double)sum / fluidityPresentPlans,2);
+                string result = output + "%";
+                return result;
+            }
+            else
+            {
+                return 0 + "%";
+            }
         }
 
         private void _SetSpotLengths(List<PlanDto> plans)

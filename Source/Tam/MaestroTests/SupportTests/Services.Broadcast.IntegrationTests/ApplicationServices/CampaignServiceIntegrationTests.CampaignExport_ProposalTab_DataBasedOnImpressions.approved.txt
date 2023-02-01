@@ -507,7 +507,7 @@
       ]
     }
   ],
-  "Fluidity": "Not Allowed",
+  "Fluidity": "0%",
   "GuaranteedDemo": [
     "HH"
   ],
