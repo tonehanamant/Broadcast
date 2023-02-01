@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Services.Broadcast.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Services.Broadcast.Converters.Post
 {
-    public class PostParsingException : Exception
+    public class PostParsingException : CadentException
     {
         private readonly string _Header;
 
