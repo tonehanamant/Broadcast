@@ -49,6 +49,7 @@
             public const string PRICING_RESULTS_REPORT = "PricingResultsReport";
             public const string BUYING_RESULTS_REPORT = "BuyingResultsReport";
             public const string INVENTORY_MARKET_AFFILIATES_REPORT = "InventoryMarketAffiliatesReport";
+            public const string OUT_OF_SPEC_EXPORT_REPORT = "OutOfSpecExportReport";
         }
     }
 }

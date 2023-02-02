@@ -1,21 +1,19 @@
-﻿using Common.Services.ApplicationServices;
+﻿using Common.Services;
+using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
-using Services.Broadcast.Repositories;
+using Services.Broadcast.ReportGenerators.SpotExceptions;
 using Services.Broadcast.Repositories.SpotExceptions;
 using System;
-using System.Threading.Tasks;
-using System.Linq;
 using System.Collections.Generic;
-using Services.Broadcast.Entities.DTO.Program;
-using Services.Broadcast.Cache;
-using Services.Broadcast.Entities.ProgramMapping;
-using System.Web.WebPages;
-using Tam.Maestro.Common.DataLayer;
-using Tam.Maestro.Common;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -33,18 +31,42 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
         /// <param name="spotExceptionsOutOfSpecSpotsRequest">plan id , start date ,end date</param>
         /// <returns>count and inventory source List</returns>
         Task<List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2>> GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
-    }
+
+        /// <summary>
+        /// Generats out of spec report.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="currentDate">The current date.</param>
+        /// <param name="templatesFilePath">The templates file path.</param>
+        /// <returns></returns>
+        Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath);
+
+
+        }
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
         private readonly ISpotExceptionsOutOfSpecRepositoryV2 _SpotExceptionsOutOfSpecRepositoryV2;
-
+        private readonly IDateTimeEngine _DateTimeEngine;
+        private readonly IFileService _FileService;
+        private readonly ISharedFolderService _SharedFolderService;
+        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
+        const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        const string outOfSpecBuyerExportFileName= "Template - Out of Spec Report Buying Team.xlsx";
         public SpotExceptionsOutOfSpecServiceV2(
           IDataRepositoryFactory dataRepositoryFactory,
           IFeatureToggleHelper featureToggleHelper,
+          IDateTimeEngine dateTime,
+          IFileService fileService,
+          ISharedFolderService sharedFolderService,
           IConfigurationSettingsHelper configurationSettingsHelper)
           : base(featureToggleHelper, configurationSettingsHelper)
         {
             _SpotExceptionsOutOfSpecRepositoryV2 = dataRepositoryFactory.GetDataRepository<ISpotExceptionsOutOfSpecRepositoryV2>();
+            _DateTimeEngine = dateTime;
+            _FileService = fileService;
+            _SharedFolderService = sharedFolderService;
+            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
         /// <inheritdoc />
         public async Task<List<SpotExceptionsOutOfSpecReasonCodeResultDtoV2>> GetSpotExceptionsOutOfSpecReasonCodesAsyncV2(
@@ -114,5 +136,55 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
             return inventorySources;
         }
 
+        /// <inheritdoc />
+        public Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath)
+        {
+            OutOfSpecExportReportData outOfSpecExportReportData = new OutOfSpecExportReportData();
+            var reportGenerator = new OutOfSpecReportGenerator(templatesFilePath);
+            _LogInfo($"Preparing to generate the file.  templatesFilePath='{templatesFilePath}'");
+            outOfSpecExportReportData.ExportFileName = outOfSpecBuyerExportFileName;
+            var report = reportGenerator.Generate(outOfSpecExportReportData);
+            var folderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.OUT_OF_SPEC_EXPORT_REPORT);
+
+            _LogInfo($"Saving generated file '{report.Filename}' to folder '{folderPath}'");
+            var fileId = _SaveFile(report.Filename, report.Stream, userName);
+            return fileId;
+
+        }
+        private Guid _SaveFile(string fileName, Stream fileStream, string userName)
+        {
+            var folderPath = _GetExportFileSaveDirectory();           
+
+            var sharedFolderFile = new SharedFolderFile
+            {
+                FolderPath = folderPath,
+                FileNameWithExtension = fileName,
+                FileMediaType = fileMediaType,
+                FileUsage = SharedFolderFileUsage.InventoryExport,
+                CreatedDate = _DateTimeEngine.GetCurrentMoment(),
+                CreatedBy = userName,
+                FileContent = fileStream
+            };
+            var fileId = _SharedFolderService.SaveFile(sharedFolderFile);
+
+            // Save to the File Service until the toggle is enabled and then we can remove it.
+            if (!_EnableSharedFileServiceConsolidation.Value)
+            {
+                _FileService.CreateDirectory(folderPath);
+                _FileService.Create(folderPath, fileName, fileStream);
+            }
+
+            return fileId;
+        }
+        private string _GetExportFileSaveDirectory()
+        {
+            var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.OUT_OF_SPEC_EXPORT_REPORT);
+            return path;
+        }
+        private bool _GetEnableSharedFileServiceConsolidation()
+        {
+            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
+            return result;
+        }
     }
 }

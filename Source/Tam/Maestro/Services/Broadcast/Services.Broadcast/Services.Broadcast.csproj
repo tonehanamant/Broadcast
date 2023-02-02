@@ -917,6 +917,8 @@
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetail.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetailDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportReportData.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionOutOfSpecSpotInventorySourcesDtoV2.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />
@@ -1390,6 +1392,7 @@
     <Compile Include="ReportGenerators\Quote\QuoteReportRateDetailLine.cs" />
     <Compile Include="ReportGenerators\Quote\QuoteReportRateDetailLineAudience.cs" />
     <Compile Include="ReportGenerators\Quote\RateDetailsReportGenerator.cs" />
+    <Compile Include="ReportGenerators\SpotExceptions\OutOfSpecReportGenerator.cs" />
     <Compile Include="Repositories\AffiliateRepository.cs" />
     <Compile Include="Repositories\CampaignSummaryRepository.cs" />
     <Compile Include="Repositories\DataMaintenanceRepository.cs" />

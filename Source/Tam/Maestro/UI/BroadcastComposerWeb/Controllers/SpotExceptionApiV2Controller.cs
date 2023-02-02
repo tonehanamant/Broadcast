@@ -47,5 +47,21 @@ namespace BroadcastComposerWeb.Controllers
             var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest);
             return _ConvertToBaseResponse(() => result);
         }
+        /// <summary>
+        /// Generates the inventory market affiliates report.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("GenerateOutOfSpecReport")]
+        [Authorize]
+        public BaseResponse<Guid> GenerateOutOfSpecReport([FromBody] OutOfSpecExportRequestDto request)
+        {
+            var fullName = _GetCurrentUserFullName();
+            var appDataPath = _GetAppDataPath();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
+        }
     }
 }

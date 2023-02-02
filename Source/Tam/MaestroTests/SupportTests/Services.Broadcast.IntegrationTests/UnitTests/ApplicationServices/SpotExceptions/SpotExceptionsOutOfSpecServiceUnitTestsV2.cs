@@ -1,8 +1,10 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
+using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
@@ -39,7 +41,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         private Mock<IGenreCache> _GenreCacheMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
-
+        private Mock<IFileService> _FileServicesMock;
+        private Mock<ISharedFolderService> _SharedFolderServiceMock;
+       
         [SetUp]
         public void SetUp()
         {
@@ -50,6 +54,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _PlanRepositoryMock = new Mock<IPlanRepository>();
 
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
+            _SharedFolderServiceMock=new Mock<ISharedFolderService>();
+            _FileServicesMock=new Mock<IFileService>();
             _AabEngine = new Mock<IAabEngine>();
             _GenreCacheMock = new Mock<IGenreCache>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
@@ -71,8 +77,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _SpotExceptionsOutOfSpecService = new SpotExceptionsOutOfSpecServiceV2
                 (
                     _DataRepositoryFactoryMock.Object,
-                    _FeatureToggleMock.Object,
-                    _ConfigurationSettingsHelperMock.Object
+                    _FeatureToggleMock.Object,                   
+                    _DateTimeEngineMock.Object,                    
+                     _FileServicesMock.Object,
+                      _SharedFolderServiceMock.Object,
+                       _ConfigurationSettingsHelperMock.Object
                 );
         }
 
