@@ -20,6 +20,8 @@ using System.Linq;
 using System.Web;
 using Services.Broadcast.Entities.Scx;
 using Services.Broadcast.Entities.InventoryMarketAffiliates;
+using Tam.Maestro.Services.Cable.Entities;
+
 namespace Services.Broadcast.Clients
 {
     public interface IInventoryManagementApiClient
@@ -360,14 +362,14 @@ namespace Services.Broadcast.Clients
                 var content = new StringContent(JsonConvert.SerializeObject(saveRequest), Encoding.UTF8, "application/json");
 
                 var apiResult = httpClient.PostAsync(requestUri, content).Result;                
-                var result = apiResult.Content.ReadAsAsync<ApiItemResponseTyped<InventoryFileSaveResult>>();
+                var result = apiResult.Content.ReadAsAsync<BaseResponse<InventoryFileSaveResult>>();
                 if (result.Result.Success)
                 {
                     InventoryFileSaveResult inventoryFileSaveResult = new InventoryFileSaveResult
                     {
-                        Status = result.Result.Result.Status,
-                        FileId = result.Result.Result.FileId,
-                        ValidationProblems = result.Result.Result.ValidationProblems
+                        Status = result.Result.Data.Status,
+                        FileId = result.Result.Data.FileId,
+                        ValidationProblems = result.Result.Data.ValidationProblems
                     };
                     return inventoryFileSaveResult;
                 }
