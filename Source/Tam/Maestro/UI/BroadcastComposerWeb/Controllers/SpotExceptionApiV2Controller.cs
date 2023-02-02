@@ -1,25 +1,29 @@
 ﻿using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
-using Services.Broadcast.Entities.SpotExceptions.RecommendedPlans;
+using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
-using Services.Broadcast.Entities.SpotExceptions.Unposted;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
-using Services.Broadcast.Entities.SpotExceptions;
 
 namespace BroadcastComposerWeb.Controllers
 {
+    /// <summary></summary>
     [RoutePrefix("api/v2/spot-exceptions")]
     public class SpotExceptionApiV2Controller : BroadcastControllerBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpotExceptionApiV2Controller" /> class.
+        /// </summary>
+        /// <param name="applicationServiceFactory">The application service factory.</param>
         public SpotExceptionApiV2Controller(BroadcastApplicationServiceFactory applicationServiceFactory) :
           base(new ControllerNameRetriever(typeof(PlanIsciApiController).Name), applicationServiceFactory)
         {
         }
+
         /// <summary>
         /// Gets the spot exceptions out of spec reason codes.
         /// </summary>
@@ -47,6 +51,7 @@ namespace BroadcastComposerWeb.Controllers
             var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest);
             return _ConvertToBaseResponse(() => result);
         }
+
         /// <summary>
         /// Generates the inventory market affiliates report.
         /// </summary>
@@ -62,6 +67,20 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
+        }
+
+        /// <summary>
+        /// Triggers the decision synchronize.
+        /// </summary>
+        /// <param name="triggerDecisionSyncRequest">The trigger decision synchronize request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("trigger-decision-sync")]
+        public async Task<BaseResponse<bool>> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsServiceV2>().TriggerDecisionSync(triggerDecisionSyncRequest);
+
+            return _ConvertToBaseResponse(() => result);
         }
     }
 }

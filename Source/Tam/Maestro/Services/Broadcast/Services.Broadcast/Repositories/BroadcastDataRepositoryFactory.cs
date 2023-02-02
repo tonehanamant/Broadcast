@@ -116,11 +116,13 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<IReelIsciIngestJobsRepository, ReelIsciIngestJobsRepository>();
             instance.RegisterType<IReelIsciRepository, ReelIsciRepository>();
             instance.RegisterType<ISpotExceptionsRepository, SpotExceptionsRepository>();
+            instance.RegisterType<ISpotExceptionsRepositoryV2, SpotExceptionsRepositoryV2>();
             instance.RegisterType<ISpotExceptionsRecommendedPlanRepository, SpotExceptionsRecommendedPlanRepository>();
+            instance.RegisterType<ISpotExceptionsRecommendedPlanRepositoryV2, SpotExceptionsRecommendedPlanRepositoryV2>();
             instance.RegisterType<ISpotExceptionsOutOfSpecRepository, SpotExceptionsOutOfSpecRepository>();
+            instance.RegisterType<ISpotExceptionsOutOfSpecRepositoryV2, SpotExceptionsOutOfSpecRepositoryV2>();
             instance.RegisterType<ISpotExceptionsUnpostedRepository, SpotExceptionsUnpostedRepository>();
             instance.RegisterType<ISpotExceptionsIngestJobRepository, SpotExceptionsIngestJobRepository>();
-            instance.RegisterType<ISpotExceptionsOutOfSpecRepositoryV2, SpotExceptionsOutOfSpecRepositoryV2>();
 
             WasRegistered = true;
         }

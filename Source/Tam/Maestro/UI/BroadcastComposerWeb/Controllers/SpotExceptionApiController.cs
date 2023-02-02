@@ -13,9 +13,14 @@ using Services.Broadcast.Entities.SpotExceptions;
 
 namespace BroadcastComposerWeb.Controllers
 {
+    /// <summary></summary>
     [RoutePrefix("api/v1/spot-exceptions")]
     public class SpotExceptionApiController : BroadcastControllerBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpotExceptionApiController" /> class.
+        /// </summary>
+        /// <param name="applicationServiceFactory">The application service factory.</param>
         public SpotExceptionApiController(BroadcastApplicationServiceFactory applicationServiceFactory) :
            base(new ControllerNameRetriever(typeof(PlanIsciApiController).Name), applicationServiceFactory)
         {

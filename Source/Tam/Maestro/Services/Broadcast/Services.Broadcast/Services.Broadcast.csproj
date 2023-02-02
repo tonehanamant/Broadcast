@@ -804,6 +804,7 @@
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecServiceV2.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsRecommendedPlanService.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsService.cs" />
+    <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsServiceV2.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsUnpostedService.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
@@ -919,6 +920,7 @@
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetailDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportReportData.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\DecisionSync\GetSyncStateResponseDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionOutOfSpecSpotInventorySourcesDtoV2.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />
@@ -1836,7 +1838,9 @@
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsOutOfSpecRepository.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsOutOfSpecRepositoryV2.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsRecommendedPlanRepository.cs" />
+    <Compile Include="Repositories\SpotExceptions\SpotExceptionsRecommendedPlanRepositoryV2.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsRepository.cs" />
+    <Compile Include="Repositories\SpotExceptions\SpotExceptionsRepositoryV2.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsUnpostedRepository.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
@@ -1891,6 +1895,7 @@
     <Compile Include="Validators\InventoryFileValidator.cs" />
     <Compile Include="Validators\PlanValidator.cs" />
     <Compile Include="Validators\PricingCalculationValidator.cs" />
+    <Compile Include="Validators\SpotExceptionsValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Schemas\SpotTVCableProposalSample.xml" />

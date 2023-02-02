@@ -1,5 +1,7 @@
-﻿using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
+﻿using Amazon.Runtime.Internal;
+using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using Services.Broadcast.Entities.ReelRosterIscis;
+using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Helpers.Json;
 using System;
@@ -11,9 +13,26 @@ namespace Services.Broadcast.Clients
 {
     public interface ISpotExceptionsApiClient
     {
+        /// <summary>
+        /// Ingests the asynchronous.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         Task<IngestApiResponse> IngestAsync(IngestApiRequest request);
 
+        /// <summary>
+        /// Publishes the synchronize request asynchronous.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <returns></returns>
         Task<bool> PublishSyncRequestAsync(ResultsSyncRequest request);
+
+        /// <summary>
+        /// Gets the synchronize state asynchronous.
+        /// </summary>
+        /// <param name="runningSyncId">The running synchronize identifier.</param>
+        /// <returns></returns>
+        Task<GetSyncStateResponseDto> GetSyncStateAsync(int runningSyncId);
     }
 
     public class SpotExceptionsApiClient : CadentSecuredClientBase, ISpotExceptionsApiClient
@@ -27,6 +46,7 @@ namespace Services.Broadcast.Clients
         {
         }
 
+        /// <inheritdoc />
         public async Task<IngestApiResponse> IngestAsync(IngestApiRequest request)
         {
             var ingestUrl = @"pull-spot-exceptions/api/ingest";
@@ -40,11 +60,12 @@ namespace Services.Broadcast.Clients
             return result;
         }
 
+        /// <inheritdoc />
         public async Task<bool> PublishSyncRequestAsync(ResultsSyncRequest request)
         {
             var requestUrl = @"pull-spot-exception-results/api/Results/notify-data-ready";
             var requestContent = new StringContent(JsonSerializerHelper.ConvertToJson(request), Encoding.UTF8, "application/json");
-            ResultsSyncResponse result;;
+            ResultsSyncResponse result;
 
             var client = await _GetSecureHttpClientAsync(AppName_Results);
             var postResponse = await client.PostAsync(requestUrl, requestContent);
@@ -65,6 +86,33 @@ namespace Services.Broadcast.Clients
 
             _LogInfo($"Successfully notified consumers that results data is ready.  Requested by '{request.RequestedBy}'.");
             return result.Success;
+        }
+
+        /// <inheritdoc />
+        public async Task<GetSyncStateResponseDto> GetSyncStateAsync(int runningSyncId)
+        {
+            var requestUrl = ($"pull-spot-exception-results/api/Results/get-sync-state?runId='{runningSyncId}'");
+
+            var client = await _GetSecureHttpClientAsync(AppName_Results);
+            var response = await client.GetAsync(requestUrl);
+
+            if (response.IsSuccessStatusCode == false)
+            {
+                _LogInfo($"Error connecting to ResultsApi for get-sync-state with runId '{runningSyncId}'.");
+                throw new InvalidOperationException($"Error connecting to ResultsApi for get-sync-state : {response}");
+            }
+
+            var result = await response.Content.ReadAsAsync<GetSyncStateResponseDto>();
+
+            if (!result.Success)
+            {
+                _LogInfo($"Error connecting to ResultsApi for get-sync-state with runId '{runningSyncId}'.");
+                throw new InvalidOperationException($"Error connecting to ResultsApi for get-sync-state : {response}");
+            }
+
+            _LogInfo($"Successfully verified the state of last running job with a runId '{runningSyncId}'.");
+
+            return result;
         }
 
         private async Task<HttpClient> _GetSecureHttpClientAsync(string appName)

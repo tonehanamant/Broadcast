@@ -1,7 +1,5 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using System;
 using System.Collections.Generic;
@@ -10,7 +8,6 @@ using System.Threading.Tasks;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using System.Data.Entity;
-using Services.Broadcast.Entities.ProgramMapping;
 using Common.Services.Extensions;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
@@ -42,6 +39,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
         Task<List<string>> GetOutOfSpecSpotsDoneInventorySourcesV2Async(int planId, DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the out of spec decision queued count asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        int GetOutOfSpecDecisionQueuedCountAsync();
     }
     /// <summary>
     /// spot exception repository which interacts with the database
@@ -143,6 +146,19 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 return spotExceptionsDoneInventorySources;
 
+            });
+        }
+
+        /// <inheritdoc />
+        public int GetOutOfSpecDecisionQueuedCountAsync()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var OutOfSpecDecisionCount = context.spot_exceptions_out_of_spec_done_decisions
+                  .Where(x => x.synced_at == null)
+                  .Count();
+
+                return OutOfSpecDecisionCount;
             });
         }
     }

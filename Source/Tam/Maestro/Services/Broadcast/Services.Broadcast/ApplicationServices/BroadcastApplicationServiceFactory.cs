@@ -290,12 +290,14 @@ namespace Services.Broadcast.ApplicationServices
 
             // Spot Exceptions Api
             unityContainer.RegisterType<ISpotExceptionsService, SpotExceptionsService>();
+            unityContainer.RegisterType<ISpotExceptionsServiceV2, SpotExceptionsServiceV2>();
             unityContainer.RegisterType<ISpotExceptionsRecommendedPlanService, SpotExceptionsRecommendedPlanService>();
             unityContainer.RegisterType<ISpotExceptionsOutOfSpecService, SpotExceptionsOutOfSpecService>();
+            unityContainer.RegisterType<ISpotExceptionsOutOfSpecServiceV2, SpotExceptionsOutOfSpecServiceV2>();
             unityContainer.RegisterType<ISpotExceptionsUnpostedService, SpotExceptionsUnpostedService>();
             unityContainer.RegisterType<ISpotExceptionsSyncService, SpotExceptionsSyncService>();
             unityContainer.RegisterType<ISpotExceptionsApiClient, SpotExceptionsApiClient>();
-            unityContainer.RegisterType<ISpotExceptionsOutOfSpecServiceV2, SpotExceptionsOutOfSpecServiceV2>();
+            unityContainer.RegisterType<ISpotExceptionsValidator, SpotExceptionsValidator>();
 
             //locking service
             unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();

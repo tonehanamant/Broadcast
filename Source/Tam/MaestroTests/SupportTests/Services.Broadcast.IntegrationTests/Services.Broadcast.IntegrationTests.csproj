@@ -789,6 +789,8 @@
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="DaypartCacheTests.cs" />
     <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
+    <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsServiceUnitTestsV2.cs" />
+    <Compile Include="UnitTests\Validators\SpotExceptionsValidatorUnitTests.cs" />
     <None Include="appsettings.Debug-Tests-Development.json">
       <DependentUpon>appsettings.json</DependentUpon>
       <IsTransformFile>true</IsTransformFile>
