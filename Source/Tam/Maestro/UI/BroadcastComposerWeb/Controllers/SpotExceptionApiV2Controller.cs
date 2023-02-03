@@ -82,5 +82,16 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => result);
         }
+        /// <summary>
+        /// Api for inventory sources dropdown filter
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-plan-inventory-sources")]
+        public async Task<BaseResponse<List<string>>> GetSpotExceptionsOutOfSpecPlanInventorySources(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetSpotExceptionsOutOfSpecPlanInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest);
+            return _ConvertToBaseResponse(() => result);
+        }
     }
 }

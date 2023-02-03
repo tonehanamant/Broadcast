@@ -42,8 +42,11 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
         /// <returns></returns>
         Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath);
 
-
-        }
+        /// <summary>
+        /// Population of Inventory Source Filter Dropdown.
+        /// </summary>
+        Task<List<string>> GetSpotExceptionsOutOfSpecPlanInventorySourcesAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest);
+}
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
         private readonly ISpotExceptionsOutOfSpecRepositoryV2 _SpotExceptionsOutOfSpecRepositoryV2;
@@ -168,7 +171,33 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
             return fileId;
 
         }
-        private Guid _SaveFile(string fileName, Stream fileStream, string userName)
+
+        /// <inheritdoc />
+        public async Task<List<string>> GetSpotExceptionsOutOfSpecPlanInventorySourcesAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
+        {
+            var outOfSpecSpotsToDo = new List<string>();
+            var outOfSpecSpotsDone = new List<string>();
+            List<string> inventorySources = new List<string>();
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Plan Inventory Sources V2");
+            try
+            {
+                outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest.WeekStartDate, spotExceptionsOutOfSpecPlansRequest.WeekEndDate);
+                outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest.WeekStartDate, spotExceptionsOutOfSpecPlansRequest.WeekEndDate);
+
+                inventorySources = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(inventorySource => inventorySource).ToList();
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Plan Inventory Sources V2");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Plan Inventory Sources V2";
+                throw new CadentException(msg, ex);
+            }
+
+            return inventorySources;
+        }
+    
+    private Guid _SaveFile(string fileName, Stream fileStream, string userName)
         {
             var folderPath = _GetExportFileSaveDirectory();           
 

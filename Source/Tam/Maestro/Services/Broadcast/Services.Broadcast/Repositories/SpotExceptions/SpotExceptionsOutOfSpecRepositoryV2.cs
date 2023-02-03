@@ -49,6 +49,21 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         /// <returns></returns>
         int GetOutOfSpecDecisionQueuedCountAsync();
+        /// <summary>
+        /// Gets the out of spec spots to do inventory sources asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<string>> GetOutOfSpecSpotsToDoInventorySourcesAsync(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the out of spec spots done inventory sources asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<string>> GetOutOfSpecSpotsDoneInventorySourcesAsync(DateTime weekStartDate, DateTime weekEndDate);
     }
     /// <summary>
     /// spot exception repository which interacts with the database
@@ -202,6 +217,57 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                   .Count();
 
                 return OutOfSpecDecisionCount;
+            });
+        }
+        /// <inheritdoc />
+        public async Task<List<string>> GetOutOfSpecSpotsToDoInventorySourcesAsync(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            List<string> spotExceptionsToDoInventorySources = new List<string>();
+
+            return await _InReadUncommitedTransaction(context =>
+            {
+                spotExceptionsToDoInventorySources = context.spot_exceptions_out_of_specs
+                   .Where(spotExceptionsOutOfSpecDb =>
+                           spotExceptionsOutOfSpecDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDb.program_air_time <= weekEndDate)
+                   .GroupJoin(
+                       context.stations
+                       .Include(stationDb => stationDb.market),
+                       spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.station_legacy_call_letters,
+                       stationDb => stationDb.legacy_call_letters,
+                       (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
+                   .Select(r => r.SpotExceptionsOutOfSpec.inventory_source_name ?? "Unknown")
+                   .ToList();
+
+                return Task.FromResult(spotExceptionsToDoInventorySources);
+
+            });
+        }
+
+        /// <inheritdoc />
+        public async Task<List<string>> GetOutOfSpecSpotsDoneInventorySourcesAsync(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            List<string> spotExceptionsDoneInventorySources = new List<string>();
+
+            return await _InReadUncommitedTransaction(context =>
+            {
+                spotExceptionsDoneInventorySources = context.spot_exceptions_out_of_specs_done
+                    .Where(spotExceptionsOutOfSpecDoneDb =>
+                            spotExceptionsOutOfSpecDoneDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDoneDb.program_air_time <= weekEndDate)
+                    .GroupJoin(
+                        context.stations
+                        .Include(stationDb => stationDb.market),
+                        spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.station_legacy_call_letters,
+                        stationDb => stationDb.legacy_call_letters,
+                        (spotExceptionsOutOfSpecDoneDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDoneDb, Station = stationDb.FirstOrDefault() })
+                    .Select(r => r.SpotExceptionsOutOfSpec.inventory_source_name ?? "Unknown")
+                    .ToList();
+
+                return Task.FromResult(spotExceptionsDoneInventorySources);
+
             });
         }
     }
