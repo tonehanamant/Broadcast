@@ -90,8 +90,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         {
             // Arrange
             _SpotExceptionsOutOfSpecRepositoryV2Mock
-                .Setup(s => s.GetSpotExceptionsOutOfSpecReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(s => s.GetSpotExceptionsOutOfSpecToDoReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(new List<SpotExceptionsOutOfSpecReasonCodeDtoV2>()));
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecDoneReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(new List<SpotExceptionsOutOfSpecReasonCodeDtoV2>()));
+
             var request = new SpotExceptionsOutOfSpecSpotsRequestDto
             {
                 PlanId = 847,
@@ -117,7 +122,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2022, 12, 31)
             };
             _SpotExceptionsOutOfSpecRepositoryV2Mock
-                .Setup(s => s.GetSpotExceptionsOutOfSpecReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(s => s.GetSpotExceptionsOutOfSpecToDoReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(new List<SpotExceptionsOutOfSpecReasonCodeDtoV2>
                 {
                     new SpotExceptionsOutOfSpecReasonCodeDtoV2
@@ -146,6 +151,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     }
                 }));
 
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+               .Setup(s => s.GetSpotExceptionsOutOfSpecDoneReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+               .Returns(Task.FromResult(new List<SpotExceptionsOutOfSpecReasonCodeDtoV2>
+               {
+                    new SpotExceptionsOutOfSpecReasonCodeDtoV2
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart",
+                        Count = 5
+                    },                    
+                    new SpotExceptionsOutOfSpecReasonCodeDtoV2
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate",
+                        Count = 10
+                    }
+               }));
+
             // Act
             var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecReasonCodesAsyncV2(request);
 
@@ -164,7 +191,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 WeekEndDate = new DateTime(2022, 12, 31)
             };
             _SpotExceptionsOutOfSpecRepositoryV2Mock
-                .Setup(s => s.GetSpotExceptionsOutOfSpecReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(s => s.GetSpotExceptionsOutOfSpecToDoReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetSpotExceptionsOutOfSpecDoneReasonCodesV2(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");

@@ -18,9 +18,13 @@ namespace Services.Broadcast.Repositories.SpotExceptions
     public interface ISpotExceptionsOutOfSpecRepositoryV2 : IDataRepository
     {
         /// <summary>
-        /// Get the list of reason codes 
+        /// Get the list of reason codes for to do
         /// </summary>
-        Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate);
+        Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecToDoReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate);
+        /// <summary>
+        /// Get the list of reason codes for done
+        /// </summary>
+        Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecDoneReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
         /// Gets the out of spec spots to do inventory sources asynchronous.
@@ -63,7 +67,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <summary>
         /// Get the list of reason codes 
         /// </summary>
-        public async Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        public async Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecToDoReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
@@ -84,6 +88,45 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                                                                      Label = grouped.Key.label,
                                                                      Count = grouped.Count()
                                                                  };
+               
+
+                var spotExceptionsOutOfSpecReasonCodes = spotExceptionsOutOfSpecReasonCodesEntities.Select(spotExceptionsOutOfSpecReasonCodesEntity => new SpotExceptionsOutOfSpecReasonCodeDtoV2
+                {
+                    Id = spotExceptionsOutOfSpecReasonCodesEntity.Id,
+                    ReasonCode = spotExceptionsOutOfSpecReasonCodesEntity.ReasonCode,
+                    Reason = spotExceptionsOutOfSpecReasonCodesEntity.Reason,
+                    Label = spotExceptionsOutOfSpecReasonCodesEntity.Label,
+                    Count = spotExceptionsOutOfSpecReasonCodesEntity.Count
+                }).ToList();
+                return spotExceptionsOutOfSpecReasonCodes;
+            });
+        }
+
+        /// <summary>
+        /// Get the list of reason codes for done
+        /// </summary>
+        public async Task<List<SpotExceptionsOutOfSpecReasonCodeDtoV2>> GetSpotExceptionsOutOfSpecDoneReasonCodesV2(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsOutOfSpecReasonCodesEntities = from oos in context.spot_exceptions_out_of_specs_done
+                                                                 join reasoncode in context.spot_exceptions_out_of_spec_reason_codes on
+                                                                 oos.reason_code_id equals reasoncode.id into spotexceptionoutofspec
+                                                                 where oos.recommended_plan_id == planId && oos.program_air_time >= weekStartDate
+                                                                 && oos.program_air_time <= weekEndDate
+                                                                 from reasoncode in spotexceptionoutofspec
+                                                                 group spotexceptionoutofspec by new { reasoncode.id, reasoncode.reason, reasoncode.reason_code, reasoncode.label } into grouped
+                                                                 select new
+                                                                 {
+                                                                     Id = grouped.Key.id,
+                                                                     ReasonCode = grouped.Key.reason_code,
+                                                                     Reason = grouped.Key.reason,
+                                                                     Label = grouped.Key.label,
+                                                                     Count = grouped.Count()
+                                                                 };
+
 
                 var spotExceptionsOutOfSpecReasonCodes = spotExceptionsOutOfSpecReasonCodesEntities.Select(spotExceptionsOutOfSpecReasonCodesEntity => new SpotExceptionsOutOfSpecReasonCodeDtoV2
                 {

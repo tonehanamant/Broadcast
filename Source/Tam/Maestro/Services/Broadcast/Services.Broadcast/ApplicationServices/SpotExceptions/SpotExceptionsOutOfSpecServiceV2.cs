@@ -77,19 +77,36 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
             _LogInfo($"Starting: Retrieving Spot Exception Out Of Spec Spot Reason Codes V2");
             try
             {
-                var spotExceptionsOutOfSpecReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetSpotExceptionsOutOfSpecReasonCodesV2(spotExceptionsOutOfSpecSpotsRequest.PlanId,
+                var spotExceptionsOutOfSpecToDoReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetSpotExceptionsOutOfSpecToDoReasonCodesV2(spotExceptionsOutOfSpecSpotsRequest.PlanId,
                     spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
+                var spotExceptionsOutOfSpecDoneReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetSpotExceptionsOutOfSpecDoneReasonCodesV2(spotExceptionsOutOfSpecSpotsRequest.PlanId,
+                   spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
 
-                spotExceptionsOutOfSpecReasonCodeResults = spotExceptionsOutOfSpecReasonCodes.Select(spotExceptionsOutOfSpecReasonCode => new SpotExceptionsOutOfSpecReasonCodeResultDtoV2
+                var combinedReasonCodeList = new List<SpotExceptionsOutOfSpecReasonCodeDtoV2>();
+
+                combinedReasonCodeList.AddRange(spotExceptionsOutOfSpecToDoReasonCodes);
+                combinedReasonCodeList.AddRange(spotExceptionsOutOfSpecDoneReasonCodes);
+
+                var distinctReasonCodes = combinedReasonCodeList.Select(x=> x.Reason).Distinct().ToList();
+
+
+                foreach (var reasonCode in distinctReasonCodes)
                 {
-                    Id = spotExceptionsOutOfSpecReasonCode.Id,
-                    ReasonCode = spotExceptionsOutOfSpecReasonCode.ReasonCode,
-                    Description = spotExceptionsOutOfSpecReasonCode.Reason,
-                    Label = spotExceptionsOutOfSpecReasonCode.Label,
-                    Count = spotExceptionsOutOfSpecReasonCode.Count
-                }).OrderBy(x => x.Label).ToList();
-
+                    var reasonEntity = combinedReasonCodeList.Where(x => x.Reason == reasonCode).ToList();
+                    int count = reasonEntity.Sum(x=> x.Count);
+                    var resonCodeEntity = reasonEntity.FirstOrDefault();
+                    var result = new SpotExceptionsOutOfSpecReasonCodeResultDtoV2
+                    {
+                        Id = resonCodeEntity.Id,
+                        ReasonCode = resonCodeEntity.ReasonCode,
+                        Description = resonCodeEntity.Reason,
+                        Label = resonCodeEntity.Label,
+                        Count = count
+                    };
+                    spotExceptionsOutOfSpecReasonCodeResults.Add(result);
+                }
                 _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Spot Reason Codes V2");
+                return spotExceptionsOutOfSpecReasonCodeResults;
             }
             catch (Exception ex)
             {
