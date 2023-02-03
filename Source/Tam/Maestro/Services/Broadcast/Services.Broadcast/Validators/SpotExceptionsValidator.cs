@@ -29,8 +29,8 @@ namespace Services.Broadcast.Validators
 
         private readonly ISpotExceptionsApiClient _SpotExceptionsApiClient;
 
-        const string NO_DECISIONS_NEEDING_SYNCED = "No decisions needing to be synced. Any decisions made so far are already being processed.";
-        const string SYNC_ALREADY_RUNNING = "A Sync is already running. Please try again later.";
+        const string NO_DECISIONS_NEEDING_SYNCED = "There are no decisions available for a sync. Any decisions previously submitted are being processed.";
+        const string SYNC_ALREADY_RUNNING = "A Sync process is currently running. Please try again later.";
 
         public SpotExceptionsValidator(IDataRepositoryFactory broadcastDataRepositoryFactory
             , ISpotExceptionsApiClient spotExceptionsApiClient
@@ -60,6 +60,11 @@ namespace Services.Broadcast.Validators
         /// <inheritdoc />
         public async Task<GetSyncStateResponseDto> ValidateSyncAlreadyRunning(int runningSyncId)
         {
+            if(runningSyncId == -1)
+            {
+                throw new SpotExceptionsException(SYNC_ALREADY_RUNNING);
+            }
+
             var response = await _SpotExceptionsApiClient.GetSyncStateAsync(runningSyncId);
 
             if(response.Result.State.State == "RUNNING")

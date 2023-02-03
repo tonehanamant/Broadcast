@@ -8,6 +8,7 @@ using Tam.Maestro.Data.EntityFrameworkMapping;
 using System.Linq;
 using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
 using Newtonsoft.Json;
+using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
 {
@@ -34,6 +35,13 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         /// <returns></returns>
         Task<int> GetRunningSyncRunId();
+
+        /// <summary>
+        /// Saves the running synchronize job.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="date">The date.</param>
+        void SaveRunningSyncJob(ResultsSyncRequest request, DateTime date);
 
         /// <summary>
         /// Sets the current job to complete.
@@ -101,6 +109,26 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 var runningSyncRunId = context.spot_exceptions_results_jobs.Where(x => x.completed_at == null).Select(x => x.databricks_run_id).FirstOrDefault();
 
                 return Task.FromResult(runningSyncRunId);
+            });
+        }
+
+        /// <inheritdoc />
+        public void SaveRunningSyncJob(ResultsSyncRequest request, DateTime date)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var entity = new spot_exceptions_results_jobs
+                {
+                    databricks_job_id = -1,
+                    databricks_run_id = -1,
+                    queued_at = date,
+                    queued_by = request.RequestedBy,
+                    completed_at = null,
+                    result = null
+                };
+
+                context.spot_exceptions_results_jobs.Add(entity);
+                context.SaveChanges();
             });
         }
 

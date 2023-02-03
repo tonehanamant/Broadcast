@@ -9,6 +9,7 @@ using Common.Services.Repositories;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories.SpotExceptions;
 using Services.Broadcast.Validators;
+using Services.Broadcast.BusinessEngines;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -28,12 +29,15 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly ISpotExceptionsApiClient _SpotExceptionsApiClient;
         private readonly ISpotExceptionsValidator _SpotExceptionValidator;
 
+        private readonly IDateTimeEngine _DateTimeEngine;
+
         private readonly Lazy<bool> _IsNotifyDataReadyEnabled;
 
         public SpotExceptionsServiceV2(
             IDataRepositoryFactory dataRepositoryFactory,
             ISpotExceptionsApiClient spotExceptionsApiClient,
             ISpotExceptionsValidator spotExceptionValidator,
+            IDateTimeEngine dateTimeEngine,
             IFeatureToggleHelper featureToggleHelper,
             IConfigurationSettingsHelper configurationSettingsHelper)
             : base(featureToggleHelper, configurationSettingsHelper)
@@ -41,6 +45,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _SpotExceptionsRepositoryV2 = dataRepositoryFactory.GetDataRepository<ISpotExceptionsRepositoryV2>();
             _SpotExceptionsApiClient = spotExceptionsApiClient;
             _SpotExceptionValidator = spotExceptionValidator;
+            _DateTimeEngine = dateTimeEngine;
             _IsNotifyDataReadyEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC));
         }
 
@@ -50,6 +55,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _LogInfo($"Beginning results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
 
             bool result;
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
 
             if (_IsNotifyDataReadyEnabled.Value)
             {
@@ -76,6 +82,10 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         {
                             _SpotExceptionsRepositoryV2.SetCurrentJobToComplete(jobState);
                         }
+                    }
+                    else
+                    {
+                        _SpotExceptionsRepositoryV2.SaveRunningSyncJob(syncRequest, currentDate);
                     }
 
                     result = await _SpotExceptionsApiClient.PublishSyncRequestAsync(syncRequest);

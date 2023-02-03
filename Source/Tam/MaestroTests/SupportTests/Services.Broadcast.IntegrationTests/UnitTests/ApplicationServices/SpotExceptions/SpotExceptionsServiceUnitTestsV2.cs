@@ -2,6 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
+using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using Services.Broadcast.Entities.SpotExceptions;
@@ -25,6 +26,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
         private Mock<ISpotExceptionsValidator> _SpotExceptionsValidatorMock;
 
+        private Mock<IDateTimeEngine> _DateTimeEngineMock;
+
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
@@ -38,6 +41,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _SpotExceptionsApiClientMock = new Mock<ISpotExceptionsApiClient>();
 
             _SpotExceptionsValidatorMock = new Mock<ISpotExceptionsValidator>();
+
+            _DateTimeEngineMock = new Mock<IDateTimeEngine>();
 
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
@@ -54,6 +59,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     _DataRepositoryFactoryMock.Object,
                     _SpotExceptionsApiClientMock.Object,
                     _SpotExceptionsValidatorMock.Object,
+                    _DateTimeEngineMock.Object,
                     _FeatureToggleMock.Object,
                     _ConfigurationSettingsHelperMock.Object
                 );

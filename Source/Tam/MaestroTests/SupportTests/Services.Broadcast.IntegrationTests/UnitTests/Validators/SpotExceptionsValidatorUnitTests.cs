@@ -52,7 +52,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             // Act and Assert
             Assert.That(() => _SpotExceptionsValidator.ValidateDataAvailableForSync(),
-                Throws.TypeOf<SpotExceptionsException>().With.Message.EqualTo("No decisions needing to be synced. Any decisions made so far are already being processed."));
+                Throws.TypeOf<SpotExceptionsException>().With.Message.EqualTo("There are no decisions available for a sync. Any decisions previously submitted are being processed."));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Validators
 
             // Act and Assert
             Assert.That(async () => await _SpotExceptionsValidator.ValidateSyncAlreadyRunning(It.IsAny<int>()),
-                Throws.TypeOf<SpotExceptionsException>().With.Message.EqualTo("A Sync is already running. Please try again later."));
+                Throws.TypeOf<SpotExceptionsException>().With.Message.EqualTo("A Sync process is currently running. Please try again later."));
         }
     }
 }
