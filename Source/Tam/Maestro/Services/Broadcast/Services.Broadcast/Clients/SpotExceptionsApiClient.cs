@@ -1,6 +1,5 @@
-﻿using Amazon.Runtime.Internal;
+﻿using Newtonsoft.Json;
 using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
-using Services.Broadcast.Entities.ReelRosterIscis;
 using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Helpers.Json;
@@ -64,8 +63,7 @@ namespace Services.Broadcast.Clients
         public async Task<bool> PublishSyncRequestAsync(ResultsSyncRequest request)
         {
             var requestUrl = @"pull-spot-exception-results/api/Results/notify-data-ready";
-            var requestContent = new StringContent(JsonSerializerHelper.ConvertToJson(request), Encoding.UTF8, "application/json");
-            ResultsSyncResponse result;
+            var requestContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
             var client = await _GetSecureHttpClientAsync(AppName_Results);
             var postResponse = await client.PostAsync(requestUrl, requestContent);
@@ -76,7 +74,7 @@ namespace Services.Broadcast.Clients
                 throw new InvalidOperationException($"Error connecting to ResultsApi for notify-data-ready : {postResponse}");
             }
 
-            result = await postResponse.Content.ReadAsAsync<ResultsSyncResponse>();
+            var result = await postResponse.Content.ReadAsAsync<ResultsSyncResponse>();
 
             if (!result.Success)
             {
