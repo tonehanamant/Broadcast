@@ -140,7 +140,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 var existingJob = context.spot_exceptions_results_jobs.Where(x => x.databricks_run_id == request.Result.RunId).First();
 
                 existingJob.completed_at = DateTime.Now;
-                existingJob.result = JsonConvert.SerializeObject(request).ToString();
+                existingJob.result = request.ToString();
 
                 context.SaveChanges();
             });

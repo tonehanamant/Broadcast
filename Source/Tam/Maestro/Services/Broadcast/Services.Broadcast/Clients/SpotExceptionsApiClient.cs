@@ -91,7 +91,7 @@ namespace Services.Broadcast.Clients
         /// <inheritdoc />
         public async Task<GetSyncStateResponseDto> GetSyncStateAsync(int runningSyncId)
         {
-            var requestUrl = ($"pull-spot-exception-results/api/Results/get-sync-state?runId='{runningSyncId}'");
+            var requestUrl = $"pull-spot-exception-results/api/Results/get-sync-state?runId={runningSyncId}";
 
             var client = await _GetSecureHttpClientAsync(AppName_Results);
             var response = await client.GetAsync(requestUrl);

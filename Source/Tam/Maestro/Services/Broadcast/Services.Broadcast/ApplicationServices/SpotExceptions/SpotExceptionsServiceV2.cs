@@ -72,10 +72,10 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     _SpotExceptionValidator.ValidateDataAvailableForSync();
 
                     var runningSyncRunId = await _SpotExceptionsRepositoryV2.GetRunningSyncRunId();
-
-                    _LogInfo($"Attempting to verify the state of last running job with a runId '{runningSyncRunId}'.");
+                                        
                     if (runningSyncRunId != 0)
                     {
+                        _LogInfo($"Attempting to verify the state of last running job with a runId '{runningSyncRunId}'.");
                         var jobState = await _SpotExceptionValidator.ValidateSyncAlreadyRunning(runningSyncRunId);
 
                         if(jobState.Result.State.State != "RUNNING")

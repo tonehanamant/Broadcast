@@ -1,4 +1,5 @@
-﻿using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
+﻿using Newtonsoft.Json;
+using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 
 namespace Services.Broadcast.Entities.SpotExceptions.DecisionSync
 {
@@ -50,24 +51,28 @@ namespace Services.Broadcast.Entities.SpotExceptions.DecisionSync
         /// Gets or sets the state.
         /// </summary>
         /// <value>The state.</value>
+        [JsonProperty(PropertyName = "state")]
         public GetSyncStateResponseStateDto State { get; set; }
 
         /// <summary>
         /// Gets or sets the job identifier.
         /// </summary>
         /// <value>The job identifier.</value>
+        [JsonProperty(PropertyName = "job_id")]
         public long JobId { get; set; }
 
         /// <summary>
         /// Gets or sets the run identifier.
         /// </summary>
         /// <value>The run identifier.</value>
+        [JsonProperty(PropertyName = "run_id")]
         public long RunId { get; set; }
 
         /// <summary>
         /// Gets or sets the number in jobs.
         /// </summary>
         /// <value>The number in jobs.</value>
+        [JsonProperty(PropertyName = "number_in_job")]
         public int NumberInJobs { get; set; }
     }
 
@@ -77,18 +82,21 @@ namespace Services.Broadcast.Entities.SpotExceptions.DecisionSync
         /// Gets or sets the state.
         /// </summary>
         /// <value>The state.</value>
+        [JsonProperty(PropertyName = "life_cycle_state")]
         public string State { get; set; }
 
         /// <summary>
         /// Gets or sets the state message.
         /// </summary>
         /// <value>The state message.</value>
+        [JsonProperty(PropertyName = "state_message")]
         public string StateMessage { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [user cancelled or timeout].
         /// </summary>
         /// <value><c>true</c> if [user cancelled or timeout]; otherwise, <c>false</c>.</value>
+        [JsonProperty(PropertyName = "user_cancelled_or_timedout")]
         public bool UserCancelledOrTimeout { get; set; }
     }
 }
