@@ -1352,6 +1352,38 @@ namespace BroadcastComposerWeb.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Spots the exceptions result reset indicator.
+        /// </summary>
+        /// <param name="protectionKey">The protection key.</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SpotExceptionsResultResetIndicator(string protectionKey)
+        {
+            try
+            {
+                if (protectionKey == "r3f4m1p2")
+                {
+                    var service = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsServiceV2>();
+                    service.ResetSpotExceptionResultsIndicator();
+                    ViewBag.Message = "Spot Exceptions Results Indicator has been reset.";
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid protection key";
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
+
+            TempData["Message"] = ViewBag.Message;
+            TempData["TabId"] = "spot_exceptions_sync";
+
+            return RedirectToAction("Index");
+        }
+
         #endregion // #region Spot Exceptions Sync
 
         #region Inventory Error File Migration to Attachment Service

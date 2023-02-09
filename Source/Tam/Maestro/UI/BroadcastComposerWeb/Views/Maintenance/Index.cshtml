@@ -1002,9 +1002,24 @@
                     }
                 </div>
             </div>
-            <h4 class="heading">Results Sync</h4>
+            <h3 class="heading">Results Sync</h3>
             <div class="form">
-                TBD
+                <div class="form">
+                    @using (Html.BeginForm("SpotExceptionsResultResetIndicator", "Maintenance", FormMethod.Post))
+                    {
+                        <h1 class="heading">Reset Spot Exceptions Results Indicator</h1>
+                        <div class="input-container">
+                            <label class="label" for="protectionKey">Protection key helps to avoid occasional clicks(enter next value 'r3f4m1p2')</label>
+                            <input class="input" type="text" name="protectionKey" placeholder="Protection key" />
+                        </div>
+                        <input class="button" type="submit" value="Reset Indicator" />
+
+                        <div>
+                            <span class="label">Result:</span>
+                            <label class="label" id="result_ClearSpotsData">@ViewBag.Message</label>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
 

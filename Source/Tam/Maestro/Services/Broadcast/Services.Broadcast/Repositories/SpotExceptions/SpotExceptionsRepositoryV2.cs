@@ -1,14 +1,13 @@
 ﻿using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
 using Services.Broadcast.Entities.SpotExceptions;
+using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
+using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using System.Threading.Tasks;
 using System;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
 using System.Linq;
-using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
-using Newtonsoft.Json;
-using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
 {
@@ -48,6 +47,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         /// <param name="request">The request.</param>
         void SetCurrentJobToComplete(GetSyncStateResponseDto request);
+
+        /// <summary>
+        /// Resets the spot exception results indicator.
+        /// </summary>
+        /// <returns></returns>
+        bool ResetSpotExceptionResultsIndicator();
     }
 
     public class SpotExceptionsRepositoryV2 : BroadcastRepositoryBase, ISpotExceptionsRepositoryV2
@@ -143,6 +148,25 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 existingJob.result = request.ToString();
 
                 context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc />
+        public bool ResetSpotExceptionResultsIndicator()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var existingJob = context.spot_exceptions_results_jobs.FirstOrDefault();
+
+                if (existingJob == null)
+                {
+                    return true;
+                }
+                existingJob.completed_at = DateTime.Now;
+                existingJob.result = "Completed manually by the results indicator reset process";
+
+                context.SaveChanges();
+                return true;
             });
         }
     }

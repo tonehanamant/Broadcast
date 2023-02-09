@@ -21,6 +21,12 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="triggerDecisionSyncRequest">The trigger decision synchronize request.</param>
         /// <returns></returns>
         Task<bool> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest);
+
+        /// <summary>
+        /// Clears the spot exception all data.
+        /// </summary>
+        /// <returns></returns>
+        bool ResetSpotExceptionResultsIndicator();
     }
 
     public class SpotExceptionsServiceV2 : BroadcastBaseClass, ISpotExceptionsServiceV2
@@ -128,6 +134,16 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
 
             _LogInfo($"Completed results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public bool ResetSpotExceptionResultsIndicator()
+        {
+            var result = _SpotExceptionsRepositoryV2.ResetSpotExceptionResultsIndicator();
+
+            _LogInfo($"The results sync indicator has been manually reset by Maintenance.");
 
             return result;
         }
