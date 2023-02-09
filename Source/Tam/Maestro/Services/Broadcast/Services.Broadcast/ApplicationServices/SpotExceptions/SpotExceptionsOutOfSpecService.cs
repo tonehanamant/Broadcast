@@ -499,7 +499,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             {
                 if (!spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.Comments).First().IsEmpty())
                 {
-                    isSaved = await _SaveOutOfSpecCommentsToDoAsync(spotExceptionsOutOfSpecSaveRequest);
+                    isSaved = await _SaveOutOfSpecCommentsToDoAsync(spotExceptionsOutOfSpecSaveRequest,userName);
                 }
                 else
                 {
@@ -527,7 +527,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             {
                 if (!spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.Comments).First().IsEmpty())
                 {
-                    isSaved = await _SaveOutOfSpecCommentsDoneAsync(spotExceptionsOutOfSpecSaveRequest);
+                    isSaved = await _SaveOutOfSpecCommentsDoneAsync(spotExceptionsOutOfSpecSaveRequest,userName);
                 }
                 else
                 {
@@ -545,7 +545,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return isSaved;
         }
 
-        private async Task<bool> _SaveOutOfSpecCommentsToDoAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest)
+        private async Task<bool> _SaveOutOfSpecCommentsToDoAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest,string userName)
         {
             bool isCommentSaved;          
 
@@ -562,9 +562,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
                     ReasonCode = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
-                    Comments = doneOutOfSpecToAdd.Comments
+                    Comments = spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments
                 }).ToList();
-                isCommentSaved = await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoneComments);
+                isCommentSaved = await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoneComments,userName,DateTime.Now);
                 _LogInfo($"Finished: Saving Comments to Out of Spec ToDo");
             }
             catch (Exception ex)
@@ -596,7 +596,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
                     ReasonCode = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
-                    Comments = doneOutOfSpecToAdd.Comments
+                    Comments = spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments
                 }).ToList();
                 var firstRequest = spotExceptionsOutOfSpecSaveRequest.Decisions.First();
                 if (string.IsNullOrEmpty(firstRequest.ProgramName) && string.IsNullOrEmpty(firstRequest.GenreName) && string.IsNullOrEmpty(firstRequest.DaypartCode))
@@ -705,7 +705,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         _SpotExceptionsOutOfSpecRepository.AddOutOfSpecEditedToDone(doneOutOfSpecsEditedToAdd);
                     }
                     _SpotExceptionsOutOfSpecRepository.DeleteOutOfSpecsFromToDo(existingOutOfSpecsToDo.Select(x => x.Id).ToList());
-                   await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoComments);
+                   await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoComments,userName,DateTime.Now);
                     transaction.Complete();
                     isSaved = true;
                 }
@@ -721,7 +721,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return isSaved;
         }
 
-        private async Task<bool> _SaveOutOfSpecCommentsDoneAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest)
+        private async Task<bool> _SaveOutOfSpecCommentsDoneAsync(SpotExceptionsOutOfSpecSaveDecisionsRequestDto spotExceptionsOutOfSpecSaveRequest,string userName)
         {
             bool isCommentSaved;         
 
@@ -738,9 +738,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
                     ReasonCode = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
-                    Comments = doneOutOfSpecToAdd.Comments
+                    Comments = spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments
                 }).ToList();
-                isCommentSaved = await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoneComments);
+                isCommentSaved = await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoneComments,userName,DateTime.Now);
                 _LogInfo($"Finished: Saving Comments to Out of Spec Done");
             }
             catch (Exception ex)

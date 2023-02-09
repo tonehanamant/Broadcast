@@ -169,9 +169,11 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// Saves the out of spec comments asynchronous.
         /// </summary>
         /// <param name="OutOfSpecsCommentsToAdd">The spot exceptions out of spec.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="decidedAt">The decided at.</param>
         /// <returns>
         /// </returns>
-        Task<bool> SaveOutOfSpecCommentsAsync(List<SpotExceptionOutOfSpecCommentsDto> OutOfSpecsCommentsToAdd);
+        Task<bool> SaveOutOfSpecCommentsAsync(List<SpotExceptionOutOfSpecCommentsDto> OutOfSpecsCommentsToAdd, string userName, DateTime decidedAt);
 
         /// <summary>
         /// Saves the spot exceptions out of spec done decisions asynchronous.
@@ -766,7 +768,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         }
 
         /// <inheritdoc />
-        public Task<bool> SaveOutOfSpecCommentsAsync(List<SpotExceptionOutOfSpecCommentsDto> OutOfSpecsCommentsToAdd)
+        public Task<bool> SaveOutOfSpecCommentsAsync(List<SpotExceptionOutOfSpecCommentsDto> OutOfSpecsCommentsToAdd,string userName, DateTime decidedAt)
         {
             bool isSaved = false;
 
@@ -793,6 +795,8 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         outOfSpecComments.reason_code_id = y.ReasonCode;
                         outOfSpecComments.recommended_plan_id = y.RecommendedPlanId.Value;
                         outOfSpecComments.comment = y.Comments;
+                        outOfSpecComments.added_by = userName;
+                        outOfSpecComments.added_at = decidedAt;
                         context.spot_exceptions_out_of_spec_comments.Add(outOfSpecComments);
                     }
                     else
