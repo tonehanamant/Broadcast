@@ -551,7 +551,6 @@
         <EntityTypeShape EntityType="BroadcastModel.stations_secondary_affiliations" Width="1.5" PointX="11.5" PointY="44.75" />
         <AssociationConnector Association="BroadcastModel.FK_stations_secondary_affiliations_affiliates" />
         <AssociationConnector Association="BroadcastModel.FK_stations_secondary_affiliations_stations" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="41.625" PointY="18.5" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details" Width="1.5" PointX="9.25" PointY="63.125" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans" Width="1.5" PointX="3" PointY="93.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_unposted_no_plan" Width="1.5" PointX="18.375" PointY="37.25" />
@@ -561,22 +560,14 @@
         <EntityTypeShape EntityType="BroadcastModel.staged_recommended_plans" Width="1.5" PointX="39.375" PointY="5.375" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_plan" Width="1.5" PointX="38.375" PointY="29.25" />
         <EntityTypeShape EntityType="BroadcastModel.staged_unposted_no_reel_roster" Width="1.5" PointX="38.375" PointY="19.25" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_spot_exceptions_recommended_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_ingest_jobs" Width="1.5" PointX="36.375" PointY="39.75" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_done_decisions" Width="1.5" PointX="46.875" PointY="13" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs_done" Width="1.5" PointX="44.625" PointY="11.25" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_details_done" Width="1.5" PointX="10.25" PointY="71.125" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plan_done_decisions" Width="1.5" PointX="12.5" PointY="73.5" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_recommended_plans_done" Width="1.5" PointX="3" PointY="100.375" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_exceptions_out_of_spec_reason_codes" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_spot_exceptions_recommended_plans_done" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_done_decisions_spot_exceptions_recommended_plans_details_done" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" />
@@ -595,8 +586,6 @@
         <AssociationConnector Association="BroadcastModel.FK_plans_campaigns" />
         <AssociationConnector Association="BroadcastModel.FK_plan_iscis_plans" />
         <AssociationConnector Association="BroadcastModel.FK_plan_versions_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_done_plans" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plan_details_plans" />
         <EntityTypeShape EntityType="BroadcastModel.scx_generation_open_market_job_files" Width="1.5" PointX="40.75" PointY="51.75" />
@@ -604,6 +593,18 @@
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_results_jobs" Width="1.5" PointX="40.375" PointY="0.75" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" Width="1.5" PointX="40.375" PointY="17.875" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.625" PointY="55.875" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs_done" Width="1.5" PointX="43.625" PointY="49.75" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_audiences" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_spec_done_decisions_spot_exceptions_out_of_specs_done" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_exceptions_out_of_spec_reason_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
+        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -34,15 +34,14 @@ namespace EntityFrameworkMapping.Broadcast
         public string house_isci { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
-        public string comment { get; set; }
         public string daypart_code { get; set; }
         public string genre_name { get; set; }
         public string inventory_source_name { get; set; }
         public int ingested_media_week_id { get; set; }
     
         public virtual audience audience { get; set; }
+        public virtual plan plan { get; set; }
         public virtual spot_exceptions_out_of_spec_reason_codes spot_exceptions_out_of_spec_reason_codes { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
-        public virtual plan plan { get; set; }
     }
 }

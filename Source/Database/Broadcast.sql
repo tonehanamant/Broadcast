@@ -1593,7 +1593,72 @@ END
 GO
 
 /*************************************** END BP-6385 ************************************/
+/*************************************** START BS-131 ***************************************/
 
+IF OBJECT_ID('spot_exceptions_out_of_spec_comments') IS NULL
+BEGIN
+ CREATE TABLE spot_exceptions_out_of_spec_comments
+	(
+		id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+		[spot_unique_hash_external] [varchar](255) NOT NULL,
+		[execution_id_external] [varchar](100) NOT NULL,
+		[isci_name] [varchar](100) NOT NULL,
+		[program_air_time] [datetime] NOT NULL,
+		[station_legacy_call_letters] [varchar](15) NOT NULL,
+		[reason_code_id] [int] NOT NULL,
+		[recommended_plan_id] [int] NOT NULL,
+		[comment] [nvarchar](1024) NULL,
+		[added_by] [varchar](100) NOT NULL,
+		[added_at] [datetime] NOT NULL		
+	)
+END
+
+DECLARE @SQL_from_todo nvarchar(1000)
+DECLARE @SQL_from_done nvarchar(1000)
+set @SQL_from_todo='INSERT INTO spot_exceptions_out_of_spec_comments (spot_unique_hash_external, execution_id_external, isci_name, program_air_time, station_legacy_call_letters, reason_code_id, recommended_plan_id, COMMENT, added_by, added_at)
+SELECT spot_unique_hash_external,
+       execution_id_external,
+       isci_name,
+       program_air_time,
+       station_legacy_call_letters,
+       reason_code_id,
+       recommended_plan_id,
+       COMMENT,
+       ingested_at,
+       ingested_at
+FROM spot_exceptions_out_of_specs where comment is not null'
+set @SQL_from_done='INSERT INTO spot_exceptions_out_of_spec_comments (spot_unique_hash_external, execution_id_external, isci_name, program_air_time, station_legacy_call_letters, reason_code_id, recommended_plan_id, COMMENT, added_by, added_at)
+SELECT spot_unique_hash_external,
+       execution_id_external,
+       isci_name,
+       program_air_time,
+       station_legacy_call_letters,
+       reason_code_id,
+       recommended_plan_id,
+       COMMENT,
+       ingested_at,
+       ingested_at
+FROM spot_exceptions_out_of_specs_done where comment is not null'
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'comment')
+BEGIN
+EXEC (@SQL_from_todo)
+EXEC (@SQL_from_done)
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs' AND COLUMN_NAME= 'comment')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs
+	DROP COLUMN comment
+END
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'spot_exceptions_out_of_specs_done' AND COLUMN_NAME= 'comment')
+BEGIN
+	ALTER TABLE spot_exceptions_out_of_specs_done
+	DROP COLUMN comment
+END
+
+GO
+/*************************************** END BS-131 ***************************************/
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

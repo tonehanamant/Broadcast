@@ -18,10 +18,10 @@ namespace EntityFrameworkMapping.Broadcast
         {
             this.plan_iscis = new HashSet<plan_iscis>();
             this.plan_versions = new HashSet<plan_versions>();
-            this.spot_exceptions_out_of_specs_done = new HashSet<spot_exceptions_out_of_specs_done>();
-            this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
             this.spot_exceptions_recommended_plan_details_done = new HashSet<spot_exceptions_recommended_plan_details_done>();
             this.spot_exceptions_recommended_plan_details = new HashSet<spot_exceptions_recommended_plan_details>();
+            this.spot_exceptions_out_of_specs_done = new HashSet<spot_exceptions_out_of_specs_done>();
+            this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
         }
     
         public int id { get; set; }
@@ -42,9 +42,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual campaign campaign { get; set; }
         public virtual ICollection<plan_iscis> plan_iscis { get; set; }
         public virtual ICollection<plan_versions> plan_versions { get; set; }
-        public virtual ICollection<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
-        public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_details_done> spot_exceptions_recommended_plan_details_done { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
+        public virtual ICollection<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
+        public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
     }
 }

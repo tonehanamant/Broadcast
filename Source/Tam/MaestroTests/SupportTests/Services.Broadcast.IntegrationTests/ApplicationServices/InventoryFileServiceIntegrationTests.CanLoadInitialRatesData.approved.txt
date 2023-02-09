@@ -321,14 +321,6 @@
       "Id": 15
     },
     {
-      "Display": "Children 2-5",
-      "Id": 339
-    },
-    {
-      "Display": "Children 6-11",
-      "Id": 46
-    },
-    {
       "Display": "Persons 2+",
       "Id": 419
     },
@@ -339,6 +331,14 @@
     {
       "Display": "Persons 15-17",
       "Id": 417
+    },
+    {
+      "Display": "Kids 2-5",
+      "Id": 339
+    },
+    {
+      "Display": "Kids 6-11",
+      "Id": 46
     }
   ],
   "DefaultPlaybackType": 4,

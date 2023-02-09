@@ -879,6 +879,9 @@
     <Compile Include="spot_exceptions_out_of_specs_done.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="spot_exceptions_out_of_spec_comments.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="spot_exceptions_out_of_spec_done_decisions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

@@ -24,8 +24,16 @@
     "Id": 11
   },
   {
+    "Display": "CRIME/INFORMATIONAL",
+    "Id": 119
+  },
+  {
     "Display": "Documentary",
     "Id": 12
+  },
+  {
+    "Display": "DOCUMENTARY/INFORMATIONAL",
+    "Id": 120
   },
   {
     "Display": "Drama",
@@ -38,6 +46,10 @@
   {
     "Display": "Entertainment",
     "Id": 15
+  },
+  {
+    "Display": "ENTERTAINMENT/NEWS",
+    "Id": 121
   },
   {
     "Display": "Entertainment/Reality",
@@ -68,8 +80,16 @@
     "Id": 112
   },
   {
+    "Display": "INFORMATIONAL/SPECIAL",
+    "Id": 122
+  },
+  {
     "Display": "Lifestyle",
     "Id": 54
+  },
+  {
+    "Display": "LIFESTYLE/NEWS",
+    "Id": 123
   },
   {
     "Display": "Movie",
@@ -84,12 +104,20 @@
     "Id": 34
   },
   {
+    "Display": "NEWS/SPECIAL",
+    "Id": 124
+  },
+  {
     "Display": "Paid Program",
     "Id": 55
   },
   {
     "Display": "Reality",
     "Id": 39
+  },
+  {
+    "Display": "REALITY TALK",
+    "Id": 125
   },
   {
     "Display": "Religious",
@@ -106,6 +134,10 @@
   {
     "Display": "Special",
     "Id": 56
+  },
+  {
+    "Display": "SPECIAL/SPORTS",
+    "Id": 126
   },
   {
     "Display": "Sports",

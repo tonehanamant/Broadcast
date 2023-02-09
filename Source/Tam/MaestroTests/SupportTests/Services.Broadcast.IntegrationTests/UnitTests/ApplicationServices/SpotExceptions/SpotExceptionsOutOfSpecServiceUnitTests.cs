@@ -1138,8 +1138,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             bool expectedResult = true;
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(s => s.SaveOutOfSpecCommentsToDoAsync(It.IsAny<List<SpotExceptionsOutOfSpecsToDoDto>>()))
+                .Setup(s => s.SaveOutOfSpecCommentsAsync(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>()))
                 .Returns(Task.FromResult(expectedResult));
+            _SpotExceptionsOutOfSpecRepositoryMock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+              .Returns(Task.FromResult(_GetOutOfSpecToDoData()));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
@@ -1173,8 +1176,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             bool expectedResult = true;
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(s => s.SaveOutOfSpecCommentsToDoAsync(It.IsAny<List<SpotExceptionsOutOfSpecsToDoDto>>()))
+                .Setup(s => s.SaveOutOfSpecCommentsAsync(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>()))
                 .Returns(Task.FromResult(expectedResult));
+            _SpotExceptionsOutOfSpecRepositoryMock
+            .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+            .Returns(Task.FromResult(_GetOutOfSpecToDoData()));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
@@ -1203,8 +1209,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             bool expectedResult = true;
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(s => s.SaveOutOfSpecCommentsDoneAsync(It.IsAny<List<SpotExceptionsOutOfSpecsDoneDto>>()))
+                .Setup(s => s.SaveOutOfSpecCommentsAsync(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>()))
                 .Returns(Task.FromResult(expectedResult));
+            _SpotExceptionsOutOfSpecRepositoryMock
+            .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+            .Returns(Task.FromResult(_GetOutOfSpecToDoData()));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
@@ -1238,8 +1247,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             bool expectedResult = true;
 
             _SpotExceptionsOutOfSpecRepositoryMock
-                .Setup(s => s.SaveOutOfSpecCommentsDoneAsync(It.IsAny<List<SpotExceptionsOutOfSpecsDoneDto>>()))
+                .Setup(s => s.SaveOutOfSpecCommentsAsync(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>()))
                 .Returns(Task.FromResult(expectedResult));
+            _SpotExceptionsOutOfSpecRepositoryMock
+            .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
+            .Returns(Task.FromResult(_GetOutOfSpecToDoData()));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
@@ -1258,78 +1270,64 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 {
                     new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
                     {
-                        TodoId = 14,
+                        TodoId = 1,
                         AcceptAsInSpec = true
                     }
                 }
             };
-
-            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            var getOutOfSpecToDoData = new List<SpotExceptionsOutOfSpecsToDoDto>()
             {
                 new SpotExceptionsOutOfSpecsToDoDto
                 {
-                    Id = 14,
-                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
-                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
-                    ReasonCodeMessage = null,
-                    EstimateId = 2009,
-                    IsciName = "JARD0075000H",
-                    RecommendedPlanId = 674,
-                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
-                    ProgramName = "BUSINESS FIRST AM",
-                    StationLegacyCallLetters = "KOLD",
-                    Affiliate= "CBS",
-                    Market = "Tucson (Sierra Vista)",
-                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
-                    AdvertiserName = null,
-                    SpotLengthId = null,
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
                     SpotLength = new SpotLengthDto
                     {
-                        Id = 2,
-                        Length= 60
+                        Id = 16,
+                        Length = 45
                     },
-                    AudienceId = null,
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
                     Audience = new AudienceDto
                     {
-                        Id = 40,
-                        Code = "A35-64",
-                        Name = "Adults 35-64"
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
                     },
-                    Product = null,
-                    FlightStartDate = new DateTime(2022, 12, 12),
-                    FlightEndDate = new DateTime(2022, 12, 25),
-                    DaypartCode = "EMN",
-                    GenreName = "INFORMATIONAL/NEWS",
-                    DaypartDetail =
+                    DaypartDetail = new DaypartDetailDto
                     {
-                        Id = 0,
-                        Code = null,
-                        Name = null,
-                        DaypartText = null
+                        Id = 70642,
+                        Code = "CUS"
                     },
-                    ProgramNetwork = "CBS",
-                    ProgramAirTime = new DateTime(2022, 12, 23),
-                    IngestedBy = "Test User",
-                    IngestedAt = new DateTime(2022, 12, 12),
-                    Impressions = 464.37199999999996,
-                    IngestedMediaWeekId = 989,
-                    PlanId = 674,
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
                     SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
                     {
-                        Id = 7,
-                        ReasonCode = 9,
-                        Reason = "Incorrect Time",
-                        Description = null,
-                        Label = "Time"
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
                     },
-                    MarketCode = 289,
-                    MarketRank = 69,
-                    HouseIsci = "009ARD0075H",
-                    TimeZone = "EST",
-                    DMA = 58,
-                    Comments = null,
-                    InventorySourceName = "Business First AM"
-                }
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                }               
             };
 
             string userName = "Test User";
@@ -1337,7 +1335,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             _SpotExceptionsOutOfSpecRepositoryMock
                 .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
-                .Returns(Task.FromResult(existingSpotExceptionOutOfSpecToDo));
+                .Returns(Task.FromResult(getOutOfSpecToDoData));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
@@ -2306,5 +2304,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 }
             };
         }
+
     }
 }
