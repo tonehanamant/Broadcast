@@ -20,17 +20,25 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
     public interface ISpotExceptionsOutOfSpecServiceV2 : IApplicationService
     {
         /// <summary>
-        /// Get the list of reason codes
+        /// Gets the spot exceptions out of spec plan inventory sources asynchronous.
         /// </summary>
-        Task<List<SpotExceptionsOutOfSpecReasonCodeResultDtoV2>> GetSpotExceptionsOutOfSpecReasonCodesAsyncV2(
-SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
+        /// <param name="outOfSpecPlansRequest">The spot exceptions out of spec plans request.</param>
+        /// <returns></returns>
+        Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto outOfSpecPlansRequest);
 
         /// <summary>
-        /// Gets the inventory Sources and the Count
+        /// Gets the spot exceptions out of spec spot inventory sources asynchronous.
         /// </summary>
-        /// <param name="spotExceptionsOutOfSpecSpotsRequest">plan id , start date ,end date</param>
-        /// <returns>count and inventory source List</returns>
-        Task<List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2>> GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
+        /// <param name="outOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
+        Task<List<OutOfSpecSpotInventorySourcesDto>> GetOutOfSpecSpotInventorySourcesAsync(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest);
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec reason codes asynchronous v2.
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
+        Task<List<OutOfSpecSpotReasonCodeResultsDto>> GetOutOfSpecSpotReasonCodesAsync(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest);
 
         /// <summary>
         /// Generats out of spec report.
@@ -41,21 +49,18 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
         /// <param name="templatesFilePath">The templates file path.</param>
         /// <returns></returns>
         Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath);
-
-        /// <summary>
-        /// Population of Inventory Source Filter Dropdown.
-        /// </summary>
-        Task<List<string>> GetSpotExceptionsOutOfSpecPlanInventorySourcesAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest);
 }
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
+        const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        const string outOfSpecBuyerExportFileName = "Template - Out of Spec Report Buying Team.xlsx";
+
         private readonly ISpotExceptionsOutOfSpecRepositoryV2 _SpotExceptionsOutOfSpecRepositoryV2;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IFileService _FileService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
-        const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        const string outOfSpecBuyerExportFileName= "Template - Out of Spec Report Buying Team.xlsx";
+
         public SpotExceptionsOutOfSpecServiceV2(
           IDataRepositoryFactory dataRepositoryFactory,
           IFeatureToggleHelper featureToggleHelper,
@@ -71,67 +76,44 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest);
             _SharedFolderService = sharedFolderService;
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
-        /// <inheritdoc />
-        public async Task<List<SpotExceptionsOutOfSpecReasonCodeResultDtoV2>> GetSpotExceptionsOutOfSpecReasonCodesAsyncV2(
-SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
-        {
-            var spotExceptionsOutOfSpecReasonCodeResults = new List<SpotExceptionsOutOfSpecReasonCodeResultDtoV2>();
-
-            _LogInfo($"Starting: Retrieving Spot Exception Out Of Spec Spot Reason Codes V2");
-            try
-            {
-                var spotExceptionsOutOfSpecToDoReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetSpotExceptionsOutOfSpecToDoReasonCodesV2(spotExceptionsOutOfSpecSpotsRequest.PlanId,
-                    spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
-                var spotExceptionsOutOfSpecDoneReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetSpotExceptionsOutOfSpecDoneReasonCodesV2(spotExceptionsOutOfSpecSpotsRequest.PlanId,
-                   spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
-
-                var combinedReasonCodeList = new List<SpotExceptionsOutOfSpecReasonCodeDtoV2>();
-
-                combinedReasonCodeList.AddRange(spotExceptionsOutOfSpecToDoReasonCodes);
-                combinedReasonCodeList.AddRange(spotExceptionsOutOfSpecDoneReasonCodes);
-
-                var distinctReasonCodes = combinedReasonCodeList.Select(x=> x.Reason).Distinct().ToList();
-
-
-                foreach (var reasonCode in distinctReasonCodes)
-                {
-                    var reasonEntity = combinedReasonCodeList.Where(x => x.Reason == reasonCode).ToList();
-                    int count = reasonEntity.Sum(x=> x.Count);
-                    var resonCodeEntity = reasonEntity.FirstOrDefault();
-                    var result = new SpotExceptionsOutOfSpecReasonCodeResultDtoV2
-                    {
-                        Id = resonCodeEntity.Id,
-                        ReasonCode = resonCodeEntity.ReasonCode,
-                        Description = resonCodeEntity.Reason,
-                        Label = resonCodeEntity.Label,
-                        Count = count
-                    };
-                    spotExceptionsOutOfSpecReasonCodeResults.Add(result);
-                }
-                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Spot Reason Codes V2");
-                return spotExceptionsOutOfSpecReasonCodeResults;
-            }
-            catch (Exception ex)
-            {
-                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Spot Reason Codes V2";
-                throw new CadentException(msg, ex);
-            }
-
-            return spotExceptionsOutOfSpecReasonCodeResults;
-        }
 
         /// <inheritdoc />
-        public async Task<List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2>> GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        public async Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto outOfSpecPlansRequest)
         {
             var outOfSpecSpotsToDo = new List<string>();
             var outOfSpecSpotsDone = new List<string>();
-            List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2> inventorySources = new List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2>();
+            List<string> inventorySources = new List<string>();
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Plan Inventory Sources V2");
+            try
+            {
+                outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecPlanToDoInventorySourcesAsync(outOfSpecPlansRequest.WeekStartDate, outOfSpecPlansRequest.WeekEndDate);
+                outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecPlanDoneInventorySourcesAsync(outOfSpecPlansRequest.WeekStartDate, outOfSpecPlansRequest.WeekEndDate);
+
+                inventorySources = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(inventorySource => inventorySource).ToList();
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Plan Inventory Sources V2");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Plan Inventory Sources V2";
+                throw new CadentException(msg, ex);
+            }
+
+            return inventorySources;
+        }
+
+        /// <inheritdoc />
+        public async Task<List<OutOfSpecSpotInventorySourcesDto>> GetOutOfSpecSpotInventorySourcesAsync(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            var outOfSpecSpotsToDo = new List<string>();
+            var outOfSpecSpotsDone = new List<string>();
+            List<OutOfSpecSpotInventorySourcesDto> inventorySources = new List<OutOfSpecSpotInventorySourcesDto>();
 
             _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Spot Inventory Sources V2");
             try
             {
-                outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoInventorySourcesV2Async(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
-                outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneInventorySourcesV2Async(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
+                outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotToDoInventorySourcesAsync(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
+                outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotDoneInventorySourcesAsync(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
 
                 var concatTodoAndDoneStringList = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).OrderBy(y => y).ToList();
                 var groupedInventorySources = concatTodoAndDoneStringList.GroupBy(x => x).ToList();
@@ -139,7 +121,7 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
                 {
                     int count = inventorySource.Count();
                     string name = inventorySource.Select(x => x).FirstOrDefault();
-                    var result = new SpotExceptionOutOfSpecSpotInventorySourcesDtoV2
+                    var result = new OutOfSpecSpotInventorySourcesDto
                     {
                         Name = name,
                         Count = count
@@ -153,7 +135,52 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
                 var msg = $"Could not retrieve Spot Exceptions Out Of Spec Inventory Sources V2";
                 throw new CadentException(msg, ex);
             }
+
             return inventorySources;
+        }
+
+        /// <inheritdoc />
+        public async Task<List<OutOfSpecSpotReasonCodeResultsDto>> GetOutOfSpecSpotReasonCodesAsync(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            var outOfSpecReasonCodeResults = new List<OutOfSpecSpotReasonCodeResultsDto>();
+
+            _LogInfo($"Starting: Retrieving Spot Exception Out Of Spec Spot Reason Codes V2");
+            try
+            {
+                var outOfSpecToDoReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotToDoReasonCodesAsync(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
+                var outOfSpecDoneReasonCodes = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotDoneReasonCodesAsync(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
+
+                var combinedReasonCodeList = new List<OutOfSpecSpotReasonCodesDto>();
+
+                combinedReasonCodeList.AddRange(outOfSpecToDoReasonCodes);
+                combinedReasonCodeList.AddRange(outOfSpecDoneReasonCodes);
+
+                var distinctReasonCodes = combinedReasonCodeList.Select(x => x.Reason).Distinct().ToList();
+
+                foreach (var reasonCode in distinctReasonCodes)
+                {
+                    var reasonEntity = combinedReasonCodeList.Where(x => x.Reason == reasonCode).ToList();
+                    int count = reasonEntity.Sum(x => x.Count);
+                    var resonCodeEntity = reasonEntity.FirstOrDefault();
+                    var result = new OutOfSpecSpotReasonCodeResultsDto
+                    {
+                        Id = resonCodeEntity.Id,
+                        ReasonCode = resonCodeEntity.ReasonCode,
+                        Description = resonCodeEntity.Reason,
+                        Label = resonCodeEntity.Label,
+                        Count = count
+                    };
+                    outOfSpecReasonCodeResults.Add(result);
+                }
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Spot Reason Codes V2");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Spot Reason Codes V2";
+                throw new CadentException(msg, ex);
+            }
+
+            return outOfSpecReasonCodeResults;
         }
 
         /// <inheritdoc />
@@ -172,32 +199,14 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
 
         }
 
-        /// <inheritdoc />
-        public async Task<List<string>> GetSpotExceptionsOutOfSpecPlanInventorySourcesAsync(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
-        {
-            var outOfSpecSpotsToDo = new List<string>();
-            var outOfSpecSpotsDone = new List<string>();
-            List<string> inventorySources = new List<string>();
-
-            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Plan Inventory Sources V2");
-            try
-            {
-                outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest.WeekStartDate, spotExceptionsOutOfSpecPlansRequest.WeekEndDate);
-                outOfSpecSpotsDone = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest.WeekStartDate, spotExceptionsOutOfSpecPlansRequest.WeekEndDate);
-
-                inventorySources = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().OrderBy(inventorySource => inventorySource).ToList();
-                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Plan Inventory Sources V2");
-            }
-            catch (Exception ex)
-            {
-                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Plan Inventory Sources V2";
-                throw new CadentException(msg, ex);
-            }
-
-            return inventorySources;
-        }
-    
-    private Guid _SaveFile(string fileName, Stream fileStream, string userName)
+        /// <summary>
+        /// Saves the file.
+        /// </summary>
+        /// <param name="fileName">Name of the file.</param>
+        /// <param name="fileStream">The file stream.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        private Guid _SaveFile(string fileName, Stream fileStream, string userName)
         {
             var folderPath = _GetExportFileSaveDirectory();           
 
@@ -222,11 +231,21 @@ SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
 
             return fileId;
         }
+
+        /// <summary>
+        /// Gets the export file save directory.
+        /// </summary>
+        /// <returns></returns>
         private string _GetExportFileSaveDirectory()
         {
             var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.OUT_OF_SPEC_EXPORT_REPORT);
             return path;
         }
+
+        /// <summary>
+        /// Gets the enable shared file service consolidation.
+        /// </summary>
+        /// <returns></returns>
         private bool _GetEnableSharedFileServiceConsolidation()
         {
             var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);

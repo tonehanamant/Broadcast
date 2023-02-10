@@ -25,30 +25,56 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the spot exceptions out of spec reason codes.
+        /// Gets the spot exception out of spec plan inventory sources.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecPlansRequest">The out of spec plans request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-plan-inventory-sources")]
+        public async Task<BaseResponse<List<string>>> GetOutOfSpecPlanInventorySources(OutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlanInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest);
+            return _ConvertToBaseResponse(() => result);
+        }
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec spot inventory sources.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-spot-inventory-sources")]
+        public async Task<BaseResponse<List<OutOfSpecSpotInventorySourcesDto>>> GetOutOfSpecSpotInventorySourcesAsync(OutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecSpotInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest);
+            return _ConvertToBaseResponse(() => result);
+        }
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec spot reason codes.
         /// </summary>
         /// <param name="spotExceptionsOutOfSpecSpotsRequest"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("out-of-spec-spot-reason-codes")]
-        public async Task<BaseResponse<List<SpotExceptionsOutOfSpecReasonCodeResultDtoV2>>> GetSpotExceptionsOutOfSpecReasonCodes_V1(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        public async Task<BaseResponse<List<OutOfSpecSpotReasonCodeResultsDto>>> GetOutOfSpecSpotReasonCodesAsync(OutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
-                 .GetSpotExceptionsOutOfSpecReasonCodesAsyncV2(spotExceptionsOutOfSpecSpotsRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecSpotReasonCodesAsync(spotExceptionsOutOfSpecSpotsRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
 
         /// <summary>
-        /// Gets the count and inventory sources
+        /// Triggers the decision synchronize.
         /// </summary>
-        /// <param name="spotExceptionsOutOfSpecSpotsRequest"></param>
+        /// <param name="triggerDecisionSyncRequest">The trigger decision synchronize request.</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("~/api/v2/spot-exceptions/out-of-spec-spot-inventory-sources")]
-        public async Task<BaseResponse<List<SpotExceptionOutOfSpecSpotInventorySourcesDtoV2>>> GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        [Route("trigger-decision-sync")]
+        public async Task<BaseResponse<bool>> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetSpotExceptionsOutOfSpecSpotInventorySourcesAsync(spotExceptionsOutOfSpecSpotsRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsServiceV2>().TriggerDecisionSync(triggerDecisionSyncRequest);
+
             return _ConvertToBaseResponse(() => result);
         }
 
@@ -67,31 +93,6 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
-        }
-
-        /// <summary>
-        /// Triggers the decision synchronize.
-        /// </summary>
-        /// <param name="triggerDecisionSyncRequest">The trigger decision synchronize request.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("trigger-decision-sync")]
-        public async Task<BaseResponse<bool>> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
-        {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsServiceV2>().TriggerDecisionSync(triggerDecisionSyncRequest);
-
-            return _ConvertToBaseResponse(() => result);
-        }
-        /// <summary>
-        /// Api for inventory sources dropdown filter
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("out-of-spec-plan-inventory-sources")]
-        public async Task<BaseResponse<List<string>>> GetSpotExceptionsOutOfSpecPlanInventorySources(SpotExceptionsOutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
-        {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetSpotExceptionsOutOfSpecPlanInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest);
-            return _ConvertToBaseResponse(() => result);
         }
     }
 }

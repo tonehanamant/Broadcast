@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
+﻿namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
-    public class SpotExceptionOutOfSpecSpotInventorySourcesDtoV2
+    /// <summary></summary>
+    public class OutOfSpecSpotInventorySourcesDto
     {
         /// <summary>
         /// Name Of Inventory Source
