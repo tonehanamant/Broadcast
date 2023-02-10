@@ -93,10 +93,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 AggregateAvailableMarkets,
                 AggregateBlackoutMarkets,
                 AggregateQuarters,
-                AggregateProduct
+                AggregateProduct,
+                AggregateIsAduPlan
             };
             return aggFunctions;
-        }
+        }        
 
         internal void AggregateFlightDays(PlanDto plan, PlanSummaryDto summary)
         {
@@ -200,6 +201,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
 
             summary.ProductName = product.Name;
+        }
+
+        internal void AggregateIsAduPlan(PlanDto plan, PlanSummaryDto summary)
+        {
+            summary.IsAduPlan = plan.IsAduPlan;
         }
     }
 }

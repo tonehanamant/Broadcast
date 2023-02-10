@@ -651,6 +651,7 @@ namespace Services.Broadcast.Repositories
                         FlightEndDate = x.flight_end_date,
                         FlightStartDate = x.flight_start_date,
                         IsDraft = x.is_draft,
+                        IsAduPlan = x.is_adu_plan,
                         ModifiedBy = x.modified_by ?? x.created_by,
                         ModifiedDate = x.modified_date ?? x.created_date,
                         Status = x.status,
@@ -725,6 +726,7 @@ namespace Services.Broadcast.Repositories
 
             //drafts don't have summary, so we're doing SingleOrDefault
             var planSummary = planVersion.plan_version_summaries.SingleOrDefault();
+
             var dto = new PlanDto
             {
                 Id = entity.id,
@@ -776,6 +778,7 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarketTotalUsCoveragePercent = planSummary?.blackout_market_total_us_coverage_percent ?? null,
                 PricingParameters = _MapPricingParameters(planVersion.plan_version_pricing_parameters.OrderByDescending(p => p.id).FirstOrDefault()),
                 IsDraft = planVersion.is_draft,
+                IsAduPlan = planVersion.is_adu_plan ?? false,
                 VersionNumber = planVersion.version_number,
                 VersionId = planVersion.id,
                 IsAduEnabled = planVersion.is_adu_enabled,
@@ -1027,6 +1030,7 @@ namespace Services.Broadcast.Repositories
             version.hh_rating_points = planDto.HHRatingPoints;
             version.hh_universe = planDto.HHUniverse;
             version.is_draft = planDto.IsDraft;
+            version.is_adu_plan = planDto.IsAduPlan;
             version.version_number = planDto.VersionNumber;
             version.is_adu_enabled = planDto.IsAduEnabled;
             version.impressions_per_unit = planDto.ImpressionsPerUnit;

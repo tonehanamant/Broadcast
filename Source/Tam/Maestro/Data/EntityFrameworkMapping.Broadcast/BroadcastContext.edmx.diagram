@@ -593,7 +593,6 @@
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_files_scx_generation_open_market_jobs" />
         <AssociationConnector Association="BroadcastModel.FK_scx_generation_open_market_job_markets_scx_generation_open_market_jobs" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_results_jobs" Width="1.5" PointX="40.375" PointY="0.75" />
-        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" Width="1.5" PointX="40.375" PointY="17.875" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs" Width="1.5" PointX="40.625" PointY="55.875" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_specs_done" Width="1.5" PointX="43.625" PointY="49.75" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences" />
@@ -605,6 +604,7 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_exceptions_out_of_spec_reason_codes" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
+        <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" Width="1.5" PointX="40.375" PointY="17.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

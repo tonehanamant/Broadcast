@@ -180,6 +180,11 @@ namespace Services.Broadcast.Entities.Plan
         /// Specify whether Plan has saved as draft
         /// </summary>
         public bool? IsDraft { get; set; }
+
+        /// <summary>
+        /// Specify that the Plan is an ADU Only Plan.
+        /// </summary>
+        public bool IsAduPlan { get; set; }
         
         /// <summary>
         /// Specify the version number of the plan

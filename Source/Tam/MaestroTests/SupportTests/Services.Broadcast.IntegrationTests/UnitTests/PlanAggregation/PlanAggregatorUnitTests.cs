@@ -333,6 +333,26 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanAggregation
             Assert.IsNull(summary.ProductName, "Invalid ProductName");
         }
 
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void AggregateIsAduPlan(bool planIsAdu)
+        {
+            // Arrange
+            var tc = GetEmptyTestClass();
+            var plan = new PlanDto
+            {
+                IsAduPlan = planIsAdu
+            };
+            var summary = new PlanSummaryDto();
+
+            // Act
+            tc.AggregateIsAduPlan(plan, summary);
+
+            // Assert
+            Assert.AreEqual(planIsAdu, summary.IsAduPlan);
+        }
+
         #endregion // #region Individual Aggregations
 
         #region Helpers

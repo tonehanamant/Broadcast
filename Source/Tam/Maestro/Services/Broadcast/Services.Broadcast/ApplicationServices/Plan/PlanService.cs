@@ -401,9 +401,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
         }
 
-       
-
-
         ///<inheritdoc/>
         public async Task<int> SavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously = false)
         {
@@ -417,7 +414,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 try
                 {
-                    result = await _DoSavePlanAsync(plan, createdBy, createdDate, aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
+                    if (plan.IsAduPlan && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2))
+                    {
+                        result = _DoSaveAduPlan(plan, createdBy, createdDate);
+                    }
+                    else
+                    {
+                        result = await _DoSavePlanAsync(plan, createdBy, createdDate, 
+                            aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -430,7 +436,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     {
                         throw new PlanSaveException(ex.Message.ToString() + " Try to save the plan as draft");
                     }
-                    throw new Exception(ex.Message.ToString() + " Try to save the plan as draft");
+                    throw new InvalidOperationException(ex.Message.ToString() + " Try to save the plan as draft");
                 }
             }
             return result;
@@ -448,7 +454,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.FlightStartDate = flightStartDate.Date + starttime;
             }
         }
-        private async Task<int> _DoSavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, bool aggregatePlanSynchronously, bool shouldPromotePlanPricingResults, bool shouldPromotePlanBuyingResults)
+        private async Task<int> _DoSavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, 
+            bool aggregatePlanSynchronously, 
+            bool shouldPromotePlanPricingResults, 
+            bool shouldPromotePlanBuyingResults)
         {
             var logTxId = Guid.NewGuid();
 
@@ -704,6 +713,87 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
                 throw new Exception("Error saving the plan draft.  Please see your administrator to check logs.");
+            }
+        }
+
+        private int _DoSaveAduPlan(PlanDto plan, string createdBy, DateTime createdDate)
+        {
+            var logTxId = Guid.NewGuid();
+            try
+            {
+                if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
+                {
+                    throw new PlanSaveException("The pricing model is running for the plan");
+                }
+
+                if (plan.CreativeLengths.Count == 1)
+                {
+                    //if there is only 1 creative length, set the weight to 100%
+                    plan.CreativeLengths.Single().Weight = 100;
+                }
+                else
+                {
+                    plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
+                }
+                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && plan.Dayparts.Any(x => x.DaypartCodeId > 0))
+                {
+                    plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                    _CalculateDeliveryDataPerAudience(plan);
+                }
+                else if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
+                {
+                    plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                }
+                if (!plan.Dayparts.IsNullOrEmpty())
+                {
+                    plan.Dayparts = _FilterValidDaypart(plan.Dayparts);
+                    DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
+                    _CalculateDaypartOverrides(plan.Dayparts);
+                }
+
+                _PlanValidator.ValidateAduPlan(plan);
+
+                _ConvertImpressionsToRawFormat(plan);
+
+                _SetPlanFlightDays(plan);
+
+                if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
+                {
+                    plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
+                }
+
+                if (plan.Id > 0)
+                {
+                    var key = KeyHelper.GetPlanLockingKey(plan.Id);
+                    var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
+
+                    if (lockingResult.Success)
+                    {
+                        _PlanRepository.SavePlan(plan, createdBy, createdDate);
+                    }
+                    else
+                    {
+                        throw new PlanSaveException(
+                            $"The chosen plan has been locked by {lockingResult.LockedUserName}");
+                    }
+                }
+                else
+                {
+                    _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
+                }
+
+                _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
+                _DispatchPlanAggregation(plan, aggregatePlanSynchronously: false);
+                return plan.Id;
+            }
+            catch (PlanSaveException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
+                throw new InvalidOperationException("Error saving the ADU Plan.  Please see your administrator to check logs.");
             }
         }
 

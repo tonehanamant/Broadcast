@@ -127,6 +127,8 @@ namespace Services.Broadcast.Repositories
             entity.product_name = dto.ProductName;
             entity.processing_status = (int)dto.ProcessingStatus;
             entity.fluidity_percentage = dto.FluidityPercentage;
+            entity.is_adu_plan = dto.IsAduPlan;
+
             _HydrateQuartersFromDto(entity, dto, context);
         }
 
@@ -150,6 +152,7 @@ namespace Services.Broadcast.Repositories
                 BlackoutMarketCount = entity.blackout_market_count,
                 BlackoutMarketTotalUsCoveragePercent = entity.blackout_market_total_us_coverage_percent,
                 ProductName = entity.product_name,
+                IsAduPlan = entity.is_adu_plan ?? false,
                 PlanSummaryQuarters = entity.plan_version_summary_quarters.Select(q => new PlanSummaryQuarterDto { Quarter = q.quarter, Year = q.year }).ToList()
             };
             return dto;

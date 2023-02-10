@@ -1553,6 +1553,7 @@
           <Property Name="available_market_with_sov_count" Type="int" />
           <Property Name="plan_version_id" Type="int" Nullable="false" />
           <Property Name="fluidity_percentage" Type="float" />
+          <Property Name="is_adu_plan" Type="bit" />
         </EntityType>
         <EntityType Name="plan_version_summary_quarters">
           <Key>
@@ -1628,6 +1629,7 @@
           <Property Name="fluidity_percentage" Type="float" />
           <Property Name="fluidity_child_category" Type="int" />
           <Property Name="fluidity_category" Type="int" />
+          <Property Name="is_adu_plan" Type="bit" />
         </EntityType>
         <EntityType Name="plans">
           <Key>
@@ -11189,7 +11191,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="scx_generation_open_market_job_markets" EntitySet="scx_generation_open_market_job_markets" />
           </AssociationSet>
           <EntitySet Name="spot_exceptions_results_jobs" EntityType="BroadcastModel.spot_exceptions_results_jobs" />
-          <EntitySet Name="spot_exceptions_out_of_spec_comments" EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" />
           <EntitySet Name="spot_exceptions_out_of_specs" EntityType="BroadcastModel.spot_exceptions_out_of_specs" />
           <EntitySet Name="spot_exceptions_out_of_specs_done" EntityType="BroadcastModel.spot_exceptions_out_of_specs_done" />
           <AssociationSet Name="FK_spot_exceptions_out_of_specs_audiences" Association="BroadcastModel.FK_spot_exceptions_out_of_specs_audiences">
@@ -11228,6 +11229,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_exceptions_out_of_specs_done" EntitySet="spot_exceptions_out_of_specs_done" />
           </AssociationSet>
+          <EntitySet Name="spot_exceptions_out_of_spec_comments" EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -14691,6 +14693,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_summary_quarters" Relationship="BroadcastModel.FK_plan_summary_quarters_plan_summary" FromRole="plan_version_summaries" ToRole="plan_version_summary_quarters" />
           <NavigationProperty Name="plan_versions" Relationship="BroadcastModel.FK_plan_version_summaries_plan_versions" FromRole="plan_version_summaries" ToRole="plan_versions" />
           <Property Name="fluidity_percentage" Type="Double" />
+          <Property Name="is_adu_plan" Type="Boolean" />
         </EntityType>
         <Association Name="FK_plan_secondary_audiences_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="1" />
@@ -18372,6 +18375,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="plan_version_weekly_breakdown" Relationship="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" FromRole="plan_versions" ToRole="plan_version_weekly_breakdown" />
           <NavigationProperty Name="fluidity_categories" Relationship="BroadcastModel.FK_plan_versions_fluidity_categories" FromRole="plan_versions" ToRole="fluidity_categories" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan_versions" ToRole="plan" />
+          <Property Name="is_adu_plan" Type="Boolean" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -19520,22 +19524,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="completed_at" Type="DateTime" Precision="7" />
           <Property Name="result" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="spot_exceptions_out_of_spec_comments">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="station_legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="reason_code_id" Type="Int32" Nullable="false" />
-          <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
-          <Property Name="comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="added_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="added_at" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="spot_exceptions_out_of_specs">
           <Key>
             <PropertyRef Name="id" />
@@ -19711,6 +19699,22 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="spot_exceptions_out_of_spec_comments">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spot_unique_hash_external" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="station_legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="reason_code_id" Type="Int32" Nullable="false" />
+          <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="added_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="added_at" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -21206,6 +21210,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_summaries">
               <MappingFragment StoreEntitySet="plan_version_summaries">
+                <ScalarProperty Name="is_adu_plan" ColumnName="is_adu_plan" />
                 <ScalarProperty Name="fluidity_percentage" ColumnName="fluidity_percentage" />
                 <ScalarProperty Name="available_market_with_sov_count" ColumnName="available_market_with_sov_count" />
                 <ScalarProperty Name="plan_version_id" ColumnName="plan_version_id" />
@@ -22574,6 +22579,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
+                <ScalarProperty Name="is_adu_plan" ColumnName="is_adu_plan" />
                 <ScalarProperty Name="fluidity_category" ColumnName="fluidity_category" />
                 <ScalarProperty Name="fluidity_child_category" ColumnName="fluidity_child_category" />
                 <ScalarProperty Name="fluidity_percentage" ColumnName="fluidity_percentage" />
@@ -23128,23 +23134,6 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="spot_exceptions_out_of_spec_comments">
-            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_spec_comments">
-              <MappingFragment StoreEntitySet="spot_exceptions_out_of_spec_comments">
-                <ScalarProperty Name="added_at" ColumnName="added_at" />
-                <ScalarProperty Name="added_by" ColumnName="added_by" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-                <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
-                <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
-                <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />
-                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
-                <ScalarProperty Name="isci_name" ColumnName="isci_name" />
-                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
-                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="spot_exceptions_out_of_specs">
             <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_specs">
               <MappingFragment StoreEntitySet="spot_exceptions_out_of_specs">
@@ -23199,6 +23188,23 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
                 <ScalarProperty Name="isci_name" ColumnName="isci_name" />
                 <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
                 <ScalarProperty Name="reason_code_message" ColumnName="reason_code_message" />
+                <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
+                <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="spot_exceptions_out_of_spec_comments">
+            <EntityTypeMapping TypeName="BroadcastModel.spot_exceptions_out_of_spec_comments">
+              <MappingFragment StoreEntitySet="spot_exceptions_out_of_spec_comments">
+                <ScalarProperty Name="added_at" ColumnName="added_at" />
+                <ScalarProperty Name="added_by" ColumnName="added_by" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="recommended_plan_id" ColumnName="recommended_plan_id" />
+                <ScalarProperty Name="reason_code_id" ColumnName="reason_code_id" />
+                <ScalarProperty Name="station_legacy_call_letters" ColumnName="station_legacy_call_letters" />
+                <ScalarProperty Name="program_air_time" ColumnName="program_air_time" />
+                <ScalarProperty Name="isci_name" ColumnName="isci_name" />
                 <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
                 <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
                 <ScalarProperty Name="id" ColumnName="id" />

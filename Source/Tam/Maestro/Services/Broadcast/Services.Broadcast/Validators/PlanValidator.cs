@@ -32,6 +32,11 @@ namespace Services.Broadcast.Validators
         void ValidatePlanDraft(PlanDto plan);
 
         /// <summary>
+        /// Validates an ADU Type Plan.
+        /// </summary>
+        void ValidateAduPlan(PlanDto plan);
+      
+        /// <summary>
         /// Validates the weekly breakdown.
         /// </summary>
         /// <param name="request">WeeklyBreakdownRequest request object.</param>
@@ -142,6 +147,8 @@ namespace Services.Broadcast.Validators
         const string INVALID_FLIGHT_CROSS_QUARTERS_PRICING = "Cross-Quarter flighting is invalid for Pricing.";
         const string INVALID_FLIGHT_CROSS_QUARTERS_BUYING = "Cross-Quarter flighting is invalid for Buying.";
 
+        const string ADU_PLAN_INVALID_ADUS = "Invalid ADUs for this type of Plan.  Expecting total ADUs greater than 0.";
+
         public PlanValidator(IBroadcastAudiencesCache broadcastAudiencesCache
             , IRatingForecastService ratingForecastService
             , IDataRepositoryFactory broadcastDataRepositoryFactory
@@ -206,7 +213,7 @@ namespace Services.Broadcast.Validators
             }
 
             _ValidateFlightAndHiatus(plan);
-        }
+        }        
 
         /// <inheritdoc/>
         public void ValidatePlanForPricing(PlanDto plan)
@@ -226,6 +233,44 @@ namespace Services.Broadcast.Validators
             _ValidatePrimaryAudience(plan);
             //_ValidateWeeklyBreakdownWeeks(plan);
             _ValidateMarkets(plan);
+        }
+
+        /// <inheritdoc/>
+        public void ValidateAduPlan(PlanDto plan)
+        {
+            if (string.IsNullOrWhiteSpace(plan.Name) || plan.Name.Length > 255)
+            {
+                throw new PlanValidationException(INVALID_PLAN_NAME);
+            }
+
+            if ((plan.VersionId == 0 || plan.Id == 0) && plan.IsDraft == true)
+            {
+                throw new PlanValidationException(INVALID_DRAFT_ON_NEW_PLAN);
+            }
+
+            _ValidateCreativeLengths(plan.CreativeLengths);
+            _ValidateProduct(plan);
+            _ValidateFlightAndHiatus(plan);
+            _ValidateCustomDayparts(plan);
+            _ValidateDayparts(plan);
+            _ValidatePrimaryAudience(plan);
+            _ValidateSecondaryAudiences(plan.SecondaryAudiences, plan.AudienceId);
+            _ValidateMarkets(plan);
+
+            _ValidateWeeklyBreakdownWeeksForAduPlan(plan);
+
+            // PRI-14012 We'll use a stop word so QA can trigger an error 
+            _ValidateStopWord(plan);
+        }
+
+        private void _ValidateWeeklyBreakdownWeeksForAduPlan(PlanDto plan)
+        {
+            // There has to be some ADUs in any Week.
+            var totalAdus = plan.WeeklyBreakdownWeeks.Sum(s => s.WeeklyAdu);
+            if (totalAdus < 1)
+            {
+                throw new PlanValidationException(ADU_PLAN_INVALID_ADUS);
+            }
         }
 
         /// <inheritdoc/>

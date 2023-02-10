@@ -91,6 +91,7 @@
   "Id": 1,
   "ImpressionsPerUnit": 20.0,
   "IsAduEnabled": null,
+  "IsAduPlan": false,
   "IsBuyingModelRunning": false,
   "IsDraft": null,
   "IsOutOfSync": false,

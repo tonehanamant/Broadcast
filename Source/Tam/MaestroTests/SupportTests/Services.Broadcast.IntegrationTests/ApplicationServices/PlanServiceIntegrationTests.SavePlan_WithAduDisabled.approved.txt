@@ -411,6 +411,7 @@
   "HUTBookId": 437,
   "ImpressionsPerUnit": 5.0,
   "IsAduEnabled": false,
+  "IsAduPlan": false,
   "IsBuyingModelRunning": false,
   "IsDraft": null,
   "IsOutOfSync": false,

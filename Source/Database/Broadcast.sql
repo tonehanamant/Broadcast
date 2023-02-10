@@ -1659,6 +1659,25 @@ END
 
 GO
 /*************************************** END BS-131 ***************************************/
+
+/*************************************** START BS-443 *************************************/
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.COLUMNS 
+	WHERE TABLE_NAME = 'plan_versions' 
+	AND COLUMN_NAME= 'is_adu_plan')
+BEGIN
+    ALTER TABLE plan_versions
+		ADD is_adu_plan BIT NULL
+
+	ALTER TABLE plan_version_summaries
+	ADD is_adu_plan BIT NULL
+END
+
+GO
+
+/*************************************** END BS-443 ***************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
