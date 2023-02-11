@@ -629,7 +629,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 throw new Exception("Error saving the plan.  Please see your administrator to check logs.");
             }
         }
-
+        
         private int _DoSavePlanDraft(PlanDto plan, string createdBy, DateTime createdDate)
         {
             var logTxId = Guid.NewGuid();
@@ -649,6 +649,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
                 }
+
+                if (plan.IsAduPlan && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2))
+                {
+                    InitAduOnlyPlanGoals(plan);
+                }
+
                 if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && plan.Dayparts.Any(x => x.DaypartCodeId > 0))
                 {
                     plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
@@ -716,6 +722,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
+        private static void InitAduOnlyPlanGoals(PlanDto plan)
+        {
+            // init goal related properties
+            plan.Budget = plan.Budget ?? 0;
+            plan.TargetImpressions = plan.TargetImpressions ?? 0;
+            plan.TargetRatingPoints = plan.TargetRatingPoints ?? 0;
+            
+            plan.TargetCPM = plan.TargetCPM ?? 0;
+            plan.TargetCPP = plan.TargetCPP ?? 0;
+
+            // we want this to be greater than 0 for the ADU Impressions calculation
+            plan.ImpressionsPerUnit = (plan.ImpressionsPerUnit ?? 0) > 0 ? plan.ImpressionsPerUnit : 1; 
+        }
+
         private int _DoSaveAduPlan(PlanDto plan, string createdBy, DateTime createdDate)
         {
             var logTxId = Guid.NewGuid();
@@ -726,6 +746,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     throw new PlanSaveException("The pricing model is running for the plan");
                 }
 
+                _PlanValidator.ValidateAduPlan(plan);
+
                 if (plan.CreativeLengths.Count == 1)
                 {
                     //if there is only 1 creative length, set the weight to 100%
@@ -735,23 +757,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
                 }
-                if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && plan.Dayparts.Any(x => x.DaypartCodeId > 0))
-                {
-                    plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-                    _CalculateDeliveryDataPerAudience(plan);
-                }
-                else if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
-                {
-                    plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-                }
-                if (!plan.Dayparts.IsNullOrEmpty())
-                {
-                    plan.Dayparts = _FilterValidDaypart(plan.Dayparts);
-                    DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
-                    _CalculateDaypartOverrides(plan.Dayparts);
-                }
 
-                _PlanValidator.ValidateAduPlan(plan);
+                // init goal related properties
+                InitAduOnlyPlanGoals(plan);
+
+                plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                _CalculateDeliveryDataPerAudience(plan);
+
+                plan.Dayparts = _FilterValidDaypart(plan.Dayparts);
+                DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
+                _CalculateDaypartOverrides(plan.Dayparts);                
 
                 _ConvertImpressionsToRawFormat(plan);
 
@@ -1102,6 +1117,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SortPlanDayparts(plan);
             _SortProgramRestrictions(plan);
             _SortCreativeLengths(plan);
+
+            if (plan.IsAduPlan)
+            {
+                InitAduOnlyPlanGoals(plan);
+            }
 
             plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
