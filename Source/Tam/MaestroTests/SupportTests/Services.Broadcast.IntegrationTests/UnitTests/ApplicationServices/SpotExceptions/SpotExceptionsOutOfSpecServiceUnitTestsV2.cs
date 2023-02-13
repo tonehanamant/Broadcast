@@ -10,9 +10,7 @@ using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -29,17 +27,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
     [UseReporter(typeof(DiffReporter))]
     public class SpotExceptionsOutOfSpecServiceUnitTestsV2
     {
-        private SpotExceptionsOutOfSpecServiceV2 _SpotExceptionsOutOfSpecService;
+        private SpotExceptionsOutOfSpecServiceV2 _SpotExceptionsOutOfSpecServiceV2;
 
         private Mock<IDataRepositoryFactory> _DataRepositoryFactoryMock;
-        private Mock<ISpotExceptionsOutOfSpecRepository> _SpotExceptionsOutOfSpecRepositoryMock;
         private Mock<ISpotExceptionsOutOfSpecRepositoryV2> _SpotExceptionsOutOfSpecRepositoryV2Mock;
-        private Mock<ISpotExceptionsOutOfSpecServiceV2> _SpotExceptionsOutOfSpecServiceV2Mock;
         private Mock<IPlanRepository> _PlanRepositoryMock;
 
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
-        private Mock<IAabEngine> _AabEngine;
         private Mock<IGenreCache> _GenreCacheMock;
+        private Mock<IAabEngine> _AabEngineMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
         private Mock<IFileService> _FileServicesMock;
@@ -49,22 +45,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         public void SetUp()
         {
             _DataRepositoryFactoryMock = new Mock<IDataRepositoryFactory>();
-            _SpotExceptionsOutOfSpecRepositoryMock = new Mock<ISpotExceptionsOutOfSpecRepository>();
             _SpotExceptionsOutOfSpecRepositoryV2Mock = new Mock<ISpotExceptionsOutOfSpecRepositoryV2>();
-            _SpotExceptionsOutOfSpecServiceV2Mock = new Mock<ISpotExceptionsOutOfSpecServiceV2>();
             _PlanRepositoryMock = new Mock<IPlanRepository>();
 
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _SharedFolderServiceMock=new Mock<ISharedFolderService>();
             _FileServicesMock=new Mock<IFileService>();
-            _AabEngine = new Mock<IAabEngine>();
             _GenreCacheMock = new Mock<IGenreCache>();
+            _AabEngineMock = new Mock<IAabEngine>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
-
-            _DataRepositoryFactoryMock
-                .Setup(x => x.GetDataRepository<ISpotExceptionsOutOfSpecRepository>())
-                .Returns(_SpotExceptionsOutOfSpecRepositoryMock.Object);
 
             _DataRepositoryFactoryMock
                 .Setup(x => x.GetDataRepository<ISpotExceptionsOutOfSpecRepositoryV2>())
@@ -75,20 +65,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
               .Setup(x => x.GetDataRepository<IPlanRepository>())
               .Returns(_PlanRepositoryMock.Object);
 
-            _SpotExceptionsOutOfSpecService = new SpotExceptionsOutOfSpecServiceV2
+            _SpotExceptionsOutOfSpecServiceV2 = new SpotExceptionsOutOfSpecServiceV2
                 (
                     _DataRepositoryFactoryMock.Object,
                     _FeatureToggleMock.Object,                   
                     _DateTimeEngineMock.Object,                    
-                     _FileServicesMock.Object,
-                      _SharedFolderServiceMock.Object,
-                      _AabEngine.Object,
-                       _ConfigurationSettingsHelperMock.Object
+                    _FileServicesMock.Object,
+                    _SharedFolderServiceMock.Object,
+                    _GenreCacheMock.Object,
+                    _AabEngineMock.Object,
+                    _ConfigurationSettingsHelperMock.Object
                 );
         }
 
         [Test]
-        public async Task GetOutOfSpecPlanToDoAsync_V2()
+        public async Task GetOutOfSpecPlansToDoAsync_Exist()
         {
             // Arrange
             var request = new OutOfSpecPlansIncludingFiltersRequestDto
@@ -101,7 +92,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Setup(x => x.GetOutOfSpecPlansToDoAsync(It.IsAny<List<string>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(_GetSpotExceptionsOutOfSpecGroupings()));
 
-            _AabEngine
+            _AabEngineMock
                 .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns(new AdvertiserDto
                 {
@@ -118,14 +109,52 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             };
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansTodoAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlansToDoAsync(request);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
         }
 
         [Test]
-        public void GetOutOfSpecPlanToDoAsync_V2_ThrowException()
+        public async Task GetOutOfSpecPlansToDoAsync_WithoutExist()
+        {
+            // Arrange
+            var request = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+            var outOfSpecToDo = new List<SpotExceptionsOutOfSpecGroupingDto>();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansToDoAsync(It.IsAny<List<string>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(outOfSpecToDo));
+
+            _AabEngineMock
+                .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(new AdvertiserDto
+                {
+                    AgencyId = 1,
+                    AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                    Name = "Lakme"
+                });
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(SpotExceptionsOutOfSpecGroupingToDoResults), "SyncedTimestamp");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlansToDoAsync(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
+
+        [Test]
+        public void GetOutOfSpecPlansToDoAsync_V2_ThrowException()
         {
             // Arrange
             const string exceptionMessage = "Could not retrieve Spot Exceptions Out Of Spec Plan Todo";
@@ -142,7 +171,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                      throw new CadentException(exceptionMessage);
                  });
 
-            _AabEngine
+            _AabEngineMock
                 .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
                 .Returns(new AdvertiserDto
                 {
@@ -159,10 +188,98 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             };
 
             // Act            
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansTodoAsync(request));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlansToDoAsync(request));
 
             // Assert
             Assert.AreEqual(exceptionMessage, result.Message);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public async Task GetOutOfSpecPlansDoneAsync_Exist()
+        {
+            // Arrange
+            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFiltersRequest = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { "Ference POD" }
+            };
+
+            var outOfSpecDone = _GetOutOfSpecGroupingDoneData();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+                .Returns(Task.FromResult(outOfSpecDone));
+
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFiltersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(1, result.Count);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public async Task GetOutOfSpecPlansDoneAsync_WithoutExist()
+        {
+            // Arrange
+            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFiltersRequest = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { }
+            };
+
+            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+                .Returns(Task.FromResult(outOfSpecDone));
+
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFiltersRequest);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOutOfSpecPlansDoneAsync_ThrowException()
+        {
+            // Arrange
+            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFilterRequest = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { }
+            };
+
+            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
+            // Act
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFilterRequest)); ;
+
+            // Assert
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Plans Done", result.Message);
         }
 
         [Test]
@@ -189,7 +306,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Returns(Task.FromResult(outOfSpecDone));
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlanInventorySourcesAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlanInventorySourcesAsync(request);
 
             // Assert
             Assert.AreEqual(result.Count, expectedFerenceMediaCount);
@@ -220,7 +337,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Returns(Task.FromResult(outOfSpecDone));
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlanInventorySourcesAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlanInventorySourcesAsync(request);
 
             // Assert
             Assert.AreEqual(expectedCount, result.Count);
@@ -250,7 +367,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 });
 
             // Act           
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlanInventorySourcesAsync(request));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecPlanInventorySourcesAsync(request));
 
             // Assert
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Plan Inventory Sources V2", result.Message);
@@ -281,7 +398,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Returns(Task.FromResult(outOfSpecDone));
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecSpotInventorySourcesAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotInventorySourcesAsync(request);
 
             // Assert
             Assert.AreEqual(result[0].Count, expectedFerenceMediaCount);
@@ -313,7 +430,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Returns(Task.FromResult(outOfSpecDone));
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecSpotInventorySourcesAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotInventorySourcesAsync(request);
 
             // Assert
             Assert.AreEqual(expectedCount, result.Count);
@@ -343,7 +460,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 });
 
             // Act           
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecSpotInventorySourcesAsync(request));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotInventorySourcesAsync(request));
 
             // Assert
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Inventory Sources V2", result.Message);
@@ -413,7 +530,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                }));
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecSpotReasonCodesAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotReasonCodesAsync(request);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -439,7 +556,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             };
 
             // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecSpotReasonCodesAsync(request);
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotReasonCodesAsync(request);
 
             // Assert
             Assert.AreEqual(0, result.Count);
@@ -469,100 +586,222 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 });
 
             // Act
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecSpotReasonCodesAsync(request));
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotReasonCodesAsync(request));
 
             // Assert
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spot Reason Codes V2", result.Message);
-        }
+        }             
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public async void GetOutOfSpec_DonePlansInventorySourceFilter_WithoutExist()
+        public async Task GetOutOfSpecSpotProgramsAsync_ExistInProgramsOnly()
         {
             // Arrange
-            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFiltersRequest = new OutOfSpecPlansIncludingFiltersRequestDto
-            {
-                WeekStartDate = new DateTime(2021, 01, 04),
-                WeekEndDate = new DateTime(2021, 01, 10),
-                InventorySourceNames = new List<string> { }
-            };
+            string programNameQuery = "WNRUSH";
 
-            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                    {
+                        new ProgramNameDto
+                        {
+                           OfficialProgramName = "WNRUSH",
+                           GenreId=  33
+                        }
+                    }
+                ));
 
-            _SpotExceptionsOutOfSpecRepositoryV2Mock
-                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
-                .Returns(Task.FromResult(outOfSpecDone));
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
 
-            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                    Id = 33,
+                    Display = "Genre"
+                });
 
-            // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFiltersRequest);
-
-            // Assert
-            Assert.AreEqual(result.Count, 0);
-        }
-
-        [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public async void GetOutOfSpec_DonePlansInventorySourceFilter_Exist()
-        {
-            // Arrange
-            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFiltersRequest = new OutOfSpecPlansIncludingFiltersRequestDto
-            {
-                WeekStartDate = new DateTime(2021, 01, 04),
-                WeekEndDate = new DateTime(2021, 01, 10),
-                InventorySourceNames = new List<string> { "Ference POD" }
-            };
-
-            var outOfSpecDone = _GetOutOfSpecGroupingDoneData();
-
-            _SpotExceptionsOutOfSpecRepositoryV2Mock
-                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
-                .Returns(Task.FromResult(outOfSpecDone));
-
-            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
-
-            // Act
-            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFiltersRequest);
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotProgramsAsync(programNameQuery, "TestsUser");
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-            Assert.AreEqual(result.Count, 1);
         }
 
         [Test]
-        [UseReporter(typeof(DiffReporter))]
-        public void GetOutOfSpec_DonePlansInventorySourceFilter_ThrowException()
+        public async Task GetOutOfSpecSpotProgramsAsync_ExistInDecisionsOnly()
         {
             // Arrange
-            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFilterRequest = new OutOfSpecPlansIncludingFiltersRequestDto
-            {
-                WeekStartDate = new DateTime(2021, 01, 04),
-                WeekEndDate = new DateTime(2021, 01, 10),
-                InventorySourceNames = new List<string> { }
-            };
+            string programNameQuery = "WNRUSH";
 
-            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
 
-            _SpotExceptionsOutOfSpecRepositoryV2Mock
-                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                    {
+                        new ProgramNameDto
+                        {
+                           OfficialProgramName = "#WNRUSH",
+                           GenreId = 33
+                        }
+                    }
+                ));
+
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                    Id = 33,
+                    Display = "Genre"
+                });
+
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotProgramsAsync(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public async Task GetOutOfSpecSpotProgramsAsync_ExistInProgramsOnly_NoGenre()
+        {
+            // Arrange
+            string programNameQuery = "WNRUSH";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                    {
+                        new ProgramNameDto
+                        {
+                           OfficialProgramName = "WNRUSH",
+                           GenreId = null
+                        }
+                    }
+                ));
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
+
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                });
+
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotProgramsAsync(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public async Task GetOutOfSpecSpotProgramsAsync_ExistInDecisionsOnly_NoGenre()
+        {
+            // Arrange
+            string programNameQuery = "WNRUSH";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                    {
+                        new ProgramNameDto
+                        {
+                           OfficialProgramName = "#WNRUSH",
+                           GenreId = null
+                        }
+                    }
+                ));
+
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                });
+
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotProgramsAsync(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public async Task GetOutOfSpecSpotProgramsAsync_DoesNotExist()
+        {
+            // Arrange
+            string programNameQuery = "WNRUSH";
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromSpotExceptionDecisionsAsync(It.IsAny<string>()))
+                .Returns(Task.FromResult(new List<ProgramNameDto>
+                {
+                }
+                ));
+
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                    Id = 33,
+                    Display = "Genre"
+                });
+
+            // Act           
+            var result = await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotProgramsAsync(programNameQuery, "TestsUser");
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetOutOfSpecSpotProgramsAsync_ThrowsException()
+        {
+            // Arrange
+            string programNameQuery = "WNRUSH";
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(s => s.FindProgramFromProgramsAsync(It.IsAny<string>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");
                 });
 
-            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
-                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+            _GenreCacheMock
+                .Setup(x => x.GetGenreLookupDtoById(It.IsAny<int>()))
+                .Returns(new LookupDto
+                {
+                    Id = 1,
+                    Display = "Genre"
+                });
 
-            // Act
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFilterRequest)); ;
+            // Act           
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotProgramsAsync(programNameQuery, "TestsUser"));
 
             // Assert
-            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Plans", result.Message);
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spot Programs", result.Message);
         }
 
+        /// <summary>
+        /// Gets the out of spec grouping done data.
+        /// </summary>
+        /// <returns></returns>
         private List<SpotExceptionsOutOfSpecGroupingDto> _GetOutOfSpecGroupingDoneData()
         {
             return new List<SpotExceptionsOutOfSpecGroupingDto>()

@@ -1,14 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Repositories;
-using Services.Broadcast.Entities.SpotExceptions.Unposted;
-using Services.Broadcast.Helpers;
-using Services.Broadcast.Repositories.SpotExceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Services.Broadcast.Entities.SpotExceptions.Unposted;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories;
-using Microsoft.VisualBasic;
+using Services.Broadcast.Repositories.SpotExceptions;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {

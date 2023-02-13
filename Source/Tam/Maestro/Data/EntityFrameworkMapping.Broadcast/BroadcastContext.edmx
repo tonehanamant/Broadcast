@@ -7083,6 +7083,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_spot_exceptions_unposted_no_plan_genres_spot_lengths">
+          <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="0..1" />
+          <End Role="spot_exceptions_unposted_no_plan" Type="Self.spot_exceptions_unposted_no_plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_unposted_no_plan">
+              <PropertyRef Name="client_spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_spot_length_cost_multipliers_spot_lengths">
           <End Role="spot_lengths" Type="Self.spot_lengths" Multiplicity="1" />
           <End Role="spot_length_cost_multipliers" Type="Self.spot_length_cost_multipliers" Multiplicity="*" />
@@ -9315,6 +9327,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_exceptions_recommended_plans" EntitySet="spot_exceptions_recommended_plans" />
           </AssociationSet>
+          <AssociationSet Name="FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" Association="Self.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="spot_exceptions_unposted_no_plan" EntitySet="spot_exceptions_unposted_no_plan" />
+          </AssociationSet>
           <AssociationSet Name="FK_spot_length_cost_multipliers_spot_lengths" Association="Self.FK_spot_length_cost_multipliers_spot_lengths">
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_length_cost_multipliers" EntitySet="spot_length_cost_multipliers" />
@@ -11230,6 +11246,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="spot_exceptions_out_of_specs_done" EntitySet="spot_exceptions_out_of_specs_done" />
           </AssociationSet>
           <EntitySet Name="spot_exceptions_out_of_spec_comments" EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" />
+          <AssociationSet Name="FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" Association="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths">
+            <End Role="spot_lengths" EntitySet="spot_lengths" />
+            <End Role="spot_exceptions_unposted_no_plan" EntitySet="spot_exceptions_unposted_no_plan" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -12092,6 +12112,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="spot_exceptions_recommended_plans_done" Relationship="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" FromRole="spot_lengths" ToRole="spot_exceptions_recommended_plans_done" />
           <NavigationProperty Name="spot_exceptions_out_of_specs" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" FromRole="spot_lengths" ToRole="spot_exceptions_out_of_specs" />
           <NavigationProperty Name="spot_exceptions_out_of_specs_done" Relationship="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" FromRole="spot_lengths" ToRole="spot_exceptions_out_of_specs_done" />
+          <NavigationProperty Name="spot_exceptions_unposted_no_plan" Relationship="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" FromRole="spot_lengths" ToRole="spot_exceptions_unposted_no_plan" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -18927,6 +18948,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="ingested_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ingested_at" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ingested_media_week_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="spot_lengths" Relationship="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" FromRole="spot_exceptions_unposted_no_plan" ToRole="spot_lengths" />
         </EntityType>
         <EntityType Name="spot_exceptions_unposted_no_reel_roster">
           <Key>
@@ -19715,6 +19737,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="added_by" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="added_at" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <Association Name="FK_spot_exceptions_unposted_no_plan_genres_spot_lengths">
+          <End Type="BroadcastModel.spot_lengths" Role="spot_lengths" Multiplicity="0..1" />
+          <End Type="BroadcastModel.spot_exceptions_unposted_no_plan" Role="spot_exceptions_unposted_no_plan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="spot_lengths">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="spot_exceptions_unposted_no_plan">
+              <PropertyRef Name="client_spot_length_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

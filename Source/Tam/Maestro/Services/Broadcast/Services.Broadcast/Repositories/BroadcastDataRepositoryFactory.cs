@@ -122,6 +122,7 @@ namespace Services.Broadcast.Repositories
             instance.RegisterType<ISpotExceptionsOutOfSpecRepository, SpotExceptionsOutOfSpecRepository>();
             instance.RegisterType<ISpotExceptionsOutOfSpecRepositoryV2, SpotExceptionsOutOfSpecRepositoryV2>();
             instance.RegisterType<ISpotExceptionsUnpostedRepository, SpotExceptionsUnpostedRepository>();
+            instance.RegisterType<ISpotExceptionsUnpostedRepositoryV2, SpotExceptionsUnpostedRepositoryV2>();
             instance.RegisterType<ISpotExceptionsIngestJobRepository, SpotExceptionsIngestJobRepository>();
 
             WasRegistered = true;

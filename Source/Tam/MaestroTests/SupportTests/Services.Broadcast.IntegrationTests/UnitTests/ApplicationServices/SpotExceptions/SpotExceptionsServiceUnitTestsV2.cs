@@ -80,7 +80,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Returns(Task.FromResult(notifySucceeded));
 
             // Act
-            var result = await _SpotExceptionsServiceV2.TriggerDecisionSync(triggerDecisionSyncRequest);
+            var result = await _SpotExceptionsServiceV2.TriggerDecisionSyncAsync(triggerDecisionSyncRequest);
 
             // Assert
             _SpotExceptionsApiClientMock.Verify(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()), Times.Once);
@@ -120,7 +120,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Returns(Task.FromResult(notifySucceeded));
 
             // Act
-            var result = await _SpotExceptionsServiceV2.TriggerDecisionSync(triggerDecisionSyncRequest);
+            var result = await _SpotExceptionsServiceV2.TriggerDecisionSyncAsync(triggerDecisionSyncRequest);
 
             // Assert
             _SpotExceptionsApiClientMock.Verify(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()), Times.Once);
@@ -141,7 +141,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             // Act
             try
             {
-                await _SpotExceptionsServiceV2.TriggerDecisionSync(triggerDecisionSyncRequest);
+                await _SpotExceptionsServiceV2.TriggerDecisionSyncAsync(triggerDecisionSyncRequest);
             }
             catch (Exception ex)
             {
@@ -171,7 +171,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             // Act
             try
             {
-                await _SpotExceptionsServiceV2.TriggerDecisionSync(triggerDecisionSyncRequest);
+                await _SpotExceptionsServiceV2.TriggerDecisionSyncAsync(triggerDecisionSyncRequest);
             }
             catch (Exception ex)
             {
@@ -197,7 +197,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             // Act
             try
             {
-                await _SpotExceptionsServiceV2.TriggerDecisionSync(triggerDecisionSyncRequest);
+                await _SpotExceptionsServiceV2.TriggerDecisionSyncAsync(triggerDecisionSyncRequest);
             }
             catch (Exception ex)
             {

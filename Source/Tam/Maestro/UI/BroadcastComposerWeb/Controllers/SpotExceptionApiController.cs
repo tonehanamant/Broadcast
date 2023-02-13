@@ -224,7 +224,6 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => result);
         }
 
-
         /// <summary>
         /// Gets the spot exceptions outof specs stations.
         /// </summary>

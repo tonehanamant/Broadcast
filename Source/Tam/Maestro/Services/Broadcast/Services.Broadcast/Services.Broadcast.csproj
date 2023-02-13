@@ -806,6 +806,7 @@
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsService.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsServiceV2.cs" />
     <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsUnpostedService.cs" />
+    <Compile Include="ApplicationServices\SpotExceptions\SpotExceptionsUnpostedServiceV2.cs" />
     <Compile Include="ApplicationServices\VpvhService.cs" />
     <Compile Include="BusinessEngines\WeeklyBreakdownEngineV2.cs" />
     <Compile Include="Clients\ApiTokenManager.cs" />
@@ -925,9 +926,14 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlansResult.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotInventorySourcesDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotProgramsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodeResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodesDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoPlanDto.cs" />
+    <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoReelRosterDto.cs" />
+    <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionOutOfSpecCommentsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecGroupingDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SpotExceptionsOutOfSpecDoneDecisionsDto.cs" />
@@ -1847,6 +1853,7 @@
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsRepository.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsRepositoryV2.cs" />
     <Compile Include="Repositories\SpotExceptions\SpotExceptionsUnpostedRepository.cs" />
+    <Compile Include="Repositories\SpotExceptions\SpotExceptionsUnpostedRepositoryV2.cs" />
     <Compile Include="Repositories\SpotTrackerRepository.cs" />
     <Compile Include="Repositories\DisplayDaypartBroadcastRepository.cs" />
     <Compile Include="Entities\OpenMarketAllocationDto.cs" />

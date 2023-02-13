@@ -24,5 +24,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
         public int ingested_media_week_id { get; set; }
+    
+        public virtual spot_lengths spot_lengths { get; set; }
     }
 }

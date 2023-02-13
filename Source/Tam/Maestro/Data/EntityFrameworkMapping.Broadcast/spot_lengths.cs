@@ -40,6 +40,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.spot_exceptions_recommended_plans_done = new HashSet<spot_exceptions_recommended_plans_done>();
             this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
             this.spot_exceptions_out_of_specs_done = new HashSet<spot_exceptions_out_of_specs_done>();
+            this.spot_exceptions_unposted_no_plan = new HashSet<spot_exceptions_unposted_no_plan>();
         }
     
         public int id { get; set; }
@@ -72,5 +73,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
         public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual ICollection<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
+        public virtual ICollection<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
     }
 }

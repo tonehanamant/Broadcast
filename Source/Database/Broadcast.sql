@@ -1677,6 +1677,18 @@ GO
 
 /*************************************** END BS-443 ***************************************/
 
+/*************************************** START BS-429 *************************************/
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_NAME ='FK_spot_exceptions_unposted_no_plan_genres_spot_lengths')
+BEGIN
+	ALTER TABLE spot_exceptions_unposted_no_plan  WITH CHECK ADD  CONSTRAINT [FK_spot_exceptions_unposted_no_plan_genres_spot_lengths] 
+	FOREIGN KEY(client_spot_length_id) REFERENCES spot_lengths (id)
+END
+
+GO
+
+/*************************************** END BS-429 ***************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

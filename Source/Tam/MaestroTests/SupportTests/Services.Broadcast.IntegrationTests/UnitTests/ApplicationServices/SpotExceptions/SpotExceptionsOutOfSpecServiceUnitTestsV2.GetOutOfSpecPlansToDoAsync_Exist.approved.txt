@@ -7,7 +7,8 @@
     "Impressions": 0.0,
     "PlanId": 334,
     "PlanName": "4Q'21 Macy's SYN",
-    "SpotLengthString": ":15, :30"
+    "SpotLengthString": ":15, :30",
+    "SyncedTimestamp": null
   },
   {
     "AdvertiserName": "Lakme",
@@ -17,6 +18,7 @@
     "Impressions": 0.0,
     "PlanId": 335,
     "PlanName": "5Q'21 Macy's SYN",
-    "SpotLengthString": ":15, :30"
+    "SpotLengthString": ":15, :30",
+    "SyncedTimestamp": null
   }
 ]

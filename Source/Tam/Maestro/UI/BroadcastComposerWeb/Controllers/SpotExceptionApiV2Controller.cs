@@ -1,13 +1,14 @@
-﻿using Services.Broadcast.ApplicationServices;
-using Services.Broadcast.ApplicationServices.SpotExceptions;
-using Services.Broadcast.Entities.SpotExceptions;
-using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Tam.Maestro.Services.Cable.Entities;
 using Tam.Maestro.Web.Common;
+using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.ApplicationServices.SpotExceptions;
+using Services.Broadcast.Entities.SpotExceptions;
+using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
+using Services.Broadcast.Entities.SpotExceptions.Unposted;
 
 namespace BroadcastComposerWeb.Controllers
 {
@@ -29,12 +30,26 @@ namespace BroadcastComposerWeb.Controllers
         /// </summary>
         [HttpPost]
         [Route("out-of-spec-plans-todo")]
-        public async Task<BaseResponse<List<SpotExceptionsOutOfSpecGroupingToDoResults>>> GetSpotExceptionsOutofSpecsToDoPlans(OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutOfSpecsPlansToDoRequest)
+        public async Task<BaseResponse<List<OutOfSpecPlansResult>>> GetOutOfSpecPlansToDoPlans(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansTodoAsync(spotExceptionsOutOfSpecsPlansToDoRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansToDoAsync(outOfSpecsPlansIncludingFiltersDoneRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
+        /// <summary>
+        /// Gets the out of spec done plans with the  basis of filter inventory sources
+        /// </summary>
+        /// <param name="outOfSpecsPlansIncludingFiltersDoneRequest">week start date and end date and inventory sources</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-plans-done")]
+        public async Task<BaseResponse<List<OutOfSpecPlansResult>>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansDoneAsync(outOfSpecsPlansIncludingFiltersDoneRequest);
+
+            return _ConvertToBaseResponse(() => result);
+        }
+
         /// <summary>
         /// Gets the spot exception out of spec plan inventory sources.
         /// </summary>
@@ -42,7 +57,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("out-of-spec-plan-inventory-sources")]
-        public async Task<BaseResponse<List<string>>> GetOutOfSpecPlanInventorySources(OutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
+        public async Task<BaseResponse<List<string>>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
         {
             var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlanInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest);
             return _ConvertToBaseResponse(() => result);
@@ -76,15 +91,45 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Gets the programs.
+        /// </summary>
+        /// <param name="programNameQuery">The program name query.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("out-of-spec-spot-programs")]
+        public async Task<BaseResponse<List<OutOfSpecSpotProgramsDto>>> GetProgramsAsync(string programNameQuery)
+        {
+            var fullName = _GetCurrentUserFullName();
+
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecSpotProgramsAsync(programNameQuery, fullName);
+
+            return _ConvertToBaseResponse(() => result);
+        }
+
+        /// <summary>
+        /// Gets the unposted spot exceptions.
+        /// </summary>
+        /// <param name="outOfSpecUnpostedRequest">The spot exception unposted request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-unposted")]
+        public async Task<BaseResponse<OutOfSpecUnpostedResultsDto>> GetOutOfSpecUnpostedAsync(OutOfSpecUnpostedRequestDto outOfSpecUnpostedRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsUnpostedServiceV2>().GetOutOfSpecUnpostedAsync(outOfSpecUnpostedRequest);
+
+            return _ConvertToBaseResponse(() => result);
+        }
+
+        /// <summary>
         /// Triggers the decision synchronize.
         /// </summary>
         /// <param name="triggerDecisionSyncRequest">The trigger decision synchronize request.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("trigger-decision-sync")]
-        public async Task<BaseResponse<bool>> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
+        public async Task<BaseResponse<bool>> TriggerDecisionSyncAsync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsServiceV2>().TriggerDecisionSync(triggerDecisionSyncRequest);
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsServiceV2>().TriggerDecisionSyncAsync(triggerDecisionSyncRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
@@ -105,20 +150,5 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
         }
-
-        /// <summary>
-        /// Gets the out of spec done plans with the  basis of filter inventory sources
-        /// </summary>
-        /// <param name="OutOfSpecsPlansIncludingFiltersDoneRequest">week start date and end date and inventory sources</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("out-of-spec-plans-done")]
-        public async Task<BaseResponse<List<OutOfSpecPlansResult>>> GetSpotExceptionsOutofSpecsV2PlansDone(OutOfSpecPlansIncludingFiltersRequestDto OutOfSpecsPlansIncludingFiltersDoneRequest)
-        {
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansDoneAsync(OutOfSpecsPlansIncludingFiltersDoneRequest);
-
-            return _ConvertToBaseResponse(() => result);
-        }
-       
     }
 }

@@ -20,7 +20,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// </summary>
         /// <param name="triggerDecisionSyncRequest">The trigger decision synchronize request.</param>
         /// <returns></returns>
-        Task<bool> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest);
+        Task<bool> TriggerDecisionSyncAsync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest);
 
         /// <summary>
         /// Clears the spot exception all data.
@@ -56,7 +56,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<bool> TriggerDecisionSync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
+        public async Task<bool> TriggerDecisionSyncAsync(TriggerDecisionSyncRequestDto triggerDecisionSyncRequest)
         {
             _LogInfo($"Beginning results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
 
