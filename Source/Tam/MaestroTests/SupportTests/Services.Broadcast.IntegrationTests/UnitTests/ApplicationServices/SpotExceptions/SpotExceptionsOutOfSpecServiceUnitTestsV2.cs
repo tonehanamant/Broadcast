@@ -3,6 +3,7 @@ using ApprovalTests.Reporters;
 using Common.Services;
 using Common.Services.Repositories;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
@@ -84,6 +85,84 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                       _AabEngine.Object,
                        _ConfigurationSettingsHelperMock.Object
                 );
+        }
+
+        [Test]
+        public async Task GetOutOfSpecPlanToDoAsync_V2()
+        {
+            // Arrange
+            var request = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansToDoAsync(It.IsAny<List<string>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(_GetSpotExceptionsOutOfSpecGroupings()));
+
+            _AabEngine
+                .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(new AdvertiserDto
+                {
+                    AgencyId = 1,
+                    AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                    Name = "Lakme"
+                });
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(SpotExceptionsOutOfSpecGroupingToDoResults), "SyncedTimestamp");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansTodoAsync(request);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result, jsonSettings));
+        }
+
+        [Test]
+        public void GetOutOfSpecPlanToDoAsync_V2_ThrowException()
+        {
+            // Arrange
+            const string exceptionMessage = "Could not retrieve Spot Exceptions Out Of Spec Plan Todo";
+            var request = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansToDoAsync(It.IsAny<List<string>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                 .Callback(() =>
+                 {
+                     throw new CadentException(exceptionMessage);
+                 });
+
+            _AabEngine
+                .Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(new AdvertiserDto
+                {
+                    AgencyId = 1,
+                    AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                    Name = "Lakme"
+                });
+            var jsonResolver = new IgnorableSerializerContractResolver();
+            jsonResolver.Ignore(typeof(SpotExceptionsOutOfSpecGroupingToDoResults), "SyncedTimestamp");
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = jsonResolver
+            };
+
+            // Act            
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansTodoAsync(request));
+
+            // Assert
+            Assert.AreEqual(exceptionMessage, result.Message);
         }
 
         [Test]
@@ -505,6 +584,63 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                         }
                     },
                     AudienceName = "Women 25-54"
+                }
+            };
+        }
+
+        private List<SpotExceptionsOutOfSpecGroupingDto> _GetSpotExceptionsOutOfSpecGroupings()
+        {
+            return new List<SpotExceptionsOutOfSpecGroupingDto>
+            {
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    AdvertiserMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                    AffectedSpotsCount = 1,
+                    AudienceName = "Women 25-54",
+                    FlightStartDate = new DateTime(2022,10,01),
+                    FlightEndDate = new DateTime(2022,12,30),
+                    Impressions = 0.0,
+                     PlanId = 334,
+                     PlanName= "4Q'21 Macy's SYN",
+                      SpotLengths = new List<SpotLengthDto>
+                      {
+                          new SpotLengthDto
+                          {
+                               Id=1,
+                               Length = 15
+                          },
+                           new SpotLengthDto
+                          {
+                               Id=2,
+                               Length = 30
+                          },
+                      },
+                       SpotLengthString = ":15"
+                },
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    AdvertiserMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                    AffectedSpotsCount = 1,
+                    AudienceName = "Women 25-40",
+                    FlightStartDate = new DateTime(2022,11,01),
+                    FlightEndDate = new DateTime(2022,12,30),
+                    Impressions = 0.0,
+                     PlanId = 335,
+                     PlanName= "5Q'21 Macy's SYN",
+                      SpotLengths = new List<SpotLengthDto>
+                      {
+                          new SpotLengthDto
+                          {
+                               Id=1,
+                               Length = 15
+                          },
+                           new SpotLengthDto
+                          {
+                               Id=2,
+                               Length = 30
+                          },
+                      },
+                       SpotLengthString = ":15"
                 }
             };
         }

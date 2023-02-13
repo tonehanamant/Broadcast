@@ -20,6 +20,10 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
     public interface ISpotExceptionsOutOfSpecServiceV2 : IApplicationService
     {
         /// <summary>
+        /// Population of Spot exception out of spec to do list
+        /// </summary>
+        Task<List<SpotExceptionsOutOfSpecGroupingToDoResults>> GetOutOfSpecPlansTodoAsync(OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutOfSpecPlanstoDoRequest);
+        /// <summary>
         /// Gets the spot exceptions out of spec plan inventory sources asynchronous.
         /// </summary>
         /// <param name="outOfSpecPlansRequest">The spot exceptions out of spec plans request.</param>
@@ -56,6 +60,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="OutOfSpecsPlansIncludingFiltersDoneRequest">week start date , end date and inventory sources</param>
         /// <returns>List of done plans</returns>
         Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto OutOfSpecsPlansIncludingFiltersDoneRequest);
+
     }
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
@@ -87,6 +92,44 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _AabEngine = aabEngine;
         }
 
+        /// <inheritdoc />
+        public async Task<List<SpotExceptionsOutOfSpecGroupingToDoResults>> GetOutOfSpecPlansTodoAsync(OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutOfSpecPlanstoDoRequest)
+        {
+            List<SpotExceptionsOutOfSpecGroupingToDoResults> spotExceptionsOutOfSpecs = new List<SpotExceptionsOutOfSpecGroupingToDoResults>();
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Plans Todo");
+            try
+            {
+                var outOfSpecToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecPlansToDoAsync(spotExceptionsOutOfSpecPlanstoDoRequest.InventorySourceNames,
+                    spotExceptionsOutOfSpecPlanstoDoRequest.WeekStartDate, spotExceptionsOutOfSpecPlanstoDoRequest.WeekEndDate);
+
+                if (outOfSpecToDo?.Any() ?? false)
+                {
+                    spotExceptionsOutOfSpecs = outOfSpecToDo.Select(x => new SpotExceptionsOutOfSpecGroupingToDoResults
+                    {
+                        PlanId = x.PlanId,
+                        AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
+                        PlanName = x.PlanName,
+                        AffectedSpotsCount = x.AffectedSpotsCount,
+                        Impressions = Math.Floor(x.Impressions / 1000),
+                        SyncedTimestamp = null,
+                        SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
+                        AudienceName = x.AudienceName,
+                        FlightString = $"{DateTimeHelper.GetForDisplay(x.FlightStartDate, SpotExceptionsConstants.DateFormat)} - {DateTimeHelper.GetForDisplay(x.FlightEndDate, SpotExceptionsConstants.DateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+
+                    }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
+                }
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Plan Todo");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Plan Todo";
+                throw new CadentException(msg, ex);
+            }
+
+            return spotExceptionsOutOfSpecs;
+        }
         /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto outOfSpecPlansRequest)
         {

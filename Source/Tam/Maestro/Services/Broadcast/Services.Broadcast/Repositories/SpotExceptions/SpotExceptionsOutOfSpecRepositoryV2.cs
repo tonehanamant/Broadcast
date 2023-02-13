@@ -19,6 +19,14 @@ namespace Services.Broadcast.Repositories.SpotExceptions
     public interface ISpotExceptionsOutOfSpecRepositoryV2 : IDataRepository
     {
         /// <summary>
+        /// Gets the list of out of spec to do 
+        /// </summary>
+        /// <param name="inventorySource">The inventory source array</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecPlansToDoAsync(List<string> inventorySource, DateTime weekStartDate, DateTime weekEndDate);
+        /// <summary>
         /// Gets the out of spec spots to do inventory sources asynchronous.
         /// </summary>
         /// <param name="weekStartDate">The week start date.</param>
@@ -84,7 +92,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="InventorySources">inventory sources</param>
         /// <returns>List of done plans</returns>
         Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecPlansDoneAsync(DateTime weekStartDate, DateTime weekEndDate, List<string> InventorySources);
-
     }
 
     /// <summary>
@@ -101,6 +108,53 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         : base(pBroadcastContextFactory, pTransactionHelper, configurationSettingsHelper)
         { }
 
+        /// <inheritdoc />
+        public Task<List<SpotExceptionsOutOfSpecGroupingDto>> GetOutOfSpecPlansToDoAsync(List<string> inventorySource, DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return Task.FromResult(_InReadUncommitedTransaction(context =>
+            {
+                var outOfSpecDetailsToDo = new List<spot_exceptions_out_of_specs>();
+                if (inventorySource == null || inventorySource.Count == 0)
+                {
+                    outOfSpecDetailsToDo = context.spot_exceptions_out_of_specs
+                   .Where(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.program_air_time >= weekStartDate
+                   && spotExceptionsOutOfSpecToDoDb.program_air_time <= weekEndDate).ToList();
+                }
+                else
+                {
+                    outOfSpecDetailsToDo = context.spot_exceptions_out_of_specs
+                   .Where(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.program_air_time >= weekStartDate
+                   && spotExceptionsOutOfSpecToDoDb.program_air_time <= weekEndDate
+                   && inventorySource.Contains(spotExceptionsOutOfSpecToDoDb.inventory_source_name)).ToList();
+                }
+
+
+                var outOfSpecGroupingToDo = outOfSpecDetailsToDo.GroupBy(x => new { x.recommended_plan_id })
+                    .Select(x =>
+                    {
+                        var first = x.First();
+                        var recommendedPlanVersion = first.plan.plan_versions.Single(planVersion => planVersion.id == first.plan.latest_version_id);
+                        var audience = first.audience;
+                        return new SpotExceptionsOutOfSpecGroupingDto
+                        {
+                            PlanId = x.Key.recommended_plan_id ?? default,
+                            AdvertiserMasterId = first.plan.campaign.advertiser_master_id,
+                            PlanName = first.plan.name,
+                            AffectedSpotsCount = x.Count(),
+                            Impressions = x.Sum(y => y.impressions),
+                            FlightStartDate = recommendedPlanVersion.flight_start_date,
+                            FlightEndDate = recommendedPlanVersion.flight_end_date,
+                            SpotLengths = recommendedPlanVersion.plan_version_creative_lengths.Select(planVersionCreativeLength => _MapSpotLengthToDto(planVersionCreativeLength.spot_lengths)).ToList(),
+                            AudienceName = _GetAudienceName(audience)
+                        };
+                    }).ToList();
+
+                return outOfSpecGroupingToDo;
+            }));
+        }
         /// <inheritdoc />
         public async Task<List<string>> GetOutOfSpecPlanToDoInventorySourcesAsync(DateTime weekStartDate, DateTime weekEndDate)
         {

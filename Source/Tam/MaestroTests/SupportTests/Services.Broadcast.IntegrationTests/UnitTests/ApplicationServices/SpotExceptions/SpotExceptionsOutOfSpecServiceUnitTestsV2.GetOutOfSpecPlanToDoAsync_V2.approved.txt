@@ -1,0 +1,22 @@
+[
+  {
+    "AdvertiserName": "Lakme",
+    "AffectedSpotsCount": 1,
+    "AudienceName": "Women 25-54",
+    "FlightString": "10/01/2022 - 12/30/2022 (13 Weeks)",
+    "Impressions": 0.0,
+    "PlanId": 334,
+    "PlanName": "4Q'21 Macy's SYN",
+    "SpotLengthString": ":15, :30"
+  },
+  {
+    "AdvertiserName": "Lakme",
+    "AffectedSpotsCount": 1,
+    "AudienceName": "Women 25-40",
+    "FlightString": "11/01/2022 - 12/30/2022 (10 Weeks)",
+    "Impressions": 0.0,
+    "PlanId": 335,
+    "PlanName": "5Q'21 Macy's SYN",
+    "SpotLengthString": ":15, :30"
+  }
+]

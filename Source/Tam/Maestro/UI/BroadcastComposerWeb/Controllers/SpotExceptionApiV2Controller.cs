@@ -25,6 +25,17 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Gets the out of spec to do plans on the  basis of inventory sources filter
+        /// </summary>
+        [HttpPost]
+        [Route("out-of-spec-plans-todo")]
+        public async Task<BaseResponse<List<SpotExceptionsOutOfSpecGroupingToDoResults>>> GetSpotExceptionsOutofSpecsToDoPlans(OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutOfSpecsPlansToDoRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansTodoAsync(spotExceptionsOutOfSpecsPlansToDoRequest);
+
+            return _ConvertToBaseResponse(() => result);
+        }
+        /// <summary>
         /// Gets the spot exception out of spec plan inventory sources.
         /// </summary>
         /// <param name="spotExceptionsOutOfSpecPlansRequest">The out of spec plans request.</param>
@@ -108,5 +119,6 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => result);
         }
+       
     }
 }
