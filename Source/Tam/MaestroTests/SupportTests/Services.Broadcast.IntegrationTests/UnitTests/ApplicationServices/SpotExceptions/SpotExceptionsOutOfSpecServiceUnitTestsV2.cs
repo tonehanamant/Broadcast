@@ -81,6 +81,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     _DateTimeEngineMock.Object,                    
                      _FileServicesMock.Object,
                       _SharedFolderServiceMock.Object,
+                      _AabEngine.Object,
                        _ConfigurationSettingsHelperMock.Object
                 );
         }
@@ -393,6 +394,119 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             // Assert
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spot Reason Codes V2", result.Message);
-        }        
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public async void GetOutOfSpec_DonePlansInventorySourceFilter_WithoutExist()
+        {
+            // Arrange
+            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFiltersRequest = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { }
+            };
+
+            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+                .Returns(Task.FromResult(outOfSpecDone));
+
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFiltersRequest);
+
+            // Assert
+            Assert.AreEqual(result.Count, 0);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public async void GetOutOfSpec_DonePlansInventorySourceFilter_Exist()
+        {
+            // Arrange
+            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFiltersRequest = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { "Ference POD" }
+            };
+
+            var outOfSpecDone = _GetOutOfSpecGroupingDoneData();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+                .Returns(Task.FromResult(outOfSpecDone));
+
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
+            // Act
+            var result = await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFiltersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+            Assert.AreEqual(result.Count, 1);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOutOfSpec_DonePlansInventorySourceFilter_ThrowException()
+        {
+            // Arrange
+            OutOfSpecPlansIncludingFiltersRequestDto spotExceptionsOutofSpecsPlansIncludingFilterRequest = new OutOfSpecPlansIncludingFiltersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { }
+            };
+
+            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecPlansDoneAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>(), It.IsAny<List<string>>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            _AabEngine.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { Name = $"Advertiser With Id ='{g}'" });
+
+            // Act
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecService.GetOutOfSpecPlansDoneAsync(spotExceptionsOutofSpecsPlansIncludingFilterRequest)); ;
+
+            // Assert
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Plans", result.Message);
+        }
+
+        private List<SpotExceptionsOutOfSpecGroupingDto> _GetOutOfSpecGroupingDoneData()
+        {
+            return new List<SpotExceptionsOutOfSpecGroupingDto>()
+            {
+                new SpotExceptionsOutOfSpecGroupingDto
+                {
+                    PlanId = 334,
+                    AdvertiserMasterId = new Guid( "C56972B6-67F2-4986-A2BE-4B1F199A1420" ),
+                    PlanName = "4Q'21 Macy's SYN",
+                    AffectedSpotsCount = 1,
+                    Impressions = 10,
+                    FlightStartDate = new DateTime(2021, 9, 28),
+                    FlightEndDate = new DateTime(2021, 12, 06),
+                    SpotLengths = new List<SpotLengthDto>
+                    {
+                        new SpotLengthDto
+                        {
+                            Length = 15,
+                        }
+                    },
+                    AudienceName = "Women 25-54"
+                }
+            };
+        }
     }
 }

@@ -49,7 +49,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="templatesFilePath">The templates file path.</param>
         /// <returns></returns>
         Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath);
-}
+
+        /// <summary>
+        /// Gets the done plans using inventory source filter
+        /// </summary>
+        /// <param name="OutOfSpecsPlansIncludingFiltersDoneRequest">week start date , end date and inventory sources</param>
+        /// <returns>List of done plans</returns>
+        Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto OutOfSpecsPlansIncludingFiltersDoneRequest);
+    }
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
         const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -60,6 +67,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly IFileService _FileService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
+        private readonly IAabEngine _AabEngine;
 
         public SpotExceptionsOutOfSpecServiceV2(
           IDataRepositoryFactory dataRepositoryFactory,
@@ -67,6 +75,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
           IDateTimeEngine dateTime,
           IFileService fileService,
           ISharedFolderService sharedFolderService,
+          IAabEngine aabEngine,
           IConfigurationSettingsHelper configurationSettingsHelper)
           : base(featureToggleHelper, configurationSettingsHelper)
         {
@@ -75,6 +84,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _FileService = fileService;
             _SharedFolderService = sharedFolderService;
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
+            _AabEngine = aabEngine;
         }
 
         /// <inheritdoc />
@@ -197,6 +207,71 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             var fileId = _SaveFile(report.Filename, report.Stream, userName);
             return fileId;
 
+        }
+
+        /// <inheritdoc />
+        public async Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto OutOfSpecsPlansIncludingFiltersDoneRequest)
+        {
+            var outOfSpecPlans = new List<OutOfSpecPlansResult>();
+            var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
+            try
+            {
+                _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Groupings");
+                outOfSpecDone = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecPlansDoneAsync(OutOfSpecsPlansIncludingFiltersDoneRequest.WeekStartDate, OutOfSpecsPlansIncludingFiltersDoneRequest.WeekEndDate, OutOfSpecsPlansIncludingFiltersDoneRequest.InventorySourceNames);
+
+                if (outOfSpecDone?.Any() ?? false)
+                {
+                    outOfSpecPlans = outOfSpecDone.Select(x =>
+                    {
+                        return new OutOfSpecPlansResult
+                        {
+                            PlanId = x.PlanId,
+                            AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
+                            PlanName = x.PlanName,
+                            AffectedSpotsCount = x.AffectedSpotsCount,
+                            Impressions = Math.Floor(x.Impressions / 1000),
+                            SyncedTimestamp = DateTimeHelper.GetForDisplay(x.SyncedTimestamp, SpotExceptionsConstants.DateTimeFormat),
+                            SpotLengthString = string.Join(", ", x.SpotLengths.OrderBy(y => y.Length).Select(spotLength => $":{spotLength.Length}")),
+                            AudienceName = x.AudienceName,
+                            FlightString = $"{DateTimeHelper.GetForDisplay(x.FlightStartDate, SpotExceptionsConstants.DateFormat)} - {DateTimeHelper.GetForDisplay(x.FlightEndDate, SpotExceptionsConstants.DateFormat)}" + " " + $"({_GetTotalNumberOfWeeks(Convert.ToDateTime(x.FlightStartDate), Convert.ToDateTime(x.FlightEndDate)).ToString() + " " + "Weeks"})"
+                        };
+                    }).OrderBy(x => x.AdvertiserName).ThenBy(x => x.PlanName).ToList();
+                }
+                _LogInfo($" Finished: Retrieving Spot Exceptions Out Of Spec Plans");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Plans";
+                throw new CadentException(msg, ex);
+            }
+
+            return outOfSpecPlans;
+        }
+
+        private string _GetAdvertiserName(Guid? masterId)
+        {
+            string advertiserName = null;
+            if (masterId.HasValue)
+            {
+                advertiserName = _AabEngine.GetAdvertiser(masterId.Value)?.Name;
+            }
+            return advertiserName;
+        }
+
+        private int _GetTotalNumberOfWeeks(DateTime startDate, DateTime endDate)
+        {
+            if (endDate < startDate)
+            {
+                throw new Exception("EndDate should be greater than StartDate");
+            }
+            startDate = startDate.Date;
+            endDate = endDate.Date.AddDays(1);
+            var dateDifference = endDate - startDate;
+            var totalDays = dateDifference.TotalDays;
+            int numberOfWeeks = Convert.ToInt32(totalDays / 7);
+            var reminder = totalDays % 7;
+            numberOfWeeks = reminder > 0 ? numberOfWeeks + 1 : numberOfWeeks;
+            return numberOfWeeks;
         }
 
         /// <summary>

@@ -94,5 +94,19 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
         }
+
+        /// <summary>
+        /// Gets the out of spec done plans with the  basis of filter inventory sources
+        /// </summary>
+        /// <param name="OutOfSpecsPlansIncludingFiltersDoneRequest">week start date and end date and inventory sources</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-plans-done")]
+        public async Task<BaseResponse<List<OutOfSpecPlansResult>>> GetSpotExceptionsOutofSpecsV2PlansDone(OutOfSpecPlansIncludingFiltersRequestDto OutOfSpecsPlansIncludingFiltersDoneRequest)
+        {
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansDoneAsync(OutOfSpecsPlansIncludingFiltersDoneRequest);
+
+            return _ConvertToBaseResponse(() => result);
+        }
     }
 }
