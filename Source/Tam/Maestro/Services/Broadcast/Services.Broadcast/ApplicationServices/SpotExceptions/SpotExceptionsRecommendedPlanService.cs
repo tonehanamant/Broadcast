@@ -307,6 +307,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                             WeeklyPacingUnselected = _calculateWeeklyPacingUnselected(recommendedPlanDetail.DeliveredImpressions, recommendedPlanDetail.ContractedImpressions),
                         }).ToList()
                     };
+                    if (recommendedPlanDetailsResult.Plans != null && recommendedPlanDetailsResult.Plans.Any(x => x.IsSelected))
+                    {
+                        foreach (var planDetail in recommendedPlanDetailsResult.Plans)
+                        {
+                            planDetail.IsRecommendedPlan = planDetail.IsSelected;
+                        }
+                    }
                 }
                 else if(recommendedPlanDetailsDone != null)
                 {
