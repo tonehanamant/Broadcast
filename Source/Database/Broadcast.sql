@@ -1693,32 +1693,33 @@ GO
 IF NOT EXISTS (SELECT 1 FROM stations WHERE legacy_call_letters='BMGT')
 BEGIN
 INSERT INTO stations(station_code, station_call_letters, affiliation, market_code,legacy_call_letters,modified_by,modified_date,rep_firm_name,owner_name,is_true_ind) VALUES
-    (NULL,'BMGT','BTV',103,'BMGT','BP-6299',SYSDATETIME(),'Katz Media','Morris Multimedia',0)
-END 
+(NULL,'BMGT','BTV',103,'BMGT','BP-6299',SYSDATETIME(),'Katz Media','Morris Multimedia',0)
+END
 
 IF NOT EXISTS (SELECT 1 FROM stations WHERE legacy_call_letters='EZDX')
 BEGIN
 INSERT INTO stations(station_code, station_call_letters, affiliation, market_code,legacy_call_letters,modified_by,modified_date,rep_firm_name,owner_name,is_true_ind) VALUES
-    (NULL,'EZDX','MET',291,'EZDX','BP-6299',SYSDATETIME(),'Tegna','Tegna Inc',0)
-END 
+(NULL,'EZDX','MET',291,'EZDX','BP-6299',SYSDATETIME(),'Tegna','Tegna Inc',0)
+END
 
 IF NOT EXISTS (SELECT 1 FROM stations WHERE legacy_call_letters='NNOECW')
 BEGIN
 INSERT INTO stations(station_code, station_call_letters, affiliation, market_code,legacy_call_letters,modified_by,modified_date,rep_firm_name,owner_name,is_true_ind) VALUES
-    (NULL,'NNOE','CW',228,'NNOECW','BP-6299',SYSDATETIME(),'Gray','Gray',0)
-END 
+(NULL,'NNOE','CW',228,'NNOECW','BP-6299',SYSDATETIME(),'Gray','Gray',0)
+END
 
 IF NOT EXISTS (SELECT 1 FROM stations WHERE legacy_call_letters='WECX')
 BEGIN
 INSERT INTO stations(station_code, station_call_letters, affiliation, market_code,legacy_call_letters,modified_by,modified_date,rep_firm_name,owner_name,is_true_ind) VALUES
-    (NULL,'WECX-LD','CW',302,'WECX','BP-6299',SYSDATETIME(),'Gray','Gray',0)
-END 
+(NULL,'WECX-LD','CW',302,'WECX','BP-6299',SYSDATETIME(),'Gray','Gray',0)
+END
 
 IF NOT EXISTS (SELECT 1 FROM stations WHERE legacy_call_letters='WYME')
 BEGIN
 INSERT INTO stations(station_code, station_call_letters, affiliation, market_code,legacy_call_letters,modified_by,modified_date,rep_firm_name,owner_name,is_true_ind) VALUES
-    (NULL,'WYME-CD','ANT',192,'WYME','BP-6299',SYSDATETIME(),NULL,'New Age Media',0)
-END 
+(NULL,'WYME-CD','ANT',192,'WYME','BP-6299',SYSDATETIME(),NULL,'New Age Media',0)
+END
+GO
 /*************************************** END BP-6299 ************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
