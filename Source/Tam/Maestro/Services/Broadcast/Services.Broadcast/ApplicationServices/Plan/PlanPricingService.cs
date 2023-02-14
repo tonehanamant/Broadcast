@@ -747,7 +747,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var jobCompletedWithinLastFiveMinutes = _DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var expectedResultCount = PricingExecutionResultExpectedCount();
+                // expecting 6 results
+                // Model Modes = 3
+                // PostingType = 2
+                // 3 * 2 = 6 results
+                const int expectedResultCount = 6;
                 result = ValidatePricingExecutionResult(result, expectedResultCount);
             }
             else
@@ -821,12 +825,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 result.Results = _GetDefaultPricingResultsList();
             }
             return result;
-        }
-
-        internal int PricingExecutionResultExpectedCount()
-        {
-            int expectedResult = 3;
-            return expectedResult;
         }
 
         private static void _PricingRunmodelJobValidation(PlanPricingJob job)

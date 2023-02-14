@@ -1,5 +1,5 @@
 {
-  "IsBuyingModelRunning": false,
+  "IsBuyingModelRunning": true,
   "Job": {
     "Completed": "2021-03-24T11:13:13",
     "DiagnosticResult": "DiagnosticResult",
@@ -13,36 +13,14 @@
   },
   "Results": [
     {
-      "CpmPercentage": 163,
+      "CpmPercentage": 0,
       "GoalFulfilledByProprietary": false,
-      "HasResults": true,
-      "JobId": 12,
-      "Notes": "",
-      "OptimalCpm": 11.0,
-      "PlanVersionId": 659,
-      "PostingType": 1,
-      "SpotAllocationModelMode": 3
-    },
-    {
-      "CpmPercentage": 119,
-      "GoalFulfilledByProprietary": false,
-      "HasResults": true,
-      "JobId": 506,
-      "Notes": "",
-      "OptimalCpm": 8.0,
-      "PlanVersionId": 659,
-      "PostingType": 1,
-      "SpotAllocationModelMode": 2
-    },
-    {
-      "CpmPercentage": 296,
-      "GoalFulfilledByProprietary": false,
-      "HasResults": true,
-      "JobId": 506,
-      "Notes": "",
-      "OptimalCpm": 20.0,
-      "PlanVersionId": 659,
-      "PostingType": 1,
+      "HasResults": false,
+      "JobId": null,
+      "Notes": null,
+      "OptimalCpm": 0.0,
+      "PlanVersionId": null,
+      "PostingType": 0,
       "SpotAllocationModelMode": 2
     }
   ]

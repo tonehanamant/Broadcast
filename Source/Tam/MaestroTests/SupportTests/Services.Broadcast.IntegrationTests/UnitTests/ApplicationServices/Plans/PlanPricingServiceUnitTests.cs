@@ -11198,17 +11198,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.IsTrue(result.All(x => x.ShareOfVoice.Any()));
             Assert.IsTrue(result.All(x => x.CpmGoal != 1));
         }
-
-        [Test]
-        [TestCase(3)]
-        public void PricingExecutionResultExpectedCountTest(int expectedResult)
-        {
-            var service = _GetService();
-            // Act
-            var count = service.PricingExecutionResultExpectedCount();
-            // Assert     
-            Assert.AreEqual(count, expectedResult);
-        }
+        
         [Test]
         public void ValidatePricingExecutionResultTest()
         {

@@ -672,7 +672,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var jobCompletedWithinLastFiveMinutes = _DidBuyingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                var expectedResultCount = _GetBuyingExecutionResultExpectedCount();
+                // expecting 4 results
+                // Model Modes = 2 
+                // PostingType = 2
+                // 2 * 2 = 4 results
+                const int expectedResultCount = 4;
                 result = _ValidateBuyingExecutionResult(result, expectedResultCount);
             }
             else
@@ -738,12 +742,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 }
             }
             return result;
-        }
-
-        internal int _GetBuyingExecutionResultExpectedCount()
-        {
-            int expectedResult = 3;
-            return expectedResult;
         }
 
         private List<CurrentBuyingExecutionResultDto> _GetDefaultBuyingResultsList(PostingTypeEnum postingType)

@@ -5112,17 +5112,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
-        [TestCase(3)]
-        public void BuyingExecutionResultExpectedCountTest(int expectedResult)
-        {
-            var service = _GetService();
-            // Act
-            var count = service._GetBuyingExecutionResultExpectedCount();
-            // Assert     
-            Assert.AreEqual(count, expectedResult);
-        }
-
-        [Test]
         [TestCase(3, PostingTypeEnum.NTI)]
         public void FillInMissingBuyingResultsWithEmptyResults(int startingResultCount, PostingTypeEnum postingType)
         {
