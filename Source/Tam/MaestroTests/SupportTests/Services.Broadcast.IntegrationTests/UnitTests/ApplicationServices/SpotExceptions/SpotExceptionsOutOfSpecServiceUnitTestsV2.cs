@@ -11,6 +11,7 @@ using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.ProgramMapping;
+using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -880,6 +881,524 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                           },
                       },
                        SpotLengthString = ":15"
+                }
+            };
+        }
+        [Test]
+        public async Task SaveOutOfSpecPlanAcceptance_AcceptOutOfSpecToDoDecision()
+        {
+            // Arrange
+            var inventorySourceNames = new List<string>();
+            var planIds = new List<int>();
+            planIds.Add(215);
+            var spotExceptionsOutOfSpecPlanAcceptanceRequest = new SaveOutOfSpecPlanDecisionsRequestDto
+            {
+                PlanIds = planIds,
+                Filters = new OutOfSpecPlansIncludingFiltersRequestDto()
+                {
+                    InventorySourceNames = inventorySourceNames,
+                    WeekStartDate = new DateTime(2021, 01, 04),
+                    WeekEndDate = new DateTime(2021, 01, 10)
+                }
+            };
+
+            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail =
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+            var outOfSpecToDo = _GetOutOfSpecPlanSpotsData();
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAsync(It.IsAny<List<int>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(outOfSpecToDo));
+           
+            // Act
+            var result = await _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecPlanDecsionsAsync(spotExceptionsOutOfSpecPlanAcceptanceRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+        [Test]
+        public async Task SaveOutOfSpecPlanAcceptance_WithInventorySource()
+        {
+            // Arrange
+            var inventorySourceNames = new List<string>();
+            inventorySourceNames.Add("TVB");
+            var planIds = new List<int>();
+            planIds.Add(215);
+            var spotExceptionsOutOfSpecPlanAcceptanceRequest = new SaveOutOfSpecPlanDecisionsRequestDto
+            {
+                PlanIds = planIds,
+                Filters = new OutOfSpecPlansIncludingFiltersRequestDto()
+                {
+                    InventorySourceNames = inventorySourceNames,
+                    WeekStartDate = new DateTime(2021, 01, 04),
+                    WeekEndDate = new DateTime(2021, 01, 10)
+                }
+            };
+
+            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail =
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+            var outOfSpecToDo = _GetOutOfSpecPlanSpotsData();
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAsync(It.IsAny<List<int>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(Task.FromResult(outOfSpecToDo));
+            // Act
+            var result = await _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecPlanDecsionsAsync(spotExceptionsOutOfSpecPlanAcceptanceRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+        [Test]
+        public async Task SaveOutOfSpecPlanAcceptance_ThrowsException()
+        {
+            // Arrange
+            var inventorySourceNames = new List<string>();
+            var planIds = new List<int>();
+            planIds.Add(215);
+            var spotExceptionsOutOfSpecPlanAcceptanceRequest = new SaveOutOfSpecPlanDecisionsRequestDto
+            {
+                PlanIds = planIds,
+                Filters = new OutOfSpecPlansIncludingFiltersRequestDto()
+                {
+                    InventorySourceNames = inventorySourceNames,
+                    WeekStartDate = new DateTime(2021, 01, 04),
+                    WeekEndDate = new DateTime(2021, 01, 10)
+                }
+            };
+
+            var existingSpotExceptionOutOfSpecToDo = new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 14,
+                    SpotUniqueHashExternal = "TE9DQUwtNDY1MzI1MjM=",
+                    ExecutionIdExternal = "2212161638441z7VnXU_R3",
+                    ReasonCodeMessage = null,
+                    EstimateId = 2009,
+                    IsciName = "JARD0075000H",
+                    RecommendedPlanId = 674,
+                    RecommendedPlanName = "Boehringer Jardiance 4Q22 BYU EM News",
+                    ProgramName = "BUSINESS FIRST AM",
+                    StationLegacyCallLetters = "KOLD",
+                    Affiliate= "CBS",
+                    Market = "Tucson (Sierra Vista)",
+                    AdvertiserMasterId = new Guid("1d0fa038-6a70-4907-b9ba-739ab67e35ad"),
+                    AdvertiserName = null,
+                    SpotLengthId = null,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 2,
+                        Length= 60
+                    },
+                    AudienceId = null,
+                    Audience = new AudienceDto
+                    {
+                        Id = 40,
+                        Code = "A35-64",
+                        Name = "Adults 35-64"
+                    },
+                    Product = null,
+                    FlightStartDate = new DateTime(2022, 12, 12),
+                    FlightEndDate = new DateTime(2022, 12, 25),
+                    DaypartCode = "EMN",
+                    GenreName = "INFORMATIONAL/NEWS",
+                    DaypartDetail =
+                    {
+                        Id = 0,
+                        Code = null,
+                        Name = null,
+                        DaypartText = null
+                    },
+                    ProgramNetwork = "CBS",
+                    ProgramAirTime = new DateTime(2022, 12, 23),
+                    IngestedBy = "Test User",
+                    IngestedAt = new DateTime(2022, 12, 12),
+                    Impressions = 464.37199999999996,
+                    IngestedMediaWeekId = 989,
+                    PlanId = 674,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 7,
+                        ReasonCode = 9,
+                        Reason = "Incorrect Time",
+                        Description = null,
+                        Label = "Time"
+                    },
+                    MarketCode = 289,
+                    MarketRank = 69,
+                    HouseIsci = "009ARD0075H",
+                    TimeZone = "EST",
+                    DMA = 58,
+                    Comments = null,
+                    InventorySourceName = "Business First AM"
+                }
+            };
+
+            string userName = "Test User";
+            var outOfSpecToDo = _GetOutOfSpecPlanSpotsData();
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAsync(It.IsAny<List<int>>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+               {
+                   throw new CadentException("Throwing a test exception.");
+               });
+
+            // Act           
+            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecPlanDecsionsAsync(spotExceptionsOutOfSpecPlanAcceptanceRequest, userName));
+
+            // Assert
+            Assert.AreEqual("Could not  Save the Spot Exception Plan Decisions", result.Message);
+        }
+
+        private List<SpotExceptionsOutOfSpecsToDoDto> _GetOutOfSpecPlanSpotsData()
+        {
+            return new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 3,
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
+                    HouseIsci = "289J76GN16H",
+                    Comments = "test Comment",
+                    GenreName="Comedy",
+                    DaypartCode="ROSP",
+                    InventorySourceName = "TVB"
+                },
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 4,
+                    ReasonCodeMessage = "",
+                    EstimateId = 191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Cincinnati",
+                    PlanId = 215,
+                     SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 71646,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
+                    HouseIsci = "289J76GN16H",
+                    Comments = "test Comment",
+                    InventorySourceName = "TVB"
+                }
+            };
+        }
+        private List<SpotExceptionsOutOfSpecsToDoDto> _GetOutOfSpecToDoData()
+        {
+            return new List<SpotExceptionsOutOfSpecsToDoDto>()
+            {
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                    Id = 3,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                },
+                new SpotExceptionsOutOfSpecsToDoDto
+                {
+                  Id = 4,
+                  ReasonCodeMessage="",
+                  EstimateId= 191757,
+                  IsciName="AB82VR58",
+                  RecommendedPlanId= 215,
+                  RecommendedPlanName="4Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="Reynolds Foil @9",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                  StationLegacyCallLetters="KSTP",
+                  Affiliate = "NBC",
+                  Market = "Phoenix (Prescott)",
+                  PlanId = 215,
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                  AudienceId= 426,
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartCode="PT",
+                  GenreName="Horror",
+                  ProgramNetwork = "",
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  IngestedMediaWeekId = 1,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 3,
+                        ReasonCode = 2,
+                        Reason = "genre content restriction",
+                        Label = "Genre"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMDc5NA==",
+                  HouseIsci = "289J76GN16H"
                 }
             };
         }

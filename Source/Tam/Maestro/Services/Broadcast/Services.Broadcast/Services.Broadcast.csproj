@@ -930,6 +930,7 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodeResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodesDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\SaveOutOfSpecPlanDecisionsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoPlanDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoReelRosterDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedRequestDto.cs" />

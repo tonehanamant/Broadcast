@@ -150,5 +150,19 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
         }
+        /// <summary>
+        /// Gets the spot exceptions out of specs plan acceptance.
+        /// </summary>
+        /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-plan-acceptance-todo")]
+        public async Task<BaseResponse<bool>> SaveOutOfSpecPlanDecsionsAsync(SaveOutOfSpecPlanDecisionsRequestDto spotExceptionsOutOfSpecSpotsRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecPlanDecsionsAsync(spotExceptionsOutOfSpecSpotsRequest, userName);
+
+            return _ConvertToBaseResponse(() => result);
+        }
     }
 }

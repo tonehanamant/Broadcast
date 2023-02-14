@@ -18,6 +18,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Tam.Maestro.Common;
+using Tam.Maestro.Common.DataLayer;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -75,6 +76,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="templatesFilePath">The templates file path.</param>
         /// <returns></returns>
         Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath);
+        /// <summary>
+        /// Generats out of spec report.
+        /// </summary>
+        /// <param name="saveOutOfSpecPlanDecisionsRequest">The request.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        Task<bool> SaveOutOfSpecPlanDecsionsAsync(SaveOutOfSpecPlanDecisionsRequestDto saveOutOfSpecPlanDecisionsRequest, string userName);
 
     }
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
@@ -480,6 +488,104 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
             return result;
+        }
+        /// <inheritdoc />
+        public async Task<bool> SaveOutOfSpecPlanDecsionsAsync(SaveOutOfSpecPlanDecisionsRequestDto saveOutOfSpecPlanDecisionsRequest, string userName)
+        {
+            bool isSpotsSaved = false;
+
+            _LogInfo($"Starting:  Saving the Spot Exception Plan Decisions");
+            try
+            {
+                var outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoAsync(saveOutOfSpecPlanDecisionsRequest.PlanIds, saveOutOfSpecPlanDecisionsRequest.Filters.WeekStartDate, saveOutOfSpecPlanDecisionsRequest.Filters.WeekEndDate);
+
+                if (saveOutOfSpecPlanDecisionsRequest.Filters.InventorySourceNames.Count > 0)
+                {
+                    outOfSpecSpotsToDo = outOfSpecSpotsToDo.Where(x => saveOutOfSpecPlanDecisionsRequest.Filters.InventorySourceNames.Contains(x.InventorySourceName)).ToList();
+                }
+
+                isSpotsSaved = await _SaveOutOfSpecDecisionsToDoAsync(outOfSpecSpotsToDo, userName);
+
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not  Save the Spot Exception Plan Decisions";
+                throw new CadentException(msg, ex);
+            }
+
+            return isSpotsSaved;
+        }
+        private async Task<bool> _SaveOutOfSpecDecisionsToDoAsync(List<SpotExceptionsOutOfSpecsToDoDto> existingOutOfSpecsToDo, string userName)
+        {
+            bool isSaved;
+            var acceptAsInSpec = false;
+            _LogInfo($"Starting: Moving the Spot Exception Plan by Decision to Done");
+            try
+            {
+                var doneOutOfSpecsToAdd = existingOutOfSpecsToDo.Select(existingOutOfSpecToDo => new SpotExceptionsOutOfSpecsDoneDto
+                    {
+                        SpotUniqueHashExternal = existingOutOfSpecToDo.SpotUniqueHashExternal,
+                        ExecutionIdExternal = existingOutOfSpecToDo.ExecutionIdExternal,
+                        ReasonCodeMessage = existingOutOfSpecToDo.ReasonCodeMessage,
+                        EstimateId = existingOutOfSpecToDo.EstimateId,
+                        IsciName = existingOutOfSpecToDo.IsciName,
+                        HouseIsci = existingOutOfSpecToDo.HouseIsci,
+                        RecommendedPlanId = existingOutOfSpecToDo.RecommendedPlanId,
+                        RecommendedPlanName = existingOutOfSpecToDo.RecommendedPlanName,
+                        ProgramName = existingOutOfSpecToDo.ProgramName,
+                        StationLegacyCallLetters = existingOutOfSpecToDo.StationLegacyCallLetters,
+                        DaypartCode = existingOutOfSpecToDo.DaypartCode,
+                        GenreName = existingOutOfSpecToDo.GenreName,
+                        Affiliate = existingOutOfSpecToDo.Affiliate,
+                        Market = existingOutOfSpecToDo.Market,
+                        SpotLength = existingOutOfSpecToDo.SpotLength,
+                        Audience = existingOutOfSpecToDo.Audience,
+                        ProgramAirTime = existingOutOfSpecToDo.ProgramAirTime,
+                        ProgramNetwork = existingOutOfSpecToDo.ProgramNetwork,
+                        IngestedBy = existingOutOfSpecToDo.IngestedBy,
+                        IngestedAt = existingOutOfSpecToDo.IngestedAt,
+                        IngestedMediaWeekId = existingOutOfSpecToDo.IngestedMediaWeekId,
+                        Impressions = existingOutOfSpecToDo.Impressions,
+                        PlanId = existingOutOfSpecToDo.PlanId,
+                        FlightStartDate = existingOutOfSpecToDo.FlightStartDate,
+                        FlightEndDate = existingOutOfSpecToDo.FlightEndDate,
+                        AdvertiserMasterId = existingOutOfSpecToDo.AdvertiserMasterId,
+                        Product = existingOutOfSpecToDo.Product,
+                        SpotExceptionsOutOfSpecReasonCode = existingOutOfSpecToDo.SpotExceptionsOutOfSpecReasonCode,
+                        MarketCode = existingOutOfSpecToDo.MarketCode,
+                        MarketRank = existingOutOfSpecToDo.MarketRank,
+                        InventorySourceName = existingOutOfSpecToDo.InventorySourceName,
+                        SpotExceptionsOutOfSpecDoneDecision = new SpotExceptionsOutOfSpecDoneDecisionsDto()
+                        {
+                            AcceptedAsInSpec = acceptAsInSpec, 
+                            DecisionNotes = "Out",
+                            ProgramName = existingOutOfSpecToDo.ProgramName,
+                            GenreName = existingOutOfSpecToDo.GenreName,
+                            DaypartCode = existingOutOfSpecToDo.DaypartCode,
+                            DecidedBy = userName,
+                            DecidedAt = _DateTimeEngine.GetCurrentMoment()
+                        }
+                    }).ToList();
+
+                using (var transaction = new TransactionScopeWrapper())
+                {
+                    if (doneOutOfSpecsToAdd.Any())
+                    {
+                        _SpotExceptionsOutOfSpecRepositoryV2.AddOutOfSpecToDone(doneOutOfSpecsToAdd);
+                    }
+                    _SpotExceptionsOutOfSpecRepositoryV2.DeleteOutOfSpecsFromToDo(existingOutOfSpecsToDo.Select(x => x.Id).ToList());
+                    transaction.Complete();
+                    isSaved = true;
+                }
+
+                _LogInfo($"Finished: Moving the Spot Exception Plan by Decision to Done");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not move Spot Exception Plan by Decision to Done";
+                throw new CadentException(msg, ex);
+            }
+            return isSaved;
         }
     }
 }
