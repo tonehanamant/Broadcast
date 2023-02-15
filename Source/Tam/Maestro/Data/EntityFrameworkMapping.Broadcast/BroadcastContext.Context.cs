@@ -93,7 +93,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<postlog_files> postlog_files { get; set; }
         public virtual DbSet<isci_blacklist> isci_blacklist { get; set; }
         public virtual DbSet<postlog_client_scrub_audiences> postlog_client_scrub_audiences { get; set; }
-        public virtual DbSet<station_inventory_manifest_genres> station_inventory_manifest_genres { get; set; }
         public virtual DbSet<station_inventory_manifest_daypart_genres> station_inventory_manifest_daypart_genres { get; set; }
         public virtual DbSet<affidavit_client_scrubs> affidavit_client_scrubs { get; set; }
         public virtual DbSet<affidavit_client_scrub_audiences> affidavit_client_scrub_audiences { get; set; }

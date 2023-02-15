@@ -598,7 +598,6 @@ namespace Services.Broadcast.Repositories
                                 .Include(x => x.station_inventory_manifest_weeks)
                                 .Include(x => x.station_inventory_manifest_rates)
                                 .Include(x => x.station_inventory_manifest_dayparts)
-                                .Include(x => x.station_inventory_manifest_genres)
                                 .Include(x => x.station_inventory_manifest_dayparts.Select(d => d.standard_dayparts.daypart))
                                 .Include(s => s.station)
                          join g in context.station_inventory_group on m.station_inventory_group_id equals g.id

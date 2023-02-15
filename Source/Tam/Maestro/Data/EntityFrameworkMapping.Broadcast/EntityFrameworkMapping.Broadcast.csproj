@@ -975,9 +975,6 @@
     <Compile Include="station_inventory_manifest_generation.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="station_inventory_manifest_genres.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="station_inventory_manifest_rates.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>

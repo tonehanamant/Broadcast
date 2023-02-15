@@ -1722,6 +1722,21 @@ END
 GO
 /*************************************** END BP-6299 ************************************/
 
+/*************************************** START BS-509 *************************************/
+
+IF NOT EXISTS(
+select 1
+from sysobjects 
+where xtype='PK' and 
+   parent_obj in (select id from sysobjects where name='spot_exceptions_ingest_jobs'))
+BEGIN
+    ALTER TABLE spot_exceptions_ingest_jobs
+	ADD PRIMARY KEY (id); 
+END
+GO
+
+/*************************************** END BS-509 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

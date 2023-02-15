@@ -129,9 +129,7 @@
         <AssociationConnector Association="BroadcastModel.FK_postlog_file_problems_postlog_files" />
         <EntityTypeShape EntityType="BroadcastModel.isci_blacklist" Width="1.5" PointX="8.625" PointY="13.125" />
         <EntityTypeShape EntityType="BroadcastModel.postlog_client_scrub_audiences" Width="1.5" PointX="34.125" PointY="17.625" />
-        <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_genres" Width="1.5" PointX="15.75" PointY="31.625" />
         <AssociationConnector Association="BroadcastModel.FK_postlog_client_scrub_audiences_audiences" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_genres_station_inventory_manifest" />
         <EntityTypeShape EntityType="BroadcastModel.station_inventory_manifest_daypart_genres" Width="1.5" PointX="21.5" PointY="30" />
         <EntityTypeShape EntityType="BroadcastModel.affidavit_client_scrubs" Width="1.5" PointX="25.875" PointY="12.875" />
         <AssociationConnector Association="BroadcastModel.FK_proposal_version_detail_quarter_weeks_affidavit_client_scrubs" />
@@ -354,7 +352,6 @@
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_genres_genres" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genres" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_genres_maestro" />
-        <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_genres_genres" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_program_sources" />
         <AssociationConnector Association="BroadcastModel.FK_station_inventory_manifest_daypart_programs_station_inventory_manifest_dayparts" />
         <EntityTypeShape EntityType="BroadcastModel.vpvh_quarters" Width="1.5" PointX="7.25" PointY="77.5" />
@@ -605,7 +602,6 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" Width="1.5" PointX="40.375" PointY="17.75" />
-        <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" />
         </Diagram>
     </edmx:Diagrams>
