@@ -327,6 +327,115 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         }
 
         [Test]
+        public async Task SavePlanNew_AduOnlyPlan()
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = true;
+
+            var sentToWeeklyBreakdown = new List<PlanDto>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
+                .Callback<PlanDto, double?, decimal?>((a, b, c) => sentToWeeklyBreakdown.Add(a))
+                .Returns(new List<WeeklyBreakdownWeek>());
+
+            var saveNewPlanCalls = new List<DateTime>();
+            var savedNewPlans = new List<PlanDto>();
+            _PlanRepositoryMock.Setup(s => s.SaveNewPlan(It.IsAny<PlanDto>(), It.IsAny<string>(), It.IsAny<DateTime>()))                
+                .Callback<PlanDto, string, DateTime>((a,b,c) => 
+                    {
+                        saveNewPlanCalls.Add(DateTime.Now);
+                        savedNewPlans.Add(a);
+                    });
+
+            var setStatusCalls = new List<Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s =>
+                    s.SetProcessingStatusForPlanSummary(It.IsAny<int>(), It.IsAny<PlanAggregationProcessingStatusEnum>()))
+                .Callback<int, PlanAggregationProcessingStatusEnum>((i, s) => setStatusCalls.Add(new Tuple<int, PlanAggregationProcessingStatusEnum, DateTime>(i, s, DateTime.Now)));
+
+            var saveSummaryCalls = new List<Tuple<int, PlanSummaryDto, DateTime>>();
+            _PlanSummaryRepositoryMock.Setup(s => s.SaveSummary(It.IsAny<PlanSummaryDto>()))
+                .Callback<PlanSummaryDto>((s) => saveSummaryCalls.Add(new Tuple<int, PlanSummaryDto, DateTime>(Thread.CurrentThread.ManagedThreadId, s, DateTime.Now)));
+
+            var planAggregator = new Mock<IPlanAggregator>();
+            var aggregateCallCount = 0;
+            var aggregateReturn = new PlanSummaryDto();
+            _PlanAggregatorMock.Setup(s => s.Aggregate(It.IsAny<PlanDto>()))
+                .Callback(() => aggregateCallCount++)
+                .Returns(aggregateReturn);
+
+            var plan = _GetNewAduOnlyPlan();
+            var campaignId = plan.CampaignId;
+            var modifiedWho = "ModificationUser";
+            var modifiedWhen = new DateTime(2019, 08, 12, 12, 31, 27);
+
+            var standardResult = new PlanAvailableMarketCalculationResult { AvailableMarkets = plan.AvailableMarkets, TotalWeight = 50 };
+            _PlanMarketSovCalculator.Setup(s =>
+                    s.CalculateMarketWeights(It.IsAny<List<PlanAvailableMarketDto>>()))
+                .Returns(standardResult);
+
+            var queuePricingJobCallCount = 0;
+            _PlanPricingServiceMock.Setup(s =>
+                    s.QueuePricingJob(It.IsAny<PlanPricingParametersDto>(), It.IsAny<DateTime>(), It.IsAny<string>()))
+                .Callback(() => queuePricingJobCallCount++);
+
+            _PlanRepositoryMock.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns(new PlanDto { VersionId = 66 });
+
+            var setPricingPlanVersionIdCallCount = 0;
+            _PlanRepositoryMock.Setup(s => s.SetPricingPlanVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback(() => setPricingPlanVersionIdCallCount++);
+
+            var updatePlanPricingVersionIdCalls = new List<UpdatePlanPricingVersionIdParams>();
+            _PlanRepositoryMock.Setup(s => s.UpdatePlanPricingVersionId(It.IsAny<int>(), It.IsAny<int>()))
+                .Callback<int, int>((a, b) => updatePlanPricingVersionIdCalls.Add(new UpdatePlanPricingVersionIdParams { AfterPlanVersionID = a, BeforePlanVersionID = b }));
+
+            _PlanRepositoryMock.Setup(s => s.GetPlanIdFromPricingJob(It.IsAny<int>()))
+                .Returns(plan.Id);
+
+            // Act
+            await _PlanService.SavePlanAsync(plan, modifiedWho, modifiedWhen, aggregatePlanSynchronously: true);
+
+            // Assert
+            Assert.AreEqual(1, saveNewPlanCalls.Count, "Invalid call count.");
+            Assert.AreEqual(1, setStatusCalls.Count, "Invalid call count.");
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2, "Invalid 'in process' processing status.");
+            Assert.AreEqual(1, aggregateCallCount, "Invalid call count.");
+            Assert.AreEqual(1, saveSummaryCalls.Count, "Invalid call count.");
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus, "Invalid final processing status.");
+            var planSavedTime = saveNewPlanCalls[0];
+            var setInProgressTime = setStatusCalls[0].Item3;
+            var summarySavedTime = saveSummaryCalls[0].Item3;
+            Assert.IsTrue(planSavedTime <= setInProgressTime, "Plan should have been saved before aggregation started.");
+            Assert.IsTrue(setInProgressTime <= summarySavedTime, "Aggregation started should be set before summary saved");
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.InProgress, setStatusCalls[0].Item2);
+            Assert.AreEqual(PlanAggregationProcessingStatusEnum.Idle, saveSummaryCalls[0].Item2.ProcessingStatus);
+            _CampaignAggregationJobTriggerMock.Verify(s => s.TriggerJob(campaignId, modifiedWho), Times.Once);
+            // Pricing Triggering etc is covered by other tests.
+
+            // ADU Only Plan Specific
+            _PlanValidatorMock.Verify(s => s.ValidateAduPlan(It.IsAny<PlanDto>()), Times.Once);
+
+            Assert.AreEqual(1, sentToWeeklyBreakdown.Count);
+            var sentToWeeklyBreakdownPlan = sentToWeeklyBreakdown.First();
+            Assert.AreEqual(0, sentToWeeklyBreakdownPlan.Budget);
+            Assert.AreEqual(0, sentToWeeklyBreakdownPlan.TargetImpressions);
+            Assert.AreEqual(0, sentToWeeklyBreakdownPlan.TargetRatingPoints);
+            Assert.AreEqual(0, sentToWeeklyBreakdownPlan.TargetCPM);
+            Assert.AreEqual(0, sentToWeeklyBreakdownPlan.TargetCPP);
+            Assert.AreEqual(1, sentToWeeklyBreakdownPlan.ImpressionsPerUnit);
+            foreach(var week in sentToWeeklyBreakdownPlan.WeeklyBreakdownWeeks)
+            {
+                Assert.AreEqual(4000000, week.AduImpressions);
+            }
+
+            var savedPlan = savedNewPlans.First();
+            Assert.AreEqual(0, savedPlan.PricingParameters.AdjustedBudget);
+            Assert.AreEqual(0, savedPlan.PricingParameters.AdjustedCPM);
+            Assert.AreEqual(0, savedPlan.BuyingParameters.AdjustedBudget);
+            Assert.AreEqual(0, savedPlan.BuyingParameters.AdjustedCPM);
+        }
+
+        [Test]
         public async Task SavePlanDraft()
         {
             // Arrange
@@ -4322,6 +4431,88 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(expectedMessage, exception.Message);            
         }
 
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ConvertImpressionsToRawFormat(bool isAduForPlanningv2Enabled)
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = isAduForPlanningv2Enabled;
+            var expectedWeeklyAduResult = isAduForPlanningv2Enabled ? 6000 : 6;
+
+            var plan = new PlanDto
+            {
+                TargetImpressions = 4,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyImpressions = 5,
+                        WeeklyAdu = 6
+                    }
+                }
+            };
+
+            // Act
+            _PlanService._ConvertImpressionsToRawFormat(plan);
+
+            // Assert
+            Assert.AreEqual(4000, plan.TargetImpressions);
+
+            plan.WeeklyBreakdownWeeks.ForEach(w =>
+            {
+                Assert.AreEqual(5000, w.WeeklyImpressions);
+                Assert.AreEqual(expectedWeeklyAduResult, w.WeeklyAdu);
+            });
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ConvertImpressionsToUserFormat(bool isAduForPlanningv2Enabled)
+        {
+            // Arrange
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = isAduForPlanningv2Enabled;
+            var expectedWeeklyAduResult = isAduForPlanningv2Enabled ? 6 : 6000;
+
+            var plan = new PlanDto
+            {
+                TargetImpressions = 4686,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek { WeeklyImpressions = 5000, WeeklyAdu = 6000 }
+                },
+                RawWeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek { WeeklyImpressions = 5000, WeeklyAdu = 6000 }
+                },
+                SecondaryAudiences = new List<PlanAudienceDto>
+                {
+                    new PlanAudienceDto { Impressions = 8000 }
+                }
+            };
+
+            // Act
+            _PlanService._ConvertImpressionsToUserFormat(plan);
+
+            // Assert
+            Assert.AreEqual(4, plan.TargetImpressions);
+            plan.WeeklyBreakdownWeeks.ForEach(w =>
+            {
+                Assert.AreEqual(5, w.WeeklyImpressions);
+                Assert.AreEqual(expectedWeeklyAduResult, w.WeeklyAdu);
+            });
+            plan.RawWeeklyBreakdownWeeks.ForEach(w =>
+            {
+                Assert.AreEqual(5, w.WeeklyImpressions);
+                Assert.AreEqual(expectedWeeklyAduResult, w.WeeklyAdu);
+            });
+            plan.SecondaryAudiences.ForEach(a =>
+            {
+                Assert.AreEqual(8, a.Impressions);
+            });
+        }
+
         private List<WeeklyBreakdownWeek> _GetWeeklyBreakDownWeeks_DistributedBySpotLengthAndDaypart()
         {
             return new List<WeeklyBreakdownWeek>
@@ -4457,5 +4648,134 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             };
         }
 
+        private static PlanDto _GetNewAduOnlyPlan()
+        {
+            return new PlanDto
+            {
+                IsAduEnabled = true,
+                IsAduPlan = true,
+                IsDraft = false,
+                Budget = null,
+                TargetCPM = null,
+                TargetImpressions = null,
+                TargetRatingPoints = 0,
+                TargetCPP = 0,                
+                ImpressionsPerUnit = 0,
+                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                CampaignId = 1,
+                Equivalized = true,
+                Name = "New Plan",
+                ProductId = 1,
+                ProductMasterId = new Guid("C8C76C3B-8C39-42CF-9657-B7AD2B8BA320"),                
+                CreativeLengths = new List<CreativeLength> { 
+                    new CreativeLength { SpotLengthId = 1, Weight = 80 } ,
+                    new CreativeLength { SpotLengthId = 2, Weight = 20 }
+                },
+                Status = Entities.Enums.PlanStatusEnum.Working,
+                FlightStartDate = new DateTime(2019, 1, 1),
+                FlightEndDate = new DateTime(2019, 7, 31),
+                FlightNotes = "Sample notes",
+                FlightNotesInternal = "Internal sample notes",
+                FlightDays = new List<int> { 1, 2, 3, 4, 5, 6, 7 },
+                FlightHiatusDays = new List<DateTime>
+                {
+                    new DateTime(2019, 1, 20),
+                    new DateTime(2019, 4, 15)
+                },
+                AudienceId = 31,        //HH
+                AudienceType = AudienceTypeEnum.Nielsen,
+                HUTBookId = 436,
+                PostingType = PostingTypeEnum.NTI,
+                ShareBookId = 437,                
+                CoverageGoalPercent = 80.5,
+                AvailableMarkets = new List<PlanAvailableMarketDto>
+                {
+                    new PlanAvailableMarketDto { MarketCode = 100, MarketCoverageFileId = 1, PercentageOfUS = 20, Rank = 1, ShareOfVoicePercent = 22.2, Market = "Portland-Auburn", IsUserShareOfVoicePercent = true },
+                    new PlanAvailableMarketDto { MarketCode = 101, MarketCoverageFileId = 1, PercentageOfUS = 32.5, Rank = 2, ShareOfVoicePercent = 34.5, Market = "New York", IsUserShareOfVoicePercent = true }
+                },
+                AvailableMarketsSovTotal = 56.7,
+                BlackoutMarkets = new List<PlanBlackoutMarketDto>
+                {
+                    new PlanBlackoutMarketDto { MarketCode = 123, MarketCoverageFileId = 1, PercentageOfUS = 5.5, Rank = 5, Market = "Burlington-Plattsburgh" },
+                    new PlanBlackoutMarketDto { MarketCode = 234, MarketCoverageFileId = 1, PercentageOfUS = 2.5, Rank = 8, Market = "Amarillo" },
+                },
+
+                ModifiedBy = "Test User",
+                ModifiedDate = new DateTime(2019, 01, 12, 12, 30, 29),
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        PlanDaypartId = 56,
+                        DaypartTypeId = DaypartTypeEnum.News,
+                        DaypartCodeId = 2,
+                        StartTimeSeconds = 0,
+                        EndTimeSeconds = 2000,
+                        WeightingGoalPercent = 28.0,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.5,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        }
+                    },
+                    new PlanDaypartDto
+                    {
+                        PlanDaypartId = 58,
+                        DaypartTypeId = DaypartTypeEnum.News,
+                        DaypartCodeId = 11,
+                        StartTimeSeconds = 1500,
+                        EndTimeSeconds = 2788,
+                        WeightingGoalPercent = 33.2,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto
+                            {
+                                AudienceId = 31,
+                                Vpvh = 0.5,
+                                VpvhType = VpvhTypeEnum.FourBookAverage,
+                                StartingPoint = new DateTime(2019, 01, 12, 12, 30, 29)
+                            }
+                        }
+                    }
+                },
+                Vpvh = 0.234543,                
+                PricingParameters = new PlanPricingParametersDto
+                {
+                    AdjustedBudget = 0,
+                    AdjustedCPM = 0,
+                    CPM = 0,
+                    Budget = 0,
+                    Currency = PlanCurrenciesEnum.Impressions,
+                    DeliveryImpressions = 0,
+                    InflationFactor = 10,
+                    JobId = 1,
+                    PlanId = 1,
+                    PlanVersionId = 1,
+                    ProprietaryInventory = new List<InventoryProprietarySummary>
+                    {
+                        new InventoryProprietarySummary
+                        {
+                            Id = 1
+                        }
+                    }
+                },
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyAdu = 4000
+                    },
+                    new WeeklyBreakdownWeek
+                    {
+                        WeeklyAdu = 4000
+                    }
+                }
+            };
+        }
     }
 }

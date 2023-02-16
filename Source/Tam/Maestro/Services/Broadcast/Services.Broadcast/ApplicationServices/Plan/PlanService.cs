@@ -340,6 +340,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
+        private readonly Lazy<bool> _IsAduForPlanningv2Enabled;
+
         private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
         private Lazy<bool> _IsUnifiedCampaignEnabled;
         public const decimal BudgetDivisor = 0.85m;
@@ -399,6 +401,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CampaignServiceApiClient = campaignServiceApiClient;
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
+
+            _IsAduForPlanningv2Enabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2));
         }
 
         ///<inheritdoc/>
@@ -414,16 +419,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 try
                 {
-                    if (plan.IsAduPlan && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2))
-                    {
-                        result = _DoSaveAduPlan(plan, createdBy, createdDate);
-                    }
-                    else
-                    {
-                        result = await _DoSavePlanAsync(plan, createdBy, createdDate, 
-                            aggregatePlanSynchronously, shouldPromotePlanPricingResults: false, shouldPromotePlanBuyingResults: false);
-                    }
-                    
+                    result = await _DoSavePlanAsync(plan, createdBy, createdDate,
+                            aggregatePlanSynchronously, 
+                            shouldPromotePlanPricingResults: false, 
+                            shouldPromotePlanBuyingResults: false);
+
                 }
                 catch (Exception ex)
                 {
@@ -454,6 +454,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.FlightStartDate = flightStartDate.Date + starttime;
             }
         }
+
         private async Task<int> _DoSavePlanAsync(PlanDto plan, string createdBy, DateTime createdDate, 
             bool aggregatePlanSynchronously, 
             bool shouldPromotePlanPricingResults, 
@@ -497,12 +498,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
 
                 _CalculateDaypartOverrides(plan.Dayparts);
-                
 
                 processTimers.End(SW_KEY_PRE_PLAN_VALIDATION);
                 processTimers.Start(SW_KEY_PLAN_VALIDATION);
 
-                _PlanValidator.ValidatePlan(plan);
+                if (plan.IsAduPlan && _IsAduForPlanningv2Enabled.Value)
+                {
+                    _PlanValidator.ValidateAduPlan(plan);
+                    // init goal related properties
+                    _InitAduOnlyPlanGoals(plan);
+                }
+                else
+                {
+                    _PlanValidator.ValidatePlan(plan);
+                }
 
                 processTimers.End(SW_KEY_PLAN_VALIDATION);
                 processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
@@ -652,7 +661,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 if (plan.IsAduPlan && _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2))
                 {
-                    InitAduOnlyPlanGoals(plan);
+                    _InitAduOnlyPlanGoals(plan);
                 }
 
                 if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty() && plan.Dayparts.Any(x => x.DaypartCodeId > 0))
@@ -722,7 +731,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private static void InitAduOnlyPlanGoals(PlanDto plan)
+        private static void _InitAduOnlyPlanGoals(PlanDto plan)
         {
             // init goal related properties
             plan.Budget = plan.Budget ?? 0;
@@ -734,83 +743,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             // we want this to be greater than 0 for the ADU Impressions calculation
             plan.ImpressionsPerUnit = (plan.ImpressionsPerUnit ?? 0) > 0 ? plan.ImpressionsPerUnit : 1; 
-        }
-
-        private int _DoSaveAduPlan(PlanDto plan, string createdBy, DateTime createdDate)
-        {
-            var logTxId = Guid.NewGuid();
-            try
-            {
-                if (plan.Id > 0 && _PlanPricingService.IsPricingModelRunningForPlan(plan.Id))
-                {
-                    throw new PlanSaveException("The pricing model is running for the plan");
-                }
-
-                _PlanValidator.ValidateAduPlan(plan);
-
-                if (plan.CreativeLengths.Count == 1)
-                {
-                    //if there is only 1 creative length, set the weight to 100%
-                    plan.CreativeLengths.Single().Weight = 100;
-                }
-                else
-                {
-                    plan.CreativeLengths = _CreativeLengthEngine.DistributeWeight(plan.CreativeLengths);
-                }
-
-                // init goal related properties
-                InitAduOnlyPlanGoals(plan);
-
-                plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-                _CalculateDeliveryDataPerAudience(plan);
-
-                plan.Dayparts = _FilterValidDaypart(plan.Dayparts);
-                DaypartTimeHelper.SubtractOneSecondToEndTime(plan.Dayparts);
-                _CalculateDaypartOverrides(plan.Dayparts);                
-
-                _ConvertImpressionsToRawFormat(plan);
-
-                _SetPlanFlightDays(plan);
-
-                if (plan.Status == PlanStatusEnum.Contracted && plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
-                {
-                    plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
-                }
-
-                if (plan.Id > 0)
-                {
-                    var key = KeyHelper.GetPlanLockingKey(plan.Id);
-                    var lockingResult = _LockingManagerApplicationService.GetLockObject(key);
-
-                    if (lockingResult.Success)
-                    {
-                        _PlanRepository.SavePlan(plan, createdBy, createdDate);
-                    }
-                    else
-                    {
-                        throw new PlanSaveException(
-                            $"The chosen plan has been locked by {lockingResult.LockedUserName}");
-                    }
-                }
-                else
-                {
-                    _PlanRepository.SaveNewPlan(plan, createdBy, createdDate);
-                }
-
-                _UpdateCampaignLastModified(plan.CampaignId, createdDate, createdBy);
-                _DispatchPlanAggregation(plan, aggregatePlanSynchronously: false);
-                return plan.Id;
-            }
-            catch (PlanSaveException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                _HandleUnknownPlanSaveException(plan, ex, logTxId, createdBy);
-                throw new InvalidOperationException("Error saving the ADU Plan.  Please see your administrator to check logs.");
-            }
-        }
+        }        
 
         internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
         {
@@ -978,7 +911,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
 
-            plan.PricingParameters = new PlanPricingParametersDto
+            var pricingParameters = new PlanPricingParametersDto
             {
                 PlanId = plan.Id,
                 Budget = Convert.ToDecimal(plan.Budget),
@@ -996,13 +929,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FluidityPercentage = plan.FluidityPercentage
             };
 
-            _PlanPricingService.ValidateAndApplyMargin(plan.PricingParameters);
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                pricingParameters.AdjustedBudget = 0;
+                pricingParameters.AdjustedCPM = 0;
+            }
+            else
+            {
+                _PlanPricingService.ValidateAndApplyMargin(pricingParameters);
+            }
+
+            plan.PricingParameters = pricingParameters;
         }
         private void _SetPlanBuyingParameters(PlanDto plan)
         {
             var pricingDefaults = _PlanPricingService.GetPlanPricingDefaults();
 
-            plan.BuyingParameters = new PlanBuyingParametersDto
+            var buyingParameters = new PlanBuyingParametersDto
             {
                 PlanId = plan.Id,
                 Budget = Convert.ToDecimal(plan.Budget),
@@ -1022,7 +965,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 FluidityPercentage = plan.FluidityPercentage
             };
 
-            _PlanBuyingService.ValidateAndApplyMargin(plan.BuyingParameters);
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                buyingParameters.AdjustedBudget = 0;
+                buyingParameters.AdjustedCPM = 0;
+            }
+            else
+            {
+                _PlanBuyingService.ValidateAndApplyMargin(buyingParameters);
+            }
+
+            plan.BuyingParameters = buyingParameters;
         }
 
         private void _SetPlanFlightDays(PlanDto plan)
@@ -1044,7 +997,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 week.AduImpressions = 0;
         }
 
-        private void _ConvertImpressionsToRawFormat(PlanDto plan)
+        internal void _ConvertImpressionsToRawFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)
@@ -1055,9 +1008,15 @@ namespace Services.Broadcast.ApplicationServices.Plan
             {
                 week.WeeklyImpressions = week.WeeklyImpressions * 1000;
             }
+
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                // ADUs are (000) not Units
+                plan.WeeklyBreakdownWeeks.ForEach(w => w.WeeklyAdu *= 1000);
+            }
         }
 
-        private void _ConvertImpressionsToUserFormat(PlanDto plan)
+        internal  void _ConvertImpressionsToUserFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
             if (plan.TargetImpressions.HasValue)
@@ -1083,6 +1042,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var week in plan.RawWeeklyBreakdownWeeks)
             {
                 week.WeeklyImpressions /= 1000;
+            }
+
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                // ADUs are (000) not Units
+                plan.WeeklyBreakdownWeeks.ForEach(w => w.WeeklyAdu /= 1000);
+                plan.RawWeeklyBreakdownWeeks.ForEach(w => w.WeeklyAdu /= 1000);
             }
         }
 
@@ -1120,7 +1086,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (plan.IsAduPlan)
             {
-                InitAduOnlyPlanGoals(plan);
+                _InitAduOnlyPlanGoals(plan);
             }
 
             plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
@@ -1465,21 +1431,28 @@ namespace Services.Broadcast.ApplicationServices.Plan
         //this method only maps the db fields
         private List<PlanVersionDto> _MapToPlanHistoryDto(List<PlanVersion> planVersions)
         {
-            return planVersions.Select(x => new PlanVersionDto
+            return planVersions.Select(x =>
             {
-                Budget = x.Budget,
-                TargetCPM = x.TargetCPM,
-                TargetImpressions = x.TargetImpressions,
-                FlightEndDate = x.FlightEndDate,
-                FlightStartDate = x.FlightStartDate,
-                IsDraft = x.IsDraft,
-                ModifiedBy = x.ModifiedBy,
-                ModifiedDate = x.ModifiedDate,
-                Status = EnumHelper.GetNullableEnum<PlanStatusEnum>(x.Status),
-                TargetAudienceId = x.TargetAudienceId,
-                VersionId = x.VersionId,
-                TotalDayparts = x.Dayparts.Count(),
-                VersionName = _SetVersionName(x)
+                var versionName = _SetVersionName(x);
+                var status = EnumHelper.GetNullableEnum<PlanStatusEnum>(x.Status);
+
+                var historyItem = new PlanVersionDto
+                {
+                    Budget = x.Budget,
+                    TargetCPM = x.TargetCPM,
+                    TargetImpressions = x.TargetImpressions,
+                    FlightEndDate = x.FlightEndDate,
+                    FlightStartDate = x.FlightStartDate,
+                    IsDraft = x.IsDraft,
+                    ModifiedBy = x.ModifiedBy,
+                    ModifiedDate = x.ModifiedDate,
+                    Status = status,
+                    TargetAudienceId = x.TargetAudienceId,
+                    VersionId = x.VersionId,
+                    TotalDayparts = x.Dayparts.Count,
+                    VersionName = versionName
+                };
+                return historyItem;
             }).ToList();
         }
 

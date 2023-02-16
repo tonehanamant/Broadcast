@@ -31,6 +31,8 @@ namespace Services.Broadcast.BusinessEngines
         private const string _UnsupportedDeliveryTypeMessage = "Unsupported Delivery Type";
 
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
+
+        private readonly Lazy<bool> _IsAduForPlanningv2Enabled;
         private readonly IFeatureToggleHelper _FeatureToggleHelper;
 
         public WeeklyBreakdownEngineV2(IPlanValidator planValidator,
@@ -44,10 +46,13 @@ namespace Services.Broadcast.BusinessEngines
             _CreativeLengthEngine = creativeLengthEngine;
             _SpotLengthEngine = spotLengthEngine;
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
+            _FeatureToggleHelper = featureToggleHelper;
 
             _SpotLengthDeliveryMultipliers = new Lazy<Dictionary<int, double>>(_GetSpotDeliveryMultipliers);
             _SpotLengthCostMultipliers = new Lazy<Dictionary<int, decimal>>(_GetSpotCostMultipliers);
-            _FeatureToggleHelper = featureToggleHelper;
+
+            _IsAduForPlanningv2Enabled = new Lazy<bool>(() =>
+               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2));
         }
 
         private Dictionary<int, double> _GetSpotDeliveryMultipliers()
@@ -869,7 +874,7 @@ namespace Services.Broadcast.BusinessEngines
             // Handle removal of weeks
             _RemoveOutOfFlightWeeks(request.Weeks, weeks);
 
-            // distributet impressions
+            // distribute impressions
             _RecalculateExistingWeeks(request, out bool redistributeCustom);
 
             // Handle the Remainder
@@ -1715,20 +1720,31 @@ namespace Services.Broadcast.BusinessEngines
         public double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool? equivalized
             , double impressionsPerUnit, List<CreativeLength> creativeLengths)
         {
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                // When enabled then the given Weekly ADU is Impression, not Units, and does not use the ImpressionsPerUnit property.
+                // But we still want the Weighting functionality.
+                // To minimize risk due to large change we will set the impressionsPerUnit to 1 and do the rest of the calcualtion as-is.
+                impressionsPerUnit = 1;
+            }
+
             if (equivalized ?? false)
             {
                 if (week.SpotLengthId.HasValue)
                 {
-                    return _CalculateUnitImpressionsForSingleSpotLength(impressionsPerUnit, week.WeeklyAdu, week.SpotLengthId.Value);
+                    var result = _CalculateUnitImpressionsForSingleSpotLength(impressionsPerUnit, week.WeeklyAdu, week.SpotLengthId.Value);
+                    return result;
                 }
                 else
                 {
-                    return _CalculateUnitImpressionsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, week.WeeklyAdu);
+                    var result = _CalculateUnitImpressionsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, week.WeeklyAdu);
+                    return result;
                 }
             }
             else
             {
-                return week.WeeklyAdu * impressionsPerUnit;
+                var result = week.WeeklyAdu * impressionsPerUnit;
+                return result;
             }
         }
 
@@ -1739,6 +1755,17 @@ namespace Services.Broadcast.BusinessEngines
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
                 return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
             }
+
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                // When enabled then the given Weekly ADU is Impression, not Units, and does not use the ImpressionsPerUnit property.
+                // But we still want the Weighting functionality.
+                // To minimize risk due to large change we will set the impressionsPerUnit to 1 and do the rest of the calcualtion as-is.
+                // It's also expected that the WeeklyAdu has been converted to Impressions by now following (000) rules.
+
+                impressionsPerUnit = 1;
+            }
+
             if (equivalized ?? false)
             {
                 if (spotLengthId.HasValue)
@@ -1764,6 +1791,17 @@ namespace Services.Broadcast.BusinessEngines
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
                 return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
             }
+
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                // When enabled then the given Weekly ADU is Impression, not Units, and does not use the ImpressionsPerUnit property.
+                // But we still want the Weighting functionality.
+                // To minimize risk due to large change we will set the impressionsPerUnit to 1 and do the rest of the calcualtion as-is.
+                // It's also expected that the WeeklyAdu has been converted to Impressions by now following (000) rules.
+
+                impressionsPerUnit = 1;
+            }
+
             if (equivalized ?? false)
             {
                 return _CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId);
