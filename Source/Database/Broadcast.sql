@@ -1737,6 +1737,23 @@ GO
 
 /*************************************** END BS-509 ***************************************/
 
+/*************************************** START BP-6445 ***************************************/
+IF EXISTS (SELECT 1 FROM stations WHERE legacy_call_letters='ETVW' and affiliation != 'BTV')
+BEGIN
+UPDATE stations SET
+station_code = NULL,
+station_call_letters = 'ETVW',
+affiliation = 'BTV',
+market_code = 249,
+modified_by = 'BP-6299',
+modified_date = SYSDATETIME(),
+rep_firm_name = 'Katz Media',
+owner_name = 'Morris Multimedia',
+is_true_ind = 0
+WHERE legacy_call_letters = 'ETVW';
+END
+/*************************************** END BP-6445 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
