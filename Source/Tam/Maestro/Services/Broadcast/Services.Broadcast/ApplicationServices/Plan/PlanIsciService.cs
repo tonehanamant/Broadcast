@@ -344,22 +344,30 @@ namespace Services.Broadcast.ApplicationServices.Plan
             List<PlanIsciDto> toSaveFiltered = new List<PlanIsciDto>();
             foreach (var mapping in toSave)
             {
+
                 int planIscisCount = 0;
                 var planIsciList = _PlanIsciRepository.GetPlanIscis(mapping.PlanId);
+                planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower()
+                && (_IsDateSameTimeOverlap(x.FlightEndDate.Date, mapping.FlightStartDate.Date, x.EndTime, mapping.StartTime)
+                || _IsDateSameTimeOverlap(x.FlightStartDate.Date, mapping.FlightEndDate.Date, mapping.EndTime, x.StartTime)
+                || mapping.SpotLengthId != x.SpotLengthId)
+                );
 
+                DateTime newEntryStartDatePlusOne = mapping.FlightStartDate.Date.AddDays(1);
+                DateTime newEntryEndDatePlusOne = mapping.FlightEndDate.Date.AddDays(1);
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower() &&
                 x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);
                 DateTime flightEndDate = mapping.FlightEndDate.Date.AddDays(-1);
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower()
-                && (_IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightStartDate.Date)
+                && (_IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, newEntryStartDatePlusOne)
                 || _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, flightEndDate)
                 || mapping.SpotLengthId != x.SpotLengthId)
                 );
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower()
-             && (_IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, x.FlightStartDate.Date)
-             || _IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, x.FlightEndDate.Date)
-             || mapping.SpotLengthId != x.SpotLengthId)
-             );
+                && (_IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, x.FlightStartDate.Date)
+                || _IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, newEntryEndDatePlusOne)
+                || mapping.SpotLengthId != x.SpotLengthId)
+                );
                 if (planIscisCount == 0)
                 {
                     toSaveFiltered.Add(mapping);
@@ -436,11 +444,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             return true;
         }
         public bool CopyIsciMappings(IsciPlanMappingsSaveRequestDto copyRequest, string createdBy)
-        {
+        {                     
             var createdAt = _DateTimeEngine.GetCurrentMoment();
             var deletedAt = _DateTimeEngine.GetCurrentMoment();
             var modifiedAt = _DateTimeEngine.GetCurrentMoment();
-
             var isciPlanMappingsDeletedCount = _HandleDeleteIsciPlanMapping(copyRequest.IsciPlanMappingsDeleted, createdBy, deletedAt);
             _LogInfo($"{isciPlanMappingsDeletedCount} IsciPlanMappings are deleted.");
 
@@ -535,6 +542,19 @@ namespace Services.Broadcast.ApplicationServices.Plan
             });
             return result;
         }
+
+        private bool _IsDateSameTimeOverlap(DateTime startDate, DateTime endDate, int? endDateTime, int? startDateTime)
+        {
+            int? timeDifference = endDateTime - startDateTime;
+            bool isOverlap = false;
+            int result = DateTime.Compare(startDate, endDate);
+            if (result == 0 && timeDifference < 1800)
+            {
+                isOverlap = true;
+            }
+            return isOverlap;
+        }
+
         private bool _IsBewteenTwoDates(DateTime startDate, DateTime endDate, DateTime target)
         {
             bool isFallBetween = false;
