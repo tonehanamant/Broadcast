@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
     /// <summary></summary>
-    public class SaveOutOfSpecPlanDecisionsRequestDto
+    public class SaveOutOfSpecPlanAcceptanceRequestDto
     {
         /// <summary>
         /// Gets or sets the plan identifier.
@@ -15,6 +15,6 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// Filter out the result.
         /// </summary>
         /// <value>Filters.</value>
-        public OutOfSpecPlansIncludingFiltersRequestDto Filters { get; set; }
+        public OutOfSpecPlansRequestDto Filters { get; set; }
     }
 }

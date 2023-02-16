@@ -26,16 +26,19 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
-        /// Gets the out of spec to do plans on the  basis of inventory sources filter
+        /// Gets the out of spec plans to do plans.
         /// </summary>
+        /// <param name="outOfSpecsPlansIncludingFiltersDoneRequest">The out of specs plans request.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("out-of-spec-plans-todo")]
-        public async Task<BaseResponse<List<OutOfSpecPlansResult>>> GetOutOfSpecPlansToDoPlans(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
+        public async Task<BaseResponse<List<OutOfSpecPlansResultDto>>> GetOutOfSpecPlansToDoPlans(OutOfSpecPlansRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
         {
             var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansToDoAsync(outOfSpecsPlansIncludingFiltersDoneRequest);
 
             return _ConvertToBaseResponse(() => result);
         }
+
         /// <summary>
         /// Gets the out of spec done plans with the  basis of filter inventory sources
         /// </summary>
@@ -43,7 +46,7 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("out-of-spec-plans-done")]
-        public async Task<BaseResponse<List<OutOfSpecPlansResult>>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
+        public async Task<BaseResponse<List<OutOfSpecPlansResultDto>>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
         {
             var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlansDoneAsync(outOfSpecsPlansIncludingFiltersDoneRequest);
 
@@ -57,9 +60,25 @@ namespace BroadcastComposerWeb.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("out-of-spec-plan-inventory-sources")]
-        public async Task<BaseResponse<List<string>>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto spotExceptionsOutOfSpecPlansRequest)
+        public async Task<BaseResponse<List<string>>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlanInventorySourcesRequestDto spotExceptionsOutOfSpecPlansRequest)
         {
             var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecPlanInventorySourcesAsync(spotExceptionsOutOfSpecPlansRequest);
+            return _ConvertToBaseResponse(() => result);
+        }
+
+
+        /// <summary>
+        /// Saves the out of spec plan decisions.
+        /// </summary>
+        /// <param name="saveOutOfSpecPlanAcceptanceRequest">The save out of spec plan decisions request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-plan-acceptance-todo")]
+        public BaseResponse<bool> SaveOutOfSpecPlanAcceptance(SaveOutOfSpecPlanAcceptanceRequestDto saveOutOfSpecPlanAcceptanceRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            var result = _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecPlanAcceptance(saveOutOfSpecPlanAcceptanceRequest, userName);
+
             return _ConvertToBaseResponse(() => result);
         }
 
@@ -149,20 +168,6 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
-        }
-        /// <summary>
-        /// Gets the spot exceptions out of specs plan acceptance.
-        /// </summary>
-        /// <param name="spotExceptionsOutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("out-of-spec-plan-acceptance-todo")]
-        public async Task<BaseResponse<bool>> SaveOutOfSpecPlanDecsionsAsync(SaveOutOfSpecPlanDecisionsRequestDto spotExceptionsOutOfSpecSpotsRequest)
-        {
-            var userName = _GetCurrentUserFullName();
-            var result = await _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecPlanDecsionsAsync(spotExceptionsOutOfSpecSpotsRequest, userName);
-
-            return _ConvertToBaseResponse(() => result);
         }
     }
 }

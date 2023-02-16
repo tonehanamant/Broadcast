@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
-    /// <summary>
-    /// Gets the request parameters from UI for getting Done plans.
-    /// </summary>
-    public class OutOfSpecPlansIncludingFiltersRequestDto
+    /// <summary></summary>
+    public class OutOfSpecPlanInventorySourcesRequestDto
     {
         /// <summary>
         /// Gets or sets the week start date.
@@ -22,10 +16,5 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// </summary>
         /// <value>The week end date.</value>
         public DateTime WeekEndDate { get; set; }
-
-        /// <summary>
-        /// Inventory Sources.
-        /// </summary>
-        public List<string> InventorySourceNames { get; set; }
     }
 }

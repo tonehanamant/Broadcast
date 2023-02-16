@@ -3,10 +3,11 @@
 namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
     public class SpotExceptionOutOfSpecCommentsDto
-    {/// <summary>
-     /// Gets or sets the spot unique hash external.
-     /// </summary>
-     /// <value>The spot unique hash external.</value>
+    {
+        /// <summary>
+        /// Gets or sets the spot unique hash external.
+        /// </summary>
+        /// <value>The spot unique hash external.</value>
         public string SpotUniqueHashExternal { get; set; }
 
         /// <summary>

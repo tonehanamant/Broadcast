@@ -29,21 +29,29 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// </summary>
         /// <param name="outOfSpecsPlansIncludingFiltersDoneRequest">The spot exceptions out of spec plans to do request.</param>
         /// <returns></returns>
-        Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansToDoAsync(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest);
+        Task<List<OutOfSpecPlansResultDto>> GetOutOfSpecPlansToDoAsync(OutOfSpecPlansRequestDto outOfSpecsPlansIncludingFiltersDoneRequest);
 
         /// <summary>
         /// Gets the done plans using inventory source filter
         /// </summary>
         /// <param name="outOfSpecsPlansIncludingFiltersDoneRequest">week start date, end date and inventory sources</param>
         /// <returns>List of done plans</returns>
-        Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest);
+        Task<List<OutOfSpecPlansResultDto>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansRequestDto outOfSpecsPlansIncludingFiltersDoneRequest);
 
         /// <summary>
         /// Gets the spot exceptions out of spec plan inventory sources asynchronous.
         /// </summary>
         /// <param name="outOfSpecPlansRequest">The spot exceptions out of spec plans request.</param>
         /// <returns></returns>
-        Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto outOfSpecPlansRequest);
+        Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlanInventorySourcesRequestDto outOfSpecPlansRequest);
+
+        /// <summary>
+        /// Generats out of spec report.
+        /// </summary>
+        /// <param name="saveOutOfSpecPlanAcceptanceRequest">The request.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        bool SaveOutOfSpecPlanAcceptance(SaveOutOfSpecPlanAcceptanceRequestDto saveOutOfSpecPlanAcceptanceRequest, string userName);
 
         /// <summary>
         /// Gets the spot exceptions out of spec spot inventory sources asynchronous.
@@ -76,15 +84,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="templatesFilePath">The templates file path.</param>
         /// <returns></returns>
         Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath);
-        /// <summary>
-        /// Generats out of spec report.
-        /// </summary>
-        /// <param name="saveOutOfSpecPlanDecisionsRequest">The request.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
-        Task<bool> SaveOutOfSpecPlanDecsionsAsync(SaveOutOfSpecPlanDecisionsRequestDto saveOutOfSpecPlanDecisionsRequest, string userName);
-
     }
+
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
         const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -121,9 +122,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansToDoAsync(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
+        public async Task<List<OutOfSpecPlansResultDto>> GetOutOfSpecPlansToDoAsync(OutOfSpecPlansRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
         {
-            List<OutOfSpecPlansResult> spotExceptionsOutOfSpecs = new List<OutOfSpecPlansResult>();
+            List<OutOfSpecPlansResultDto> spotExceptionsOutOfSpecs = new List<OutOfSpecPlansResultDto>();
 
             _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Plans Todo");
             try
@@ -133,7 +134,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
                 if (outOfSpecToDo?.Any() ?? false)
                 {
-                    spotExceptionsOutOfSpecs = outOfSpecToDo.Select(x => new OutOfSpecPlansResult
+                    spotExceptionsOutOfSpecs = outOfSpecToDo.Select(x => new OutOfSpecPlansResultDto
                     {
                         PlanId = x.PlanId,
                         AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
@@ -159,9 +160,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return spotExceptionsOutOfSpecs;
         }
         /// <inheritdoc />
-        public async Task<List<OutOfSpecPlansResult>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansIncludingFiltersRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
+        public async Task<List<OutOfSpecPlansResultDto>> GetOutOfSpecPlansDoneAsync(OutOfSpecPlansRequestDto outOfSpecsPlansIncludingFiltersDoneRequest)
         {
-            var outOfSpecPlans = new List<OutOfSpecPlansResult>();
+            var outOfSpecPlans = new List<OutOfSpecPlansResultDto>();
             var outOfSpecDone = new List<SpotExceptionsOutOfSpecGroupingDto>();
             try
             {
@@ -172,7 +173,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 {
                     outOfSpecPlans = outOfSpecDone.Select(x =>
                     {
-                        return new OutOfSpecPlansResult
+                        return new OutOfSpecPlansResultDto
                         {
                             PlanId = x.PlanId,
                             AdvertiserName = _GetAdvertiserName(x.AdvertiserMasterId),
@@ -198,7 +199,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlansRequestDto outOfSpecPlansRequest)
+        public async Task<List<string>> GetOutOfSpecPlanInventorySourcesAsync(OutOfSpecPlanInventorySourcesRequestDto outOfSpecPlansRequest)
         {
             var outOfSpecSpotsToDo = new List<string>();
             var outOfSpecSpotsDone = new List<string>();
@@ -220,6 +221,39 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
 
             return inventorySources;
+        }
+
+        /// <inheritdoc />
+        public bool SaveOutOfSpecPlanAcceptance(SaveOutOfSpecPlanAcceptanceRequestDto saveOutOfSpecPlanAcceptanceRequest, string userName)
+        {
+            bool isSpotsSaved = false;
+            List<OutOfSpecSpotsToDoDto> outOfSpecSpotsToDo = new List<OutOfSpecSpotsToDoDto>();
+
+            _LogInfo($"Starting:  Saving the Spot Exception Plan Decisions");
+            try
+            {
+                saveOutOfSpecPlanAcceptanceRequest.PlanIds.ForEach(planId =>
+                {
+                    var outOfSpecSpotsToDoPerPlanId = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDo(planId, saveOutOfSpecPlanAcceptanceRequest.Filters.WeekStartDate, saveOutOfSpecPlanAcceptanceRequest.Filters.WeekEndDate);
+
+                    outOfSpecSpotsToDo.AddRange(outOfSpecSpotsToDoPerPlanId);
+                });
+
+                if (saveOutOfSpecPlanAcceptanceRequest.Filters.InventorySourceNames != null && saveOutOfSpecPlanAcceptanceRequest.Filters.InventorySourceNames.Count > 0)
+                {
+                    outOfSpecSpotsToDo = outOfSpecSpotsToDo.Where(x => saveOutOfSpecPlanAcceptanceRequest.Filters.InventorySourceNames.Contains(x.InventorySourceName)).ToList();
+                }
+
+                isSpotsSaved = _SaveOutOfSpecDecisionsToDo(outOfSpecSpotsToDo, userName);
+
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not Save the Spot Exception Plan Decisions";
+                throw new CadentException(msg, ex);
+            }
+
+            return isSpotsSaved;
         }
 
         /// <inheritdoc />
@@ -342,6 +376,91 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         }
 
+        /// <summary>
+        /// Saves the out of spec decisions to do.
+        /// </summary>
+        /// <param name="existingOutOfSpecSpotsToDo">The existing out of specs to do.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        private bool _SaveOutOfSpecDecisionsToDo(List<OutOfSpecSpotsToDoDto> existingOutOfSpecSpotsToDo, string userName)
+        {
+            bool isSaved;
+            var acceptAsInSpec = false;
+
+            _LogInfo($"Starting: Saving the Out Of Spec Plan Decisions to Done");
+            try
+            {
+                var doneOutOfSpecsToAdd = existingOutOfSpecSpotsToDo.Select(existingOutOfSpecToDo => new SpotExceptionsOutOfSpecsDoneDto
+                {
+                    SpotUniqueHashExternal = existingOutOfSpecToDo.SpotUniqueHashExternal,
+                    ExecutionIdExternal = existingOutOfSpecToDo.ExecutionIdExternal,
+                    ReasonCodeMessage = existingOutOfSpecToDo.ReasonCodeMessage,
+                    EstimateId = existingOutOfSpecToDo.EstimateId,
+                    IsciName = existingOutOfSpecToDo.IsciName,
+                    HouseIsci = existingOutOfSpecToDo.HouseIsci,
+                    RecommendedPlanId = existingOutOfSpecToDo.RecommendedPlanId,
+                    RecommendedPlanName = existingOutOfSpecToDo.RecommendedPlanName,
+                    ProgramName = existingOutOfSpecToDo.ProgramName,
+                    StationLegacyCallLetters = existingOutOfSpecToDo.StationLegacyCallLetters,
+                    DaypartCode = existingOutOfSpecToDo.DaypartCode,
+                    GenreName = existingOutOfSpecToDo.GenreName,
+                    Affiliate = existingOutOfSpecToDo.Affiliate,
+                    Market = existingOutOfSpecToDo.Market,
+                    SpotLength = existingOutOfSpecToDo.SpotLength,
+                    Audience = existingOutOfSpecToDo.Audience,
+                    ProgramAirTime = existingOutOfSpecToDo.ProgramAirTime,
+                    ProgramNetwork = existingOutOfSpecToDo.ProgramNetwork,
+                    IngestedBy = existingOutOfSpecToDo.IngestedBy,
+                    IngestedAt = existingOutOfSpecToDo.IngestedAt,
+                    IngestedMediaWeekId = existingOutOfSpecToDo.IngestedMediaWeekId,
+                    Impressions = existingOutOfSpecToDo.Impressions,
+                    PlanId = existingOutOfSpecToDo.PlanId,
+                    FlightStartDate = existingOutOfSpecToDo.FlightStartDate,
+                    FlightEndDate = existingOutOfSpecToDo.FlightEndDate,
+                    AdvertiserMasterId = existingOutOfSpecToDo.AdvertiserMasterId,
+                    Product = existingOutOfSpecToDo.Product,
+                    SpotExceptionsOutOfSpecReasonCode = existingOutOfSpecToDo.SpotExceptionsOutOfSpecReasonCode,
+                    MarketCode = existingOutOfSpecToDo.MarketCode,
+                    MarketRank = existingOutOfSpecToDo.MarketRank,
+                    InventorySourceName = existingOutOfSpecToDo.InventorySourceName,
+                    SpotExceptionsOutOfSpecDoneDecision = new SpotExceptionsOutOfSpecDoneDecisionsDto()
+                    {
+                        AcceptedAsInSpec = acceptAsInSpec,
+                        DecisionNotes = "Out",
+                        ProgramName = existingOutOfSpecToDo.ProgramName,
+                        GenreName = existingOutOfSpecToDo.GenreName,
+                        DaypartCode = existingOutOfSpecToDo.DaypartCode,
+                        DecidedBy = userName,
+                        DecidedAt = _DateTimeEngine.GetCurrentMoment()
+                    }
+                }).ToList();
+
+                using (var transaction = new TransactionScopeWrapper())
+                {
+                    if (doneOutOfSpecsToAdd.Any())
+                    {
+                        _SpotExceptionsOutOfSpecRepositoryV2.AddOutOfSpecToDone(doneOutOfSpecsToAdd);
+                    }
+                    _SpotExceptionsOutOfSpecRepositoryV2.DeleteOutOfSpecsFromToDo(existingOutOfSpecSpotsToDo.Select(x => x.Id).ToList());
+                    transaction.Complete();
+                }
+
+                isSaved = true;
+                _LogInfo($"Finished: Saving The Out Of Spec Plan Decisions To Done");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could Not Save The Out Of Spec Plan Decisions To Done";
+                throw new CadentException(msg, ex);
+            }
+            return isSaved;
+        }
+
+        /// <summary>
+        /// Gets the name of the advertiser.
+        /// </summary>
+        /// <param name="masterId">The master identifier.</param>
+        /// <returns></returns>
         private string _GetAdvertiserName(Guid? masterId)
         {
             string advertiserName = null;
@@ -352,6 +471,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return advertiserName;
         }
 
+        /// <summary>
+        /// Gets the total number of weeks.
+        /// </summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception">EndDate should be greater than StartDate</exception>
         private int _GetTotalNumberOfWeeks(DateTime startDate, DateTime endDate)
         {
             if (endDate < startDate)
@@ -368,6 +494,11 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return numberOfWeeks;
         }
 
+        /// <summary>
+        /// Loads the program from programs asynchronous.
+        /// </summary>
+        /// <param name="searchRequest">The search request.</param>
+        /// <returns></returns>
         private async Task<List<OutOfSpecSpotProgramsDto>> _LoadProgramFromProgramsAsync(SearchRequestProgramDto searchRequest)
         {
             List<string> combinedProgramNames = new List<string>();
@@ -488,104 +619,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
             return result;
-        }
-        /// <inheritdoc />
-        public async Task<bool> SaveOutOfSpecPlanDecsionsAsync(SaveOutOfSpecPlanDecisionsRequestDto saveOutOfSpecPlanDecisionsRequest, string userName)
-        {
-            bool isSpotsSaved = false;
-
-            _LogInfo($"Starting:  Saving the Spot Exception Plan Decisions");
-            try
-            {
-                var outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoAsync(saveOutOfSpecPlanDecisionsRequest.PlanIds, saveOutOfSpecPlanDecisionsRequest.Filters.WeekStartDate, saveOutOfSpecPlanDecisionsRequest.Filters.WeekEndDate);
-
-                if (saveOutOfSpecPlanDecisionsRequest.Filters.InventorySourceNames.Count > 0)
-                {
-                    outOfSpecSpotsToDo = outOfSpecSpotsToDo.Where(x => saveOutOfSpecPlanDecisionsRequest.Filters.InventorySourceNames.Contains(x.InventorySourceName)).ToList();
-                }
-
-                isSpotsSaved = await _SaveOutOfSpecDecisionsToDoAsync(outOfSpecSpotsToDo, userName);
-
-            }
-            catch (Exception ex)
-            {
-                var msg = $"Could not  Save the Spot Exception Plan Decisions";
-                throw new CadentException(msg, ex);
-            }
-
-            return isSpotsSaved;
-        }
-        private async Task<bool> _SaveOutOfSpecDecisionsToDoAsync(List<SpotExceptionsOutOfSpecsToDoDto> existingOutOfSpecsToDo, string userName)
-        {
-            bool isSaved;
-            var acceptAsInSpec = false;
-            _LogInfo($"Starting: Moving the Spot Exception Plan by Decision to Done");
-            try
-            {
-                var doneOutOfSpecsToAdd = existingOutOfSpecsToDo.Select(existingOutOfSpecToDo => new SpotExceptionsOutOfSpecsDoneDto
-                    {
-                        SpotUniqueHashExternal = existingOutOfSpecToDo.SpotUniqueHashExternal,
-                        ExecutionIdExternal = existingOutOfSpecToDo.ExecutionIdExternal,
-                        ReasonCodeMessage = existingOutOfSpecToDo.ReasonCodeMessage,
-                        EstimateId = existingOutOfSpecToDo.EstimateId,
-                        IsciName = existingOutOfSpecToDo.IsciName,
-                        HouseIsci = existingOutOfSpecToDo.HouseIsci,
-                        RecommendedPlanId = existingOutOfSpecToDo.RecommendedPlanId,
-                        RecommendedPlanName = existingOutOfSpecToDo.RecommendedPlanName,
-                        ProgramName = existingOutOfSpecToDo.ProgramName,
-                        StationLegacyCallLetters = existingOutOfSpecToDo.StationLegacyCallLetters,
-                        DaypartCode = existingOutOfSpecToDo.DaypartCode,
-                        GenreName = existingOutOfSpecToDo.GenreName,
-                        Affiliate = existingOutOfSpecToDo.Affiliate,
-                        Market = existingOutOfSpecToDo.Market,
-                        SpotLength = existingOutOfSpecToDo.SpotLength,
-                        Audience = existingOutOfSpecToDo.Audience,
-                        ProgramAirTime = existingOutOfSpecToDo.ProgramAirTime,
-                        ProgramNetwork = existingOutOfSpecToDo.ProgramNetwork,
-                        IngestedBy = existingOutOfSpecToDo.IngestedBy,
-                        IngestedAt = existingOutOfSpecToDo.IngestedAt,
-                        IngestedMediaWeekId = existingOutOfSpecToDo.IngestedMediaWeekId,
-                        Impressions = existingOutOfSpecToDo.Impressions,
-                        PlanId = existingOutOfSpecToDo.PlanId,
-                        FlightStartDate = existingOutOfSpecToDo.FlightStartDate,
-                        FlightEndDate = existingOutOfSpecToDo.FlightEndDate,
-                        AdvertiserMasterId = existingOutOfSpecToDo.AdvertiserMasterId,
-                        Product = existingOutOfSpecToDo.Product,
-                        SpotExceptionsOutOfSpecReasonCode = existingOutOfSpecToDo.SpotExceptionsOutOfSpecReasonCode,
-                        MarketCode = existingOutOfSpecToDo.MarketCode,
-                        MarketRank = existingOutOfSpecToDo.MarketRank,
-                        InventorySourceName = existingOutOfSpecToDo.InventorySourceName,
-                        SpotExceptionsOutOfSpecDoneDecision = new SpotExceptionsOutOfSpecDoneDecisionsDto()
-                        {
-                            AcceptedAsInSpec = acceptAsInSpec, 
-                            DecisionNotes = "Out",
-                            ProgramName = existingOutOfSpecToDo.ProgramName,
-                            GenreName = existingOutOfSpecToDo.GenreName,
-                            DaypartCode = existingOutOfSpecToDo.DaypartCode,
-                            DecidedBy = userName,
-                            DecidedAt = _DateTimeEngine.GetCurrentMoment()
-                        }
-                    }).ToList();
-
-                using (var transaction = new TransactionScopeWrapper())
-                {
-                    if (doneOutOfSpecsToAdd.Any())
-                    {
-                        _SpotExceptionsOutOfSpecRepositoryV2.AddOutOfSpecToDone(doneOutOfSpecsToAdd);
-                    }
-                    _SpotExceptionsOutOfSpecRepositoryV2.DeleteOutOfSpecsFromToDo(existingOutOfSpecsToDo.Select(x => x.Id).ToList());
-                    transaction.Complete();
-                    isSaved = true;
-                }
-
-                _LogInfo($"Finished: Moving the Spot Exception Plan by Decision to Done");
-            }
-            catch (Exception ex)
-            {
-                var msg = $"Could not move Spot Exception Plan by Decision to Done";
-                throw new CadentException(msg, ex);
-            }
-            return isSaved;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
     /// <summary>
     /// Get and sets the done plans
     /// </summary>
-    public class OutOfSpecPlansResult
+    public class OutOfSpecPlansResultDto
     {
         /// <summary>
         /// Gets or sets the plan identifier.

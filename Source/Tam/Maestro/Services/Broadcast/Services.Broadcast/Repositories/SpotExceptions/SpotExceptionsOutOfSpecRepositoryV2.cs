@@ -1,7 +1,10 @@
 ﻿using Common.Services.Repositories;
 using Common.Services.Extensions;
 using EntityFrameworkMapping.Broadcast;
+using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
+using Services.Broadcast.Entities.ProgramMapping;
+using Services.Broadcast.Entities.SpotExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,6 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.SpotExceptions;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
 {
@@ -53,6 +53,27 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
         Task<List<string>> GetOutOfSpecPlanDoneInventorySourcesAsync(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the out of spec spots to do.
+        /// </summary>
+        /// <param name="planId">The plan identifier.</param>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        List<OutOfSpecSpotsToDoDto> GetOutOfSpecSpotsToDo(int planId, DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Adds the out of spec to done.
+        /// </summary>
+        /// <param name="doneOutOfSpecsToAdd">The done out of spec to add.</param>
+        void AddOutOfSpecToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd);
+
+        /// <summary>
+        /// Deletes the out of specs from to do.
+        /// </summary>
+        /// <param name="existingOutOfSpecsToDo">The existing out of specs to do.</param>
+        void DeleteOutOfSpecsFromToDo(List<int> existingOutOfSpecsToDo);
 
         /// <summary>
         /// Gets the out of spec spots to do inventory sources asynchronous.
@@ -109,25 +130,6 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         /// <returns></returns>
         int GetOutOfSpecDecisionQueuedCountAsync();
-        /// <summary>
-        /// Gets the out of spec spots to do asynchronous for v2.
-        /// </summary>
-        /// <param name="planIds">The plan Ids identifier.</param>
-        /// <param name="weekStartDate">The week start date.</param>
-        /// <param name="weekEndDate">The week end date.</param>
-        /// <returns></returns>
-        Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecSpotsToDoAsync(List<int> planIds, DateTime weekStartDate, DateTime weekEndDate);
-        /// <summary>
-        /// Adds the out of spec to done.
-        /// </summary>
-        /// <param name="doneOutOfSpecsToAdd">The done out of spec to add.</param>
-        void AddOutOfSpecToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd);
-        /// <summary>
-        /// Deletes the out of specs from to do.
-        /// </summary>
-        /// <param name="existingOutOfSpecsToDo">The existing out of specs to do.</param>
-        void DeleteOutOfSpecsFromToDo(List<int> existingOutOfSpecsToDo);
-
     }
 
     /// <summary>
@@ -287,6 +289,109 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 return Task.FromResult(spotExceptionsDoneInventorySources);
 
+            });
+        }
+
+        /// <inheritdoc />
+        public List<OutOfSpecSpotsToDoDto> GetOutOfSpecSpotsToDo(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+            var spotExceptionsOutOfSpecsEntities = context.spot_exceptions_out_of_specs
+                .Where(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDb.program_air_time <= weekEndDate && spotExceptionsOutOfSpecDb.recommended_plan_id == planId)
+                .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan)
+                .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.campaign)
+                .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.plan_versions)
+                .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.plan_versions.Select(x => x.plan_version_dayparts))
+                .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.spot_lengths)
+                .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.audience)
+                .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
+                .GroupJoin
+                (
+                    context.spot_exceptions_out_of_spec_comments,
+                    x => new { a = x.spot_unique_hash_external, b = x.execution_id_external, c = x.isci_name, d = x.program_air_time, e = x.reason_code_id, f = x.recommended_plan_id.Value }, 
+                    y => new { a = y.spot_unique_hash_external, b = y.execution_id_external, c = y.isci_name, d = y.program_air_time, e = y.reason_code_id, f = y.recommended_plan_id },
+                    (x, y) => new { OutOfSpecSpotsToDo = x, Comments = y.FirstOrDefault() }
+                )
+                .GroupJoin(
+                    context.stations
+                    .Include(stationDb => stationDb.market),
+                    spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.OutOfSpecSpotsToDo.station_legacy_call_letters,
+                    stationDb => stationDb.legacy_call_letters,
+                    (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsoutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
+                .ToList();
+
+                var outOfSpecSpotsToDo = spotExceptionsOutOfSpecsEntities.Select(spotExceptionsOutOfSpecEntity => _MapOutOfSpecSpotsToDoToDto(spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.OutOfSpecSpotsToDo, spotExceptionsOutOfSpecEntity.Station, spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec.Comments)).ToList();
+                return outOfSpecSpotsToDo;
+            });
+        }
+
+        /// <inheritdoc />
+        public void AddOutOfSpecToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var outOfSpecDoneEntities = doneOutOfSpecsToAdd.Select(doneOutOfSpecToAdd => new spot_exceptions_out_of_specs_done
+                {
+                    spot_unique_hash_external = doneOutOfSpecToAdd.SpotUniqueHashExternal,
+                    execution_id_external = doneOutOfSpecToAdd.ExecutionIdExternal,
+                    reason_code_message = doneOutOfSpecToAdd.ReasonCodeMessage,
+                    estimate_id = doneOutOfSpecToAdd.EstimateId,
+                    isci_name = doneOutOfSpecToAdd.IsciName,
+                    house_isci = doneOutOfSpecToAdd.HouseIsci,
+                    recommended_plan_id = doneOutOfSpecToAdd.RecommendedPlanId,
+                    program_name = doneOutOfSpecToAdd.ProgramName,
+                    station_legacy_call_letters = doneOutOfSpecToAdd.StationLegacyCallLetters,
+                    daypart_code = doneOutOfSpecToAdd.DaypartCode,
+                    genre_name = doneOutOfSpecToAdd.GenreName,
+                    spot_length_id = doneOutOfSpecToAdd.SpotLength.Id,
+                    audience_id = doneOutOfSpecToAdd.Audience.Id,
+                    program_network = doneOutOfSpecToAdd.ProgramNetwork,
+                    program_air_time = doneOutOfSpecToAdd.ProgramAirTime,
+                    reason_code_id = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
+                    ingested_by = doneOutOfSpecToAdd.IngestedBy,
+                    ingested_at = doneOutOfSpecToAdd.IngestedAt,
+                    ingested_media_week_id = doneOutOfSpecToAdd.IngestedMediaWeekId,
+                    impressions = doneOutOfSpecToAdd.Impressions,
+                    market_code = doneOutOfSpecToAdd.MarketCode,
+                    market_rank = doneOutOfSpecToAdd.MarketRank,
+                    inventory_source_name = doneOutOfSpecToAdd.InventorySourceName,
+                    spot_exceptions_out_of_spec_done_decisions = new List<spot_exceptions_out_of_spec_done_decisions>
+                    {
+                        new spot_exceptions_out_of_spec_done_decisions
+                        {
+                            accepted_as_in_spec = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec,
+                            decision_notes = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec ? "In" : "Out",
+                            program_name = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.ProgramName,
+                            genre_name = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision?.GenreName,
+                            daypart_code = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DaypartCode,
+                            decided_by = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedBy,
+                            decided_at = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedAt
+                        }
+                    }
+
+                }).ToList();
+
+                context.spot_exceptions_out_of_specs_done.AddRange(outOfSpecDoneEntities);
+                context.SaveChanges();
+            });
+        }
+
+        /// <inheritdoc />
+        public void DeleteOutOfSpecsFromToDo(List<int> existingOutOfSpecsToDo)
+        {
+            _InReadUncommitedTransaction(context =>
+            {
+                var foundTodoOutOfSpecPlan = context.spot_exceptions_out_of_specs
+                    .Where(x => existingOutOfSpecsToDo.Contains(x.id))
+                    .ToList();
+
+                context.spot_exceptions_out_of_specs.RemoveRange(foundTodoOutOfSpecPlan);
+
+                context.SaveChanges();
             });
         }
 
@@ -498,164 +603,51 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             };
             return spotLength;
         }
-        /// <inheritdoc />
-        public async Task<List<SpotExceptionsOutOfSpecsToDoDto>> GetOutOfSpecSpotsToDoAsync(List<int> planIds, DateTime weekStartDate, DateTime weekEndDate)
+        
+        private OutOfSpecSpotsToDoDto _MapOutOfSpecSpotsToDoToDto(spot_exceptions_out_of_specs outOfSpecsEntity, station stationEntity, spot_exceptions_out_of_spec_comments commentsEntity)
         {
-            weekStartDate = weekStartDate.Date;
-            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            var planVersion = outOfSpecsEntity.plan?.plan_versions.First(v => v.id == outOfSpecsEntity.plan.latest_version_id);
 
-            return _InReadUncommitedTransaction(context =>
+            var outOfSpecSpotsToDo = new OutOfSpecSpotsToDoDto
             {
-                var spotExceptionsOutOfSpecsEntities = context.spot_exceptions_out_of_specs
-                    .Where(spotExceptionsOutOfSpecDb => planIds.Contains((Int32)spotExceptionsOutOfSpecDb.recommended_plan_id) &&
-                            spotExceptionsOutOfSpecDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDb.program_air_time <= weekEndDate)
-                    .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan)
-                    .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.campaign)
-                    .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.plan_versions)
-                    .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.plan.plan_versions.Select(x => x.plan_version_dayparts))
-                    .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.spot_lengths)
-                    .Include(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.audience)
-                    .Include(spotExceptionsoutOfSpecDb => spotExceptionsoutOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
-                    .GroupJoin(
-                        context.stations
-                        .Include(stationDb => stationDb.market),
-                        spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.station_legacy_call_letters,
-                        stationDb => stationDb.legacy_call_letters,
-                        (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsoutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
-                    .ToList();
-                var lstExecutionIdExternal = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.execution_id_external);
-                var lstHashExternal = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.spot_unique_hash_external);
-                var lstIsciName = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.isci_name).ToList();
-                var lstProgramAir = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.program_air_time);
-                var lstStationLegacy = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.station_legacy_call_letters);
-                var lstReasonCode = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.reason_code_id);
-                var lstRecomPlans = spotExceptionsOutOfSpecsEntities.Select(x => x.SpotExceptionsoutOfSpec.recommended_plan_id);
-                var outOfSpecComment = context.spot_exceptions_out_of_spec_comments.Where(x => lstExecutionIdExternal.Contains(x.execution_id_external) &&
-                                                                                      lstHashExternal.Contains(x.spot_unique_hash_external) &&
-                                                                                      lstIsciName.Contains(x.isci_name) &&
-                                                                                      lstProgramAir.Contains(x.program_air_time) &&
-                                                                                      lstStationLegacy.Contains(x.station_legacy_call_letters) &&
-                                                                                      lstReasonCode.Contains(x.reason_code_id) &&
-                                                                                      lstRecomPlans.Contains(x.recommended_plan_id)).ToList();
-                var spotExceptionsOutOfSpecPosts = spotExceptionsOutOfSpecsEntities.Select(spotExceptionsOutOfSpecEntity => _MapOutOfSpecToDoToDto(spotExceptionsOutOfSpecEntity.SpotExceptionsoutOfSpec, spotExceptionsOutOfSpecEntity.Station, outOfSpecComment)).ToList();
-                return spotExceptionsOutOfSpecPosts;
-
-            });
-        }
-
-        /// <inheritdoc />
-        public void AddOutOfSpecToDone(List<SpotExceptionsOutOfSpecsDoneDto> doneOutOfSpecsToAdd)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                var outOfSpecDoneEntities = doneOutOfSpecsToAdd.Select(doneOutOfSpecToAdd => new spot_exceptions_out_of_specs_done
-                {
-                    spot_unique_hash_external = doneOutOfSpecToAdd.SpotUniqueHashExternal,
-                    execution_id_external = doneOutOfSpecToAdd.ExecutionIdExternal,
-                    reason_code_message = doneOutOfSpecToAdd.ReasonCodeMessage,
-                    estimate_id = doneOutOfSpecToAdd.EstimateId,
-                    isci_name = doneOutOfSpecToAdd.IsciName,
-                    house_isci = doneOutOfSpecToAdd.HouseIsci,
-                    recommended_plan_id = doneOutOfSpecToAdd.RecommendedPlanId,
-                    program_name = doneOutOfSpecToAdd.ProgramName,
-                    station_legacy_call_letters = doneOutOfSpecToAdd.StationLegacyCallLetters,
-                    daypart_code = doneOutOfSpecToAdd.DaypartCode,
-                    genre_name = doneOutOfSpecToAdd.GenreName,
-                    spot_length_id = doneOutOfSpecToAdd.SpotLength.Id,
-                    audience_id = doneOutOfSpecToAdd.Audience.Id,
-                    program_network = doneOutOfSpecToAdd.ProgramNetwork,
-                    program_air_time = doneOutOfSpecToAdd.ProgramAirTime,
-                    reason_code_id = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
-                    ingested_by = doneOutOfSpecToAdd.IngestedBy,
-                    ingested_at = doneOutOfSpecToAdd.IngestedAt,
-                    ingested_media_week_id = doneOutOfSpecToAdd.IngestedMediaWeekId,
-                    impressions = doneOutOfSpecToAdd.Impressions,
-                    market_code = doneOutOfSpecToAdd.MarketCode,
-                    market_rank = doneOutOfSpecToAdd.MarketRank,
-                    inventory_source_name = doneOutOfSpecToAdd.InventorySourceName,
-                    spot_exceptions_out_of_spec_done_decisions = new List<spot_exceptions_out_of_spec_done_decisions>
-                    {
-                        new spot_exceptions_out_of_spec_done_decisions
-                        {
-                            accepted_as_in_spec = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec,
-                            decision_notes = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.AcceptedAsInSpec ? "In" : "Out",
-                            program_name = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.ProgramName,
-                            genre_name = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision?.GenreName,
-                            daypart_code = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DaypartCode,
-                            decided_by = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedBy,
-                            decided_at = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecDoneDecision.DecidedAt
-                        }
-                    }
-
-                }).ToList();
-                context.spot_exceptions_out_of_specs_done.AddRange(outOfSpecDoneEntities);
-                context.SaveChanges();
-            });
-        }
-
-        /// <inheritdoc />
-        public void DeleteOutOfSpecsFromToDo(List<int> existingOutOfSpecsToDo)
-        {
-            _InReadUncommitedTransaction(context =>
-            {
-                var foundTodoOutOfSpecPlan = context.spot_exceptions_out_of_specs
-                    .Where(x => existingOutOfSpecsToDo.Contains(x.id))
-                    .ToList();
-
-                context.spot_exceptions_out_of_specs.RemoveRange(foundTodoOutOfSpecPlan);
-
-                context.SaveChanges();
-            });
-        }
-        private SpotExceptionsOutOfSpecsToDoDto _MapOutOfSpecToDoToDto(spot_exceptions_out_of_specs spotExceptionsOutOfSpecToDoEntity, station stationEntity, List<spot_exceptions_out_of_spec_comments> lstComments)
-        {
-            var planVersion = spotExceptionsOutOfSpecToDoEntity.plan?.plan_versions.First(v => v.id == spotExceptionsOutOfSpecToDoEntity.plan.latest_version_id);
-
-            var outOfSpecComment = lstComments.FirstOrDefault(x => x.spot_unique_hash_external == spotExceptionsOutOfSpecToDoEntity.spot_unique_hash_external
-                                                                                  && x.execution_id_external == spotExceptionsOutOfSpecToDoEntity.execution_id_external
-                                                                                  && x.isci_name == spotExceptionsOutOfSpecToDoEntity.isci_name
-                                                                                  && x.program_air_time == spotExceptionsOutOfSpecToDoEntity.program_air_time
-                                                                                  && x.station_legacy_call_letters == spotExceptionsOutOfSpecToDoEntity.station_legacy_call_letters
-                                                                                  && x.reason_code_id == spotExceptionsOutOfSpecToDoEntity.reason_code_id
-                                                                                  && x.recommended_plan_id == spotExceptionsOutOfSpecToDoEntity.recommended_plan_id);
-            var spotExceptionsOutOfSpec = new SpotExceptionsOutOfSpecsToDoDto
-            {
-                Id = spotExceptionsOutOfSpecToDoEntity.id,
-                SpotUniqueHashExternal = spotExceptionsOutOfSpecToDoEntity.spot_unique_hash_external,
-                ExecutionIdExternal = spotExceptionsOutOfSpecToDoEntity.execution_id_external,
-                ReasonCodeMessage = spotExceptionsOutOfSpecToDoEntity.reason_code_message,
-                EstimateId = spotExceptionsOutOfSpecToDoEntity.estimate_id,
-                IsciName = spotExceptionsOutOfSpecToDoEntity.isci_name,
-                HouseIsci = spotExceptionsOutOfSpecToDoEntity.house_isci,
-                RecommendedPlanId = spotExceptionsOutOfSpecToDoEntity.recommended_plan_id,
-                RecommendedPlanName = spotExceptionsOutOfSpecToDoEntity.plan?.name,
-                ProgramName = spotExceptionsOutOfSpecToDoEntity.program_name,
-                StationLegacyCallLetters = spotExceptionsOutOfSpecToDoEntity.station_legacy_call_letters,
-                DaypartCode = spotExceptionsOutOfSpecToDoEntity.daypart_code,
-                GenreName = spotExceptionsOutOfSpecToDoEntity.genre_name,
+                Id = outOfSpecsEntity.id,
+                SpotUniqueHashExternal = outOfSpecsEntity.spot_unique_hash_external,
+                ExecutionIdExternal = outOfSpecsEntity.execution_id_external,
+                ReasonCodeMessage = outOfSpecsEntity.reason_code_message,
+                EstimateId = outOfSpecsEntity.estimate_id,
+                IsciName = outOfSpecsEntity.isci_name,
+                HouseIsci = outOfSpecsEntity.house_isci,
+                RecommendedPlanId = outOfSpecsEntity.recommended_plan_id,
+                RecommendedPlanName = outOfSpecsEntity.plan?.name,
+                ProgramName = outOfSpecsEntity.program_name,
+                StationLegacyCallLetters = outOfSpecsEntity.station_legacy_call_letters,
+                DaypartCode = outOfSpecsEntity.daypart_code,
+                GenreName = outOfSpecsEntity.genre_name,
                 Affiliate = stationEntity?.affiliation,
                 Market = stationEntity?.market?.geography_name,
-                SpotLength = _MapSpotLengthToDto(spotExceptionsOutOfSpecToDoEntity.spot_lengths),
-                Audience = _MapAudienceToDto(spotExceptionsOutOfSpecToDoEntity.audience),
-                ProgramAirTime = spotExceptionsOutOfSpecToDoEntity.program_air_time,
-                ProgramNetwork = spotExceptionsOutOfSpecToDoEntity.program_network,
-                IngestedBy = spotExceptionsOutOfSpecToDoEntity.ingested_by,
-                IngestedAt = spotExceptionsOutOfSpecToDoEntity.ingested_at,
-                IngestedMediaWeekId = spotExceptionsOutOfSpecToDoEntity.ingested_media_week_id,
-                Impressions = spotExceptionsOutOfSpecToDoEntity.impressions,
-                PlanId = spotExceptionsOutOfSpecToDoEntity.recommended_plan_id ?? 0,
+                SpotLength = _MapSpotLengthToDto(outOfSpecsEntity.spot_lengths),
+                Audience = _MapAudienceToDto(outOfSpecsEntity.audience),
+                ProgramAirTime = outOfSpecsEntity.program_air_time,
+                ProgramNetwork = outOfSpecsEntity.program_network,
+                IngestedBy = outOfSpecsEntity.ingested_by,
+                IngestedAt = outOfSpecsEntity.ingested_at,
+                IngestedMediaWeekId = outOfSpecsEntity.ingested_media_week_id,
+                Impressions = outOfSpecsEntity.impressions,
+                PlanId = outOfSpecsEntity.recommended_plan_id ?? 0,
                 FlightStartDate = planVersion?.flight_start_date,
                 FlightEndDate = planVersion?.flight_end_date,
-                AdvertiserMasterId = spotExceptionsOutOfSpecToDoEntity.plan?.campaign.advertiser_master_id,
+                AdvertiserMasterId = outOfSpecsEntity.plan?.campaign.advertiser_master_id,
                 Product = null,
-                SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecToDoEntity.spot_exceptions_out_of_spec_reason_codes),
-                MarketCode = spotExceptionsOutOfSpecToDoEntity.market_code,
-                MarketRank = spotExceptionsOutOfSpecToDoEntity.market_rank,
-                Comments = outOfSpecComment != null ? outOfSpecComment.comment : null,
-                InventorySourceName = spotExceptionsOutOfSpecToDoEntity.inventory_source_name
+                SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(outOfSpecsEntity.spot_exceptions_out_of_spec_reason_codes),
+                MarketCode = outOfSpecsEntity.market_code,
+                MarketRank = outOfSpecsEntity.market_rank,
+                Comments = commentsEntity != null ? commentsEntity.comment : null,
+                InventorySourceName = outOfSpecsEntity.inventory_source_name
             };
-            return spotExceptionsOutOfSpec;
+
+            return outOfSpecSpotsToDo;
         }
+
         private AudienceDto _MapAudienceToDto(audience audienceEntity)
         {
             if (audienceEntity == null)
