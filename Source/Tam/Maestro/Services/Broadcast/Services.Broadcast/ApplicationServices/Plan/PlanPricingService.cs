@@ -899,6 +899,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             if (!IsPricingModelRunning(job))
             {
+                var jobCompletedWithinOneMinute = _DidPricingJobCompleteWithinThreshold(job, thresholdMinutes: 1);
+                if (jobCompletedWithinOneMinute)
+                {
+                    // if we're here then we hit that time between finished and UI picked it up.
+                    // but the user thinks they hit Cancel... 
+                    // we want to tell them that the Cancel didn't take affect and the results are new.
+                    _LogInfo("The user requested to Cancel, but the job just finished.");
+                    throw new CadentException("While attempting to Cancel the job, it completed.");
+                }
+
                 throw new CadentException("Error encountered while canceling Pricing Model, process is not running");
             }
 
