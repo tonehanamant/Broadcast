@@ -50,6 +50,29 @@ GO
 
 /*************************************** START UPDATE SCRIPT *****************************************************/
 
+/*************************************** START DST-7706 *****************************************************/
+
+IF OBJECT_ID('[nsi].[vpvh_quarters]') IS NULL
+BEGIN
+    CREATE TABLE [nsi].[vpvh_quarters](
+        [year] [int] NOT NULL,
+        [quarter] [tinyint] NOT NULL,
+        [audience_id] [int] NOT NULL,
+        [standard_daypart_id] [int] NOT NULL,
+        [vpvh] [float] NOT NULL,
+     CONSTRAINT [PK_vpvh_quarters] PRIMARY KEY CLUSTERED 
+    (
+        [year] ASC,
+        [quarter] ASC,
+        [audience_id] ASC,
+        [standard_daypart_id] ASC
+    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+    ) ON [PRIMARY]
+END
+GO
+
+/*************************************** END DST-7706 *******************************************************/
+
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
