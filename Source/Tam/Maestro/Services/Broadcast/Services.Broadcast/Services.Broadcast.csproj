@@ -932,6 +932,7 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsToDoDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SaveOutOfSpecPlanAcceptanceRequestDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecBulkEditRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoPlanDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoReelRosterDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedRequestDto.cs" />

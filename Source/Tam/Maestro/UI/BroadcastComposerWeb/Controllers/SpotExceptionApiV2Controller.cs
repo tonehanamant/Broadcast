@@ -126,6 +126,19 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// save the buld edit for out of spec done
+        /// </summary>
+        [HttpPost]
+        [Route("out-of-spec-spot-bulk-edit-done")]
+        public BaseResponse<bool> SaveOutOfSpecSpotBulkEditDoneAsync(OutOfSpecBulkEditRequestDto outOfSpecBulkEditRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecSpotsBulkEdit(outOfSpecBulkEditRequest, userName));
+        }
+
+        /// <summary>
         /// Gets the unposted spot exceptions.
         /// </summary>
         /// <param name="outOfSpecUnpostedRequest">The spot exception unposted request.</param>

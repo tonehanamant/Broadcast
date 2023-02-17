@@ -1283,5 +1283,272 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 }
             };
         }
+
+        [Test]
+        public  void SaveSpotExceptionsOutOfSpecsBulkEdit_SaveSingleDoneComment()
+        {
+            // Arrange
+            List<int> spots = new List<int>();
+            spots.Add(1);
+            spots.Add(2);
+            var spotExceptionsOutOfSpecBulkEditRequest = new OutOfSpecBulkEditRequestDto
+            {
+                SpotIds = spots,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    AcceptAsInSpec = true,
+                    Comments = "Unit test comments"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecComments(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(_GetOutOfSpecDoneData());
+
+            // Act
+            var result =  _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsBulkEdit(spotExceptionsOutOfSpecBulkEditRequest, userName);
+
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsBulkEdit_SaveCommentAndDecision()
+        {
+            List<int> spots = new List<int>();
+            spots.Add(1);
+            spots.Add(2);
+            // Arrange
+            var spotExceptionsOutOfSpecBulkEditRequest = new OutOfSpecBulkEditRequestDto
+            {
+                SpotIds = spots,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    AcceptAsInSpec = true,
+                    Comments = "Unit test comments"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecComments(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+               .Returns(_GetOutOfSpecDoneData());
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecDoneDecisions(It.IsAny<List<SpotExceptionsOutOfSpecDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            // Act
+            var result =  _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsBulkEdit(spotExceptionsOutOfSpecBulkEditRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsBulkEdit_SaveSingleDoneComment_ThrowException()
+        {
+            // Arrange
+            List<int> spots = new List<int>();
+            spots.Add(1);
+            spots.Add(2);
+            var spotExceptionsOutOfSpecBulkEditRequest = new OutOfSpecBulkEditRequestDto
+            {
+                SpotIds = spots,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    AcceptAsInSpec = true,
+                    Comments = "Unit test comments"
+                }
+            };
+
+            string userName = "Test User";
+            string expectedResult = "Could not save Decisions to Out of Spec";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecComments(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(true);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            //// Act           
+            var result = Assert.Throws<CadentException>( () => 
+            _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsBulkEdit(spotExceptionsOutOfSpecBulkEditRequest, userName));
+
+            //// Assert
+            Assert.AreEqual(expectedResult, result.Message);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsBulkEdit_SaveCommentAndDecision_ThrowException()
+        {
+            // Arrange
+            List<int> spots = new List<int>();
+            spots.Add(1);
+            spots.Add(2);
+            // Arrange
+            var spotExceptionsOutOfSpecBulkEditRequest = new OutOfSpecBulkEditRequestDto
+            {
+                SpotIds = spots,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    AcceptAsInSpec = true,
+                    Comments = "Unit test comments"
+                }
+            };
+
+
+            string userName = "Test User";
+            string expectedResult = "Could not save Decisions to Out of Spec";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecComments(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(true);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(_GetOutOfSpecDoneData());
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveSpotExceptionsOutOfSpecDoneDecisions(It.IsAny<List<SpotExceptionsOutOfSpecDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+
+            //// Act           
+            var result = Assert.Throws<CadentException>(() =>  
+            _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsBulkEdit(spotExceptionsOutOfSpecBulkEditRequest, userName));
+
+            //// Assert
+            Assert.AreEqual(expectedResult, result.Message);
+        }
+        private List<SpotExceptionsOutOfSpecsDoneDto> _GetOutOfSpecDoneData()
+        {
+            return new List<SpotExceptionsOutOfSpecsDoneDto>()
+            {
+                new SpotExceptionsOutOfSpecsDoneDto
+                {
+                  Id = 3,
+                  ReasonCodeMessage="",
+                  EstimateId= 191758,
+                  IsciName="AB44NR58",
+                  RecommendedPlanId= 218,
+                  RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                  StationLegacyCallLetters = "KSTP",
+                  Affiliate = "ABC",
+                  Market = "Lincoln & Hastings-Krny",
+                  PlanId = 218,
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                  AudienceId= 426,
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartCode="PT",
+                  GenreName="Horror",
+                  ProgramNetwork = "",
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  IngestedMediaWeekId = 1,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
+                  HouseIsci = "289J76GN16H"
+                },
+                new SpotExceptionsOutOfSpecsDoneDto
+                {
+                  Id = 4,
+                  ReasonCodeMessage="",
+                  EstimateId= 191759,
+                  IsciName="AB44NR59",
+                  RecommendedPlanId= 11726,
+                  RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                  StationLegacyCallLetters = "KSTP",
+                  Affiliate = "ABC",
+                  Market = "Lincoln & Hastings-Krny",
+                  PlanId = 218,
+                  SpotLength = new SpotLengthDto
+                  {
+                    Id = 16,
+                    Length = 45
+                  },
+                  AudienceId= 430,
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartCode="PT",
+                  GenreName="Horror",
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  IngestedMediaWeekId = 1,
+                  SpotExceptionsOutOfSpecReasonCode = new SpotExceptionsOutOfSpecReasonCodeDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    },
+                    SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxOTY3MA==",
+                    HouseIsci = "289J76GN16H"
+                }
+            };
+        }
     }
 }
