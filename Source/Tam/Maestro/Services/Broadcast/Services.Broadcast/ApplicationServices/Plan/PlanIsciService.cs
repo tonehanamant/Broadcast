@@ -349,23 +349,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 var planIsciList = _PlanIsciRepository.GetPlanIscis(mapping.PlanId);
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower()
                 && (_IsDateSameTimeOverlap(x.FlightEndDate.Date, mapping.FlightStartDate.Date, x.EndTime, mapping.StartTime)
-                || _IsDateSameTimeOverlap(x.FlightStartDate.Date, mapping.FlightEndDate.Date, mapping.EndTime, x.StartTime)
+                || _IsDateSameTimeOverlap(x.FlightStartDate.Date, mapping.FlightEndDate.Date, x.StartTime, mapping.EndTime)
                 || mapping.SpotLengthId != x.SpotLengthId)
                 );
-
-                DateTime newEntryStartDatePlusOne = mapping.FlightStartDate.Date.AddDays(1);
-                DateTime newEntryEndDatePlusOne = mapping.FlightEndDate.Date.AddDays(1);
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower() &&
                 x.FlightStartDate.Date == mapping.FlightStartDate.Date && x.FlightEndDate.Date == mapping.FlightEndDate.Date);
                 DateTime flightEndDate = mapping.FlightEndDate.Date.AddDays(-1);
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower()
-                && (_IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, newEntryStartDatePlusOne)
+                && (_IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, mapping.FlightStartDate.Date)
                 || _IsBewteenTwoDates(x.FlightStartDate.Date, x.FlightEndDate.Date, flightEndDate)
                 || mapping.SpotLengthId != x.SpotLengthId)
                 );
                 planIscisCount = planIscisCount + planIsciList.Count(x => x.Isci.ToLower() == mapping.Isci.ToLower()
                 && (_IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, x.FlightStartDate.Date)
-                || _IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, newEntryEndDatePlusOne)
+                || _IsBewteenTwoDates(mapping.FlightStartDate.Date, mapping.FlightEndDate.Date, mapping.FlightEndDate.Date)
                 || mapping.SpotLengthId != x.SpotLengthId)
                 );
                 if (planIscisCount == 0)
@@ -545,7 +542,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private bool _IsDateSameTimeOverlap(DateTime startDate, DateTime endDate, int? endDateTime, int? startDateTime)
         {
-            int? timeDifference = endDateTime - startDateTime;
+            int? timeDifference = startDateTime > endDateTime ? startDateTime - endDateTime : endDateTime - startDateTime;
             bool isOverlap = false;
             int result = DateTime.Compare(startDate, endDate);
             if (result == 0 && timeDifference < 1800)
@@ -558,7 +555,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private bool _IsBewteenTwoDates(DateTime startDate, DateTime endDate, DateTime target)
         {
             bool isFallBetween = false;
-            if (target.Ticks >= startDate.Ticks && target.Ticks <= endDate.Ticks)
+            if (target.Ticks > startDate.Ticks && target.Ticks < endDate.Ticks)
             {
                 isFallBetween = true;
             }
