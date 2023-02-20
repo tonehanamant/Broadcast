@@ -14,8 +14,15 @@ namespace EntityFrameworkMapping.Broadcast
     
     public partial class time_zones
     {
+        public time_zones()
+        {
+            this.market_time_zones = new HashSet<market_time_zones>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string code { get; set; }
+    
+        public virtual ICollection<market_time_zones> market_time_zones { get; set; }
     }
 }

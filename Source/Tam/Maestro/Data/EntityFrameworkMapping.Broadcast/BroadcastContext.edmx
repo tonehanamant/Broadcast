@@ -708,7 +708,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="market_code" Type="int" Nullable="false" />
+          <Property Name="market_code" Type="smallint" Nullable="false" />
           <Property Name="time_zone_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="markets">
@@ -4164,6 +4164,30 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Principal>
             <Dependent Role="market_dma_map">
               <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_market_time_zones_markets">
+          <End Role="markets" Type="Self.markets" Multiplicity="1" />
+          <End Role="market_time_zones" Type="Self.market_time_zones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="markets">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="market_time_zones">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_market_time_zones_time_zones">
+          <End Role="time_zones" Type="Self.time_zones" Multiplicity="1" />
+          <End Role="market_time_zones" Type="Self.market_time_zones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_zones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="market_time_zones">
+              <PropertyRef Name="time_zone_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8391,6 +8415,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="markets" EntitySet="markets" />
             <End Role="market_dma_map" EntitySet="market_dma_map" />
           </AssociationSet>
+          <AssociationSet Name="FK_market_time_zones_markets" Association="Self.FK_market_time_zones_markets">
+            <End Role="markets" EntitySet="markets" />
+            <End Role="market_time_zones" EntitySet="market_time_zones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_market_time_zones_time_zones" Association="Self.FK_market_time_zones_time_zones">
+            <End Role="time_zones" EntitySet="time_zones" />
+            <End Role="market_time_zones" EntitySet="market_time_zones" />
+          </AssociationSet>
           <AssociationSet Name="FK_media_weeks_media_months" Association="Self.FK_media_weeks_media_months">
             <End Role="media_months" EntitySet="media_months" />
             <End Role="media_weeks" EntitySet="media_weeks" />
@@ -11203,6 +11235,14 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           </AssociationSet>
           <EntitySet Name="market_time_zones" EntityType="BroadcastModel.market_time_zones" />
           <EntitySet Name="time_zones" EntityType="BroadcastModel.time_zones" />
+          <AssociationSet Name="FK_market_time_zones_markets" Association="BroadcastModel.FK_market_time_zones_markets">
+            <End Role="market" EntitySet="markets" />
+            <End Role="market_time_zones" EntitySet="market_time_zones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_market_time_zones_time_zones" Association="BroadcastModel.FK_market_time_zones_time_zones">
+            <End Role="time_zones" EntitySet="time_zones" />
+            <End Role="market_time_zones" EntitySet="market_time_zones" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -14197,6 +14237,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_proprietary_summary_station_audiences" Relationship="BroadcastModel.FK_inventory_proprietary_summary_station_audiences_markets" FromRole="market" ToRole="inventory_proprietary_summary_station_audiences" />
           <NavigationProperty Name="plan_version_daypart_available_markets" Relationship="BroadcastModel.FK_plan_version_daypart_available_markets_markets" FromRole="market" ToRole="plan_version_daypart_available_markets" />
           <NavigationProperty Name="schedules" Relationship="BroadcastModel.schedule_restriction_markets" FromRole="market" ToRole="schedule" />
+          <NavigationProperty Name="market_time_zones" Relationship="BroadcastModel.FK_market_time_zones_markets" FromRole="market" ToRole="market_time_zones" />
         </EntityType>
         <Association Name="FK_market_coverages_markets">
           <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
@@ -19671,8 +19712,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="market_code" Type="Int32" Nullable="false" />
+          <Property Name="market_code" Type="Int16" Nullable="false" />
           <Property Name="time_zone_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="market" Relationship="BroadcastModel.FK_market_time_zones_markets" FromRole="market_time_zones" ToRole="market" />
+          <NavigationProperty Name="time_zones" Relationship="BroadcastModel.FK_market_time_zones_time_zones" FromRole="market_time_zones" ToRole="time_zones" />
         </EntityType>
         <EntityType Name="time_zones">
           <Key>
@@ -19681,7 +19724,32 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="market_time_zones" Relationship="BroadcastModel.FK_market_time_zones_time_zones" FromRole="time_zones" ToRole="market_time_zones" />
         </EntityType>
+        <Association Name="FK_market_time_zones_markets">
+          <End Type="BroadcastModel.market" Role="market" Multiplicity="1" />
+          <End Type="BroadcastModel.market_time_zones" Role="market_time_zones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="market">
+              <PropertyRef Name="market_code" />
+            </Principal>
+            <Dependent Role="market_time_zones">
+              <PropertyRef Name="market_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_market_time_zones_time_zones">
+          <End Type="BroadcastModel.time_zones" Role="time_zones" Multiplicity="1" />
+          <End Type="BroadcastModel.market_time_zones" Role="market_time_zones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="time_zones">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="market_time_zones">
+              <PropertyRef Name="time_zone_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

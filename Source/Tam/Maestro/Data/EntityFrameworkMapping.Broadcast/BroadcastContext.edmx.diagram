@@ -603,8 +603,10 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_out_of_specs_done_spot_lengths" />
         <EntityTypeShape EntityType="BroadcastModel.spot_exceptions_out_of_spec_comments" Width="1.5" PointX="40.375" PointY="17.75" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" />
-        <EntityTypeShape EntityType="BroadcastModel.market_time_zones" Width="1.5" PointX="28.375" PointY="18.125" />
-        <EntityTypeShape EntityType="BroadcastModel.time_zones" Width="1.5" PointX="15.375" PointY="31.125" />
+        <EntityTypeShape EntityType="BroadcastModel.market_time_zones" Width="1.5" PointX="3" PointY="10.625" />
+        <EntityTypeShape EntityType="BroadcastModel.time_zones" Width="1.5" PointX="0.75" PointY="62.625" />
+        <AssociationConnector Association="BroadcastModel.FK_market_time_zones_markets" />
+        <AssociationConnector Association="BroadcastModel.FK_market_time_zones_time_zones" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

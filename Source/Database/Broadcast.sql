@@ -1779,7 +1779,7 @@ BEGIN
  CREATE TABLE dbo.market_time_zones
 	(
 	  id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,		
-      market_code INT NOT NULL, 
+      market_code smallint NOT NULL, 
       time_zone_id INT NOT NULL 
 	)
 ALTER TABLE market_time_zones ADD CONSTRAINT FK_market_time_zones_markets FOREIGN KEY(market_code) REFERENCES markets(market_code)
@@ -1998,6 +1998,7 @@ INSERT INTO [dbo].[market_time_zones]([market_code],[time_zone_id])values('466',
 INSERT INTO [dbo].[market_time_zones]([market_code],[time_zone_id])values('468','6')
 INSERT INTO [dbo].[market_time_zones]([market_code],[time_zone_id])values('481','6')
 END
+GO
 /*************************************** END BS-535 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/

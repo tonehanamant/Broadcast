@@ -15,7 +15,10 @@ namespace EntityFrameworkMapping.Broadcast
     public partial class market_time_zones
     {
         public int id { get; set; }
-        public int market_code { get; set; }
+        public short market_code { get; set; }
         public int time_zone_id { get; set; }
+    
+        public virtual market market { get; set; }
+        public virtual time_zones time_zones { get; set; }
     }
 }

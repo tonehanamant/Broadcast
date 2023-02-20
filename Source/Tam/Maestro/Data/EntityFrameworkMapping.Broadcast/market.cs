@@ -27,6 +27,7 @@ namespace EntityFrameworkMapping.Broadcast
             this.inventory_proprietary_summary_station_audiences = new HashSet<inventory_proprietary_summary_station_audiences>();
             this.plan_version_daypart_available_markets = new HashSet<plan_version_daypart_available_markets>();
             this.schedules = new HashSet<schedule>();
+            this.market_time_zones = new HashSet<market_time_zones>();
         }
     
         public short market_code { get; set; }
@@ -44,5 +45,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<inventory_proprietary_summary_station_audiences> inventory_proprietary_summary_station_audiences { get; set; }
         public virtual ICollection<plan_version_daypart_available_markets> plan_version_daypart_available_markets { get; set; }
         public virtual ICollection<schedule> schedules { get; set; }
+        public virtual ICollection<market_time_zones> market_time_zones { get; set; }
     }
 }
