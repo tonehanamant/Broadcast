@@ -29,18 +29,18 @@
           <Property Name="comment" Type="varchar" MaxLength="1023" />
           <Property Name="modified_by" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="modified_date" Type="datetime" />
-          <Property Name="match_station" Type="bit" Nullable="false" />
           <Property Name="lead_in" Type="bit" Nullable="false" />
+          <Property Name="match_station" Type="bit" Nullable="false" />
           <Property Name="match_isci_days" Type="bit" Nullable="false" />
           <Property Name="match_date" Type="bit" Nullable="false" />
           <Property Name="effective_program_name" Type="varchar" MaxLength="255" />
           <Property Name="effective_genre" Type="varchar" MaxLength="255" />
           <Property Name="effective_show_type" Type="varchar" MaxLength="255" />
           <Property Name="match_show_type" Type="bit" Nullable="false" />
+          <Property Name="status_override" Type="bit" Nullable="false" />
+          <Property Name="effective_isci" Type="varchar" MaxLength="63" />
           <Property Name="match_isci" Type="bit" Nullable="false" />
           <Property Name="effective_client_isci" Type="varchar" MaxLength="63" />
-          <Property Name="effective_isci" Type="varchar" MaxLength="63" />
-          <Property Name="status_override" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="affidavit_file_detail_demographics">
           <Key>
@@ -703,6 +703,14 @@
           <Property Name="market_code" Type="smallint" Nullable="false" />
           <Property Name="dma_mapped_value" Type="varchar" MaxLength="63" Nullable="false" />
         </EntityType>
+        <EntityType Name="market_time_zones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="market_code" Type="int" Nullable="false" />
+          <Property Name="time_zone_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="markets">
           <Key>
             <PropertyRef Name="market_code" />
@@ -1058,9 +1066,9 @@
           <Property Name="market_group" Type="int" Nullable="false" />
           <Property Name="posting_type" Type="int" Nullable="false" />
           <Property Name="budget_cpm_lever" Type="int" Nullable="false" />
+          <Property Name="fluidity_percentage" Type="float" />
           <Property Name="share_book_id" Type="int" />
           <Property Name="hut_book_id" Type="int" />
-          <Property Name="fluidity_percentage" Type="float" />
         </EntityType>
         <EntityType Name="plan_version_buying_rep_firm_details">
           <Key>
@@ -2138,6 +2146,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="proposal_id" Type="int" Nullable="false" />
           <Property Name="proposal_version" Type="smallint" Nullable="false" />
           <Property Name="start_date" Type="date" />
@@ -2148,7 +2157,6 @@
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="modified_by" Type="varchar" MaxLength="63" Nullable="false" />
           <Property Name="modified_date" Type="datetime" Nullable="false" />
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="target_budget" Type="money" />
           <Property Name="target_units" Type="int" />
           <Property Name="target_impressions" Type="float" Nullable="false" />
@@ -2971,8 +2979,8 @@
           <Property Name="station_inventory_group_id" Type="int" />
           <Property Name="file_id" Type="int" />
           <Property Name="spots_per_day" Type="int" />
-          <Property Name="station_id" Type="int" />
           <Property Name="comment" Type="varchar" MaxLength="255" />
+          <Property Name="station_id" Type="int" />
         </EntityType>
         <EntityType Name="station_inventory_manifest_audiences">
           <Key>
@@ -3080,7 +3088,7 @@
           <Property Name="sys_end_date" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.station_inventory_manifest_weeks_history' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="station_inventory_manifest_weeks_history">
           <Key>
             <PropertyRef Name="id" />
@@ -3200,6 +3208,14 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="description" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="last_modified_time" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="time_zones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
         <EntityType Name="timespans">
           <Key>
             <PropertyRef Name="id" />
@@ -3257,7 +3273,7 @@ warning 6002: The table/view 'broadcast.dbo.station_inventory_manifest_weeks_his
           <Property Name="vpvh_file_id" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ccc_daypart">
           <Key>
             <PropertyRef Name="id" />
@@ -3297,7 +3313,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__maest__2F2FFC0C">
+        <Association Name="FK__genre_map__maest__27114E05">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3309,31 +3325,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__maest__57E7F8DC">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genre_mappings">
-              <PropertyRef Name="maestro_genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__genre_map__maest__61DB776A">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genre_mappings">
-              <PropertyRef Name="maestro_genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__genre_map__mappe__30242045">
+        <Association Name="FK__genre_map__mappe__2805723E">
           <End Role="genres" Type="Self.genres" Multiplicity="1" />
           <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3345,91 +3337,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__genre_map__mappe__58DC1D15">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genre_mappings">
-              <PropertyRef Name="mapped_genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__genre_map__mappe__62CF9BA3">
-          <End Role="genres" Type="Self.genres" Multiplicity="1" />
-          <End Role="genre_mappings" Type="Self.genre_mappings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genre_mappings">
-              <PropertyRef Name="mapped_genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__genres__program___3118447E">
-          <End Role="program_sources" Type="Self.program_sources" Multiplicity="1" />
-          <End Role="genres" Type="Self.genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="program_sources">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genres">
-              <PropertyRef Name="program_source_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__genres__program___59D0414E">
-          <End Role="program_sources" Type="Self.program_sources" Multiplicity="1" />
-          <End Role="genres" Type="Self.genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="program_sources">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genres">
-              <PropertyRef Name="program_source_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__genres__program___63C3BFDC">
-          <End Role="program_sources" Type="Self.program_sources" Multiplicity="1" />
-          <End Role="genres" Type="Self.genres" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="program_sources">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="genres">
-              <PropertyRef Name="program_source_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__plan_vers__genre__153B1FDF">
-          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
-          <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_daypart_program_restrictions">
-              <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__plan_vers__genre__5AC46587">
-          <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
-          <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="genres">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="plan_version_daypart_program_restrictions">
-              <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__plan_vers__genre__64B7E415">
+        <Association Name="FK__plan_vers__genre__6CAFA246">
           <End Role="genres" Type="Self.genres" Multiplicity="0..1" />
           <End Role="plan_version_daypart_program_restrictions" Type="Self.plan_version_daypart_program_restrictions" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3775,6 +3683,18 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_genres_program_sources">
+          <End Role="program_sources" Type="Self.program_sources" Multiplicity="1" />
+          <End Role="genres" Type="Self.genres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="program_sources">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="genres">
+              <PropertyRef Name="program_source_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_inventory_export_job_files_shared_folder_files_id">
           <End Role="shared_folder_files" Type="Self.shared_folder_files" Multiplicity="0..1" />
           <End Role="inventory_export_jobs" Type="Self.inventory_export_jobs" Multiplicity="*" />
@@ -4044,18 +3964,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Principal>
             <Dependent Role="inventory_proprietary_daypart_programs">
               <PropertyRef Name="genre_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_inventory_proprietary_daypart_programs_show_types">
-          <End Role="show_types" Type="Self.show_types" Multiplicity="1" />
-          <End Role="inventory_proprietary_daypart_programs" Type="Self.inventory_proprietary_daypart_programs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="show_types">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inventory_proprietary_daypart_programs">
-              <PropertyRef Name="show_type_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7993,6 +7901,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="market_coverage_files" EntityType="Self.market_coverage_files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="market_coverages" EntityType="Self.market_coverages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="market_dma_map" EntityType="Self.market_dma_map" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="market_time_zones" EntityType="Self.market_time_zones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="markets" EntityType="Self.markets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_months" EntityType="Self.media_months" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="media_weeks" EntityType="Self.media_weeks" Schema="dbo" store:Type="Tables" />
@@ -8169,6 +8078,7 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           <EntitySet Name="stations" EntityType="Self.stations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="stations_secondary_affiliations" EntityType="Self.stations_secondary_affiliations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="system_component_parameters" EntityType="Self.system_component_parameters" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="time_zones" EntityType="Self.time_zones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="timespans" EntityType="Self.timespans" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvh_audience_mappings" EntityType="Self.vpvh_audience_mappings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vpvh_files" EntityType="Self.vpvh_files" Schema="dbo" store:Type="Tables" />
@@ -8209,51 +8119,15 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="plan_version_daypart_customizations" EntitySet="plan_version_daypart_customizations" />
             <End Role="plan_version_audience_daypart_vpvh" EntitySet="plan_version_audience_daypart_vpvh" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__maest__2F2FFC0C" Association="Self.FK__genre_map__maest__2F2FFC0C">
+          <AssociationSet Name="FK__genre_map__maest__27114E05" Association="Self.FK__genre_map__maest__27114E05">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__maest__57E7F8DC" Association="Self.FK__genre_map__maest__57E7F8DC">
+          <AssociationSet Name="FK__genre_map__mappe__2805723E" Association="Self.FK__genre_map__mappe__2805723E">
             <End Role="genres" EntitySet="genres" />
             <End Role="genre_mappings" EntitySet="genre_mappings" />
           </AssociationSet>
-          <AssociationSet Name="FK__genre_map__maest__61DB776A" Association="Self.FK__genre_map__maest__61DB776A">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="genre_mappings" EntitySet="genre_mappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__30242045" Association="Self.FK__genre_map__mappe__30242045">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="genre_mappings" EntitySet="genre_mappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__58DC1D15" Association="Self.FK__genre_map__mappe__58DC1D15">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="genre_mappings" EntitySet="genre_mappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__genre_map__mappe__62CF9BA3" Association="Self.FK__genre_map__mappe__62CF9BA3">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="genre_mappings" EntitySet="genre_mappings" />
-          </AssociationSet>
-          <AssociationSet Name="FK__genres__program___3118447E" Association="Self.FK__genres__program___3118447E">
-            <End Role="program_sources" EntitySet="program_sources" />
-            <End Role="genres" EntitySet="genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK__genres__program___59D0414E" Association="Self.FK__genres__program___59D0414E">
-            <End Role="program_sources" EntitySet="program_sources" />
-            <End Role="genres" EntitySet="genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK__genres__program___63C3BFDC" Association="Self.FK__genres__program___63C3BFDC">
-            <End Role="program_sources" EntitySet="program_sources" />
-            <End Role="genres" EntitySet="genres" />
-          </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__153B1FDF" Association="Self.FK__plan_vers__genre__153B1FDF">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__5AC46587" Association="Self.FK__plan_vers__genre__5AC46587">
-            <End Role="genres" EntitySet="genres" />
-            <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
-          </AssociationSet>
-          <AssociationSet Name="FK__plan_vers__genre__64B7E415" Association="Self.FK__plan_vers__genre__64B7E415">
+          <AssociationSet Name="FK__plan_vers__genre__6CAFA246" Association="Self.FK__plan_vers__genre__6CAFA246">
             <End Role="genres" EntitySet="genres" />
             <End Role="plan_version_daypart_program_restrictions" EntitySet="plan_version_daypart_program_restrictions" />
           </AssociationSet>
@@ -8361,6 +8235,10 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="fluidity_categories" EntitySet="fluidity_categories" />
             <End Role="plan_versions" EntitySet="plan_versions" />
           </AssociationSet>
+          <AssociationSet Name="FK_genres_program_sources" Association="Self.FK_genres_program_sources">
+            <End Role="program_sources" EntitySet="program_sources" />
+            <End Role="genres" EntitySet="genres" />
+          </AssociationSet>
           <AssociationSet Name="FK_inventory_export_job_files_shared_folder_files_id" Association="Self.FK_inventory_export_job_files_shared_folder_files_id">
             <End Role="shared_folder_files" EntitySet="shared_folder_files" />
             <End Role="inventory_export_jobs" EntitySet="inventory_export_jobs" />
@@ -8447,10 +8325,6 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
           </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_daypart_programs_genres" Association="Self.FK_inventory_proprietary_daypart_programs_genres">
             <End Role="genres" EntitySet="genres" />
-            <End Role="inventory_proprietary_daypart_programs" EntitySet="inventory_proprietary_daypart_programs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_inventory_proprietary_daypart_programs_show_types" Association="Self.FK_inventory_proprietary_daypart_programs_show_types">
-            <End Role="show_types" EntitySet="show_types" />
             <End Role="inventory_proprietary_daypart_programs" EntitySet="inventory_proprietary_daypart_programs" />
           </AssociationSet>
           <AssociationSet Name="FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings" Association="Self.FK_inventory_proprietary_summary_inventory_proprietary_daypart_program_mappings">
@@ -11327,6 +11201,8 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             <End Role="spot_lengths" EntitySet="spot_lengths" />
             <End Role="spot_exceptions_unposted_no_plan" EntitySet="spot_exceptions_unposted_no_plan" />
           </AssociationSet>
+          <EntitySet Name="market_time_zones" EntityType="BroadcastModel.market_time_zones" />
+          <EntitySet Name="time_zones" EntityType="BroadcastModel.time_zones" />
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -19790,6 +19666,22 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="market_time_zones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="market_code" Type="Int32" Nullable="false" />
+          <Property Name="time_zone_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="time_zones">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -23273,6 +23165,24 @@ warning 6002: The table/view 'broadcast.dbo.vw_ccc_daypart' does not have a prim
                 <ScalarProperty Name="isci_name" ColumnName="isci_name" />
                 <ScalarProperty Name="execution_id_external" ColumnName="execution_id_external" />
                 <ScalarProperty Name="spot_unique_hash_external" ColumnName="spot_unique_hash_external" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="market_time_zones">
+            <EntityTypeMapping TypeName="BroadcastModel.market_time_zones">
+              <MappingFragment StoreEntitySet="market_time_zones">
+                <ScalarProperty Name="time_zone_id" ColumnName="time_zone_id" />
+                <ScalarProperty Name="market_code" ColumnName="market_code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="time_zones">
+            <EntityTypeMapping TypeName="BroadcastModel.time_zones">
+              <MappingFragment StoreEntitySet="time_zones">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

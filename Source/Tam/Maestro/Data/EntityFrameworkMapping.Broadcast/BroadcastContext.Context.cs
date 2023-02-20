@@ -261,5 +261,7 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual DbSet<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_comments> spot_exceptions_out_of_spec_comments { get; set; }
+        public virtual DbSet<market_time_zones> market_time_zones { get; set; }
+        public virtual DbSet<time_zones> time_zones { get; set; }
     }
 }

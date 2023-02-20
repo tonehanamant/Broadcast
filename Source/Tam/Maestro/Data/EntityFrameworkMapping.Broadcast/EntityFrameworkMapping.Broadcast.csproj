@@ -478,6 +478,9 @@
     <Compile Include="market_dma_map.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="market_time_zones.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="media_months.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -1006,6 +1009,9 @@
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="timespan.cs">
+      <DependentUpon>BroadcastContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="time_zones.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="vpvh.cs">
