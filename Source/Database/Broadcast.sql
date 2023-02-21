@@ -2001,6 +2001,544 @@ END
 GO
 /*************************************** END BS-535 ***************************************/
 
+/*************************************** START BS-640 ***************************************/
+
+CREATE OR ALTER VIEW [dbo].[vw_audiences]
+/* View for external consumers. */
+AS 
+	SELECT [id]
+		,[category_code]
+		,[sub_category_code]
+		,[range_start]
+		,[range_end]
+		,[custom]
+		,[code]
+		,[name]
+	FROM [dbo].[audiences]
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_audience_audiences]
+/* View for external consumers. */
+AS 
+	SELECT [rating_category_group_id]
+		,[custom_audience_id]
+		,[rating_audience_id]
+	FROM [dbo].[audience_audiences]
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_affiliates]
+/* View for external consumers. */
+AS 
+	SELECT [id]
+		,[name]
+		,[created_by]
+		,[created_date]
+		,[modified_by]
+		,[modified_date]
+	FROM [dbo].[affiliates]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_campaigns]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[name]
+		,[advertiser_id]
+		,[agency_id]
+		,[created_date]
+		,[created_by]
+		,[modified_date]
+		,[modified_by]
+		,[notes]
+		,[agency_master_id]
+		,[advertiser_master_id]
+		,[unified_id]
+		,[max_fluidity_percent]
+		,[unified_campaign_last_sent_at]
+		,[unified_campaign_last_received_at]
+		,[view_details_url]
+		,[account_executive]
+		,[client_contact]
+	FROM [dbo].[campaigns]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_genres]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[name]
+		,[created_by]
+		,[created_date]
+		,[modified_by]
+		,[modified_date]
+		,[program_source_id]
+	FROM [dbo].[genres]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_inventory_sources]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[name]
+		,[is_active]
+		,[inventory_source_type]
+	FROM [dbo].[inventory_sources]
+	
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_market_coverages]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[rank]
+		,[market_code]
+		,[tv_homes]
+		,[percentage_of_us]
+		,[market_coverage_file_id]
+	FROM [dbo].[market_coverages]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_market_dma_map]
+/* View for external consumers. */
+AS
+	SELECT [market_code]
+		,[dma_mapped_value]
+	FROM [dbo].[market_dma_map]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_markets]
+/* View for external consumers. */
+AS
+	SELECT [market_code]
+		,[geography_name]
+	FROM [dbo].[markets]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_media_weeks]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[media_month_id]
+		,[week_number]
+		,[start_date]
+		,[end_date]
+	FROM [dbo].[media_weeks]
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_iscis]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_id]
+		,[isci]
+		,[created_at]
+		,[created_by]
+		,[deleted_at]
+		,[deleted_by]
+		,[flight_start_date]
+		,[flight_end_date]
+		,[modified_at]
+		,[modified_by]
+		,[spot_length_id]
+		,[start_time]
+		,[end_time]
+	FROM [dbo].[plan_iscis]
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_available_markets]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[market_code]
+		,[market_coverage_File_id]
+		,[rank]
+		,[percentage_of_us]
+		,[share_of_voice_percent]
+		,[plan_version_id]
+		,[is_user_share_of_voice_percent]
+	FROM [dbo].[plan_version_available_markets]
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_blackout_markets]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[market_code]
+		,[market_coverage_file_id]
+		,[rank]
+		,[percentage_of_us]
+		,[plan_version_id]
+	FROM [dbo].[plan_version_blackout_markets]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_creative_lengths]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_id]
+		,[spot_length_id]
+		,[weight]
+	FROM [dbo].[plan_version_creative_lengths]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_program_restrictions]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_daypart_id]
+		,[program_name]
+		,[genre_id]
+		,[content_rating]
+	FROM [dbo].[plan_version_daypart_program_restrictions]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_genre_restrictions]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_daypart_id]
+		,[genre_id]
+	FROM [dbo].[plan_version_daypart_genre_restrictions]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_affiliate_restrictions]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_daypart_id]
+		,[affiliate_id]
+	FROM [dbo].[plan_version_daypart_affiliate_restrictions]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_show_type_restrictions]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_daypart_id]
+		,[show_type_id]
+	FROM [dbo].[plan_version_daypart_show_type_restrictions]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_dayparts]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[standard_daypart_id]
+		,[start_time_seconds]
+		,[end_time_seconds]
+		,[weighting_goal_percent]
+		,[daypart_type]
+		,[is_start_time_modified]
+		,[is_end_time_modified]
+		,[plan_version_id]
+		,[show_type_restrictions_contain_type]
+		,[genre_restrictions_contain_type]
+		,[program_restrictions_contain_type]
+		,[affiliate_restrictions_contain_type]
+		,[weekdays_weighting]
+		,[weekend_weighting]
+	FROM [dbo].[plan_version_dayparts]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_customizations]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_daypart_id]
+		,[custom_daypart_organization_id]
+		,[custom_daypart_name]
+	FROM [dbo].[plan_version_daypart_customizations]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_flight_hiatus_days]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[hiatus_day]
+		,[plan_version_id]
+	FROM [dbo].[plan_version_flight_hiatus_days]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_secondary_audiences]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[audience_type]
+		,[audience_id]
+		,[vpvh]
+		,[rating_points]
+		,[impressions]
+		,[cpm]
+		,[cpp]
+		,[universe]
+		,[plan_version_id]
+	FROM [dbo].[plan_version_secondary_audiences]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_summaries]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[processing_status]
+		,[hiatus_days_count]
+		,[active_day_count]
+		,[available_market_count]
+		,[available_market_total_us_coverage_percent]
+		,[blackout_market_count]
+		,[blackout_market_total_us_coverage_percent]
+		,[product_name]
+		,[available_market_with_sov_count]
+		,[plan_version_id]
+		,[fluidity_percentage]
+		,[is_adu_plan]
+	FROM [dbo].[plan_version_summaries]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_weekly_breakdown]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_version_daypart_goal_id]
+		,[media_week_id]
+		,[number_active_days]
+		,[active_days_label]
+		,[impressions]
+		,[impressions_percentage]
+		,[plan_version_id]
+		,[rating_points]
+		,[budget]
+		,[spot_length_id]
+		,[percentage_of_week]
+		,[adu_impressions]
+		,[unit_impressions]
+		,[is_locked]
+	FROM [dbo].[plan_version_daypart_weekly_breakdown]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_versions]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[plan_id]
+		,[is_draft]
+		,[equivalized]
+		,[flight_start_date]
+		,[flight_end_date]
+		,[flight_notes]
+		,[audience_type]
+		,[posting_type]
+		,[target_audience_id]
+		,[share_book_id]
+		,[hut_book_id]
+		,[budget]
+		,[target_impression]
+		,[target_cpm]
+		,[target_rating_points]
+		,[target_cpp]
+		,[target_universe]
+		,[hh_impressions]
+		,[hh_cpm]
+		,[hh_rating_points]
+		,[hh_cpp]
+		,[hh_universe]
+		,[currency]
+		,[target_vpvh]
+		,[coverage_goal_percent]
+		,[goal_breakdown_type]
+		,[status]
+		,[created_by]
+		,[created_date]
+		,[modified_by]
+		,[modified_date]
+		,[version_number]
+		,[is_adu_enabled]
+		,[impressions_per_unit]
+		,[flight_notes_internal]
+		,[fluidity_percentage]
+		,[fluidity_child_category]
+		,[fluidity_category]
+		,[is_adu_plan]
+	FROM [dbo].[plan_versions]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plans]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[campaign_id]
+		,[name]
+		,[product_id]
+		,[latest_version_id]
+		,[product_master_id]
+		,[spot_allocation_model_mode]
+		,[plan_mode]
+		,[deleted_by]
+		,[deleted_at]
+		,[unified_tactic_line_id]
+		,[unified_campaign_last_sent_at]
+		,[unified_campaign_last_received_at]
+		,[nielsen_transmittal_code]
+	FROM [dbo].[plans]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_program_name_mappings]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[inventory_program_name]
+		,[official_program_name]
+		,[show_type_id]
+		,[created_by]
+		,[created_at]
+		,[modified_by]
+		,[modified_at]
+	FROM [dbo].[program_name_mappings]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_show_types]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[name]
+		,[created_by]
+		,[created_date]
+		,[modified_by]
+		,[modified_date]
+		,[program_source_id]
+	FROM [dbo].[show_types]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_spot_lengths]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[length]
+		,[delivery_multiplier]
+		,[order_by]
+		,[is_default]
+	FROM [dbo].[spot_lengths]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_standard_dayparts]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[daypart_type]
+		,[daypart_id]
+		,[code]
+		,[name]
+		,[vpvh_calculation_source_type]
+	FROM [dbo].[standard_dayparts]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_stations]
+/* View for external consumers. */
+AS
+	SELECT [station_code]
+		,[station_call_letters]
+		,[affiliation]
+		,[market_code]
+		,[legacy_call_letters]
+		,[modified_by]
+		,[modified_date]
+		,[id]
+		,[rep_firm_name]
+		,[owner_name]
+		,[is_true_ind]
+	FROM [dbo].[stations]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_station_mappings]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[station_id]
+		,[mapped_call_letters]
+		,[map_set]
+		,[created_date]
+		,[created_by]
+	FROM [dbo].[station_mappings]
+
+GO
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_flat]
+/* View for external consumers. */
+AS
+	SELECT
+		pvd.id AS plan_version_daypart_id
+		, pvd.plan_version_id AS plan_version_id
+		, pvd.standard_daypart_id 
+		, sd.code AS standard_daypart_code
+		, sd.[name] AS standard_daypart_name
+		, sd.daypart_type AS daypart_type_id
+		, CASE sd.daypart_type
+			WHEN 1 THEN 'News'
+			WHEN 2 THEN 'Entertainment/Non-News'
+			WHEN 3 THEN 'ROS'
+			WHEN 4 THEN 'Sports'
+			ELSE NULL
+		END AS [daypart_type_name]
+		, pvdc.custom_daypart_organization_id	
+		, pvdc.custom_daypart_name
+		, pvdc.custom_daypart_organization_id AS organization_id
+		, cdo.organization_name
+		, d.id AS daypart_id
+		, d.tier
+		, pvd.start_time_seconds 
+		, pvd.is_start_time_modified
+		, pvd.end_time_seconds 
+		, pvd.is_end_time_modified
+		, d.mon
+		, d.tue
+		, d.wed
+		, d.thu
+		, d.fri
+		, d.sat
+		, d.sun
+		, d.daypart_text
+		, d.total_hours
+		, pvd.weighting_goal_percent
+		, pvd.weekdays_weighting
+		, pvd.weekend_weighting
+	FROM plan_version_dayparts pvd
+	JOIN standard_dayparts sd
+		ON pvd.standard_daypart_id = sd.id
+	LEFT OUTER JOIN plan_version_daypart_customizations pvdc
+		ON pvdc.plan_version_daypart_id = pvd.id
+	LEFT OUTER JOIN custom_daypart_organizations cdo
+		ON cdo.id = pvdc.custom_daypart_organization_id
+	JOIN vw_ccc_daypart d
+		ON sd.daypart_id = d.id
+GO
+
+/*************************************** END BS-640 ***************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
