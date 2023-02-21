@@ -2479,5 +2479,105 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             Assert.AreEqual(result.Plans.Count, expectedCount);
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
         }
+
+        [Test]
+        public void CopyIsciMappings_OverlappingTime()
+        {
+            var copyRequest = _GetIsciSaveRequest();
+            string createdBy = "Test User";
+            DateTime dateAt = new DateTime(2023, 01, 15);
+            // Arrange
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2021, 01, 01));
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns<int, int?>((a, b) => new PlanDto()
+                {
+                    Id = 1,
+                    FlightStartDate = new DateTime(2023, 01, 01),
+                    FlightEndDate = new DateTime(2023, 04, 30)
+                });
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<int>()))
+               .Returns(new List<PlanIsciDto>
+               {
+                    new PlanIsciDto
+                    {
+                        Id = 1,
+                        PlanId = 2,
+                        Isci = "NDEN0114000H",
+                        FlightStartDate = new DateTime(2023,01,03),
+                        FlightEndDate = new DateTime(2023,03,10),
+                        StartTime=300,
+                        EndTime=21600
+                    }
+               });
+            // Act
+            var result = _PlanIsciService._HandleCopyIsciPlanMapping(copyRequest, createdBy, dateAt);
+            // Assert
+            Assert.AreEqual(0, result);
+        }
+        [Test]
+        public void CopyIsciMappings_NoOverlappingTime()
+        {
+            var copyRequest = _GetIsciSaveRequest();
+            string createdBy = "Test User";
+            DateTime dateAt = new DateTime(2023, 01, 15);
+            // Arrange
+            _DateTimeEngineMock
+                .Setup(x => x.GetCurrentMoment())
+                .Returns(new DateTime(2021, 01, 01));
+            _PlanService.Setup(s => s.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
+                .Returns<int, int?>((a, b) => new PlanDto()
+                {
+                    Id = 1,
+                    FlightStartDate = new DateTime(2023, 01, 01),
+                    FlightEndDate = new DateTime(2023, 04, 30)
+                });
+            _PlanIsciRepositoryMock.Setup(s => s.GetPlanIscis(It.IsAny<int>()))
+               .Returns(new List<PlanIsciDto>
+               {
+                    new PlanIsciDto
+                    {
+                        Id = 1,
+                        PlanId = 2,
+                        Isci = "NDEN0114000H",
+                        SpotLengthId=1,
+                        FlightStartDate = new DateTime(2023,03,10),
+                        FlightEndDate = new DateTime(2023,03,26),
+                        StartTime=300,
+                        EndTime=19800
+                    }
+               });
+            _PlanIsciRepositoryMock.Setup(s => s.SaveIsciPlanMappings(It.IsAny<List<PlanIsciDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+               .Returns(1);
+            // Act
+            var result = _PlanIsciService._HandleCopyIsciPlanMapping(copyRequest, createdBy, dateAt);
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+        private List<IsciPlanMappingDto> _GetIsciSaveRequest()
+        {
+            List<IsciPlanMappingDto>  IsciPlanMappings = new List<IsciPlanMappingDto>
+                {
+                    new IsciPlanMappingDto
+                    {
+                        PlanId=727,
+                        Isci ="NDEN0114000H",
+                        SpotLengthId =1,
+                        IsciPlanMappingFlights=new List<IsciPlanMappingFlightsDto>
+                        {
+                            new IsciPlanMappingFlightsDto
+                            {
+                            FlightStartDate=new DateTime(2023, 01, 15),
+                            FlightEndDate=new DateTime(2023, 03, 10),
+                            StartTime =4000,
+                            EndTime=20100
+                            }
+                        }
+                    }
+
+                };
+            return IsciPlanMappings;
+        }
     }
 }

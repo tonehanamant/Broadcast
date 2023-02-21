@@ -83,6 +83,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthRepository _SpotLengthRepository;
         protected Lazy<bool> _IsUnifiedCampaignEnabled;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
+        const int defaultStartTime = 0;
+        const int defaultEndTime = 86339; 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlanIsciService"/> class.
         /// </summary>
@@ -331,7 +333,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             });
             return result;
         }
-        private int _HandleCopyIsciPlanMapping(List<IsciPlanMappingDto> mappings, string createdBy, DateTime createdAt)
+        internal int _HandleCopyIsciPlanMapping(List<IsciPlanMappingDto> mappings, string createdBy, DateTime createdAt)
         {
             if (!mappings.Any())
             {
@@ -454,7 +456,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var modifiedCount = _HandleModifiedIsciPlanMappings(copyRequest.IsciPlanMappingsModified, modifiedAt, createdBy);
 
             _LogInfo($"{modifiedCount} IsciPlanMappings were modified.");
-
+          
             return true;
         }
 
@@ -542,6 +544,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private bool _IsDateSameTimeOverlap(DateTime startDate, DateTime endDate, int? endDateTime, int? startDateTime)
         {
+            startDateTime= startDateTime ?? defaultStartTime;
+            endDateTime= endDateTime ?? defaultEndTime;
             int? timeDifference = startDateTime > endDateTime ? startDateTime - endDateTime : endDateTime - startDateTime;
             bool isOverlap = false;
             int result = DateTime.Compare(startDate, endDate);
