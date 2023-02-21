@@ -19,7 +19,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// </summary>
         /// <param name="outOfSpecUnpostedRequest">The out of spec unposted request.</param>
         /// <returns></returns>
-        Task<OutOfSpecUnpostedResultsDto> GetOutOfSpecUnpostedAsync(OutOfSpecUnpostedRequestDto outOfSpecUnpostedRequest);
+        OutOfSpecUnpostedResultsDto GetOutOfSpecUnposted(OutOfSpecUnpostedRequestDto outOfSpecUnpostedRequest);
     }
 
     /// <summary></summary>
@@ -43,14 +43,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         }
 
         /// <inheritdoc />
-        public async Task<OutOfSpecUnpostedResultsDto> GetOutOfSpecUnpostedAsync(OutOfSpecUnpostedRequestDto outOfSpecUnpostedRequest)
+        public OutOfSpecUnpostedResultsDto GetOutOfSpecUnposted(OutOfSpecUnpostedRequestDto outOfSpecUnpostedRequest)
         {
             var spotExceptionOutOfSpecUnpostedResult = new OutOfSpecUnpostedResultsDto();
 
             try
             {
-                var unpostedNoPlanResult = await _SpotExceptionsUnpostedRepositoryV2.GetSpotExceptionUnpostedNoPlanAsync(outOfSpecUnpostedRequest.WeekStartDate, outOfSpecUnpostedRequest.WeekEndDate);
-                var unpostedNoReelRosterResult = await _SpotExceptionsUnpostedRepositoryV2.GetSpotExceptionUnpostedNoReelRosterAsync(outOfSpecUnpostedRequest.WeekStartDate, outOfSpecUnpostedRequest.WeekEndDate);
+                var unpostedNoPlanResult = _SpotExceptionsUnpostedRepositoryV2.GetSpotExceptionUnpostedNoPlan(outOfSpecUnpostedRequest.WeekStartDate, outOfSpecUnpostedRequest.WeekEndDate);
+                var unpostedNoReelRosterResult = _SpotExceptionsUnpostedRepositoryV2.GetSpotExceptionUnpostedNoReelRoster(outOfSpecUnpostedRequest.WeekStartDate, outOfSpecUnpostedRequest.WeekEndDate);
 
                 spotExceptionOutOfSpecUnpostedResult.NoPlan = unpostedNoPlanResult.Select(x => new OutOfSpecNoPlanDto
                 {

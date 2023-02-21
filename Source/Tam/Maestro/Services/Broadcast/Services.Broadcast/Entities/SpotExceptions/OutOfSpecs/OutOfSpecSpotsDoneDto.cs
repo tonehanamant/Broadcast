@@ -3,7 +3,7 @@
 namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
     /// <summary></summary>
-    public class OutOfSpecSpotsToDoDto
+    public class OutOfSpecSpotsDoneDto
     {
         /// <summary>
         /// Gets or sets the identifier.
@@ -191,7 +191,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// <value>The plan identifier.</value>
         public int PlanId { get; set; }
 
-        //ovo
+        /// <summary>
+        /// Gets or sets the spot exceptions out of spec done decision.
+        /// </summary>
+        /// <value>The spot exceptions out of spec done decision.</value>
+        public OutOfSpecSpotDoneDecisionsDto OutOfSpecSpotDoneDecisions { get; set; } = new OutOfSpecSpotDoneDecisionsDto();
+
         /// <summary>
         /// Gets or sets the spot exceptions out of spec reason code.
         /// </summary>

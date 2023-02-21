@@ -5,12 +5,12 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
     /// <summary>
     /// Request class for the out of spec bulk edit
     /// </summary>
-    public class OutOfSpecBulkEditRequestDto
+    public class SaveOutOfSpecSpotBulkEditRequestDto
     {
         /// <summary>
         ///Defines constructor for the class OutOfSpecBulkEditRequestDto
         /// </summary>
-        public OutOfSpecBulkEditRequestDto()
+        public SaveOutOfSpecSpotBulkEditRequestDto()
         {
             this.Decisions = new OutOfSpecDecisionsToSaveRequestDto();
         }

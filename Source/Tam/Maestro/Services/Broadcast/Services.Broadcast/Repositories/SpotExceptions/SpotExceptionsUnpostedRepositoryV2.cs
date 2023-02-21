@@ -19,7 +19,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="weekStartDate">The week start date.</param>
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
-        Task<List<OutOfSpecUnpostedNoPlanDto>> GetSpotExceptionUnpostedNoPlanAsync(DateTime weekStartDate, DateTime weekEndDate);
+        List<OutOfSpecUnpostedNoPlanDto> GetSpotExceptionUnpostedNoPlan(DateTime weekStartDate, DateTime weekEndDate);
 
         /// <summary>
         /// Gets the spot exception unposted no reel roster asynchronous.
@@ -27,7 +27,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="weekStartDate">The week start date.</param>
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
-        Task<List<OutOfSpecUnpostedNoReelRosterDto>> GetSpotExceptionUnpostedNoReelRosterAsync(DateTime weekStartDate, DateTime weekEndDate);
+        List<OutOfSpecUnpostedNoReelRosterDto> GetSpotExceptionUnpostedNoReelRoster(DateTime weekStartDate, DateTime weekEndDate);
     }
 
     /// <inheritdoc />
@@ -46,12 +46,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         { }
 
         /// <inheritdoc />
-        public async Task<List<OutOfSpecUnpostedNoPlanDto>> GetSpotExceptionUnpostedNoPlanAsync(DateTime weekStartDate, DateTime weekEndDate)
+        public List<OutOfSpecUnpostedNoPlanDto> GetSpotExceptionUnpostedNoPlan(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            return await _InReadUncommitedTransaction(context =>
+            return _InReadUncommitedTransaction(context =>
             {
                 var unpostedNoPlanEntities = context.spot_exceptions_unposted_no_plan
                     .Where(unpostedNoPlanDb => unpostedNoPlanDb.program_air_time >= weekStartDate && unpostedNoPlanDb.program_air_time <= weekEndDate)
@@ -68,17 +68,17 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         IngestMediaWeekId = x.ingested_media_week_id
                     }).ToList();
 
-                return Task.FromResult(unpostedNoPlanEntities);
+                return unpostedNoPlanEntities;
             });
         }
 
         /// <inheritdoc />
-        public async Task<List<OutOfSpecUnpostedNoReelRosterDto>> GetSpotExceptionUnpostedNoReelRosterAsync(DateTime weekStartDate, DateTime weekEndDate)
+        public List<OutOfSpecUnpostedNoReelRosterDto> GetSpotExceptionUnpostedNoReelRoster(DateTime weekStartDate, DateTime weekEndDate)
         {
             weekStartDate = weekStartDate.Date;
             weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
 
-            return await _InReadUncommitedTransaction(context =>
+            return _InReadUncommitedTransaction(context =>
             {
                 var unpostedNoReelRosterEntities = context.spot_exceptions_unposted_no_reel_roster
                     .Where(unpostedNoReelRosterDb => unpostedNoReelRosterDb.program_air_time >= weekStartDate && unpostedNoReelRosterDb.program_air_time <= weekEndDate)
@@ -93,7 +93,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         IngestedMediaWeekId = x.ingested_media_week_id
                     }).ToList();
 
-                return Task.FromResult(unpostedNoReelRosterEntities);
+                return unpostedNoReelRosterEntities;
             });
         }
     }

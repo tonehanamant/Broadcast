@@ -57,7 +57,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public async Task GetSpotExceptionsUnposted_Exist()
+        public void GetSpotExceptionsUnposted_Exist()
         {
             // Arrange
             OutOfSpecUnpostedRequestDto spotExceptionsUnpostedRequest = new OutOfSpecUnpostedRequestDto
@@ -70,19 +70,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             List<OutOfSpecUnpostedNoReelRosterDto> unpostedNoReelRoster = GetOutOfSpecUnpostedNoReelRoster();
 
             _SpotExceptionsUnpostedRepositoryV2Mock
-                .Setup(x => x.GetSpotExceptionUnpostedNoPlanAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(unpostedNoPlan));
+                .Setup(x => x.GetSpotExceptionUnpostedNoPlan(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(unpostedNoPlan);
 
             _SpotExceptionsUnpostedRepositoryV2Mock
-                .Setup(x => x.GetSpotExceptionUnpostedNoReelRosterAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(unpostedNoReelRoster));
+                .Setup(x => x.GetSpotExceptionUnpostedNoReelRoster(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(unpostedNoReelRoster);
 
             _SpotLengthRepositoryMock
                 .Setup(x => x.GetSpotLengthById(It.IsAny<int>()))
                 .Returns(30);
 
             // Act
-            var result = await _SpotExceptionsUnpostedServiceV2.GetOutOfSpecUnpostedAsync(spotExceptionsUnpostedRequest);
+            var result = _SpotExceptionsUnpostedServiceV2.GetOutOfSpecUnposted(spotExceptionsUnpostedRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -91,7 +91,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
         [Test]
-        public async Task GetSpotExceptionsUnposted_DoesNotExist()
+        public void GetSpotExceptionsUnposted_DoesNotExist()
         {
             // Arrange
             OutOfSpecUnpostedRequestDto spotExceptionsUnpostedRequest = new OutOfSpecUnpostedRequestDto
@@ -104,15 +104,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             List<OutOfSpecUnpostedNoReelRosterDto> unpostedNoReelRoster = new List<OutOfSpecUnpostedNoReelRosterDto>(0);
 
             _SpotExceptionsUnpostedRepositoryV2Mock
-                .Setup(x => x.GetSpotExceptionUnpostedNoPlanAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(unpostedNoPlan));
+                .Setup(x => x.GetSpotExceptionUnpostedNoPlan(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(unpostedNoPlan);
 
             _SpotExceptionsUnpostedRepositoryV2Mock
-                .Setup(x => x.GetSpotExceptionUnpostedNoReelRosterAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(unpostedNoReelRoster));
+                .Setup(x => x.GetSpotExceptionUnpostedNoReelRoster(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(unpostedNoReelRoster);
 
             // Act
-            var result = await _SpotExceptionsUnpostedServiceV2.GetOutOfSpecUnpostedAsync(spotExceptionsUnpostedRequest);
+            var result = _SpotExceptionsUnpostedServiceV2.GetOutOfSpecUnposted(spotExceptionsUnpostedRequest);
 
             // Assert
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -134,18 +134,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             List<OutOfSpecUnpostedNoReelRosterDto> unpostedNoReelRoster = GetOutOfSpecUnpostedNoReelRoster();
 
             _SpotExceptionsUnpostedRepositoryV2Mock
-                .Setup(x => x.GetSpotExceptionUnpostedNoPlanAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(unpostedNoPlan));
+                .Setup(x => x.GetSpotExceptionUnpostedNoPlan(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(unpostedNoPlan);
 
             _SpotExceptionsUnpostedRepositoryV2Mock
-                .Setup(x => x.GetSpotExceptionUnpostedNoReelRosterAsync(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Setup(x => x.GetSpotExceptionUnpostedNoReelRoster(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Callback(() =>
                 {
                     throw new CadentException("Throwing a test exception.");
                 });
 
             // Act           
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsUnpostedServiceV2.GetOutOfSpecUnpostedAsync(spotExceptionsUnpostedRequest));
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsUnpostedServiceV2.GetOutOfSpecUnposted(spotExceptionsUnpostedRequest));
 
             // Assert
             Assert.AreEqual("Could not retrieve the Out Of Spec Unposted from the Database", result.Message);
