@@ -136,6 +136,19 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// save the bulk edit for out of spec todo
+        /// </summary>
+        [HttpPost]
+        [Route("out-of-spec-spot-bulk-edit-todo")]
+        public BaseResponse<bool> SaveOutOfSpecSpotBulkEditToDo(SaveOutOfSpecSpotBulkEditRequestDto saveOutOfSpecSpotBulkEditRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecSpotBulkEditToDo(saveOutOfSpecSpotBulkEditRequest, userName));
+        }
+
+        /// <summary>
         /// save the buld edit for out of spec done
         /// </summary>
         [HttpPost]

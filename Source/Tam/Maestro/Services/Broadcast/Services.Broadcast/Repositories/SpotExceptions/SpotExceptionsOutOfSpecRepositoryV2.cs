@@ -759,7 +759,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 return OutOfSpecDecisionCount;
             });
-        }        
+        }
 
         private string _GetAudienceName(audience audienceEntity)
         {
@@ -791,7 +791,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
             };
             return spotLength;
         }
-        
+
         private OutOfSpecSpotsToDoDto _MapOutOfSpecSpotsToDoToDto(spot_exceptions_out_of_specs outOfSpecsEntity, station stationEntity, spot_exceptions_out_of_spec_comments commentsEntity)
         {
             var planVersion = outOfSpecsEntity.plan?.plan_versions.First(v => v.id == outOfSpecsEntity.plan.latest_version_id);

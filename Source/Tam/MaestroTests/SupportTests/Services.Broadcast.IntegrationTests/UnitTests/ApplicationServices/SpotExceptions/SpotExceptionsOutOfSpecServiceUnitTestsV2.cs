@@ -2258,5 +2258,101 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 }
             };
         }
+        [Test]
+        public void OutOfSpecSpotBulkEditTodo()
+        {
+            // Arrange
+            var spotIds = new List<int>();
+            spotIds.Add(514109);
+            spotIds.Add(514118);
+            var outOfSpecSpotBulkEditToDoRequest = new SaveOutOfSpecSpotBulkEditRequestDto
+            {
+                SpotIds = spotIds,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    Comments = "Comment Saved By Unittests",
+                    ProgramName = "PAID PROGRAMMING",
+                    GenreName = "PAID PROGRAM",
+                    DaypartCode = "TDN"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+              .Returns(_GetOutOfSpecPlanSpotsData());
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotBulkEditToDo(outOfSpecSpotBulkEditToDoRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+        [Test]
+        public void OutOfSpecSpotBulkEditTodo_WithoutComments()
+        {
+            // Arrange
+            var spotIds = new List<int>();
+            spotIds.Add(514109);
+            spotIds.Add(514118);
+            var outOfSpecSpotBulkEditToDoRequest = new SaveOutOfSpecSpotBulkEditRequestDto
+            {
+                SpotIds = spotIds,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    Comments = "",
+                    ProgramName = "PAID PROGRAMMING",
+                    GenreName = "PAID PROGRAM",
+                    DaypartCode = "TDN"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+              .Returns(_GetOutOfSpecPlanSpotsData());
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotBulkEditToDo(outOfSpecSpotBulkEditToDoRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+        [Test]
+        public void OutOfSpecSpotBulkEditTodo_ThrowsException()
+        {
+            // Arrange
+            var spotIds = new List<int>();
+            spotIds.Add(514109);
+            spotIds.Add(514118);
+            var outOfSpecSpotBulkEditToDoRequest = new SaveOutOfSpecSpotBulkEditRequestDto
+            {
+                SpotIds = spotIds,
+                Decisions = new OutOfSpecDecisionsToSaveRequestDto
+                {
+                    Comments = "Comment Saved By Unittests",
+                    ProgramName = "PAID PROGRAMMING",
+                    GenreName = "PAID PROGRAM",
+                    DaypartCode = "TDN"
+                }
+            };
+
+            string userName = "Test User";
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+               .Callback(() =>
+               {
+                   throw new CadentException("Throwing a test exception.");
+               });
+
+            // Act
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotBulkEditToDo(outOfSpecSpotBulkEditToDoRequest, userName));
+
+            // Assert
+            Assert.AreEqual("Could not Bulk Saving Decisions For Out of Spec Spot ToDo", result.Message);
+        }
+
     }
 }
