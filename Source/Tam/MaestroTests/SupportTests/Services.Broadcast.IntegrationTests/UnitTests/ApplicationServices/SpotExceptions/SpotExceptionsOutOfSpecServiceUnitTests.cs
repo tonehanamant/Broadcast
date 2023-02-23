@@ -1212,8 +1212,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             .Setup(s => s.SaveOutOfSpecCommentsAsync(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
             .Returns(Task.FromResult(expectedResult));
             _SpotExceptionsOutOfSpecRepositoryMock
-            .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
-            .Returns(Task.FromResult(_GetOutOfSpecToDoData()));
+            .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int?>>()))
+            .Returns(Task.FromResult(_GetOutOfSpecDoneData()));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);
@@ -1250,8 +1250,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             .Setup(s => s.SaveOutOfSpecCommentsAsync(It.IsAny<List<SpotExceptionOutOfSpecCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
             .Returns(Task.FromResult(expectedResult));
             _SpotExceptionsOutOfSpecRepositoryMock
-            .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int?>>()))
-            .Returns(Task.FromResult(_GetOutOfSpecToDoData()));
+            .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int?>>()))
+            .Returns(Task.FromResult(_GetOutOfSpecDoneData()));
 
             // Act
             var result = await _SpotExceptionsOutOfSpecService.HandleSaveSpotExceptionsOutOfSpecAsync(spotExceptionsOutOfSpecDecisionsPostsRequest, userName);

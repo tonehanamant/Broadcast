@@ -728,8 +728,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _LogInfo($"Starting: Saving Comments to Out of Spec Done");
             try
             {
-                var existingOutOfSpecsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoByIds(spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.TodoId).ToList());
-                var outOfSpecDoneComments = existingOutOfSpecsToDo.Select(doneOutOfSpecToAdd => new SpotExceptionOutOfSpecCommentsDto
+                var existingOutOfSpecsDone = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsDoneByIds(spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.DoneId).ToList());
+                var outOfSpecDoneComments = existingOutOfSpecsDone.Select(doneOutOfSpecToAdd => new SpotExceptionOutOfSpecCommentsDto
                 {
                     SpotUniqueHashExternal = doneOutOfSpecToAdd.SpotUniqueHashExternal,
                     ExecutionIdExternal = doneOutOfSpecToAdd.ExecutionIdExternal,
