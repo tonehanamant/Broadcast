@@ -360,6 +360,12 @@ namespace Services.Broadcast.BusinessEngines
                     DaypartOrganizationName = item.DaypartOrganizationName,
                     PlanDaypartId = planDaypartId
                 };
+
+                if (_IsAduForPlanningv2Enabled.Value)
+                {
+                    newWeeklyBreakdownItem.AduImpressions = item.Adu;
+                }
+
                 if (plan.TargetImpressions.HasValue && plan.TargetRatingPoints.HasValue && plan.Budget.HasValue)
                 {
                     _UpdateGoalsForWeeklyBreakdownItem(
@@ -402,6 +408,12 @@ namespace Services.Broadcast.BusinessEngines
                     WeeklyUnits = item.Units,
                     IsLocked = item.IsLocked
                 };
+
+                if (_IsAduForPlanningv2Enabled.Value)
+                {
+                    newWeeklyBreakdownItem.AduImpressions = item.Adu;
+                }
+
                 if (plan.TargetImpressions.HasValue && plan.TargetRatingPoints.HasValue && plan.Budget.HasValue)
                 {
                     _UpdateGoalsForWeeklyBreakdownItem(
@@ -447,6 +459,12 @@ namespace Services.Broadcast.BusinessEngines
                     WeeklyUnits = week.Units,
                     IsLocked = week.IsLocked
                 };
+
+                if (_IsAduForPlanningv2Enabled.Value)
+                {
+                    newWeeklyBreakdownItem.AduImpressions = week.Adu;
+                }
+
                 if (plan.TargetImpressions.HasValue && plan.TargetRatingPoints.HasValue && plan.Budget.HasValue)
                 {
                     _UpdateGoalsForWeeklyBreakdownItem(

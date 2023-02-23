@@ -517,11 +517,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
 
                 _ConvertImpressionsToRawFormat(plan);
-                plan.WeeklyBreakdownWeeks =
-                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
-                _CalculateDeliveryDataPerAudience(plan);
-                _SetPlanVersionNumber(plan);
-                _SetPlanFlightDays(plan);
 
                 if (plan.Status == PlanStatusEnum.Contracted &&
                     plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
@@ -529,7 +524,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
                 }
 
-                _VerifyWeeklyAdu(plan.IsAduEnabled ?? false, plan.WeeklyBreakdownWeeks);
+                plan.WeeklyBreakdownWeeks =
+                    _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                _CalculateDeliveryDataPerAudience(plan);
+                _SetPlanVersionNumber(plan);
+                _SetPlanFlightDays(plan);
 
                 processTimers.End(SW_KEY_PRE_PLAN_SAVE);
                 processTimers.Start(SW_KEY_PLAN_SAVE);
@@ -691,11 +690,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     plan.GoalBreakdownType = PlanGoalBreakdownTypeEnum.CustomByWeek;
                 }
 
-                if (plan.IsAduEnabled.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
-                {
-                    _VerifyWeeklyAdu(plan.IsAduEnabled.Value, plan.WeeklyBreakdownWeeks);
-                }
-
                 if (plan.Id > 0)
                 {
                     var key = KeyHelper.GetPlanLockingKey(plan.Id);
@@ -733,6 +727,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         private static void _InitAduOnlyPlanGoals(PlanDto plan)
         {
+            // make sure this is set to true
+            plan.IsAduEnabled = true;
+
             // init goal related properties
             plan.Budget = plan.Budget ?? 0;
             plan.TargetImpressions = plan.TargetImpressions ?? 0;
@@ -989,14 +986,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.FlightDays.AddRange(days.Select(x => x.Id));
         }
 
-        private void _VerifyWeeklyAdu(bool isAduEnabled, List<WeeklyBreakdownWeek> weeks)
-        {
-            if (isAduEnabled) return;
-
-            foreach (var week in weeks)
-                week.AduImpressions = 0;
-        }
-
         internal void _ConvertImpressionsToRawFormat(PlanDto plan)
         {
             //the UI is sending the user entered value instead of the raw value. BE needs to adjust
@@ -1012,7 +1001,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (_IsAduForPlanningv2Enabled.Value)
             {
                 // ADUs are (000) not Units
-                plan.WeeklyBreakdownWeeks.ForEach(w => w.WeeklyAdu *= 1000);
+                plan.WeeklyBreakdownWeeks.ForEach(w =>
+                {
+                    w.WeeklyAdu *= 1000;
+                    w.AduImpressions *= 1000;
+                });
             }
         }
 
@@ -1047,8 +1040,17 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (_IsAduForPlanningv2Enabled.Value)
             {
                 // ADUs are (000) not Units
-                plan.WeeklyBreakdownWeeks.ForEach(w => w.WeeklyAdu /= 1000);
-                plan.RawWeeklyBreakdownWeeks.ForEach(w => w.WeeklyAdu /= 1000);
+                plan.WeeklyBreakdownWeeks.ForEach(w =>
+                {
+                    w.WeeklyAdu /= 1000;
+                    w.AduImpressions /= 1000;
+                });
+                // Do raw also since that may bet sent back.
+                plan.RawWeeklyBreakdownWeeks.ForEach(w =>
+                {
+                    w.WeeklyAdu /= 1000;
+                    w.AduImpressions /= 1000;
+                });
             }
         }
 
@@ -1191,6 +1193,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 VersionNumber = plan.VersionNumber,
                 VersionId = plan.VersionId,
                 IsAduEnabled = plan.IsAduEnabled,
+                IsAduPlan = plan.IsAduPlan,
                 ImpressionsPerUnit = plan.ImpressionsPerUnit,
                 BuyingParameters = plan.BuyingParameters,
                 JobId = plan.JobId,
@@ -1266,6 +1269,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 VersionNumber = plan.VersionNumber,
                 VersionId = plan.VersionId,
                 IsAduEnabled = plan.IsAduEnabled,
+                IsAduPlan = plan.IsAduPlan,
                 ImpressionsPerUnit = plan.ImpressionsPerUnit,
                 BuyingParameters = plan.BuyingParameters,
                 JobId = plan.JobId,
