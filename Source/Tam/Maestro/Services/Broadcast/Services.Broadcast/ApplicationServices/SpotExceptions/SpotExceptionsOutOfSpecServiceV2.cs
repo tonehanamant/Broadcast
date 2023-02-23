@@ -106,6 +106,11 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
         bool SaveOutOfSpecSpotBulkEditToDo(SaveOutOfSpecSpotBulkEditRequestDto saveOutOfSpecSpotBulkEditRequest, string userName);
+
+        /// <summary>
+        /// Saves spot exception out of spec comments on done tab
+        /// </summary>
+        bool SaveOutOfSpecCommentsDone(SaveOutOfSpecSpotCommentsRequestDto outOfSpecCommentRequest, string userName);
     }
 
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
@@ -928,6 +933,60 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
 
             return isSaved;
+        }
+        
+        /// <inheritdoc />
+        public bool SaveOutOfSpecCommentsDone(SaveOutOfSpecSpotCommentsRequestDto outOfSpecCommentRequest, string userName)
+        {
+            var isSaved = false;
+
+            _LogInfo($"Starting: Saving Out of Spec done comments");
+            try
+            {
+                if (!string.IsNullOrEmpty(outOfSpecCommentRequest.Comment))
+                {
+                    isSaved = _SaveOutOfSpecComments(outOfSpecCommentRequest, userName);
+                }
+                _LogInfo($"Finished: Saving Out of Spec done comments");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not saveOut of Spec done comments";
+                throw new CadentException(msg, ex);
+            }
+
+            return isSaved;
+        }
+        private bool _SaveOutOfSpecComments(SaveOutOfSpecSpotCommentsRequestDto outOfSpecCommentRequest, string userName)
+        {
+            bool isCommentSaved;
+
+            _LogInfo($"Starting: Saving Comments to Out of Spec Done");
+            try
+            {
+                var existingOutOfSpecsDone = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneByIds(outOfSpecCommentRequest.SpotIds);
+
+                var outOfSpecDoneComments = existingOutOfSpecsDone.Select(doneOutOfSpecToAdd => new OutOfSpecSpotCommentsDto
+                {
+                    SpotUniqueHashExternal = doneOutOfSpecToAdd.SpotUniqueHashExternal,
+                    ExecutionIdExternal = doneOutOfSpecToAdd.ExecutionIdExternal,
+                    IsciName = doneOutOfSpecToAdd.IsciName,
+                    RecommendedPlanId = doneOutOfSpecToAdd.RecommendedPlanId.Value,
+                    StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
+                    ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
+                    ReasonCode = doneOutOfSpecToAdd.OutOfSpecSpotReasonCodes.Id,
+                    Comment = outOfSpecCommentRequest.Comment
+                }).ToList();
+                isCommentSaved = _SpotExceptionsOutOfSpecRepositoryV2.SaveOutOfSpecSpotComments(outOfSpecDoneComments, userName, DateTime.Now);
+                _LogInfo($"Finished: Saving Comments to Out of Spec Done");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not save Comments to Out of Spec Done";
+                throw new CadentException(msg, ex);
+            }
+
+            return isCommentSaved;
         }
     }
 }

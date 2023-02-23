@@ -2354,5 +2354,93 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Assert.AreEqual("Could not Bulk Saving Decisions For Out of Spec Spot ToDo", result.Message);
         }
 
+        [Test]
+        public void SaveOutOfSpecCommentsDone_WithoutComments()
+        {
+            // Arrange
+            string userName = "Test User";
+            List<int> spots = new List<int>();
+            spots.Add(101);
+            spots.Add(102);
+            var request = new SaveOutOfSpecSpotCommentsRequestDto
+            {
+                SpotIds = spots,
+                Comment = String.Empty
+            };
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecCommentsDone(request, userName);
+
+            // Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [Test]
+        public void SaveOutOfSpecCommentsDone_WithComments()
+        {
+            // Arrange
+            string userName = "Test User";
+            List<int> spots = new List<int>();
+            spots.Add(101);
+            spots.Add(102);
+            var request = new SaveOutOfSpecSpotCommentsRequestDto
+            {
+                SpotIds = spots,
+                Comment = "Comment from Unitests"
+            };
+
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecSpotComments(It.IsAny<List<OutOfSpecSpotCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(expectedResult);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(_GetOutOfSpecDoneData());
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecCommentsDone(request, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveOutOfSpecCommentsDone_ThrowException()
+        {
+            // Arrange
+            string userName = "Test User";
+            List<int> spots = new List<int>();
+            spots.Add(101);
+            spots.Add(102);
+            var request = new SaveOutOfSpecSpotCommentsRequestDto
+            {
+                SpotIds = spots,
+                Comment = "Comment from Unitests"
+            };
+
+            string expectedResult = $"Could not saveOut of Spec done comments";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecSpotComments(It.IsAny<List<OutOfSpecSpotCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+             .Callback(() =>
+             {
+                 throw new CadentException("Throwing a test exception.");
+             });
+
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(_GetOutOfSpecDoneData());
+
+            //// Act           
+            var result = Assert.Throws<CadentException>(() =>
+            _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecCommentsDone(request, userName));
+
+            //// Assert
+            Assert.AreEqual(expectedResult, result.Message);
+        }
+
     }
 }

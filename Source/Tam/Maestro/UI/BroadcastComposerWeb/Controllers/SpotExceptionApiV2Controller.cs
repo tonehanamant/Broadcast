@@ -136,6 +136,19 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// save the buld edit for out of spec done
+        /// </summary>
+        [HttpPost]
+        [Route("out-of-spec-spot-comments-done")]
+        public BaseResponse<bool> SaveOutOfSpecSpotDoneComments(SaveOutOfSpecSpotCommentsRequestDto outOfSpecCommentRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecCommentsDone(outOfSpecCommentRequest, userName));
+        }
+
+        /// <summary>
         /// save the bulk edit for out of spec todo
         /// </summary>
         [HttpPost]
