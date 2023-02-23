@@ -11,6 +11,7 @@ using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.ReportGenerators.SpotExceptions;
+using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.SpotExceptions;
 using System;
 using System.Collections.Generic;
@@ -111,10 +112,18 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// Saves spot exception out of spec comments on done tab
         /// </summary>
         bool SaveOutOfSpecCommentsDone(SaveOutOfSpecSpotCommentsRequestDto outOfSpecCommentRequest, string userName);
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec spots for ToDo.
+        /// </summary>
+        /// <param name="OutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
+        /// <returns></returns>
+        List<OutOfSpecSpotsResultDto> GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest);
     }
 
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
     {
+        const int fourHundred = 400;
         const string fileMediaType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         const string outOfSpecBuyerExportFileName = "Template - Out of Spec Report Buying Team.xlsx";
 
@@ -125,8 +134,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IGenreCache _GenreCache;
         private readonly IAabEngine _AabEngine;
-
+        private readonly IPlanRepository _PlanRepository;
         private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
+        private readonly Lazy<bool> _IsSpotExceptionEnabled;
 
         public SpotExceptionsOutOfSpecServiceV2(
           IDataRepositoryFactory dataRepositoryFactory,
@@ -146,6 +156,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _GenreCache = genreCache;
             _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
             _AabEngine = aabEngine;
+            _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
+            _IsSpotExceptionEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS));
         }
 
         /// <inheritdoc />
@@ -987,6 +999,63 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
 
             return isCommentSaved;
+        }
+        /// <inheritdoc />
+        public List<OutOfSpecSpotsResultDto> GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest)
+        {
+            int marketRank = 0;
+            var outOfSpecPlanSpots = new List<OutOfSpecSpotsResultDto>();
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Spots");
+            try
+            {
+                var outOfSpecSpotsToDo = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest.PlanId, OutOfSpecSpotsRequest.WeekStartDate, OutOfSpecSpotsRequest.WeekEndDate);
+
+                if (outOfSpecSpotsToDo?.Any() ?? false)
+                {
+                    var planIds = outOfSpecSpotsToDo.Select(p => p.PlanId).Distinct().ToList();
+                    var daypartsList = _PlanRepository.GetPlanDaypartsByPlanIds(planIds);
+
+                    outOfSpecPlanSpots = outOfSpecSpotsToDo
+                    .Select(activePlan =>
+                    {
+                        marketRank = activePlan.MarketRank == null ? 0 : activePlan.MarketRank.Value;
+                        return new OutOfSpecSpotsResultDto
+                        {
+                            Id = activePlan.Id,
+                            EstimateId = activePlan.EstimateId,
+                            Reason = activePlan.OutOfSpecSpotReasonCodes.Reason,
+                            ReasonLabel = activePlan.OutOfSpecSpotReasonCodes.Label,
+                            MarketRank = activePlan.MarketRank,
+                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA,
+                            Market = activePlan.Market,
+                            Station = activePlan.StationLegacyCallLetters,
+                            TimeZone = activePlan.TimeZone,
+                            Affiliate = activePlan.Affiliate,
+                            Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
+                            GenreName = activePlan.GenreName,
+                            HouseIsci = activePlan.HouseIsci,
+                            ClientIsci = activePlan.IsciName,
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
+                            ProgramName = activePlan.ProgramName,
+                            SpotLengthString = activePlan.SpotLength != null ? $":{activePlan.SpotLength.Length}" : null,
+                            DaypartCode = activePlan.DaypartCode,
+                            Comments = activePlan.Comment,
+                            PlanDaypartCodes = daypartsList.Where(d => d.PlanId == activePlan.PlanId).Select(s => s.Code).Distinct().ToList(),
+                            InventorySourceName = activePlan.InventorySourceName
+                        };
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Spots";
+                throw new CadentException(msg, ex);
+            }
+
+            _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Spots");
+
+            return outOfSpecPlanSpots;
         }
     }
 }

@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using ApprovalTests;
 using ApprovalTests.Reporters;
+using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.SpotExceptions
 {
@@ -2441,6 +2442,90 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             //// Assert
             Assert.AreEqual(expectedResult, result.Message);
         }
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlanSpots_Exist()
+        {
+            // Arrange
+            var expectedValue = 4;
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
 
+            var outOfSpecToDo = _GetOutOfSpecPlanSpotsData();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _PlanRepositoryMock
+               .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+               .Returns(new List<PlanDaypartDetailsDto>
+                   {
+                        new PlanDaypartDetailsDto
+                        {
+                        PlanId=215,
+                        Code="ROSP",
+                        Name="ROS Programming"
+                        },
+                         new PlanDaypartDetailsDto
+                        {
+                        PlanId=215,
+                        Code="TDNS",
+                        Name="Total Day News and Syndication"
+                        }
+                   }
+               );
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest);
+
+            // Assert
+            Assert.AreEqual(expectedValue,result.Count);
+        }
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlanSpots_DoesNotExist()
+        {
+            List<OutOfSpecSpotsToDoDto> outOfSpecToDo = null;
+            var expectedValue = 0;
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest);
+
+            // Assert            
+            Assert.AreEqual(expectedValue,result.Count);
+        }
+        [Test]
+        public void GetSpotExceptionsOutOfSpecsPlanSpots_ThrowsException()
+        {
+            // Arrange
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            var outOfSpecToDo = _GetOutOfSpecPlanSpotsData();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDo(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            // Act           
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest));
+
+            // Assert
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spots", result.Message);
+        }
     }
 }

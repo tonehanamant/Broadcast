@@ -933,6 +933,7 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodeResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodesDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsDoneDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsResultDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsToDoDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SaveOutOfSpecPlanAcceptanceRequestDto.cs" />
