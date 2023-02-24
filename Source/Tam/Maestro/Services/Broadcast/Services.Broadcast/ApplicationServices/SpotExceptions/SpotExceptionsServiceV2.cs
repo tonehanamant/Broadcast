@@ -60,7 +60,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             _LogInfo($"Beginning results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
 
-            bool result;
+            bool result = false;
             var currentDate = _DateTimeEngine.GetCurrentMoment();
 
             if (_IsNotifyDataReadyEnabled.Value)
@@ -84,7 +84,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         _LogInfo($"Attempting to verify the state of last running job with a runId '{runningSyncRunId}'.");
                         var jobState = await _SpotExceptionValidator.ValidateSyncAlreadyRunning(runningSyncRunId);
 
-                        if(jobState.Result.State.State != "RUNNING")
+                        if(jobState.Result.State.State != "RUNNING" || jobState.Result.State.State != "PENDING")
                         {
                             _SpotExceptionsRepositoryV2.SetCurrentJobToComplete(jobState);
                         }
@@ -98,8 +98,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 }
                 catch (SpotExceptionsException ex)
                 {
-                    var msg = $"Sync can not be initiated";
-                    throw new SpotExceptionsException(msg, ex);
+                    throw new SpotExceptionsException(ex.Message);
                 }
                                 
                 _LogInfo($"Successfully notified consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");

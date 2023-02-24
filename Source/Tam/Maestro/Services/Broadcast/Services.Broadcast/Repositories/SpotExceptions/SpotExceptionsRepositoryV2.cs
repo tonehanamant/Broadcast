@@ -122,17 +122,30 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         {
             _InReadUncommitedTransaction(context =>
             {
-                var entity = new spot_exceptions_results_jobs
-                {
-                    databricks_job_id = -1,
-                    databricks_run_id = -1,
-                    queued_at = date,
-                    queued_by = request.RequestedBy,
-                    completed_at = null,
-                    result = null
-                };
+                var existingJob = context.spot_exceptions_results_jobs.First();
 
-                context.spot_exceptions_results_jobs.Add(entity);
+                if (existingJob != null)
+                {
+                    existingJob.databricks_job_id = -1;
+                    existingJob.databricks_run_id = -1;
+                    existingJob.queued_at = date;
+                    existingJob.queued_by = request.RequestedBy;
+                }
+                else
+                {
+                    var entity = new spot_exceptions_results_jobs
+                    {
+                        databricks_job_id = -1,
+                        databricks_run_id = -1,
+                        queued_at = date,
+                        queued_by = request.RequestedBy,
+                        completed_at = null,
+                        result = null
+                    };
+
+                    context.spot_exceptions_results_jobs.Add(entity);
+                }
+               
                 context.SaveChanges();
             });
         }
