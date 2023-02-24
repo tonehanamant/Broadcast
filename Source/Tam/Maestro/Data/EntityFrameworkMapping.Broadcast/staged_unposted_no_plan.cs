@@ -20,7 +20,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int client_spot_length { get; set; }
         public int spot_count { get; set; }
         public System.DateTime program_air_time { get; set; }
-        public long estimate_id { get; set; }
+        public Nullable<int> estimate_id { get; set; }
         public string ingested_by { get; set; }
         public System.DateTime ingested_at { get; set; }
     }

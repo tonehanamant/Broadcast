@@ -48,8 +48,8 @@ namespace EntityFrameworkMapping.Broadcast
         public string spot_unique_hash_external { get; set; }
         public string execution_id_external { get; set; }
     
-        public virtual spot_exceptions_recommended_plans_done spot_exceptions_recommended_plans_done { get; set; }
         public virtual ICollection<spot_exceptions_recommended_plan_done_decisions> spot_exceptions_recommended_plan_done_decisions { get; set; }
         public virtual plan plan { get; set; }
+        public virtual spot_exceptions_recommended_plans_done spot_exceptions_recommended_plans_done { get; set; }
     }
 }

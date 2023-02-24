@@ -36,10 +36,10 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
             this.plan_version_daypart_weekly_breakdown = new HashSet<plan_version_daypart_weekly_breakdown>();
             this.plan_iscis = new HashSet<plan_iscis>();
-            this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
-            this.spot_exceptions_recommended_plans_done = new HashSet<spot_exceptions_recommended_plans_done>();
             this.spot_exceptions_out_of_specs = new HashSet<spot_exceptions_out_of_specs>();
             this.spot_exceptions_out_of_specs_done = new HashSet<spot_exceptions_out_of_specs_done>();
+            this.spot_exceptions_recommended_plans = new HashSet<spot_exceptions_recommended_plans>();
+            this.spot_exceptions_recommended_plans_done = new HashSet<spot_exceptions_recommended_plans_done>();
             this.spot_exceptions_unposted_no_plan = new HashSet<spot_exceptions_unposted_no_plan>();
         }
     
@@ -69,10 +69,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual ICollection<plan_version_daypart_weekly_breakdown> plan_version_daypart_weekly_breakdown { get; set; }
         public virtual ICollection<plan_iscis> plan_iscis { get; set; }
-        public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
-        public virtual ICollection<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
         public virtual ICollection<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
         public virtual ICollection<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
+        public virtual ICollection<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
+        public virtual ICollection<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
         public virtual ICollection<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
     }
 }

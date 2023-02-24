@@ -236,19 +236,10 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<campaign_plan_secondary_audiences> campaign_plan_secondary_audiences { get; set; }
         public virtual DbSet<stations_secondary_affiliations> stations_secondary_affiliations { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_details> spot_exceptions_recommended_plan_details { get; set; }
-        public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
-        public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
-        public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
-        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
-        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
-        public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
-        public virtual DbSet<staged_unposted_no_plan> staged_unposted_no_plan { get; set; }
-        public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
         public virtual DbSet<spot_exceptions_ingest_jobs> spot_exceptions_ingest_jobs { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_done_decisions> spot_exceptions_out_of_spec_done_decisions { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_details_done> spot_exceptions_recommended_plan_details_done { get; set; }
         public virtual DbSet<spot_exceptions_recommended_plan_done_decisions> spot_exceptions_recommended_plan_done_decisions { get; set; }
-        public virtual DbSet<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
         public virtual DbSet<program_name_mappings> program_name_mappings { get; set; }
         public virtual DbSet<program> programs { get; set; }
         public virtual DbSet<scx_generation_open_market_job_affiliates> scx_generation_open_market_job_affiliates { get; set; }
@@ -258,10 +249,19 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual DbSet<scx_generation_open_market_job_files> scx_generation_open_market_job_files { get; set; }
         public virtual DbSet<scx_generation_open_market_job_markets> scx_generation_open_market_job_markets { get; set; }
         public virtual DbSet<spot_exceptions_results_jobs> spot_exceptions_results_jobs { get; set; }
-        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
-        public virtual DbSet<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
         public virtual DbSet<spot_exceptions_out_of_spec_comments> spot_exceptions_out_of_spec_comments { get; set; }
         public virtual DbSet<market_time_zones> market_time_zones { get; set; }
         public virtual DbSet<time_zones> time_zones { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_specs> spot_exceptions_out_of_specs { get; set; }
+        public virtual DbSet<spot_exceptions_out_of_specs_done> spot_exceptions_out_of_specs_done { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plans> spot_exceptions_recommended_plans { get; set; }
+        public virtual DbSet<spot_exceptions_recommended_plans_done> spot_exceptions_recommended_plans_done { get; set; }
+        public virtual DbSet<spot_exceptions_unposted_no_plan> spot_exceptions_unposted_no_plan { get; set; }
+        public virtual DbSet<spot_exceptions_unposted_no_reel_roster> spot_exceptions_unposted_no_reel_roster { get; set; }
+        public virtual DbSet<staged_out_of_specs> staged_out_of_specs { get; set; }
+        public virtual DbSet<staged_recommended_plan_details> staged_recommended_plan_details { get; set; }
+        public virtual DbSet<staged_recommended_plans> staged_recommended_plans { get; set; }
+        public virtual DbSet<staged_unposted_no_plan> staged_unposted_no_plan { get; set; }
+        public virtual DbSet<staged_unposted_no_reel_roster> staged_unposted_no_reel_roster { get; set; }
     }
 }

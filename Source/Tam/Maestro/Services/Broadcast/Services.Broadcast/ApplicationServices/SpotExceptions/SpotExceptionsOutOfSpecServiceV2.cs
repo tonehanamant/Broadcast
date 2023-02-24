@@ -1076,7 +1076,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         return new OutOfSpecSpotsResultDto
                         {
                             Id = activePlan.Id,
-                            EstimateId = activePlan.EstimateId,
+                            EstimateId = activePlan.EstimateId.Value,
                             Reason = activePlan.OutOfSpecSpotReasonCodes.Reason,
                             ReasonLabel = activePlan.OutOfSpecSpotReasonCodes.Label,
                             MarketRank = activePlan.MarketRank,

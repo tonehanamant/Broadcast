@@ -8,7 +8,7 @@
         public int? ClientSpotLengthId { get; set; }
         public int Count { get; set; }
         public System.DateTime ProgramAirTime { get; set; }
-        public long EstimateID { get; set; }
+        public long? EstimateID { get; set; }
         public string IngestedBy { get; set; }
         public System.DateTime IngestedAt { get; set; }
         public int IngestMediaWeekId { get; set; }

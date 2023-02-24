@@ -1593,6 +1593,7 @@ END
 GO
 
 /*************************************** END BP-6385 ************************************/
+
 /*************************************** START BS-131 ***************************************/
 
 IF OBJECT_ID('spot_exceptions_out_of_spec_comments') IS NULL
@@ -1753,6 +1754,7 @@ is_true_ind = 0
 WHERE legacy_call_letters = 'ETVW';
 END
 /*************************************** END BP-6445 ***************************************/
+
 /*************************************** START BS-535 ***************************************/
 IF OBJECT_ID('time_zones') IS NULL
 BEGIN
@@ -2538,6 +2540,44 @@ GO
 
 /*************************************** END BS-640 ***************************************/
 
+/*************************************** START BS-692 ***************************************/
+
+IF EXISTS (SELECT COLUMNPROPERTY(OBJECT_ID('spot_exceptions_out_of_specs', 'U'), 'estimate_id', 'AllowsNull'))
+BEGIN
+
+	ALTER TABLE staged_out_of_specs
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE staged_recommended_plans
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE staged_unposted_no_plan
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE staged_unposted_no_reel_roster
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE spot_exceptions_out_of_specs
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE spot_exceptions_out_of_specs_done
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE spot_exceptions_recommended_plans
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE spot_exceptions_recommended_plans_done
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE spot_exceptions_unposted_no_plan
+		ALTER COLUMN estimate_id int NULL;
+
+	ALTER TABLE spot_exceptions_unposted_no_reel_roster
+		ALTER COLUMN estimate_id int NULL;
+
+END
+
+/*************************************** END Bs-692 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 

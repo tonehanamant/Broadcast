@@ -23,7 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string spot_unique_hash_external { get; set; }
         public string execution_id_external { get; set; }
         public string reason_code_message { get; set; }
-        public int estimate_id { get; set; }
+        public Nullable<int> estimate_id { get; set; }
         public string isci_name { get; set; }
         public Nullable<int> recommended_plan_id { get; set; }
         public string program_name { get; set; }

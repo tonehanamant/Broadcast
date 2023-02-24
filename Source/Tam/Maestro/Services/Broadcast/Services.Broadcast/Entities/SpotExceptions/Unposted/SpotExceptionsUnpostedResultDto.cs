@@ -25,7 +25,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.Unposted
         public string ClientSpotLength { get; set; }
         public int AffectedSpotsCount { get; set; }
         public string ProgramAirDate { get; set; }
-        public long EstimateId { get; set; }
+        public long? EstimateId { get; set; }
     }
 
     public class SpotExceptionOutOfSpecNoReelRosterDto

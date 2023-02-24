@@ -23,7 +23,7 @@ namespace EntityFrameworkMapping.Broadcast
         public string spot_unique_hash_external { get; set; }
         public int ambiguity_code { get; set; }
         public string execution_id_external { get; set; }
-        public int estimate_id { get; set; }
+        public Nullable<int> estimate_id { get; set; }
         public string inventory_source { get; set; }
         public string house_isci { get; set; }
         public string client_isci { get; set; }

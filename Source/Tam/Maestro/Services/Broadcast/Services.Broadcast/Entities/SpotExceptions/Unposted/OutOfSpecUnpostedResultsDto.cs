@@ -63,7 +63,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.Unposted
         /// Gets or sets the estimate identifier.
         /// </summary>
         /// <value>The estimate identifier.</value>
-        public long EstimateId { get; set; }
+        public long? EstimateId { get; set; }
     }
 
     /// <summary></summary>
@@ -91,6 +91,6 @@ namespace Services.Broadcast.Entities.SpotExceptions.Unposted
         /// Gets or sets the estimate identifier.
         /// </summary>
         /// <value>The estimate identifier.</value>
-        public long EstimateId { get; set; }
+        public long? EstimateId { get; set; }
     }
 }

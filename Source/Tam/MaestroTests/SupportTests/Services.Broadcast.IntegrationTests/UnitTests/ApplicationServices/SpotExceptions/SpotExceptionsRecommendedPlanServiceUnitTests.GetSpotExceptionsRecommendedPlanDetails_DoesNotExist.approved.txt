@@ -1,5 +1,5 @@
 {
-  "EstimateId": 0,
+  "EstimateId": null,
   "FlightDateString": null,
   "FlightEndDate": null,
   "FlightStartDate": null,
