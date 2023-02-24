@@ -922,6 +922,7 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportReportData.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\DecisionSync\GetSyncStateResponseDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlanAdvertisersRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlansDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlanInventorySourcesRequestDto.cs" />

@@ -119,6 +119,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="OutOfSpecSpotsRequest">The spot exceptions out of spec spots request.</param>
         /// <returns></returns>
         List<OutOfSpecSpotsResultDto> GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest);
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec advertisers asynchronous.
+        /// </summary>
+        /// <param name="outofSpecPlanAdvertisersRequest">The spot exceptions outof spec advertisers request.</param>
+        /// <returns></returns>
+        List<MasterIdName> GetOutOfSpecAdvertisers(OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest);
     }
 
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
@@ -512,6 +519,53 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             var fileId = _SaveFile(report.Filename, report.Stream, userName);
             return fileId;
 
+        }
+
+        /// <inheritdoc />
+        public List<MasterIdName> GetOutOfSpecAdvertisers(OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest)
+        {
+            List<Guid?> outOfSpecSpotsToDo = null;
+            List<Guid?> outOfSpecSpotsDone = null;
+            List<MasterIdName> advertiserMasterIdAndName = new List<MasterIdName>();
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Advertisers");
+            try
+            {
+                outOfSpecSpotsToDo = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoAdvertisers(outofSpecPlanAdvertisersRequest.WeekStartDate, outofSpecPlanAdvertisersRequest.WeekEndDate);
+                outOfSpecSpotsDone = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneAdvertisers(outofSpecPlanAdvertisersRequest.WeekStartDate, outofSpecPlanAdvertisersRequest.WeekEndDate);
+
+                var advertiserMasterIds = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).Distinct().ToList();
+                if (advertiserMasterIds.Any())
+                {
+                    advertiserMasterIdAndName = advertiserMasterIds.Select(n => _GetAdvertiserIdAndName(n)).OrderBy(n => n.Name).ToList();
+                }
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Advertisers");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Advertisers";
+                throw new CadentException(msg, ex);
+            }
+            return advertiserMasterIdAndName;
+        }
+
+        private MasterIdName _GetAdvertiserIdAndName(Guid? masterId)
+        {
+            MasterIdName obj = new MasterIdName();
+            if (masterId.HasValue)
+            {
+                var advertiser = _AabEngine.GetAdvertiser(masterId.Value);
+                if (advertiser != null)
+                {
+                    obj.MasterId = advertiser.MasterId;
+                    obj.Name = advertiser.Name;
+                    return obj;
+                }
+            }
+            obj.MasterId = null;
+            obj.Name = "Unknown";
+            return obj;
         }
 
         /// <summary>

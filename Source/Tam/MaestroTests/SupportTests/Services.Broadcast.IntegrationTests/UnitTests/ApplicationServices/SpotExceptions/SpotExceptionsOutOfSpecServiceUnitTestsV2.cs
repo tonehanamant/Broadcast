@@ -2527,5 +2527,172 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             // Assert
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spots", result.Message);
         }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOutOfSpecAdvertisers_Exist()
+        {
+            // Arrange
+            OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecPlanAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            List<Guid?> outOfSpecToDo = new List<Guid?> { new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C") };
+            List<Guid?> outOfSpecDone = new List<Guid?> { new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7") };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { MasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"), Name = $"Advertiser With Id ='{g}'" });
+
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOutOfSpecAdvertisers_DoesNotExist()
+        {
+            // Arrange
+            OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecPlanAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            List<Guid?> outOfSpecToDo = new List<Guid?>();
+            List<Guid?> outOfSpecDone = new List<Guid?>();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { MasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"), Name = $"Advertiser With Id ='{g}'" });
+
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        public void GetOutOfSpecAdvertisers_DuplicateExist()
+        {
+            // Arrange
+            OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecPlanAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            List<Guid?> outOfSpecToDo = new List<Guid?> { new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"), new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"), new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7") };
+            List<Guid?> outOfSpecDone = new List<Guid?> { new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7"), new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7") };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _AabEngineMock.Setup(s => s.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns<Guid>(g => new AdvertiserDto { MasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B"), Name = $"Advertiser With Id ='{g}'" });
+
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+
+        [Test]
+        public void GetOutOfSpecAdvertisers_Unknown()
+        {
+            // Arrange
+            OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecPlanAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            List<Guid?> outOfSpecToDo = new List<Guid?> { new Guid() };
+            List<Guid?> outOfSpecDone = new List<Guid?> { new Guid() };
+
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _AabEngineMock.Setup(x => x.GetAdvertiser(It.IsAny<Guid>()))
+                .Returns(new AdvertiserDto
+                {
+                    Id = 432,
+                    Name = "ESPN",
+                    MasterId = new Guid("CFFFE6C6-0A33-44C5-8E12-FC1C0563591B")
+                });
+
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetOutOfSpecAdvertisers_ThrowsException()
+        {
+            // Arrange
+            OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecPlanAdvertisersRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            List<Guid?> outOfSpecToDo = new List<Guid?> { new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"), new Guid("4CDA85D1-2F40-4B27-A4AD-72A012907E3C"), new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7") };
+            List<Guid?> outOfSpecDone = new List<Guid?> { new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7"), new Guid("4679219D-64C9-4773-BB91-D3BBA83E0EB7") };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneAdvertisers(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            // Act
+            TestDelegate act = () => _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            var ex = Assert.Throws<CadentException>(() => act());
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Advertisers", ex.Message);
+        }
+
     }
 }

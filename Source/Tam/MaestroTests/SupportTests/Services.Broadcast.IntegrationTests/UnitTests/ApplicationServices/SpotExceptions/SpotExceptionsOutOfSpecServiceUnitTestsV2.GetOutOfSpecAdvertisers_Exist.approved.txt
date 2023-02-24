@@ -1,0 +1,10 @@
+[
+  {
+    "MasterId": "cfffe6c6-0a33-44c5-8e12-fc1c0563591b",
+    "Name": "Advertiser With Id ='4679219d-64c9-4773-bb91-d3bba83e0eb7'"
+  },
+  {
+    "MasterId": "cfffe6c6-0a33-44c5-8e12-fc1c0563591b",
+    "Name": "Advertiser With Id ='4cda85d1-2f40-4b27-a4ad-72a012907e3c'"
+  }
+]

@@ -229,5 +229,17 @@ namespace BroadcastComposerWeb.Controllers
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .GenerateOutOfSpecExportReport(request, fullName, DateTime.Now, appDataPath));
         }
+
+        /// <summary>
+        /// Gets the spot exceptions outof spec advertisers.
+        /// </summary>
+        /// <param name="outofSpecPlanAdvertisersRequest">The spot exceptions outof spec advertisers request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-advertisers")]
+        public BaseResponse<List<MasterIdName>> GetOutofSpecAdvertisers(OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest));
+        }
     }
 }

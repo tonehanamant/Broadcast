@@ -175,6 +175,22 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="decidedAt">The decided at.</param>
         /// <returns></returns>
         bool SaveOutOfSpecSpotDoneDecisions(List<OutOfSpecSpotDoneDecisionsDto> outOfSpecSpotDoneDecisions, string userName, DateTime decidedAt);
+
+        /// <summary>
+        /// Gets the out of spec spots to do advertisers asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        List<Guid?> GetOutOfSpecSpotsToDoAdvertisers(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// Gets the out of spec spots done advertisers asynchronous.
+        /// </summary>
+        /// <param name="weekStartDate">The week start date.</param>
+        /// <param name="weekEndDate">The week end date.</param>
+        /// <returns></returns>
+        List<Guid?> GetOutOfSpecSpotsDoneAdvertisers(DateTime weekStartDate, DateTime weekEndDate);
     }
 
     /// <summary>
@@ -758,6 +774,56 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                   .Count();
 
                 return OutOfSpecDecisionCount;
+            });
+        }
+
+        /// <inheritdoc />
+        public List<Guid?> GetOutOfSpecSpotsToDoAdvertisers(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            List<Guid?> spotExceptionsToDoAdvertisers = null;
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                spotExceptionsToDoAdvertisers = context.spot_exceptions_out_of_specs
+                   .Where(spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecToDoDb.program_air_time <= weekEndDate)
+                   .GroupJoin(
+                       context.stations
+                       .Include(stationDb => stationDb.market),
+                       spotExceptionsOutOfSpecToDoDb => spotExceptionsOutOfSpecToDoDb.station_legacy_call_letters,
+                       stationDb => stationDb.legacy_call_letters,
+                       (spotExceptionsOutOfSpecToDoDb, stationDb) => new { SpotExceptionsOutOfSpecToDo = spotExceptionsOutOfSpecToDoDb, Station = stationDb.FirstOrDefault() })
+                   .Select(r => r.SpotExceptionsOutOfSpecToDo.plan.campaign.advertiser_master_id)
+                   .ToList();
+
+                return spotExceptionsToDoAdvertisers;
+
+            });
+        }
+
+        /// <inheritdoc />
+        public List<Guid?> GetOutOfSpecSpotsDoneAdvertisers(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            List<Guid?> spotExceptionsDoneAdvertisers = null;
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                spotExceptionsDoneAdvertisers = context.spot_exceptions_out_of_specs_done
+                    .Where(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDoneDb.program_air_time <= weekEndDate)
+                    .GroupJoin(
+                        context.stations
+                        .Include(stationDb => stationDb.market),
+                        spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.station_legacy_call_letters,
+                        stationDb => stationDb.legacy_call_letters,
+                        (spotExceptionsOutOfSpecDoneDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDoneDb, Station = stationDb.FirstOrDefault() })
+                    .Select(r => r.SpotExceptionsOutOfSpec.plan.campaign.advertiser_master_id)
+                    .ToList();
+
+                return spotExceptionsDoneAdvertisers;
+
             });
         }
 
