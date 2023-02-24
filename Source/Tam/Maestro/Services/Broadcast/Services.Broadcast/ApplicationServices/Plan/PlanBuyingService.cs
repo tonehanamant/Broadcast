@@ -1067,6 +1067,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.Dayparts = plan.Dayparts.Where(daypart => !EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute())).ToList();
             }
 
+            var transactionId = Guid.NewGuid();
+            var msgStamp = $"JobId={jobId}; TxId={transactionId};";
+            _LogInfo($"Beginning Buying... {msgStamp}");
+
             var diagnostic = new PlanBuyingJobDiagnostic();
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
 
@@ -1120,10 +1124,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 token.ThrowIfCancellationRequested();
 
+                _LogInfo($"Preparing to call the Buying Model... {msgStamp}");
                 var modelAllocationResults = await _SendBuyingRequestsAsync(jobId, plan, inventory, planBuyingParametersDto, proprietaryInventoryData,
                     token, goalsFulfilledByProprietaryInventory, diagnostic);
-
+                
                 token.ThrowIfCancellationRequested();
+
+                _LogInfo($"Validating results {msgStamp}");
 
                 /*** Validate the Results ***/
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_VALIDATING_ALLOCATION_RESULT);
@@ -1135,8 +1142,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 token.ThrowIfCancellationRequested();
 
+                _LogInfo($"Calculating plan buying band inventory... {msgStamp}");
                 _CalculatePlanBuyingBandInventory(modelAllocationResults, planBuyingParametersDto, inventory, token);
 
+                _LogInfo($"Saving raw inventory... {msgStamp}");
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_SPOTS_RAW);
                 var planBuyingRawInventory = _MapBuyingRawInventory(modelAllocationResults, inventory);
                 _SaveBuyingRawInventory(plan.Id, jobId, planBuyingRawInventory);
@@ -1144,6 +1153,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 foreach (var allocationResult in modelAllocationResults)
                 {
+                    _LogInfo($"Beginning to aggregate results. {msgStamp}");
                     var aggregationTasks = new List<AggregationTask>();
 
                     var allocationResults = new Dictionary<PostingTypeEnum, PlanBuyingAllocationResult>();
@@ -1280,8 +1290,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     var allAggregationTasks = Task.WhenAll(aggregationTasks.Select(x => x.Task).ToArray());
                     allAggregationTasks.Wait();
                     /*** Persist the results ***/
-                    _SaveBuyingArtifacts(allocationResults, aggregationTasks, diagnostic);
+                    _SaveBuyingArtifacts(allocationResults, aggregationTasks, diagnostic, transactionId);
                 }
+
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SETTING_JOB_STATUS_TO_SUCCEEDED);
                 var buyingJob = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
                 buyingJob.Status = BackgroundJobProcessingStatus.Succeeded;
@@ -1291,6 +1302,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
                 buyingJob.DiagnosticResult = diagnostic.ToString();
 
+                _LogInfo($"Beginning to save Buying Artifacts. {msgStamp}");
                 _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
             }
             catch (BuyingModelException exception)
@@ -1468,16 +1480,26 @@ namespace Services.Broadcast.ApplicationServices.Plan
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BAND_INVENTORY);
         }
 
-        internal void _SaveBuyingArtifacts(IDictionary<PostingTypeEnum, PlanBuyingAllocationResult> allocationResults, List<AggregationTask> aggregationTasks,
-             PlanBuyingJobDiagnostic diagnostic)
+        internal void _SaveBuyingArtifacts(IDictionary<PostingTypeEnum, PlanBuyingAllocationResult> allocationResults,
+            List<AggregationTask> aggregationTasks,
+             PlanBuyingJobDiagnostic diagnostic, Guid? transactionId = null)
         {
+            var jobId = allocationResults.First().Value.JobId;
+            var modelMode = allocationResults.First().Value.SpotAllocationModelMode;
+            transactionId = transactionId ?? Guid.NewGuid();
+            var msgStamp = $"JobId={jobId}; ModelMode={modelMode}; TxId={transactionId};";
+
+            _LogInfo($"Beginning to save Buying Artifacts. {msgStamp}");
+
             foreach (var postingType in Enum.GetValues(typeof(PostingTypeEnum)).Cast<PostingTypeEnum>())
             {
                 var postingAllocationResult = allocationResults[postingType];
+
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
+                _LogInfo($"Beginning to SaveBuyingApiResults for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SaveBuyingApiResults(postingAllocationResult);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_ALLOCATION_RESULTS);
-
+                
                 diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
                 var calculateBuyingProgramsTask = (Task<PlanBuyingResultBaseDto>)aggregationTasks
                     .First(x => x.PostingType == postingType && x.TaskName == BuyingJobTaskNameEnum.CalculatePrograms)
@@ -1493,8 +1515,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 calculateBuyingProgramStationsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
                 calculateBuyingProgramStationsTaskResult.PostingType = postingAllocationResult.PostingType;
 
+                _LogInfo($"Beginning to SaveBuyingAggregateResults for Posting Type {postingType}. {msgStamp}");
                 var planVersionBuyingResultId = _PlanBuyingRepository.SaveBuyingAggregateResults(calculateBuyingProgramsTaskResult);
+                _LogInfo($"Beginning to SavePlanBuyingResultSpots for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingResultSpots(planVersionBuyingResultId, calculateBuyingProgramsTaskResult);
+                _LogInfo($"Beginning to SavePlanBuyingResultSpotStations for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingResultSpotStations(planVersionBuyingResultId, calculateBuyingProgramStationsTaskResult);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_AGGREGATION_RESULTS);
 
@@ -1504,7 +1529,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .Task;
                 var calculateBuyingBandTaskResult = calculateBuyingBandTask.Result;
                 calculateBuyingBandTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
-
+                _LogInfo($"Beginning to SavePlanBuyingBands for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingBands(calculateBuyingBandTaskResult, postingType);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_BANDS);
 
@@ -1514,6 +1539,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .Task;
                 var calculateBuyingStationTaskResult = calculateBuyingStationTask.Result;
                 calculateBuyingStationTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _LogInfo($"Beginning to SavePlanBuyingStations for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingStations(calculateBuyingStationTaskResult, postingType);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_BUYING_STATIONS);
 
@@ -1523,6 +1549,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .Task;
                 var aggregateMarketResultsTaskResult = aggregateMarketResultsTask.Result;
                 aggregateMarketResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _LogInfo($"Beginning to SavePlanBuyingMarketResults for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingMarketResults(aggregateMarketResultsTaskResult, postingType);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_MARKET_RESULTS);
 
@@ -1532,6 +1559,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .Task;
                 var aggregateOwnershipGroupResultsTaskResult = aggregateOwnershipGroupResultsTask.Result;
                 aggregateOwnershipGroupResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _LogInfo($"Beginning to SavePlanBuyingOwnershipGroupResults for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingOwnershipGroupResults(aggregateOwnershipGroupResultsTaskResult, postingType);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_OWNERSHIP_GROUP_RESULTS);
 
@@ -1541,9 +1569,11 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     .Task;
                 var aggregateRepFirmResultsTaskResult = aggregateRepFirmResultsTask.Result;
                 aggregateRepFirmResultsTaskResult.SpotAllocationModelMode = postingAllocationResult.SpotAllocationModelMode;
+                _LogInfo($"Beginning to SavePlanBuyingRepFirmResults for Posting Type {postingType}. {msgStamp}");
                 _PlanBuyingRepository.SavePlanBuyingRepFirmResults(aggregateRepFirmResultsTaskResult, postingType);
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_SAVING_REP_FIRM_RESULTS);
             }
+            _LogInfo($"Finished to save Buying Artifacts. {msgStamp}");
         }
 
         private ProprietaryInventoryData _CalculateProprietaryInventoryData(
