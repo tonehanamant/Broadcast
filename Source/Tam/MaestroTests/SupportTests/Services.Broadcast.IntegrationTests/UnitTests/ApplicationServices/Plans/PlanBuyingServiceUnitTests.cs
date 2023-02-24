@@ -5016,7 +5016,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public void ValidateBuyingExecutionResultTest()
         {
-            int expectedResult = 3;
+            int expectedResult = 2;
             var result = new CurrentBuyingExecutions
             {
                 Job = new PlanBuyingJob
@@ -5037,18 +5037,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                                         //Id = 15,
                                         OptimalCpm=21,
                                         JobId=755,
-                                        PlanVersionId=805,
-                                        GoalFulfilledByProprietary=false,
-                                        Notes="",
-                                        HasResults=true,
-                                        CpmPercentage=4,
-                                        PostingType=PostingTypeEnum.NTI,
-                                        SpotAllocationModelMode=SpotAllocationModelMode.Efficiency
-                                    },
-                                    new CurrentBuyingExecutionResultDto
-                                    {
-                                        //Id = 15,
-                                        OptimalCpm=21,JobId=755,
                                         PlanVersionId=805,
                                         GoalFulfilledByProprietary=false,
                                         Notes="",

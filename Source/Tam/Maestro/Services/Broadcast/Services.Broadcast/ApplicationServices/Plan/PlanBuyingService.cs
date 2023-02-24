@@ -629,7 +629,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             };
         }
 
-        private CurrentBuyingExecutions _GetCurrentBuyingExecution_v2(PlanBuyingJob job, int? planId, PostingTypeEnum postingType = PostingTypeEnum.NSI)
+        private CurrentBuyingExecutions _GetCurrentBuyingExecution_v2(PlanBuyingJob job, int? planId, 
+            PostingTypeEnum postingType = PostingTypeEnum.NSI)
         {
             List<CurrentBuyingExecutionResultDto> buyingExecutionResults = null;
 
@@ -672,11 +673,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             var jobCompletedWithinLastFiveMinutes = _DidBuyingJobCompleteWithinThreshold(job, thresholdMinutes: 5);
             if (jobCompletedWithinLastFiveMinutes)
             {
-                // expecting 4 results
-                // Model Modes = 2 
-                // PostingType = 2
-                // 2 * 2 = 4 results
-                const int expectedResultCount = 4;
+                // expecting 2 results
+                // This call is Per Posting Type (not like Pricing, which is all at once).
+                // Model Modes = 2
+                // PostingType = 1
+                // 2 * 1 = 2 results
+                const int expectedResultCount = 2;
                 result = _ValidateBuyingExecutionResult(result, expectedResultCount);
             }
             else
@@ -1302,19 +1304,22 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_TOTAL_DURATION);
                 buyingJob.DiagnosticResult = diagnostic.ToString();
 
-                _LogInfo($"Beginning to save Buying Artifacts. {msgStamp}");
+                _LogInfo($"Job finished.  Updating to indicate Success. {msgStamp}");
                 _PlanBuyingRepository.UpdatePlanBuyingJob(buyingJob);
             }
             catch (BuyingModelException exception)
             {
+                _LogInfo($"Job finished.  Updating to indicate {BackgroundJobProcessingStatus.Failed}. {msgStamp}");
                 _HandleBuyingJobError(jobId, BackgroundJobProcessingStatus.Failed, exception.Message);
             }
             catch (Exception exception) when (exception is ObjectDisposedException || exception is OperationCanceledException)
             {
+                _LogInfo($"Job finished.  Updating to indicate {BackgroundJobProcessingStatus.Canceled}. {msgStamp}");
                 _HandleBuyingJobException(jobId, BackgroundJobProcessingStatus.Canceled, exception, "Running the buying model was canceled");
             }
             catch (Exception exception)
             {
+                _LogInfo($"Job finished.  Updating to indicate {BackgroundJobProcessingStatus.Failed}. {msgStamp}");
                 _HandleBuyingJobException(jobId, BackgroundJobProcessingStatus.Failed, exception, "Error attempting to run the buying model");
             }
         }
