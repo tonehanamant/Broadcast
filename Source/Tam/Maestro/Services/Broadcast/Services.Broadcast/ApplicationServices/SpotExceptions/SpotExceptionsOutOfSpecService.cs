@@ -195,7 +195,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         return new SpotExceptionsOutOfSpecPlanSpotsDto
                         {
                             Id = activePlan.Id,
-                            EstimateId = activePlan.EstimateId.Value,
+                            EstimateId = activePlan.EstimateId,
                             Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             ReasonLabel = activePlan.SpotExceptionsOutOfSpecReasonCode.Label,
                             MarketRank = activePlan.MarketRank,
@@ -234,7 +234,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         return new SpotExceptionsOutOfSpecDonePlanSpotsDto
                         {
                             Id = queuedPlan.Id,
-                            EstimateId = queuedPlan.EstimateId.Value,
+                            EstimateId = queuedPlan.EstimateId,
                             Reason = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             ReasonLabel = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Label,
                             MarketRank = queuedPlan.MarketRank,

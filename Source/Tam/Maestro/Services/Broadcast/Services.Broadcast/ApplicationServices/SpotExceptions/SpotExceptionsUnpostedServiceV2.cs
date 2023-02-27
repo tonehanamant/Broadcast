@@ -59,7 +59,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     ClientSpotLength = x.ClientSpotLength.HasValue ? $":{x.ClientSpotLength.Value}" : null,
                     AffectedSpotsCount = x.Count,
                     ProgramAirDate = DateTimeHelper.GetForDisplay(x.ProgramAirTime, SpotExceptionsConstants.DateFormat),
-                    EstimateId = x.EstimateID.Value
+                    EstimateId = x.EstimateID
                 }).ToList();
 
                 spotExceptionOutOfSpecUnpostedResult.NoReelRoster = unpostedNoReelRosterResult.Select(x => new OutOfSpecNoReelRosterDto
@@ -67,7 +67,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     HouseIsci = x.HouseIsci,
                     AffectedSpotsCount = x.Count,
                     ProgramAirDate = DateTimeHelper.GetForDisplay(x.ProgramAirTime, SpotExceptionsConstants.DateFormat),
-                    EstimateId = x.EstimateId.Value
+                    EstimateId = x.EstimateId
                 }).ToList();
             }
             catch (Exception ex)

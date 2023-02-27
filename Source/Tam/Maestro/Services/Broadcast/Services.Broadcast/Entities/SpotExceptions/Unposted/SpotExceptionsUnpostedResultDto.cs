@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions.Unposted
 {
@@ -25,7 +21,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.Unposted
         public string ClientSpotLength { get; set; }
         public int AffectedSpotsCount { get; set; }
         public string ProgramAirDate { get; set; }
-        public long? EstimateId { get; set; }
+        public int? EstimateId { get; set; }
     }
 
     public class SpotExceptionOutOfSpecNoReelRosterDto
@@ -33,6 +29,6 @@ namespace Services.Broadcast.Entities.SpotExceptions.Unposted
         public string HouseIsci { get; set; }
         public int AffectedSpotsCount { get; set; }
         public string ProgramAirDate { get; set; }
-        public long EstimateId { get; set; }
+        public int? EstimateId { get; set; }
     }
 }

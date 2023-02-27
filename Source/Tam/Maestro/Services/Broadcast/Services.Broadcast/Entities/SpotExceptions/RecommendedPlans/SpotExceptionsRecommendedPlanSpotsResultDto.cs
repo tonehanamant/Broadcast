@@ -45,7 +45,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.RecommendedPlans
         /// Gets or sets the estimate identifier.
         /// </summary>
         /// <value>The estimate identifier.</value>
-        public int EstimateId { get; set; }
+        public int? EstimateId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the isci.

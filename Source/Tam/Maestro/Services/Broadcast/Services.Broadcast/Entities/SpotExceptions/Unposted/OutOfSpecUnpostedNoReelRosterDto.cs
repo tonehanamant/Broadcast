@@ -31,7 +31,7 @@
         /// Gets or sets the estimate identifier.
         /// </summary>
         /// <value>The estimate identifier.</value>
-        public long? EstimateId { get; set; }
+        public int? EstimateId { get; set; }
 
         /// <summary>
         /// Gets or sets the ingested by.

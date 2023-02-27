@@ -173,7 +173,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         return new SpotExceptionsRecommendedToDoPlanSpotsDto
                         {
                             Id = activePlan.Id,
-                            EstimateId = activePlan.EstimateId.Value,
+                            EstimateId = activePlan.EstimateId,
                             IsciName = activePlan.IsciName,
                             ProgramAirDate = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
                             ProgramAirTime = DateTimeHelper.GetForDisplay(activePlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
@@ -270,7 +270,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     recommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
                     {
                         Id = recommendedPlanDetailsToDo.Id,
-                        EstimateId = recommendedPlanDetailsToDo.EstimateId.Value,
+                        EstimateId = recommendedPlanDetailsToDo.EstimateId,
                         SpotLengthString = recommendedPlanDetailsToDo.SpotLength != null ? $":{recommendedPlanDetailsToDo.SpotLength.Length}" : null,
                         Product = _GetProductName(recommendedPlanDetails.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlanDetails.RecommendedPlanDetail.ProductMasterId),
                         FlightStartDate = recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate.ToString(),
@@ -322,7 +322,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     recommendedPlanDetailsResult = new SpotExceptionsRecommendedPlanDetailsResultDto
                     {
                         Id = recommendedPlanDetailsDone.Id,
-                        EstimateId = recommendedPlanDetailsDone.EstimateId.Value,
+                        EstimateId = recommendedPlanDetailsDone.EstimateId,
                         SpotLengthString = recommendedPlanDetailsDone.SpotLength != null ? $":{recommendedPlanDetailsDone.SpotLength.Length}" : null,
                         Product = _GetProductName(recommendedPlanDetails.RecommendedPlanDetail.AdvertiserMasterId, recommendedPlanDetails.RecommendedPlanDetail.ProductMasterId),
                         FlightStartDate = recommendedPlanDetails.RecommendedPlanDetail.FlightStartDate.ToString(),

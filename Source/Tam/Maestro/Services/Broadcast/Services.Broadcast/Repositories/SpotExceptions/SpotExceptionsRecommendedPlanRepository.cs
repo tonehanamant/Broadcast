@@ -337,7 +337,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     return new SpotExceptionsRecommendedPlanSpotsDto
                     {
                         Id = x.recommendedPlansDone.lengthPlan.plan.id,
-                        EstimateId = x.recommendedPlansDone.lengthPlan.plan.estimate_id.Value,
+                        EstimateId = x.recommendedPlansDone.lengthPlan.plan.estimate_id,
                         IsciName = x.recommendedPlansDone.lengthPlan.plan.house_isci,
                         ProgramAirTime = x.recommendedPlansDone.lengthPlan.plan.program_air_time,
                         RecommendedPlanName = x.recommendedPlansDone.lengthPlan.detail.plan.name,

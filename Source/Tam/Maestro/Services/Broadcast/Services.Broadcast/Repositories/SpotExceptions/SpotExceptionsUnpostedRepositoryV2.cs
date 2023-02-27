@@ -62,7 +62,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         ClientSpotLength = x.spot_lengths.length,
                         Count = x.count,
                         ProgramAirTime = x.program_air_time,
-                        EstimateID = x.estimate_id.Value,
+                        EstimateID = x.estimate_id,
                         IngestedBy = x.ingested_by,
                         IngestedAt = x.ingested_at,
                         IngestMediaWeekId = x.ingested_media_week_id
@@ -87,7 +87,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                         HouseIsci = x.house_isci,
                         Count = x.count,
                         ProgramAirTime = x.program_air_time,
-                        EstimateId = x.estimate_id.Value,
+                        EstimateId = x.estimate_id,
                         IngestedBy = x.ingested_by,
                         IngestedAt = x.ingested_at,
                         IngestedMediaWeekId = x.ingested_media_week_id
