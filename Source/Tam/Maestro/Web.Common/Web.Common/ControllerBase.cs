@@ -40,7 +40,7 @@ namespace Tam.Maestro.Web.Common
         {
             if (!ModelState.IsValid)
             {
-                throw new Exception("The ModelState was invalid.");
+                throw new CadentException("The ModelState was invalid.");
             }
         }
 

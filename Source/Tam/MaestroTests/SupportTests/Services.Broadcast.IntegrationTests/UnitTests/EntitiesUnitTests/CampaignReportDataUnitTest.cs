@@ -86,19 +86,19 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
         }
 
         [Test]       
-        [TestCase(183.15018315018312, 11.17216117216117)]
-        public void ProjectHHAudienceData_VPVH_WithRunPricing(double expectedHhImpressions, double expectedHhRatings)
+        [TestCase(200, 12.2, 183.15018315018312, 11.17216117216117)]
+        public void ProjectHHAudienceData_VPVH_WithRunPricing(
+            double planHhImpressions, double planHhRatingPoints,
+            double expectedHhImpressions, double expectedHhRatings)
         {
             // Arrange
             PlanDto plan = _GetNewPlan();
             plan.Id = 1;
-            plan.HHImpressions = 200;
-            plan.HHRatingPoints = 12.2;
+            plan.HHImpressions = planHhImpressions;
+            plan.HHRatingPoints = planHhRatingPoints;
             WeeklyBreakdownWeek planWeek = _GetWeeklyBreakdownWeek();
             Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = _GetPlanPricingResultsDayparts(2);
-            var testClass = new CampaignReportData
-            {                
-            };
+            var testClass = new CampaignReportData();
             var projection = _GetPlanProjectionForCampaignExport();
 
             // Action
@@ -107,6 +107,31 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             // Assert
             Assert.AreEqual(expectedHhImpressions, projection.TotalHHImpressions);
             Assert.AreEqual(expectedHhRatings, projection.TotalHHRatingPoints);
+        }
+
+        [Test]
+        public void ProjectHHAudienceData_AduOnlyPLan()
+        {
+            // Arrange
+            PlanDto plan = _GetNewAduOnlyPlan();
+            WeeklyBreakdownWeek planWeek = new WeeklyBreakdownWeek()
+            {
+                WeeklyImpressions = 0,
+                WeeklyRatings = 0,
+                DaypartCodeId = 2
+            };
+            Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts = _GetPlanPricingResultsDayparts(2);
+            var testClass = new CampaignReportData
+            {
+            };
+            var projection = _GetPlanProjectionForCampaignExport();
+
+            // Action
+            testClass._ProjectHHAudienceData(plan, planWeek, projection, planPricingResultsDayparts);
+
+            // Assert
+            Assert.AreEqual(0, projection.TotalHHImpressions);
+            Assert.AreEqual(0, projection.TotalHHRatingPoints);
         }
 
         [Test]
@@ -543,6 +568,21 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.EntitiesUnitTests
             var result = CampaignReportData._CalculateUnitsForWeekComponent(planWeek, planImpressionsPerUnit, equivalized, spotLengthDeliveryMultipliers);
 
             Assert.AreEqual(expectedResult, result);
+        }
+        
+        private static PlanDto _GetNewAduOnlyPlan()
+        {
+            var plan = _GetNewPlan();
+            plan.IsAduEnabled = true;
+            plan.IsAduPlan = true;
+            plan.Budget = null;
+            plan.TargetCPM = null;
+            plan.TargetImpressions = null;
+            plan.ImpressionsPerUnit = null;
+            plan.Vpvh = null;
+            plan.TargetRatingPoints = null;
+            plan.TargetCPP = null;
+            return plan;
         }
 
         private static PlanDto _GetNewPlan()

@@ -563,15 +563,18 @@ namespace Services.Broadcast.BusinessEngines
             var weightedDayparts = PlanGoalHelper.GetStandardDaypardWeightingGoals(request.Dayparts);
             _PlanValidator.ValidateWeeklyBreakdownItemWeights(weightedDayparts, weightedSpotLengths, request.DeliveryType);
 
-            if (request.ImpressionsPerUnit <= 0) //old plan
+            if (!request.IsAduOnly)
             {
-                if (request.TotalImpressions < _DefaultImpressionsPerUnitForOldPlans)
-                    request.ImpressionsPerUnit = request.TotalImpressions;
-                else
-                    request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;
-            }
+                if (request.ImpressionsPerUnit <= 0) //old plan
+                {
+                    if (request.TotalImpressions < _DefaultImpressionsPerUnitForOldPlans)
+                        request.ImpressionsPerUnit = request.TotalImpressions;
+                    else
+                        request.ImpressionsPerUnit = _DefaultImpressionsPerUnitForOldPlans;
+                }
 
-            _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
+                _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
+            }
 
             /*** Prepare to calculate ***/
 
@@ -644,7 +647,7 @@ namespace Services.Broadcast.BusinessEngines
             }
             else
             {
-                throw new ApplicationException(_UnsupportedDeliveryTypeMessage);
+                throw new CadentException(_UnsupportedDeliveryTypeMessage);
             }
 
             /*** Calculate what is not Delivery Type specific  ***/
@@ -1025,6 +1028,18 @@ namespace Services.Broadcast.BusinessEngines
         {
             weeklyBreakdown.TotalActiveDays = GroupWeeklyBreakdownByWeek(weeklyBreakdown.Weeks)
                 .Sum(x => x.NumberOfActiveDays);
+
+            if (request.IsAduOnly && _IsAduForPlanningv2Enabled.Value)
+            {
+                weeklyBreakdown.TotalImpressions = 0;
+                weeklyBreakdown.TotalShareOfVoice = 0;
+                weeklyBreakdown.TotalImpressionsPercentage = 0;
+
+                weeklyBreakdown.TotalRatingPoints = 0;
+                weeklyBreakdown.TotalBudget = 0;
+                weeklyBreakdown.TotalUnits = 0;
+                return;
+            }
 
             weeklyBreakdown.TotalImpressions = weeklyBreakdown.Weeks.Sum(w => w.WeeklyImpressions);
             var impressionsTotalRatio = weeklyBreakdown.TotalImpressions / request.TotalImpressions;

@@ -3524,6 +3524,93 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             Assert.AreEqual(expectedResult, result);
         }
 
+        [Test]
+        public void CalculatePlanWeeklyGoalBreakdown_AduPlan()
+        {
+            // Arrange
+            // spot length delivery multipliers are setup in the test class constructor
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2] = true;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = true;
+
+            var weightedCreatives = new List<CreativeLength>
+                    {
+                        new CreativeLength { SpotLengthId = 1, Weight = 100 }
+                    };
+
+            _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<IEnumerable<CreativeLength>>()))
+                .Returns(weightedCreatives);
+
+            var request = new WeeklyBreakdownRequest
+            { 
+                    FlightDays = new List<int> { 1,2,3,4,5,6,7 },
+                    FlightStartDate = new DateTime(2023, 03, 27),
+                    FlightEndDate = new DateTime(2023, 4, 9, 23, 59 ,59),
+                    FlightHiatusDays = new List<DateTime>(),
+                    // TotalImpressions = null,
+                    DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                    Equivalized = true,
+                    Weeks = new List<WeeklyBreakdownWeek>(),
+                    CreativeLengths = weightedCreatives,
+                    Dayparts = new List<PlanDaypartDto>
+                    {
+                        new PlanDaypartDto { DaypartCodeId = 1 }
+                    },
+                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
+                    IsAduOnly = true,
+                    ImpressionsPerUnit = 0,
+                    TotalBudget = 0,
+                    TotalImpressions = 0,
+                    TotalRatings = 0
+            };
+
+            var cachedWeeks = new List<DisplayMediaWeek>
+            {
+                new DisplayMediaWeek
+                {
+                    Id = 1005,
+                    Week = 1,
+                    MediaMonthId = 499,
+                    Year = 2023,
+                    Month = 4,
+                    WeekStartDate = new DateTime(2023, 3, 27),
+                    WeekEndDate = new DateTime(2023,4, 2),
+                    MonthStartDate = new DateTime(2023, 3, 27),
+                    MonthEndDate = new DateTime(2023, 4, 30)
+                },
+                new DisplayMediaWeek
+                {
+                    Id = 1006,
+                    Week = 2,
+                    MediaMonthId = 499,
+                    Year = 2023,
+                    Month = 4,
+                    WeekStartDate = new DateTime(2023, 4, 3),
+                    WeekEndDate = new DateTime(2023,4, 9),
+                    MonthStartDate = new DateTime(2023, 3, 27),
+                    MonthEndDate = new DateTime(2023, 4, 30)
+                }
+            };
+
+            _MediaMonthAndWeekAggregateCacheMock
+                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(cachedWeeks);
+
+            // Act
+            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.AreEqual(2, result.Weeks.Count);
+            Assert.AreEqual(2, result.RawWeeklyBreakdownWeeks.Count);
+            Assert.AreEqual(14, result.TotalActiveDays);
+            Assert.AreEqual(0, result.TotalShareOfVoice);
+            Assert.AreEqual(0, result.TotalImpressions);
+            Assert.AreEqual(0, result.TotalRatingPoints);
+            Assert.AreEqual(0, result.TotalImpressionsPercentage);
+            Assert.AreEqual(0, result.TotalBudget);
+            Assert.AreEqual(0, result.TotalUnits);
+        }
+
         #region Handling Delivery Type Change
 
         [Test]
@@ -3918,6 +4005,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             return cachedWeeks;
         }
 
-        #endregion // #region Handling Hiatus Day Change
+        #endregion // #region Handling Hiatus Day Change        
     }
 }

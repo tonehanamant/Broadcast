@@ -342,7 +342,7 @@ namespace Services.Broadcast.Validators
                 throw new PlanValidationException("More than one updated week found.");
             }
 
-            if (request.TotalImpressions <= 0 && !isClearAll)
+            if (request.TotalImpressions <= 0 && !isClearAll  && !request.IsAduOnly)
             {
                 throw new PlanValidationException("Total impressions must be more than zero");
             }

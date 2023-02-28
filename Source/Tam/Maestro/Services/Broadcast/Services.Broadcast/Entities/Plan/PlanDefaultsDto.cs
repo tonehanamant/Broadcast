@@ -4,6 +4,9 @@ using Services.Broadcast.Entities.Enums;
 
 namespace Services.Broadcast.Entities.Plan
 {
+    /// <summary>
+    /// The default values for plan properties in the UI.
+    /// </summary>
     public class PlanDefaultsDto
     {
         public string Name { get; set; }
@@ -26,5 +29,10 @@ namespace Services.Broadcast.Entities.Plan
         public List<DateTime> FlightHiatusDays { get; set; } = new List<DateTime>();
         public List<int> FlightDays { get; set; }
         public List<WeeklyBreakdownWeek> WeeklyBreakdownWeeks { get; set; } = new List<WeeklyBreakdownWeek>();
+
+        /// <summary>
+        /// True to indicate the Plan is an ADU Only Plan.
+        /// </summary>
+        public bool IsAduPlan { get; set; } = false;
     }
 }

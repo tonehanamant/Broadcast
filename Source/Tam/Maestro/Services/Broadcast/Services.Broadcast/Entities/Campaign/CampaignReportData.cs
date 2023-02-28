@@ -290,9 +290,8 @@ namespace Services.Broadcast.Entities.Campaign
             if (plan.HHImpressions.HasValue && plan.HHRatingPoints.HasValue)
             {
                 var factor = planProjection.TotalHHImpressions / plan.HHImpressions.Value;
-                planProjection.TotalHHRatingPoints = plan.HHRatingPoints.Value * factor;
+                planProjection.TotalHHRatingPoints = double.IsNaN(factor) ? 0 : plan.HHRatingPoints.Value * factor;
             }
-
         }
 
         private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, string standardDaypartId, int? audienceId)
@@ -374,7 +373,7 @@ namespace Services.Broadcast.Entities.Campaign
                     {
                         AudienceId = audience.AudienceId,
                         TotalImpressions = audienceImpressions,
-                        TotalRatingPoints = audience.RatingPoints.Value * factor
+                        TotalRatingPoints = double.IsNaN(factor) ? 0 : audience.RatingPoints.Value * factor
                     });
             }
         }

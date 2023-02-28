@@ -93,5 +93,10 @@ namespace Services.Broadcast.Entities.Plan
         ///   <c>true</c> if equivalized; otherwise, <c>false</c>.
         /// </value>
         public bool? Equivalized { get; set; }
+
+        /// <summary>
+        /// True if the request is for an ADU Only Context.
+        /// </summary>
+        public bool IsAduOnly { get; set; } = false;
     }
 }
