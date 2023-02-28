@@ -966,10 +966,12 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-               return _InventoryApiClient.DownloadErrorFiles(fileIds);
+                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
+                // at that time this API will be directly called by FE from inventory microservice
+                // return _InventoryApiClient.DownloadErrorFiles(fileIds);
             }
-            else
-            {
+            //else
+            //{
                 var archiveFileName = $"InventoryErrorFiles_{_DateTimeEngine.GetCurrentMoment().ToString("MMddyyyyhhmmss")}.zip";
                 Tuple<string, Stream> result;
 
@@ -983,7 +985,7 @@ namespace Services.Broadcast.ApplicationServices
 
                 result = _DownloadErrorFilesFromFileService(archiveFileName, fileIds);
                 return result;
-            }
+           // }
         }
 
         private Tuple<string, Stream> _DownloadErrorFilesFromFileService(string archiveFileName, List<int> fileIds)
