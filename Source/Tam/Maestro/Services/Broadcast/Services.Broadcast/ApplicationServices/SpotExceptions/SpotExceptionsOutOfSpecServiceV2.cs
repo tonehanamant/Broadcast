@@ -1070,15 +1070,25 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
             return isCommentSaved;
         }
+
+        private string _GetMarketTimeZoneCode(List<MarketTimeZoneDto> timeZone, int? marketCode)
+        {
+            var timeZoneMatch = timeZone.FirstOrDefault(y => y.MarketCode.Equals(marketCode));
+            return timeZoneMatch?.Code;
+        }
+
         /// <inheritdoc />
         public List<OutOfSpecSpotsResultDto> GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest)
         {
             int marketRank = 0;
+            int DMA = 0;
+            string timeZone = String.Empty;
             var outOfSpecPlanSpots = new List<OutOfSpecSpotsResultDto>();
             _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Spots");
             try
             {
                 var outOfSpecSpotsToDo = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest.PlanId, OutOfSpecSpotsRequest.WeekStartDate, OutOfSpecSpotsRequest.WeekEndDate);
+                var timeZones = _SpotExceptionsOutOfSpecRepositoryV2.GetMarketTimeZones();
 
                 if (outOfSpecSpotsToDo?.Any() ?? false)
                 {
@@ -1089,17 +1099,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(activePlan =>
                     {
                         marketRank = activePlan.MarketRank == null ? 0 : activePlan.MarketRank.Value;
+                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA;
+                        timeZone = _GetMarketTimeZoneCode(timeZones, activePlan.MarketCode);
                         return new OutOfSpecSpotsResultDto
                         {
                             Id = activePlan.Id,
                             EstimateId = activePlan.EstimateId,
                             Reason = activePlan.OutOfSpecSpotReasonCodes.Reason,
                             ReasonLabel = activePlan.OutOfSpecSpotReasonCodes.Label,
-                            MarketRank = activePlan.MarketRank,
-                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA,
+                            MarketRank = marketRank,
+                            DMA = DMA,
                             Market = activePlan.Market,
                             Station = activePlan.StationLegacyCallLetters,
-                            TimeZone = activePlan.TimeZone,
+                            TimeZone = timeZone,
                             Affiliate = activePlan.Affiliate,
                             Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
                             GenreName = activePlan.GenreName,

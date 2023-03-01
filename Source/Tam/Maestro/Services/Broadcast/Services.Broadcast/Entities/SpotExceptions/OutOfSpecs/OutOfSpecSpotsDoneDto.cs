@@ -225,7 +225,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// Gets or sets the time zone.
         /// </summary>
         /// <value>The time zone.</value>
-        public string TimeZone { get; set; } = "EST"; // TODO: Populate this for real
+        public string TimeZone { get; set; } 
 
         /// <summary>
         /// Gets or sets the dma.

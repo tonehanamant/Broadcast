@@ -241,6 +241,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             var outOfSpecToDo = _GetOutOfSpecPlanSpotsData();
             var outOfSpecDone = _GetOutOfSpecPlanDoneSpotsData();
+            var timeZone = _GetTimeZones();
 
             _SpotExceptionsOutOfSpecRepositoryMock
                 .Setup(x => x.GetOutOfSpecSpotsToDoAsync(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
@@ -250,24 +251,28 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 .Setup(x => x.GetOutOfSpecSpotsDoneAsync(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
                 .Returns(Task.FromResult(outOfSpecDone));
 
+            _SpotExceptionsOutOfSpecRepositoryMock
+                .Setup(x => x.GetMarketTimeZones())
+                .Returns(timeZone);
+
             _PlanRepositoryMock
-               .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
-               .Returns(new List<PlanDaypartDetailsDto>
-                   {
+                .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+                .Returns(new List<PlanDaypartDetailsDto>
+                    {
                         new PlanDaypartDetailsDto
                         {
-                        PlanId=215,
-                        Code="ROSP",
-                        Name="ROS Programming"
+                            PlanId=215,
+                            Code="ROSP",
+                            Name="ROS Programming"
                         },
-                         new PlanDaypartDetailsDto
+                        new PlanDaypartDetailsDto
                         {
-                        PlanId=215,
-                        Code="TDNS",
-                        Name="Total Day News and Syndication"
+                            PlanId=215,
+                            Code="TDNS",
+                            Name="Total Day News and Syndication"
                         }
-                   }
-               );
+                    }
+                );
             // Act
             var result = await _SpotExceptionsOutOfSpecService.GetSpotExceptionsOutOfSpecSpotsAsync(spotExceptionsOutOfSpecSpotsRequest);
 
@@ -2120,7 +2125,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     Comments = "test Comment",
                     GenreName="Comedy",
                     DaypartCode="ROSP",
-                    InventorySourceName = "TVB"
+                    InventorySourceName = "TVB",
+                    TimeZone="ET",
+                    MarketCode=351
                 },
                 new SpotExceptionsOutOfSpecsToDoDto
                 {
@@ -2171,8 +2178,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
                     HouseIsci = "289J76GN16H",
                     Comments = "test Comment",
-                    InventorySourceName = "TVB"
-                }
+                    InventorySourceName = "TVB",
+                    TimeZone="ET",
+                    MarketCode=352
+                }               
             };
         }
 
@@ -2239,7 +2248,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0MDYzNg==",
                     HouseIsci = "289J76GN16H",
                     Comments = "test Comment",
-                    InventorySourceName = "TVB"
+                    InventorySourceName = "TVB",
+                    TimeZone="ET",
+                    MarketCode=351
                 },
                 new SpotExceptionsOutOfSpecsDoneDto
                 {
@@ -2300,7 +2311,34 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     SpotUniqueHashExternal = "TE9DQUwtMTA1OTA0NDAxOA==",
                     HouseIsci = "289J76GN16H",
                     Comments = "test Comment",
-                    InventorySourceName = "TVB"
+                    InventorySourceName = "TVB",
+                    TimeZone="CT",
+                    MarketCode=352
+                }
+            };
+        }
+
+        private List<MarketTimeZoneDto> _GetTimeZones()
+        {
+            return new List<MarketTimeZoneDto>()
+            {
+                new MarketTimeZoneDto
+                {
+                    Name="Central",
+                    MarketCode=351,
+                    Code="CT"
+                },
+                new MarketTimeZoneDto
+                {
+                    Name="Eastern",
+                    MarketCode=352,
+                    Code="ET"
+                },
+                new MarketTimeZoneDto
+                {
+                    Name="Pacific",
+                    MarketCode=353,
+                    Code="PT"
                 }
             };
         }

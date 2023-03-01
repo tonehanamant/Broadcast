@@ -174,14 +174,23 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return outOfSpecPlans;
         }
 
+        private static string _GetMarketTimeZoneCode(List<MarketTimeZoneDto> timeZone, int? marketCode)
+        {
+            var timeZoneMatch = timeZone.FirstOrDefault(y => y.MarketCode.Equals(marketCode));
+            return timeZoneMatch?.Code;
+        }
+
         /// <inheritdoc />
         public async Task<SpotExceptionsOutOfSpecSpotsResultDto> GetSpotExceptionsOutOfSpecSpotsAsync(SpotExceptionsOutOfSpecSpotsRequestDto spotExceptionsOutOfSpecSpotsRequest)
         {
             var outOfSpecPlanSpots = new SpotExceptionsOutOfSpecSpotsResultDto();
             int marketRank = 0;
+            int DMA = 0;
+            string timeZone = String.Empty;
             try
             {
                 var outOfSpecSpotsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoAsync(spotExceptionsOutOfSpecSpotsRequest.PlanId, spotExceptionsOutOfSpecSpotsRequest.WeekStartDate, spotExceptionsOutOfSpecSpotsRequest.WeekEndDate);
+                var timeZones = _SpotExceptionsOutOfSpecRepository.GetMarketTimeZones();
 
                 if (outOfSpecSpotsToDo?.Any() ?? false)
                 {
@@ -192,17 +201,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(activePlan =>
                     {
                         marketRank = activePlan.MarketRank == null ? 0 : activePlan.MarketRank.Value;
+                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA;
+                        timeZone = _GetMarketTimeZoneCode(timeZones, activePlan.MarketCode);
                         return new SpotExceptionsOutOfSpecPlanSpotsDto
                         {
                             Id = activePlan.Id,
                             EstimateId = activePlan.EstimateId,
                             Reason = activePlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             ReasonLabel = activePlan.SpotExceptionsOutOfSpecReasonCode.Label,
-                            MarketRank = activePlan.MarketRank,
-                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA,
+                            MarketRank = marketRank,
+                            DMA = DMA,
                             Market = activePlan.Market,
                             Station = activePlan.StationLegacyCallLetters,
-                            TimeZone = activePlan.TimeZone,
+                            TimeZone = timeZone,
                             Affiliate = activePlan.Affiliate,
                             Day = activePlan.ProgramAirTime.DayOfWeek.ToString(),
                             GenreName = activePlan.GenreName,
@@ -231,17 +242,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(queuedPlan =>
                     {
                         marketRank = queuedPlan.MarketRank == null ? 0 : queuedPlan.MarketRank.Value;
+                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : queuedPlan.DMA;
+                        timeZone = _GetMarketTimeZoneCode(timeZones, queuedPlan.MarketCode);
                         return new SpotExceptionsOutOfSpecDonePlanSpotsDto
                         {
                             Id = queuedPlan.Id,
                             EstimateId = queuedPlan.EstimateId,
                             Reason = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             ReasonLabel = queuedPlan.SpotExceptionsOutOfSpecReasonCode.Label,
-                            MarketRank = queuedPlan.MarketRank,
-                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : queuedPlan.DMA,
+                            MarketRank = marketRank,
+                            DMA = DMA,
                             Market = queuedPlan.Market,
                             Station = queuedPlan.StationLegacyCallLetters,
-                            TimeZone = queuedPlan.TimeZone,
+                            TimeZone = timeZone,
                             Affiliate = queuedPlan.Affiliate,
                             Day = queuedPlan.ProgramAirTime.DayOfWeek.ToString(),
                             GenreName = queuedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName == null ? queuedPlan.GenreName : queuedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName,
@@ -264,17 +277,19 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(syncedPlan =>
                     {
                         marketRank = syncedPlan.MarketRank == null ? 0 : syncedPlan.MarketRank.Value;
+                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : syncedPlan.DMA;
+                        timeZone = _GetMarketTimeZoneCode(timeZones, syncedPlan.MarketCode);
                         return new SpotExceptionsOutOfSpecDonePlanSpotsDto
                         {
                             Id = syncedPlan.Id,
                             EstimateId = syncedPlan.EstimateId,
                             Reason = syncedPlan.SpotExceptionsOutOfSpecReasonCode.Reason,
                             ReasonLabel = syncedPlan.SpotExceptionsOutOfSpecReasonCode.Label,
-                            MarketRank = syncedPlan.MarketRank,
-                            DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : syncedPlan.DMA,
+                            MarketRank = marketRank,
+                            DMA = DMA,
                             Market = syncedPlan.Market,
                             Station = syncedPlan.StationLegacyCallLetters,
-                            TimeZone = syncedPlan.TimeZone,
+                            TimeZone = timeZone,
                             Affiliate = syncedPlan.Affiliate,
                             Day = syncedPlan.ProgramAirTime.DayOfWeek.ToString(),
                             GenreName = syncedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName == null ? syncedPlan.GenreName : syncedPlan.SpotExceptionsOutOfSpecDoneDecision.GenreName,

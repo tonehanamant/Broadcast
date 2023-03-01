@@ -13,7 +13,7 @@
       "Id": 3,
       "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "MarketRank": null,
+      "MarketRank": 0,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -25,7 +25,7 @@
       "ReasonLabel": "Daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
-      "TimeZone": "EST"
+      "TimeZone": "CT"
     },
     {
       "Affiliate": "CBS",
@@ -40,7 +40,7 @@
       "Id": 4,
       "InventorySourceName": "TVB",
       "Market": "Cincinnati",
-      "MarketRank": null,
+      "MarketRank": 0,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -52,7 +52,7 @@
       "ReasonLabel": "Daypart",
       "SpotLengthString": ":45",
       "Station": "KXMC",
-      "TimeZone": "EST"
+      "TimeZone": "ET"
     }
   ],
   "Queued": [
@@ -71,7 +71,7 @@
       "Id": 2,
       "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "MarketRank": null,
+      "MarketRank": 0,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -84,7 +84,7 @@
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "SyncedTimestamp": null,
-      "TimeZone": "EST"
+      "TimeZone": "ET"
     }
   ],
   "Synced": [
@@ -103,7 +103,7 @@
       "Id": 1,
       "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "MarketRank": null,
+      "MarketRank": 0,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -116,7 +116,7 @@
       "SpotLengthString": ":45",
       "Station": "KXMC",
       "SyncedTimestamp": "01/10/2020 23:45:00",
-      "TimeZone": "EST"
+      "TimeZone": "CT"
     }
   ]
 }

@@ -190,6 +190,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="doneId">done id</param>
         /// <returns>Done plans by id</returns>
         Task<List<SpotExceptionsOutOfSpecsDoneDto>> GetOutOfSpecSpotsDoneByIds(List<int?> doneId);
+
+        /// <summary>
+        /// get the market time zones
+        /// </summary>
+        /// <returns>returns Market Time Zone</returns>
+        List<MarketTimeZoneDto> GetMarketTimeZones();
     }
 
     /// <inheritdoc />
@@ -273,6 +279,26 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 return outOfSpecGroupingDone;
             }));
+        }
+
+        /// <inheritdoc />
+        public List<MarketTimeZoneDto> GetMarketTimeZones()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var marketTimeZones = context.market_time_zones
+                    .Include(mtz => mtz.time_zones)
+                    .Select(mtz => new MarketTimeZoneDto
+                    {
+                        Name = mtz.time_zones.name,
+                        Code = mtz.time_zones.code,
+                        MarketCode = mtz.market_code
+                    })
+                    .OrderBy(mtz => mtz.Code)
+                    .ToList();
+
+                return marketTimeZones;
+            });
         }
 
         /// <inheritdoc />

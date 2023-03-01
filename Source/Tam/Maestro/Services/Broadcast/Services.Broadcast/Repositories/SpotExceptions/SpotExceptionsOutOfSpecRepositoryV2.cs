@@ -191,6 +191,12 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="weekEndDate">The week end date.</param>
         /// <returns></returns>
         List<Guid?> GetOutOfSpecSpotsDoneAdvertisers(DateTime weekStartDate, DateTime weekEndDate);
+
+        /// <summary>
+        /// get the market time zones
+        /// </summary>
+        /// <returns>returns Market Time Zone</returns>
+        List<MarketTimeZoneDto> GetMarketTimeZones();
     }
 
     /// <summary>
@@ -338,6 +344,26 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 return outOfSpecDoneInventorySources;
 
+            });
+        }
+
+        /// <inheritdoc />
+        public List<MarketTimeZoneDto> GetMarketTimeZones()
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var marketTimeZones = context.market_time_zones
+                    .Include(mtz => mtz.time_zones)
+                    .Select(mtz => new MarketTimeZoneDto
+                    {
+                        Name = mtz.time_zones.name,
+                        Code = mtz.time_zones.code,
+                        MarketCode = mtz.market_code
+                    })
+                    .OrderBy(mtz => mtz.Code)
+                    .ToList();
+
+                return marketTimeZones;
             });
         }
 
