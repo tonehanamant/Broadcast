@@ -1017,7 +1017,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     decision.daypart_code = request.DaypartCode;
                 });
 
-                isSaved = context.SaveChanges() > 1;
+                isSaved = context.SaveChanges() > 0;
                 _LogInfo($"Finished: Saving Out Of Spec Decisions to Done");
 
                 return isSaved;

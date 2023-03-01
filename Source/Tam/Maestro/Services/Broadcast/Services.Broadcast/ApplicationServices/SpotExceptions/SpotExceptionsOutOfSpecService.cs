@@ -596,7 +596,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
                     ReasonCode = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
-                    Comments = spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments
+                    Comments = spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments == null ? doneOutOfSpecToAdd.Comments : spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments
                 }).ToList();
                 var firstRequest = spotExceptionsOutOfSpecSaveRequest.Decisions.First();
                 if (string.IsNullOrEmpty(firstRequest.ProgramName) && string.IsNullOrEmpty(firstRequest.GenreName) && string.IsNullOrEmpty(firstRequest.DaypartCode))

@@ -927,6 +927,7 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlansRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlanInventorySourcesRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlansResultDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSaveAcceptanceRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotCommentsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotDoneDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotInventorySourcesDto.cs" />

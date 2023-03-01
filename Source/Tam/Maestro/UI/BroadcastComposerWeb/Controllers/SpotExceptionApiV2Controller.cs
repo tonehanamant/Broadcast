@@ -241,5 +241,33 @@ namespace BroadcastComposerWeb.Controllers
         {
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest));
         }
+
+        /// <summary>
+        /// Saves the out of spec decisions plans.
+        /// </summary>
+        /// <param name="outOfSpecTodoAcceptanceRequest">The spot exceptions out of spec save request.</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [Route("out-of-spec-spot-acceptance-todo")]
+        public BaseResponse<bool> SaveOutofSpecToDoAcceptanceAndComment(OutOfSpecSaveAcceptanceRequestDto outOfSpecTodoAcceptanceRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecDecisionsToDoPlans(outOfSpecTodoAcceptanceRequest, userName));
+        }
+
+        /// <summary>
+        /// Saves the out of spec decisions plans.
+        /// </summary>
+        /// <param name="outOfSpecTodoAcceptanceRequest">The spot exceptions out of spec save request.</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [Route("out-of-spec-spot-acceptance-done")]
+        public BaseResponse<bool> SaveOutofSpecDoneAcceptanceAndComment(OutOfSpecSaveAcceptanceRequestDto outOfSpecTodoAcceptanceRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecDecisionsDonePlans(outOfSpecTodoAcceptanceRequest, userName));
+        }
     }
 }

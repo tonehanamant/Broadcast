@@ -2694,5 +2694,560 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Advertisers", ex.Message);
         }
 
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecOneToDoDecision()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+            var getOutOfSpecToDoData = new List<OutOfSpecSpotsToDoDto>()
+            {
+                new OutOfSpecSpotsToDoDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+                .Returns(getOutOfSpecToDoData);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsToDoPlans(outOfSpecSaveDecisionsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecOneDoneDecision()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+            var getOutOfSpecDoneData = new List<OutOfSpecSpotsDoneDto>()
+            {
+                new OutOfSpecSpotsDoneDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(getOutOfSpecDoneData);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(x => x.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(true);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsDonePlans(outOfSpecSaveDecisionsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecOneDoneDecision_SaveFails()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+            var getOutOfSpecDoneData = new List<OutOfSpecSpotsDoneDto>()
+            {
+                new OutOfSpecSpotsDoneDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = false;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(getOutOfSpecDoneData);
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsDonePlans(outOfSpecSaveDecisionsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecMultipleToDoDecision()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1,2 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+            var getOutOfSpecToDoData = new List<OutOfSpecSpotsToDoDto>()
+            {
+                new OutOfSpecSpotsToDoDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                },
+                 new OutOfSpecSpotsToDoDto
+                {
+                    Id = 2,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+                .Returns(getOutOfSpecToDoData);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsToDoPlans(outOfSpecSaveDecisionsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_AcceptInSpecMultipleDoneDecision()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1,2 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+            var getOutOfSpecDoneData = new List<OutOfSpecSpotsDoneDto>()
+            {
+                new OutOfSpecSpotsDoneDto
+                {
+                    Id = 1,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                },
+                new OutOfSpecSpotsDoneDto
+                {
+                    Id = 2,
+                    ReasonCodeMessage="",
+                    EstimateId =191760,
+                    IsciName = "CC44ZZPT4",
+                    RecommendedPlanId = 215,
+                    RecommendedPlanName = "3Q' 21 Reckitt HYHO Early Morning Upfront",
+                    ProgramName = "Reckitt HYHO",
+                    StationLegacyCallLetters = "KXMC",
+                    AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                    Affiliate = "CBS",
+                    Market = "Minot-Bsmrck-Dcknsn(Wlstn)",
+                    PlanId = 215,
+                    SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                    AudienceId = 426,
+                    Product = "Nike",
+                    FlightStartDate = new DateTime(2019, 12, 1),
+                    FlightEndDate = new DateTime(2019, 12, 9),
+                    DaypartCode="PT",
+                    GenreName="Horror",
+                    Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                    ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                    IngestedAt = new DateTime(2019,1,1),
+                    IngestedBy = "Repository Test User",
+                    IngestedMediaWeekId = 1,
+                    OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 2,
+                        ReasonCode = 1,
+                        Reason = "spot aired outside daypart",
+                        Label = "Daypart"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxMjQ4OQ==",
+                  HouseIsci = "289J76GN16H"
+                }
+            };
+
+            string userName = "Test User";
+            bool expectedResult = true;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(getOutOfSpecDoneData);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(x => x.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(true);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsDonePlans(outOfSpecSaveDecisionsRequest, userName);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_Done_ThrowException()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1, 2 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+
+            string userName = "Test User";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Setup(x => x.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>())).Returns(true);
+
+            // Act
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsDonePlans(outOfSpecSaveDecisionsRequest, userName));
+
+            // Assert
+            Assert.AreEqual("Could not save decisions for the Done", result.Message);
+        }
+
+        [Test]
+        public void SaveSpotExceptionsOutOfSpecsDecisions_ToDo_ThrowException()
+        {
+            // Arrange
+            var outOfSpecSaveDecisionsRequest = new OutOfSpecSaveAcceptanceRequestDto
+            {
+                SpotIds = new List<int> { 1, 2 },
+                AcceptAsInSpec = true,
+                Comment = "Test Comment"
+            };
+
+            string userName = "Test User";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            // Act
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecDecisionsToDoPlans(outOfSpecSaveDecisionsRequest, userName));
+
+            // Assert
+            Assert.AreEqual("Could not move Spot Exception Plan by Decision to Done", result.Message);
+        }
     }
 }
