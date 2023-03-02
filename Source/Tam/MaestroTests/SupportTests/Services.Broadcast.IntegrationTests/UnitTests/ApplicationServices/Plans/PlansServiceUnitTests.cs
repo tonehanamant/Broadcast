@@ -326,17 +326,55 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // Pricing Triggering etc is covered by other tests.
         }
 
+        /// <summary>
+        /// This tests covers Saving an ADU Plan only.
+        /// It verifies that the Goals are initialized correctly and saved correctly.
+        /// </summary>
         [Test]
         public async Task SavePlanNew_AduOnlyPlan()
         {
             // Arrange
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = true;
 
-            var sentToWeeklyBreakdown = new List<PlanDto>();
+            var sentToWeeklyBreakdownDistributeGoals = new List<PlanDto>();
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
-                .Callback<PlanDto, double?, decimal?>((a, b, c) => sentToWeeklyBreakdown.Add(a))
+                .Callback<PlanDto, double?, decimal?>((a, b, c) => sentToWeeklyBreakdownDistributeGoals.Add(a))
                 .Returns(new List<WeeklyBreakdownWeek>());
+
+            var sentToGroupWeklyBreakdownBySd = new List<IEnumerable<WeeklyBreakdownWeek>>();
+            _WeeklyBreakdownEngineMock
+                .Setup(x => x.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()))
+                .Callback<IEnumerable<WeeklyBreakdownWeek>>((a) => sentToGroupWeklyBreakdownBySd.Add(a))
+                .Returns(new List<WeeklyBreakdownByStandardDaypart>
+                {
+                    new WeeklyBreakdownByStandardDaypart
+                    {
+                        Impressions = 0,
+                        Budget = 0,
+                        StandardDaypartId = 2
+                    },
+                    new WeeklyBreakdownByStandardDaypart
+                    {
+                        Impressions = 0,
+                        Budget = 0,
+                        StandardDaypartId = 11
+                    }
+                });
+
+            var sentToCalculateBudget = new List<PlanDeliveryBudget>();
+            _PlanBudgetDeliveryCalculatorMock
+                .Setup(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()))
+                .Callback<PlanDeliveryBudget>((a) => sentToCalculateBudget.Add(a))
+                .Returns<PlanDeliveryBudget>((a) => new PlanDeliveryBudget
+                {
+                    AudienceId = a.AudienceId,
+                    Universe = a.AudienceId * 1000,
+                    Impressions = 0,
+                    CPM = 0,
+                    RatingPoints = 0,
+                    CPP = 0
+                });
 
             var saveNewPlanCalls = new List<DateTime>();
             var savedNewPlans = new List<PlanDto>();
@@ -415,8 +453,50 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             // ADU Only Plan Specific
             _PlanValidatorMock.Verify(s => s.ValidateAduPlan(It.IsAny<PlanDto>()), Times.Once);
 
-            Assert.AreEqual(1, sentToWeeklyBreakdown.Count);
-            var sentToWeeklyBreakdownPlan = sentToWeeklyBreakdown.First();
+            // goals are empty
+            var savedPlan = savedNewPlans.First();
+
+            Assert.AreEqual(0, savedPlan.Budget);
+            Assert.AreEqual(0, savedPlan.TargetImpressions);
+            Assert.AreEqual(0, savedPlan.TargetRatingPoints);
+            Assert.AreEqual(0, savedPlan.TargetCPM);            
+            Assert.AreEqual(0, savedPlan.TargetCPP);
+
+            Assert.AreEqual(0, savedPlan.HHImpressions);
+            Assert.AreEqual(0, savedPlan.HHRatingPoints);
+            Assert.AreEqual(0, savedPlan.HHCPM);
+            Assert.AreEqual(0, savedPlan.HHCPP);
+
+            Assert.AreEqual(1, savedPlan.ImpressionsPerUnit);
+
+            // weekly breakdown weeks were cleared in when sentToGroupWeklyBreakdownBySd
+            _WeeklyBreakdownEngineMock
+                .Verify(x => x.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()), Times.Once);
+            var groupWeeklyBreakdownInput = sentToGroupWeklyBreakdownBySd.First();
+            foreach (var weekitem in groupWeeklyBreakdownInput)
+            {
+                Assert.AreEqual(0, weekitem.PercentageOfWeek);
+                Assert.AreEqual(0, weekitem.WeeklyBudget);
+                Assert.AreEqual(0, weekitem.WeeklyImpressions);
+                Assert.AreEqual(0, weekitem.WeeklyImpressionsPercentage);
+                Assert.AreEqual(0, weekitem.WeeklyRatings);
+                Assert.AreEqual(0, weekitem.WeeklyUnits);
+            }
+
+            // audience calculation input data was cleared
+            _PlanBudgetDeliveryCalculatorMock.Verify(s => s.CalculateBudget(It.IsAny<PlanDeliveryBudget>()), Times.Once);
+            var hhCalcInput = sentToCalculateBudget.Single(s => s.AudienceId == BroadcastConstants.HouseholdAudienceId);
+            Assert.AreEqual(0, hhCalcInput.Budget);
+            Assert.AreEqual(0, hhCalcInput.Impressions);
+
+            // pricing goals are empty
+            Assert.AreEqual(0, savedPlan.PricingParameters.AdjustedBudget);
+            Assert.AreEqual(0, savedPlan.PricingParameters.AdjustedCPM);
+            Assert.AreEqual(0, savedPlan.BuyingParameters.AdjustedBudget);
+            Assert.AreEqual(0, savedPlan.BuyingParameters.AdjustedCPM);
+
+            Assert.AreEqual(1, sentToWeeklyBreakdownDistributeGoals.Count);
+            var sentToWeeklyBreakdownPlan = sentToWeeklyBreakdownDistributeGoals.First();
             Assert.AreEqual(0, sentToWeeklyBreakdownPlan.Budget);
             Assert.AreEqual(0, sentToWeeklyBreakdownPlan.TargetImpressions);
             Assert.AreEqual(0, sentToWeeklyBreakdownPlan.TargetRatingPoints);
@@ -427,12 +507,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             {
                 Assert.AreEqual(4000000, week.AduImpressions);
             }
-
-            var savedPlan = savedNewPlans.First();
-            Assert.AreEqual(0, savedPlan.PricingParameters.AdjustedBudget);
-            Assert.AreEqual(0, savedPlan.PricingParameters.AdjustedCPM);
-            Assert.AreEqual(0, savedPlan.BuyingParameters.AdjustedBudget);
-            Assert.AreEqual(0, savedPlan.BuyingParameters.AdjustedCPM);
         }
 
         [Test]

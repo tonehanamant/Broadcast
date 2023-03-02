@@ -731,15 +731,30 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.IsAduEnabled = true;
 
             // init goal related properties
-            plan.Budget = plan.Budget ?? 0;
-            plan.TargetImpressions = plan.TargetImpressions ?? 0;
-            plan.TargetRatingPoints = plan.TargetRatingPoints ?? 0;
-            
-            plan.TargetCPM = plan.TargetCPM ?? 0;
-            plan.TargetCPP = plan.TargetCPP ?? 0;
+            plan.Budget = 0;
+            plan.TargetImpressions =  0;
+            plan.TargetRatingPoints = 0;
+            plan.TargetCPM = 0;
+            plan.TargetCPP = 0;
+
+            plan.HHImpressions = 0;
+            plan.HHRatingPoints = 0;
+            plan.HHCPM = 0;
+            plan.HHCPP = 0;
 
             // we want this to be greater than 0 for the ADU Impressions calculation
-            plan.ImpressionsPerUnit = (plan.ImpressionsPerUnit ?? 0) > 0 ? plan.ImpressionsPerUnit : 1; 
+            plan.ImpressionsPerUnit = 1;
+
+            // clear out same in weekly breakdown
+            foreach (var weekItem in plan.WeeklyBreakdownWeeks)
+            {
+                weekItem.PercentageOfWeek = 0;
+                weekItem.WeeklyBudget = 0;
+                weekItem.WeeklyImpressions = 0;
+                weekItem.WeeklyImpressionsPercentage = 0;
+                weekItem.WeeklyRatings = 0;
+                weekItem.WeeklyUnits = 0;
+            }
         }        
 
         internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
