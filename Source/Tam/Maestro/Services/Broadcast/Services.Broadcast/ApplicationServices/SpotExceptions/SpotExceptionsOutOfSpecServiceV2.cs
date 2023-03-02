@@ -141,6 +141,17 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="userName">User name</param>
         /// <returns>true or false</returns>
         bool SaveOutOfSpecDecisionsDonePlans(OutOfSpecSaveAcceptanceRequestDto spotExceptionsOutOfSpecSaveRequest, string userName);
+        /// <summary>
+        /// OutOfSpec Spot Single Edit.
+        /// </summary>
+        /// <param name="outOfSpecEditRequest">The request.</param>
+        /// <param name="userName">Name of the user.</param>
+        bool SaveOutOfSpecSpotEditToDo(OutOfSpecEditRequestDto outOfSpecEditRequest, string userName);
+
+        /// <summary>
+        /// Save out of spec spots on edit 
+        /// </summary>
+        bool SaveOutOfSpecSpotsEditDone(OutOfSpecEditRequestDto outOfSpecEditRequest, string userName);
     }
 
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
@@ -1274,6 +1285,127 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             }
 
             return isSpotExceptionsOutOfSpecDoneDecisionSaved;
+        }
+
+        /// <inheritdoc />
+        public bool SaveOutOfSpecSpotEditToDo(OutOfSpecEditRequestDto outOfSpecEditRequest, string userName)
+        {
+            var isSaved = false;
+
+            _LogInfo($"Starting: Bulk Saving Decisions For Out of Spec Spot ToDo");
+            try
+            {
+                List<int> spots = new List<int>();
+                spots.Add(outOfSpecEditRequest.SpotId);
+                var outOfSpecSpotsToDo = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoByIds(spots);
+                outOfSpecSpotsToDo.ForEach(x =>
+                {
+                    x.Comment = string.IsNullOrEmpty(outOfSpecEditRequest.Comments) ? x.Comment : outOfSpecEditRequest.Comments;
+                    x.ProgramName = outOfSpecEditRequest.ProgramName;
+                    x.DaypartCode = outOfSpecEditRequest.DaypartCode;
+                    x.GenreName = outOfSpecEditRequest.GenreName;
+                });
+                isSaved = _SaveOutOfSpecSpotDecisionsToDo(outOfSpecSpotsToDo, userName, outOfSpecEditRequest.AcceptAsInSpec);
+
+                _LogInfo($"Finished: Bulk Saving Decisions For Out of Spec Spot ToDo");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not Bulk Saving Decisions For Out of Spec Spot ToDo";
+                throw new CadentException(msg, ex);
+            }
+
+            return isSaved;
+        }
+
+        /// <inheritdoc />
+        public bool SaveOutOfSpecSpotsEditDone(OutOfSpecEditRequestDto outOfSpecEditRequest, string userName)
+        {
+            var isSaved = false;
+
+            _LogInfo($"Starting: Saving Decisions to Out of Spec");
+            try
+            {
+                isSaved = _SaveOutOfSpecSpotDecisionEditDone(outOfSpecEditRequest, userName);
+
+                if (!string.IsNullOrEmpty(outOfSpecEditRequest.Comments))
+                {
+                    isSaved = _SaveOutOfSpecSpotCommentEditDone(outOfSpecEditRequest, userName);
+                }
+                _LogInfo($"Finished: Saving Decisions to Out of Spec");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not save Decisions to Out of Spec";
+                throw new CadentException(msg, ex);
+            }
+
+            return isSaved;
+        }
+        private bool _SaveOutOfSpecSpotDecisionEditDone(OutOfSpecEditRequestDto outOfSpecEditRequest, string userName)
+        {
+            bool isOutOfSpecSpotDoneDecisionSaved;
+            var outOfSpecSpotsDone = new List<OutOfSpecSpotDoneDecisionsDto>();
+            var currentDate = _DateTimeEngine.GetCurrentMoment();
+
+            _LogInfo($"Starting: Saving decisions for the Done");
+            try
+            {
+                var outOfSpecSpotDoneDecision = new OutOfSpecSpotDoneDecisionsDto
+                {
+                    Id = outOfSpecEditRequest.SpotId,
+                    AcceptedAsInSpec = outOfSpecEditRequest.AcceptAsInSpec,
+                    ProgramName = outOfSpecEditRequest.ProgramName?.ToUpper(),
+                    GenreName = outOfSpecEditRequest.GenreName?.ToUpper(),
+                    DaypartCode = outOfSpecEditRequest.DaypartCode
+                };
+                outOfSpecSpotsDone.Add(outOfSpecSpotDoneDecision);
+
+                isOutOfSpecSpotDoneDecisionSaved = _SpotExceptionsOutOfSpecRepositoryV2.SaveOutOfSpecSpotDoneDecisions(outOfSpecSpotsDone, userName, currentDate);
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not save decisions for the Done";
+                throw new CadentException(msg, ex);
+            }
+
+            _LogInfo($"Starting: Saving decisions for the Done");
+            return isOutOfSpecSpotDoneDecisionSaved;
+        }
+
+        private bool _SaveOutOfSpecSpotCommentEditDone(OutOfSpecEditRequestDto outOfSpecEditRequest, string userName)
+        {
+            bool isCommentSaved;
+
+            _LogInfo($"Starting: Saving Comments to Out of Spec Done");
+            try
+            {
+                List<int> spots = new List<int>();
+                spots.Add(outOfSpecEditRequest.SpotId);
+                var existingOutOfSpecsDone = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneByIds(spots);
+
+                var outOfSpecSpotDoneComments = existingOutOfSpecsDone.Select(doneOutOfSpecToAdd => new OutOfSpecSpotCommentsDto
+                {
+                    SpotUniqueHashExternal = doneOutOfSpecToAdd.SpotUniqueHashExternal,
+                    ExecutionIdExternal = doneOutOfSpecToAdd.ExecutionIdExternal,
+                    IsciName = doneOutOfSpecToAdd.IsciName,
+                    RecommendedPlanId = doneOutOfSpecToAdd.RecommendedPlanId.Value,
+                    StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
+                    ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
+                    ReasonCode = doneOutOfSpecToAdd.OutOfSpecSpotReasonCodes.Id,
+                    Comment = outOfSpecEditRequest.Comments
+                }).ToList();
+
+                isCommentSaved = _SpotExceptionsOutOfSpecRepositoryV2.SaveOutOfSpecSpotComments(outOfSpecSpotDoneComments, userName, DateTime.Now);
+                _LogInfo($"Finished: Saving Comments to Out of Spec Done");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not save Comments to Out of Spec Done";
+                throw new CadentException(msg, ex);
+            }
+
+            return isCommentSaved;
         }
     }
 }

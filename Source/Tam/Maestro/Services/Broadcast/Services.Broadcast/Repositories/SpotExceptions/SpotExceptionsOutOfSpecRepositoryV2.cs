@@ -1090,7 +1090,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     }
                 });
 
-                isSaved = context.SaveChanges() > 1;
+                isSaved = context.SaveChanges() > 0;
                 _LogInfo($"Finished: Saving Out Of Spec Comments");
 
                 return isSaved;

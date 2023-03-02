@@ -174,8 +174,9 @@ namespace BroadcastComposerWeb.Controllers
                 .SaveOutOfSpecSpotBulkEditToDo(saveOutOfSpecSpotBulkEditRequest, userName));
         }
 
+
         /// <summary>
-        /// save the buld edit for out of spec done
+        /// save the bulk edit for out of spec done
         /// </summary>
         [HttpPost]
         [Route("out-of-spec-spot-bulk-edit-done")]
@@ -187,6 +188,32 @@ namespace BroadcastComposerWeb.Controllers
                 .SaveOutOfSpecSpotsBulkEditDone(saveOutOfSpecSpotBulkEditRequest, userName));
         }
 
+       /// <summary>
+       /// save the out of spec to do items 
+       /// </summary>
+        [HttpPost]
+        [Route("out-of-spec-spot-edit-todo")]
+        public BaseResponse<bool> SaveOutOfSpecSpotEditToDo(OutOfSpecEditRequestDto outOfSpecEditRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecSpotEditToDo(outOfSpecEditRequest, userName));
+        }
+
+        /// <summary>
+        /// save the single edit for out of spec done
+        /// </summary>
+        [HttpPost]
+        [Route("out-of-spec-spot-edit-done")]
+        public BaseResponse<bool> SaveOutOfSpecSpotEditDone(OutOfSpecEditRequestDto outOfSpecEditRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecSpotsEditDone(outOfSpecEditRequest, userName));
+        }
+       
         /// <summary>
         /// Gets the unposted spot exceptions.
         /// </summary>

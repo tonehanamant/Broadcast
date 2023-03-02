@@ -919,6 +919,7 @@
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetail.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetailDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecEditRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportReportData.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\DecisionSync\GetSyncStateResponseDto.cs" />

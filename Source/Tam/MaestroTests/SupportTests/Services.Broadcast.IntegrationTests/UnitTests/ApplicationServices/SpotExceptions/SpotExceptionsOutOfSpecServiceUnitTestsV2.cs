@@ -2733,5 +2733,224 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             };
         }
 
+        [Test]
+        public void SaveOutOfSpecSpotEditToDo()
+        {
+            // Arrange
+            var outOfSpecEditRequest = new OutOfSpecEditRequestDto
+            {
+                SpotId = 514109,
+                Comments = "Comment Saved By Unittests",
+                ProgramName = "PAID PROGRAMMING",
+                GenreName = "PAID PROGRAM",
+                DaypartCode = "TDN"
+            };
+
+            string userName = "Test User";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+              .Returns(_GetOutOfSpecPlanSpotsData());
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotEditToDo(outOfSpecEditRequest, userName);
+
+            // Assert
+            Assert.IsTrue(result);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()), Times.Once);
+
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.DeleteOutOfSpecsFromToDo(It.IsAny<List<int>>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.SaveOutOfSpecSpotComments(It.IsAny<List<OutOfSpecSpotCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()),
+                Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.AddOutOfSpecSpotCommentsToDo(It.IsAny<List<OutOfSpecSpotCommentsDto>>()), Times.Never);
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.UpdateOutOfSpecCommentsToDo(It.IsAny<List<OutOfSpecSpotCommentsDto>>()), Times.Never);
+        }
+
+        [Test]
+        public void SaveOutOfSpecSpotEditToDo_WithoutComments()
+        {
+            // Arrange
+            var outOfSpecEditRequest = new OutOfSpecEditRequestDto
+            {
+                SpotId = 514109,
+                Comments = String.Empty,
+                ProgramName = "PAID PROGRAMMING",
+                GenreName = "PAID PROGRAM",
+                DaypartCode = "TDN"
+            };
+
+            string userName = "Test User";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+              .Returns(_GetOutOfSpecPlanSpotsData());
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotEditToDo(outOfSpecEditRequest, userName);
+
+            // Assert
+            Assert.IsTrue(result);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.DeleteOutOfSpecsFromToDo(It.IsAny<List<int>>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.SaveOutOfSpecSpotComments(It.IsAny<List<OutOfSpecSpotCommentsDto>>(), It.IsAny<string>(),
+                It.IsAny<DateTime>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.AddOutOfSpecSpotCommentsToDo(It.IsAny<List<OutOfSpecSpotCommentsDto>>()), Times.Never);
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.UpdateOutOfSpecCommentsToDo(It.IsAny<List<OutOfSpecSpotCommentsDto>>()), Times.Never);
+        }
+
+        [Test]
+        public void SaveOutOfSpecSpotEditToDo_ThrowException()
+        {
+            // Arrange
+            var outOfSpecEditRequest = new OutOfSpecEditRequestDto
+            {
+                SpotId = 514109,
+                Comments = "Comment Saved By Unittests",
+                ProgramName = "PAID PROGRAMMING",
+                GenreName = "PAID PROGRAM",
+                DaypartCode = "TDN"
+            };
+
+            string userName = "Test User";
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+              .Setup(s => s.GetOutOfSpecSpotsToDoByIds(It.IsAny<List<int>>()))
+              .Callback(() =>
+              {
+                  throw new CadentException("Throwing a test exception.");
+              });
+
+            // Act
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotEditToDo(outOfSpecEditRequest, userName));
+
+            // Assert
+            Assert.AreEqual("Could not Bulk Saving Decisions For Out of Spec Spot ToDo", result.Message);
+        }
+
+        [Test]
+        public void SaveOutOfSpecSpotsEditDone_SaveDecision()
+        {
+            // Arrange
+            string userName = "Test User";
+            var request = new OutOfSpecEditRequestDto
+            {
+                SpotId = 1,
+                AcceptAsInSpec = true,
+                DaypartCode = "PM",
+                GenreName = "News",
+                ProgramName = "Family Man",
+                Comments = null
+            };
+            //Mocking 
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+               .Setup(s => s.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+               .Returns(true);
+
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsEditDone(request, userName);
+
+            // Assert
+            Assert.IsTrue(result);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+               Verify(s => s.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(),
+               It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.UpdateOutOfSpecCommentsToDo(It.IsAny<List<OutOfSpecSpotCommentsDto>>()), Times.Never);
+        }
+
+        [Test]
+        public void SaveOutOfSpecSpotsEditDone_SaveComment()
+        {
+            // Arrange
+            string userName = "Test User";
+            var request = new OutOfSpecEditRequestDto
+            {
+                SpotId = 1,
+                AcceptAsInSpec = true,
+                DaypartCode = "PM",
+                GenreName = "News",
+                ProgramName = "Family Man",
+                Comments = "Test comments"
+            };
+            //Mocking 
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+               .Setup(s => s.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+               .Returns(true);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()))
+                .Returns(_GetOutOfSpecDoneData());
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(s => s.SaveOutOfSpecSpotComments(It.IsAny<List<OutOfSpecSpotCommentsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Returns(true);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsEditDone(request, userName);
+
+            // Assert
+            Assert.IsTrue(result);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(),
+                It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.GetOutOfSpecSpotsDoneByIds(It.IsAny<List<int>>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.Verify(s => s.SaveOutOfSpecSpotComments(It.IsAny<List<OutOfSpecSpotCommentsDto>>(),
+                It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock.
+                Verify(s => s.UpdateOutOfSpecCommentsToDo(It.IsAny<List<OutOfSpecSpotCommentsDto>>()), Times.Never);
+        }
+
+        [Test]
+        public void SaveOutOfSpecSpotsEditDone_ThrowException()
+        {
+            // Arrange
+            string userName = "Test User";
+            var request = new OutOfSpecEditRequestDto
+            {
+                SpotId = 1,
+                AcceptAsInSpec = true,
+                DaypartCode = "PM",
+                GenreName = "News",
+                ProgramName = "Family Man",
+                Comments = null
+            };
+            //Mocking 
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+               .Setup(s => s.SaveOutOfSpecSpotDoneDecisions(It.IsAny<List<OutOfSpecSpotDoneDecisionsDto>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+               .Callback(() =>
+               {
+                   throw new CadentException("Throwing a test exception.");
+               });
+
+            var expectedResult = "Could not save Decisions to Out of Spec";
+
+            // Act
+            var result = Assert.Throws<CadentException>(() =>
+            _SpotExceptionsOutOfSpecServiceV2.SaveOutOfSpecSpotsEditDone(request, userName));
+
+            // Assert
+            Assert.AreEqual(expectedResult, result.Message);
+        }
+
     }
 }
