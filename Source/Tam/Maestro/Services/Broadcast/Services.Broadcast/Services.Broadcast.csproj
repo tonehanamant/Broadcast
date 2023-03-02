@@ -919,8 +919,10 @@
     <Compile Include="Entities\Scx\PlanPricingScxFile.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetail.cs" />
     <Compile Include="Entities\Scx\ScxOpenMarketFileGenerationDetailDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\MarketTimeZoneDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecEditRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportReportData.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportReportDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecExportRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\DecisionSync\GetSyncStateResponseDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecPlanAdvertisersRequestDto.cs" />
@@ -942,7 +944,6 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SaveOutOfSpecPlanAcceptanceRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SaveOutOfSpecSpotCommentsRequestDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\SaveOutOfSpecSpotBulkEditRequestDto.cs" />
-    <Compile Include="Entities\SpotExceptions\OutOfSpecs\MarketTimeZoneDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoPlanDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedNoReelRosterDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\OutOfSpecUnpostedRequestDto.cs" />

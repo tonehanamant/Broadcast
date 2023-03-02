@@ -1,0 +1,51 @@
+{
+  "OutOfSpecExportFileName": null,
+  "OutOfSpecs": [
+    {
+      "AdvertiserMasterId": "acc19eaf-381f-43f7-899b-d03893510e24",
+      "AdvertiserName": null,
+      "Affiliate": "NBC",
+      "ClientIsci": "009ARD0075H",
+      "Comment": "Unit Test Comment",
+      "Date": "2021-01-15T00:00:00",
+      "Day": "",
+      "Estimates": 7335,
+      "HouseIsci": "LDU6NE9370H",
+      "InventoryOutOfSpecReason": "Incorrect Time",
+      "InventorySource": "Game Time with Boomer Esiason",
+      "InventorySourceDaypart": "SYN",
+      "Length": 60,
+      "Market": "Knoxville",
+      "MarketRank": 136,
+      "ProgramName": "BUSINESS FIRST AM",
+      "RecommendedPlanId": 100,
+      "Spot": 0,
+      "Station": "KOB",
+      "TimeAired": "05:41:11",
+      "WeekStartDate": "2021-01-01T00:00:00"
+    },
+    {
+      "AdvertiserMasterId": "c56972b6-67f2-4986-a2be-4b1f199a1420",
+      "AdvertiserName": null,
+      "Affiliate": "NBC",
+      "ClientIsci": "009ARD0075H",
+      "Comment": "Unit Test Comment",
+      "Date": "2021-01-15T00:00:00",
+      "Day": "",
+      "Estimates": 7335,
+      "HouseIsci": "LDU6NE9370H",
+      "InventoryOutOfSpecReason": "Incorrect Time",
+      "InventorySource": "TVB Syn",
+      "InventorySourceDaypart": "SYN",
+      "Length": 60,
+      "Market": "Knoxville",
+      "MarketRank": 136,
+      "ProgramName": "BUSINESS FIRST AM",
+      "RecommendedPlanId": 200,
+      "Spot": 0,
+      "Station": "KOB",
+      "TimeAired": "05:41:11",
+      "WeekStartDate": "2021-01-01T00:00:00"
+    }
+  ]
+}

@@ -534,19 +534,48 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <inheritdoc />
         public Guid GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request, string userName, DateTime currentDate, string templatesFilePath)
         {
-            OutOfSpecExportReportData outOfSpecExportReportData = new OutOfSpecExportReportData();
+            var outOfSpecExportReportData = GetOutOfSpecExportReportData(request);
             var reportGenerator = new OutOfSpecReportGenerator(templatesFilePath);
             _LogInfo($"Preparing to generate the file.  templatesFilePath='{templatesFilePath}'");
-            outOfSpecExportReportData.ExportFileName = outOfSpecBuyerExportFileName;
-            var report = reportGenerator.Generate(outOfSpecExportReportData);
+            outOfSpecExportReportData.OutOfSpecExportFileName = outOfSpecBuyerExportFileName;
+            var report = reportGenerator.Generate(outOfSpecExportReportData);         
             var folderPath = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.OUT_OF_SPEC_EXPORT_REPORT);
-
             _LogInfo($"Saving generated file '{report.Filename}' to folder '{folderPath}'");
             var fileId = _SaveFile(report.Filename, report.Stream, userName);
             return fileId;
-
         }
+        /// <inheritdoc />
+        public OutOfSpecExportReportData GetOutOfSpecExportReportData(OutOfSpecExportRequestDto request)
+        {
+            List<OutOfSpecExportReportDto> outOfSpecExportData;
+             outOfSpecExportData = _SpotExceptionsOutOfSpecRepositoryV2.GenerateOutOfSpecExportReport(request);
+            if (request.AdvertisersMasterIds.Any())
+            {
+                outOfSpecExportData = outOfSpecExportData.Where(x => request.AdvertisersMasterIds.Contains(x.AdvertiserMasterId ?? new Guid())).ToList();
+            }                
+            if (request.AdvertisersPlanIds.Any())
+            {
+                outOfSpecExportData = outOfSpecExportData.Where(x => request.AdvertisersPlanIds.Contains(x.RecommendedPlanId ?? 1)).ToList();
+            }
+                
+            if (request.InventorySourceNames.Any())
+            {
+                outOfSpecExportData = outOfSpecExportData.Where(x => request.InventorySourceNames.Contains(x.InventorySource)).ToList();
+            }             
 
+            _SetIsciPlanAdvertiser(outOfSpecExportData);
+            var outOfSpecExportReportData = new OutOfSpecExportReportData()
+            {
+                OutOfSpecs = outOfSpecExportData
+            };
+            return outOfSpecExportReportData;
+        }
+        private void _SetIsciPlanAdvertiser(List<OutOfSpecExportReportDto> outOfSpecExportData)
+        {
+            var advertisers = _AabEngine.GetAdvertisers();
+            outOfSpecExportData.ForEach(x =>
+                x.AdvertiserName = advertisers.SingleOrDefault(y => y.MasterId == x.AdvertiserMasterId)?.Name);
+        }
         /// <inheritdoc />
         public List<MasterIdName> GetOutOfSpecAdvertisers(OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest)
         {

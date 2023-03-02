@@ -1,12 +1,17 @@
-﻿using Common.Services;
+﻿using ApprovalTests;
+using ApprovalTests.Reporters;
+using Common.Services;
 using Common.Services.Repositories;
+using Moq;
+using Newtonsoft.Json;
+using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.SpotExceptions;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Entities;
+using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.ProgramMapping;
-using Services.Broadcast.Entities.SpotExceptions;
 using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Helpers;
@@ -14,14 +19,7 @@ using Services.Broadcast.Repositories;
 using Services.Broadcast.Repositories.SpotExceptions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
-using Moq;
-using Newtonsoft.Json;
-using NUnit.Framework;
-using ApprovalTests;
-using ApprovalTests.Reporters;
-using Services.Broadcast.Entities.Plan;
 
 namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.SpotExceptions
 {
@@ -2701,7 +2699,136 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             var ex = Assert.Throws<CadentException>(() => act());
             Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Advertisers", ex.Message);
         }
+        [Test]
+        public void GetOutOfSpecExportReportData()
+        {
+            // Arrange
+            OutOfSpecExportRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecExportRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { },
+                AdvertisersMasterIds = new List<Guid> { },
+                AdvertisersPlanIds = new List<int> { }
 
+            };
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GenerateOutOfSpecExportReport(It.IsAny<OutOfSpecExportRequestDto>()))
+                .Returns(_GetOutOfSpecReportData);
+            _AabEngineMock
+             .Setup(x => x.GetAdvertisers())
+             .Returns(new List<AdvertiserDto>
+             {
+                new AdvertiserDto {
+                AgencyId = 1,
+                AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                Name = "Lakme"
+                }
+             });
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecExportReportData(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+       
+        [Test]
+        public void GetOutOfSpecExportReportData_InventorySourceNamesFilter()
+        {
+            // Arrange
+            OutOfSpecExportRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecExportRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { "Game Time with Boomer Esiason" },
+                AdvertisersMasterIds = new List<Guid> { },
+                AdvertisersPlanIds = new List<int> { }
+
+            };
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GenerateOutOfSpecExportReport(It.IsAny<OutOfSpecExportRequestDto>()))
+                .Returns(_GetOutOfSpecReportData);
+            _AabEngineMock
+            .Setup(x => x.GetAdvertisers())
+            .Returns(new List<AdvertiserDto>
+            {
+                new AdvertiserDto {
+                AgencyId = 1,
+                AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                Name = "Lakme"
+                }
+            });
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecExportReportData(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Assert.AreEqual(1, result.OutOfSpecs.Count);
+        }
+        [Test]
+        public void GetOutOfSpecExportReportData_RecommendedPlanFilter()
+        {
+            // Arrange
+            OutOfSpecExportRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecExportRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { },
+                AdvertisersMasterIds = new List<Guid> { },
+                AdvertisersPlanIds = new List<int> {100 }
+
+            };
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GenerateOutOfSpecExportReport(It.IsAny<OutOfSpecExportRequestDto>()))
+                .Returns(_GetOutOfSpecReportData);
+            _AabEngineMock
+             .Setup(x => x.GetAdvertisers())
+             .Returns(new List<AdvertiserDto>
+             {
+                new AdvertiserDto {
+                AgencyId = 1,
+                AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                Name = "Lakme"
+                }
+             });
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecExportReportData(outofSpecPlanAdvertisersRequest);
+
+            // Assert
+            Assert.AreEqual(1, result.OutOfSpecs.Count);           
+        }
+        [Test]
+        public void GetOutOfSpecExportReportData_AdvertisersFilter()
+        {
+            // Arrange
+            OutOfSpecExportRequestDto outofSpecPlanAdvertisersRequest = new OutOfSpecExportRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10),
+                InventorySourceNames = new List<string> { },
+                AdvertisersMasterIds = new List<Guid> {
+                   new Guid("ACC19EAF-381F-43F7-899B-D03893510E24" )},
+                AdvertisersPlanIds = new List<int> { 100 }
+
+            };
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GenerateOutOfSpecExportReport(It.IsAny<OutOfSpecExportRequestDto>()))
+                .Returns(_GetOutOfSpecReportData);
+            _AabEngineMock
+            .Setup(x => x.GetAdvertisers())
+            .Returns(new List<AdvertiserDto>
+            {
+                new AdvertiserDto {
+                AgencyId = 1,
+                AgencyMasterId = new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                Name = "Lakme"
+                }
+            });
+            // Act           
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecExportReportData(outofSpecPlanAdvertisersRequest);
+        
+            // Assert
+            Assert.AreEqual(1, result.OutOfSpecs.Count);
+        }
         private List<MarketTimeZoneDto> _GetTimeZones()
         {
             return new List<MarketTimeZoneDto>()
@@ -2952,5 +3079,60 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             Assert.AreEqual(expectedResult, result.Message);
         }
 
+        private List<OutOfSpecExportReportDto> _GetOutOfSpecReportData()
+        {
+            List<OutOfSpecExportReportDto> reportData = new List<OutOfSpecExportReportDto>
+            {
+                new OutOfSpecExportReportDto
+                {
+                    MarketRank=136,
+                    Market="Knoxville",
+                    Station="KOB",
+                    Affiliate="NBC",
+                    WeekStartDate=new DateTime(2021, 01, 01),
+                    Day="",
+                    Date=new DateTime(2021, 01, 15),
+                    TimeAired="05:41:11",
+                    ProgramName="BUSINESS FIRST AM",
+                    Length=60,
+                    HouseIsci="LDU6NE9370H",
+                    ClientIsci="009ARD0075H",
+                    AdvertiserName="Smucker's",
+                    AdvertiserMasterId=new Guid("ACC19EAF-381F-43F7-899B-D03893510E24"),
+                    InventorySource="Game Time with Boomer Esiason",
+                    InventorySourceDaypart="SYN",
+                    InventoryOutOfSpecReason="Incorrect Time",
+                    Estimates=7335,
+                    Comment="Unit Test Comment",
+                    RecommendedPlanId=100
+
+                },
+                 new OutOfSpecExportReportDto
+                {
+                    MarketRank=136,
+                    Market="Knoxville",
+                    Station="KOB",
+                    Affiliate="NBC",
+                    WeekStartDate=new DateTime(2021, 01, 01),
+                    Day="",
+                    Date=new DateTime(2021, 01, 15),
+                    TimeAired="05:41:11",
+                    ProgramName="BUSINESS FIRST AM",
+                    Length=60,
+                    HouseIsci="LDU6NE9370H",
+                    ClientIsci="009ARD0075H",
+                    AdvertiserName="Smucker's",
+                    AdvertiserMasterId=new Guid("c56972b6-67f2-4986-a2be-4b1f199a1420"),
+                    InventorySource="TVB Syn",
+                    InventorySourceDaypart="SYN",
+                    InventoryOutOfSpecReason="Incorrect Time",
+                    Estimates=7335,
+                    Comment="Unit Test Comment",
+                    RecommendedPlanId=200
+
+                }
+            };
+            return reportData;
+        }
     }
 }

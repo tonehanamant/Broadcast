@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
+    /// <summary>Out Of Spec Export Request</summary>
     public class OutOfSpecExportRequestDto
     {
         /// <summary>
@@ -27,9 +28,9 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
         /// <value>The Advertisers Plan Ids.</value>
         public List<int> AdvertisersPlanIds { get; set; } = new List<int>();
         /// <summary>
-        /// Gets or sets the Advertisers.
+        /// Gets or sets the Advertisers master ids.
         /// </summary>
-        /// <value>The Advertisers.</value>
-        public List<string> Advertisers { get; set; } = new List<string>();
+        /// <value>The AdvertisersMasterIds.</value>
+        public List<Guid> AdvertisersMasterIds { get; set; } = new List<Guid>();
     }
 }

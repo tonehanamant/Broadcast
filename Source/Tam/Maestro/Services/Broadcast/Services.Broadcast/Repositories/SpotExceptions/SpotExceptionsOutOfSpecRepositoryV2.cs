@@ -1,16 +1,16 @@
-﻿using Common.Services.Repositories;
-using Common.Services.Extensions;
+﻿using Common.Services.Extensions;
+using Common.Services.Repositories;
 using EntityFrameworkMapping.Broadcast;
+using Microsoft.EntityFrameworkCore.Internal;
 using Services.Broadcast.Entities;
-using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using Services.Broadcast.Entities.ProgramMapping;
+using Services.Broadcast.Entities.SpotExceptions.OutOfSpecs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
+using System.Linq;
 using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.EntityFrameworkMapping;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Services.Broadcast.Repositories.SpotExceptions
 {
@@ -197,6 +197,13 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// </summary>
         /// <returns>returns Market Time Zone</returns>
         List<MarketTimeZoneDto> GetMarketTimeZones();
+
+        /// <summary>
+        /// Gets the outofspec report to export.
+        /// </summary>
+        /// <param name="request">Request Dto to get outofspec report.</param>       
+        /// <returns></returns>
+        List<OutOfSpecExportReportDto> GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request);
     }
 
     /// <summary>
@@ -1095,6 +1102,74 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 return isSaved;
             }));
+        }
+
+        /// <inheritdoc />
+        public List<OutOfSpecExportReportDto> GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request)
+        {
+            DateTime weekStartDate = request.WeekStartDate.Date;
+            DateTime weekEndDate = request.WeekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                var outOfSpecsEntities = context.spot_exceptions_out_of_specs
+                    .Where(outOfSpecDb => outOfSpecDb.program_air_time >= weekStartDate && outOfSpecDb.program_air_time <= weekEndDate)
+                    .Include(outOfSpecDb => outOfSpecDb.plan)
+                    .Include(outOfSpecDb => outOfSpecDb.plan.campaign)
+                    .Include(outOfSpecDb => outOfSpecDb.plan.plan_versions)
+                    .Include(outOfSpecDb => outOfSpecDb.plan.plan_versions.Select(x => x.plan_version_dayparts))
+                    .Include(outOfSpecDb => outOfSpecDb.spot_lengths)
+                    .Include(outOfSpecDb => outOfSpecDb.audience)
+                    .Include(outOfSpecDb => outOfSpecDb.spot_exceptions_out_of_spec_reason_codes)
+                    .GroupJoin
+                    (
+                        context.spot_exceptions_out_of_spec_comments,
+                        x => new { a = x.spot_unique_hash_external, b = x.execution_id_external, c = x.isci_name, d = x.program_air_time, e = x.reason_code_id, f = x.recommended_plan_id.Value },
+                        y => new { a = y.spot_unique_hash_external, b = y.execution_id_external, c = y.isci_name, d = y.program_air_time, e = y.reason_code_id, f = y.recommended_plan_id },
+                        (x, y) => new { OutOfSpecSpotsToDo = x, Comments = y.FirstOrDefault() }
+                    )
+                    .GroupJoin(
+                        context.stations
+                        .Include(stationDb => stationDb.market),
+                        outOfSpecDb => outOfSpecDb.OutOfSpecSpotsToDo.station_legacy_call_letters,
+                        stationDb => stationDb.legacy_call_letters,
+                        (outOfSpecDb, stationDb) => new { OutOfSpec = outOfSpecDb, Station = stationDb.FirstOrDefault() })
+                    .ToList();
+
+                var outOfSpecSpotsToDo = outOfSpecsEntities.Select(outOfSpecEntity => _MapOutOfSpecReportToDto(outOfSpecEntity.OutOfSpec.OutOfSpecSpotsToDo, outOfSpecEntity.Station, outOfSpecEntity.OutOfSpec.Comments,weekStartDate)).ToList();
+
+                return outOfSpecSpotsToDo;
+            });
+        }
+
+        private OutOfSpecExportReportDto _MapOutOfSpecReportToDto(spot_exceptions_out_of_specs outOfSpecsEntity, station stationEntity, spot_exceptions_out_of_spec_comments commentsEntity,DateTime weekStartDate)
+        {
+            var AdvertiserId = outOfSpecsEntity.plan?.campaign.advertiser_master_id;
+
+            var outOfSpecSpotsToDo = new OutOfSpecExportReportDto
+            {
+                MarketRank = outOfSpecsEntity.market_rank,
+                Market = stationEntity?.market?.geography_name,
+                Station = outOfSpecsEntity.station_legacy_call_letters,
+                Affiliate = stationEntity?.affiliation,
+                WeekStartDate = weekStartDate,
+                Day = outOfSpecsEntity.program_air_time.DayOfWeek.ToString(),
+                Date = outOfSpecsEntity.program_air_time.Date,
+                TimeAired = outOfSpecsEntity.program_air_time.TimeOfDay.ToString(),
+                ProgramName = outOfSpecsEntity.program_name,
+                Length = _MapSpotLengthToDto(outOfSpecsEntity.spot_lengths).Length,
+                HouseIsci = outOfSpecsEntity.house_isci,
+                ClientIsci = outOfSpecsEntity.isci_name,
+                AdvertiserMasterId = AdvertiserId,
+                InventorySource = outOfSpecsEntity.inventory_source_name,
+                InventorySourceDaypart = outOfSpecsEntity.daypart_code,               
+                InventoryOutOfSpecReason = _MapOutOfSpecSpotReasonCodesToDto(outOfSpecsEntity.spot_exceptions_out_of_spec_reason_codes).Reason,
+                Estimates = outOfSpecsEntity.estimate_id,               
+                Spot = outOfSpecsEntity.id,
+                Comment = commentsEntity != null ? commentsEntity.comment : null,
+                RecommendedPlanId=outOfSpecsEntity.recommended_plan_id,
+            };
+            return outOfSpecSpotsToDo;
         }
     }
 }

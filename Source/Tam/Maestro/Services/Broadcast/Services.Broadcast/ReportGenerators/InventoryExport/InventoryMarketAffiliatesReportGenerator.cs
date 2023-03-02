@@ -65,8 +65,8 @@ namespace Services.Broadcast.ReportGenerators.InventoryExport
         private ExcelPackage _GetFileWithData(InventoryMarketAffiliatesData inventoryMarketAffiliates)
         {
             string templateFilePath = Path.Combine(TEMPLATES_FILE_PATH, INVENTORY_MARKET_AFFILIATES_EXPORT_TEMPLATE_FILENAME);
-            var package = new ExcelPackage(new FileInfo(templateFilePath));
-
+            var package = new ExcelPackage(new FileInfo(templateFilePath));           
+            
             ExcelWorksheet newsWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, NEWS_WORKSHEET_NAME);
             new InventoryMarketAffiliatesReportGenerator(newsWorksheet)._PopulateMarketAffiliateTab(inventoryMarketAffiliates.NewsMarketAffiliates);
 
