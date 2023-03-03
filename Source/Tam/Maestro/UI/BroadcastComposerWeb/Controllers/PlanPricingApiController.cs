@@ -24,7 +24,7 @@ namespace BroadcastComposerWeb.Controllers
         public PlanPricingApiController(BroadcastApplicationServiceFactory applicationServiceFactory) : 
             base(new ControllerNameRetriever(typeof(PlanPricingApiController).Name), applicationServiceFactory)
         {
-        }
+        }        
 
         /// <summary>
         /// Queues pricing job
@@ -298,6 +298,18 @@ namespace BroadcastComposerWeb.Controllers
 	        var service = _ApplicationServiceFactory.GetApplicationService<IInventoryProprietarySummaryService>();
 
 	        return _ConvertToBaseResponse(() => service.GetPlanProprietarySummaryAggregation(request));
+        }
+
+        /// <summary>
+        /// Tests the repository query for getting the Inventory Programs.
+        /// Query dimensions are configured per the given Job Id.
+        /// </summary>
+        [HttpPost]
+        [Route("TestGetProgramsForPricingModel")]
+        public BaseResponse<string> TestGetProgramsForPricingModel(int jobId)
+        {
+            return _ConvertToBaseResponseWithStackTrace(() => _ApplicationServiceFactory.GetApplicationService<IPlanPricingService>()
+                    .TestGetProgramsForPricingModel(jobId));
         }
     }
 }

@@ -308,6 +308,11 @@ namespace Services.Broadcast.Repositories
         /// <param name="planId"></param>
         /// <returns>Campaign Id</returns>
         int SearchPlanByIdWithUnifiedPlan(int planId);
+
+        /// <summary>
+        /// Gets the plan id from plan version.
+        /// </summary>
+        int? GetPlanIdFromPlanVersion(int planVersionId);
     }
 
     public class PlanRepository : BroadcastRepositoryBase, IPlanRepository
@@ -3195,6 +3200,18 @@ namespace Services.Broadcast.Repositories
             {
                 int campaignId = context.plans.Where(x => x.id == planId).Select(x => x.campaign_id).FirstOrDefault();
                 return campaignId;
+            });
+        }
+
+        /// <inheritdoc />
+        public int? GetPlanIdFromPlanVersion(int planVersionId)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                var planId = context.plan_versions
+                    .FirstOrDefault(v => v.id == planVersionId)
+                    ?.plan_id;
+                return planId;
             });
         }
     }

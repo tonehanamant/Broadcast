@@ -7,11 +7,13 @@ using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Entities.Plan.Buying;
 using Services.Broadcast.Entities.Plan.CommonPricingEntities;
 using Services.Broadcast.Entities.QuoteReport;
+using Services.Broadcast.Exceptions;
 using Services.Broadcast.Extensions;
 using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Tam.Maestro.Common;
 using Tam.Maestro.Data.Entities;
@@ -50,6 +52,7 @@ namespace Services.Broadcast.BusinessEngines
 
         private Lazy<List<Day>> _CadentDayDefinitions;
         protected Lazy<Dictionary<int, List<int>>> _DaypartDefaultDayIds;
+        private readonly Lazy<bool> _IsPricingBuyingProgramsQueryv2;
 
         public PlanBuyingInventoryEngine(IDataRepositoryFactory broadcastDataRepositoryFactory,
                                           IImpressionsCalculationEngine impressionsCalculationEngine,
@@ -78,6 +81,7 @@ namespace Services.Broadcast.BusinessEngines
             _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(_GetThresholdInSecondsForProgramIntersectInPricing);
             _NumberOfFallbackQuarters = new Lazy<int>(_GetNumberOfFallbackQuarters);
+            _IsPricingBuyingProgramsQueryv2 = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_BUYING_PROGRAMS_QUERY_V2));
 
             // register lazy delegates - domain data
             _CadentDayDefinitions = new Lazy<List<Day>>(() => _DayRepository.GetDays());
@@ -248,6 +252,65 @@ namespace Services.Broadcast.BusinessEngines
             return totalInventory;
         }
 
+        internal List<PlanBuyingInventoryProgram> _GetProgramsForBuyingModel(
+            DateTime startDate,
+            DateTime endDate,
+            List<int> spotLengthIds,
+            IEnumerable<int> inventorySourceIds,
+            List<int> stationIds,
+            Guid? logTxId = null)
+        {
+            var txId = logTxId ?? Guid.NewGuid();
+
+            var querySw = new Stopwatch();
+            querySw.Start();
+
+            try
+            {
+                List<PlanBuyingInventoryProgram> results;
+                if (_IsPricingBuyingProgramsQueryv2.Value)
+                {
+                    _LogInfo("Querying Programs with v2.", txId);
+                    // look for inventory from plan quarter
+                    results = _StationProgramRepository.GetProgramsForBuyingModelv2(
+                        startDate,
+                        endDate,
+                        spotLengthIds,
+                        inventorySourceIds,
+                        stationIds);
+                }
+                else
+                {
+                    _LogInfo("Querying Programs with v1.", txId);
+                    // look for inventory from plan quarter
+                    results = _StationProgramRepository.GetProgramsForBuyingModel(
+                        startDate,
+                        endDate,
+                        spotLengthIds,
+                        inventorySourceIds,
+                        stationIds);
+                }
+
+                querySw.Stop();
+                var durationMs = querySw.ElapsedMilliseconds;
+
+                var resultMsg = $"Found {results.Count} results in {durationMs}ms.";
+                _LogInfo(resultMsg, txId);
+
+                return results;
+            }
+            catch (Exception ex)
+            {
+                querySw.Stop();
+                var durationMs = querySw.ElapsedMilliseconds;
+
+                var resultMsg = $"Exception caught in {durationMs}ms.";
+                _LogError(resultMsg, txId, ex);
+
+                throw new CadentException(resultMsg, ex);
+            }
+        }
+
         /// <summary>
         /// Attempts to gather the full inventory set from the plan's quarter or the fallback quarter.
         /// </summary>
@@ -268,9 +331,7 @@ namespace Services.Broadcast.BusinessEngines
             foreach (var dateRange in dateRanges)
             {
                 var ungatheredStationIds = availableStations.Select(s => s.Id).ToList();
-
-                // look for inventory from plan quarter
-                var planInventoryForDateRange = _StationProgramRepository.GetProgramsForBuyingModel(
+                var planInventoryForDateRange = _GetProgramsForBuyingModel(
                     dateRange.Start.Value,
                     dateRange.End.Value,
                     spotLengthIds,
@@ -293,7 +354,7 @@ namespace Services.Broadcast.BusinessEngines
 
                     var fallbackInventory = fallbackDateRanges
                         .SelectMany(fallbackDateRange =>
-                            _StationProgramRepository.GetProgramsForBuyingModel(
+                            _GetProgramsForBuyingModel(
                                 fallbackDateRange.Start.Value,
                                 fallbackDateRange.End.Value,
                                 spotLengthIds,

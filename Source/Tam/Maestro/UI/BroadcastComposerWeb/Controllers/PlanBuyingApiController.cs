@@ -294,5 +294,17 @@ namespace BroadcastComposerWeb.Controllers
             var createdBy = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>().GenerateBuyingResultsReportAndSave(planBuyingResultsReportRequest, appDataPath, createdBy));
         }
+
+        /// <summary>
+        /// Tests the repository query for getting the Inventory Programs.
+        /// Query dimensions are configured per the given Job Id.
+        /// </summary>
+        [HttpPost]
+        [Route("TestGetProgramsForPricingModel")]
+        public BaseResponse<string> TestGetProgramsForBuyingModel(int jobId)
+        {
+            return _ConvertToBaseResponseWithStackTrace(() => _ApplicationServiceFactory.GetApplicationService<IPlanBuyingService>()
+                    .TestGetProgramsForBuyingModel(jobId));
+        }
     }
 }

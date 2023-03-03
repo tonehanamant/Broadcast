@@ -28,7 +28,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Tam.Maestro.Common.DataLayer;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 
 namespace Services.Broadcast.ApplicationServices.Plan
@@ -242,6 +241,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
         /// <param name="createdBy">The createdBy.</param>
         /// <returns> The Guid</returns>
         Guid GenerateBuyingResultsReportAndSave(PlanBuyingResultsReportRequest planBuyingResultsReportRequest, string templateFilePath, string createdBy);
+
+        /// <summary>
+        /// Tests the repository query for getting the Inventory Programs.
+        /// Query dimensions are configured per the given Job Id.
+        /// </summary>
+        string TestGetProgramsForBuyingModel(int jobId);
     }
 
     /// <summary>
@@ -274,6 +279,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingRequestLogClient _BuyingRequestLogClient;
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _AudienceRepository;
+        private readonly IStationRepository _StationRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IPlanBuyingScxDataPrep _PlanBuyingScxDataPrep;
@@ -342,6 +348,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingRepFirmEngine = planBuyingRepFirmEngine;
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _AudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
             _SharedFolderService = sharedFolderService;
             _PlanBuyingScxDataPrep = planBuyingScxDataPrep;
@@ -3034,5 +3041,43 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             return savedFileGuid;
         }
-    }
+
+        /// <inheritdoc/>
+        public string TestGetProgramsForBuyingModel(int jobId)
+        {
+            var txId = Guid.NewGuid();
+            var logMsgSuffix = $"Job Id {jobId};";
+
+            _LogInfo($"Beginning. {logMsgSuffix}", txId);
+
+            var job = _PlanBuyingRepository.GetPlanBuyingJob(jobId);
+            var planId = _PlanRepository.GetPlanIdFromPlanVersion(job.PlanVersionId.Value);
+            var plan = _PlanRepository.GetPlan(planId.Value, job.PlanVersionId.Value);
+
+            var startDate = plan.FlightStartDate.Value;
+            var endDate = plan.FlightEndDate.Value;
+            var spotLengthIds = plan.CreativeLengths.Select(c => c.SpotLengthId).ToList();
+            var inventorySourceIds = new List<int> { (int)InventorySourceEnum.OpenMarket };
+            var availableMarkets = plan.AvailableMarkets.Select(m => m.MarketCode).ToList();
+
+            var stationIds = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(availableMarkets)
+                .Select(s => s.Id)
+                .ToList();
+
+            _LogInfo($"Found {stationIds.Count} station Ids. {logMsgSuffix}", txId);
+
+            var querySw = new Stopwatch();
+            querySw.Start();
+
+            var results = ((PlanBuyingInventoryEngine)_PlanBuyingInventoryEngine)._GetProgramsForBuyingModel(
+                startDate, endDate, spotLengthIds, inventorySourceIds, stationIds, txId);
+
+            querySw.Stop();
+            var durationMs = querySw.ElapsedMilliseconds;
+
+            var resultsMsg = $"Found {results.Count} results in {durationMs}ms. {logMsgSuffix}";
+            _LogInfo(resultsMsg, txId);
+            return resultsMsg;
+        }
+    }    
 }

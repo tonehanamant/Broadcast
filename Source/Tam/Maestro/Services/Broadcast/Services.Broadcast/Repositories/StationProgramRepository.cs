@@ -36,6 +36,18 @@ namespace Services.Broadcast.Repositories
             IEnumerable<int> inventorySourceIds,
             List<int> stationIds);
 
+        /// <summary>
+        /// Gets the programs for the pricing model.  
+        /// V2 uses a different query than GetProgramsForPricingModel (V1) 
+        /// in the hopes to improve and avoid resource hogging issues.
+        /// </summary>
+        List<PlanPricingInventoryProgram> GetProgramsForPricingModelv2(
+            DateTime startDate,
+            DateTime endDate,
+            List<int> spotLengthIds,
+            IEnumerable<int> inventorySourceIds,
+            List<int> stationIds);
+
         Dictionary<int, PlanPricingInventoryProgram.ManifestDaypart.Program> GetPrimaryProgramsForManifestDayparts(IEnumerable<int> manifestDaypartIds);
 
         List<QuoteProgram> GetProgramsForQuoteReport(
@@ -46,6 +58,18 @@ namespace Services.Broadcast.Repositories
             List<int> stationIds);
 
         List<PlanBuyingInventoryProgram> GetProgramsForBuyingModel(
+            DateTime startDate,
+            DateTime endDate,
+            List<int> spotLengthIds,
+            IEnumerable<int> inventorySourceIds,
+            List<int> stationIds);
+
+        /// <summary>
+        /// Gets the programs for the pricing model.  
+        /// V2 uses a different query than GetProgramsForBuyingModelv2 (V1) 
+        /// in the hopes to improve and avoid resource hogging issues.
+        /// </summary>
+        List<PlanBuyingInventoryProgram> GetProgramsForBuyingModelv2(
             DateTime startDate,
             DateTime endDate,
             List<int> spotLengthIds,
@@ -274,7 +298,7 @@ namespace Services.Broadcast.Repositories
                         ManifestRates = x.station_inventory_manifest_rates
                             .Where(r => spotLengthIds.Contains(r.spot_length_id))
                             .Select(r => new PlanPricingInventoryProgram.ManifestRate
-                            { 
+                            {
                                 SpotLengthId = r.spot_length_id,
                                 Cost = r.spot_cost
                             })
@@ -328,6 +352,141 @@ namespace Services.Broadcast.Repositories
                             .ToList()
                     })
                     .ToList();
+            });
+        }
+
+        /// <inheritdoc/>
+        public List<PlanPricingInventoryProgram> GetProgramsForPricingModelv2(
+            DateTime startDate,
+            DateTime endDate,
+            List<int> spotLengthIds,
+            IEnumerable<int> inventorySourceIds,
+            List<int> stationIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                /*
+                 * In some plans the size of the data used up the resources on the server and this blew up.
+                 * We have split up the query to bring down the memory footprint.
+                 * 
+                 * 1. Query to get just the list of manifests to get.
+                 * 2. Gather the details in chunks.
+                 * 3. Transform at query-time to not bring back all that unused data.
+                 * */
+
+                // use the media weeks ids for a more direct and faster query.
+                var startMediaWeekId = context.media_weeks
+                    .Single(w => w.start_date <= startDate && w.end_date >= startDate).id;
+
+                var endMediaWeekId = context.media_weeks
+                    .Single(w => w.start_date <= endDate.Date && w.end_date >= endDate.Date).id;
+
+                var manifestIds = context.station_inventory_manifest
+                    .Where(s =>
+                        inventorySourceIds.Contains(s.inventory_source_id)
+                        // has weeks within this time frame. 
+                        // that it has weeks at all guarantees that it is "active"
+                        && s.station_inventory_manifest_weeks.Any(w => w.media_week_id >= startMediaWeekId && w.media_week_id <= endMediaWeekId)
+                        // within our list of target stations
+                        && s.station_id.HasValue && stationIds.Contains(s.station_id.Value)
+                        // has a program
+                        && s.station_inventory_manifest_dayparts.Any(d => d.primary_program_id != null)
+                        // has rates
+                        && spotLengthIds.Intersect(s.station_inventory_manifest_rates.Select(r => r.spot_length_id)).Any()
+                    )
+                    .Select(s => s.id)
+                    .Distinct()
+                    .ToList();
+
+                // Chunk up what we found to minimize the memory of each query.
+                // 10,000 hits the resource issue.
+                //  7,500 clears it and plays nicer with the neighbors.
+                const int chunkSize = 7500;
+                var idChunks = manifestIds.GetChunks(chunkSize);
+
+                var foundManifests = new List<PlanPricingInventoryProgram>();
+
+                foreach (var chunk in idChunks)
+                {
+                    var queryResult = context.station_inventory_manifest
+                    // .Includes(...) slowed this down, so don't use them.
+                    // They are not needed since we transform in-line with the query.
+                    .Where(s => chunk.Contains(s.id))
+                    // Transform in-line here to not bring back all that unused data.
+                    .Select(x => new PlanPricingInventoryProgram
+                    {
+                        ManifestId = x.id,
+                        SpotLengthId = x.spot_length_id,
+                        ManifestWeeks = x.station_inventory_manifest_weeks
+                                                             .Where(w => w.media_week_id >= startMediaWeekId && w.media_week_id <= endMediaWeekId)
+                                                             .Select(w => new PlanPricingInventoryProgram.ManifestWeek
+                                                             {
+                                                                 Id = w.id,
+                                                                 InventoryMediaWeekId = w.media_week_id,
+                                                                 Spots = w.spots
+                                                             })
+                                                             .ToList(),
+                        ManifestRates = x.station_inventory_manifest_rates
+                                                             .Where(r => spotLengthIds.Contains(r.spot_length_id))
+                                                             .Select(r => new PlanPricingInventoryProgram.ManifestRate
+                                                             {
+                                                                 SpotLengthId = r.spot_length_id,
+                                                                 Cost = r.spot_cost
+                                                             })
+                                                             .ToList(),
+                        Station = new DisplayBroadcastStation()
+                        {
+                            Id = x.station.id,
+                            Affiliation = x.station.affiliation,
+                            Code = x.station.station_code,
+                            CallLetters = x.station.station_call_letters,
+                            LegacyCallLetters = x.station.legacy_call_letters,
+                            MarketCode = x.station.market_code,
+                            IsTrueInd = x.station.is_true_ind
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = x.inventory_sources.id,
+                            InventoryType = (InventorySourceTypeEnum)x.inventory_sources.inventory_source_type,
+                            IsActive = x.inventory_sources.is_active,
+                            Name = x.inventory_sources.name
+                        },
+                        ManifestDayparts = x.station_inventory_manifest_dayparts
+                                                             .Where(d => d.primary_program_id.HasValue)
+                                                             .Select(d => new PlanPricingInventoryProgram.ManifestDaypart
+                                                             {
+                                                                 Id = d.id,
+                                                                 Daypart = new DisplayDaypart
+                                                                 {
+                                                                     Id = d.daypart_id
+                                                                 },
+                                                                 ProgramName = d.program_name,
+                                                                 PrimaryProgramId = d.primary_program_id,
+                                                                 Programs = d.station_inventory_manifest_daypart_programs.Select(
+                                                                     z => new PlanPricingInventoryProgram.ManifestDaypart.Program
+                                                                     {
+                                                                         Id = z.id,
+                                                                         Name = z.name,
+                                                                         ShowType = z.show_type,
+                                                                         Genre = z.maestro_genre.name,
+                                                                         StartTime = z.start_time,
+                                                                         EndTime = z.end_time
+                                                                     }).ToList()
+                                                             }).ToList(),
+                        ManifestAudiences = x.station_inventory_manifest_audiences
+                                                             .Where(a => a.is_reference)
+                                                             .Select(a => new PlanPricingInventoryProgram.ManifestAudience
+                                                             {
+                                                                 AudienceId = a.audience_id,
+                                                                 Impressions = a.impressions
+                                                             })
+                                                             .ToList()
+                    }).ToList();
+
+                    foundManifests.AddRange(queryResult);
+                }
+
+                return foundManifests;
             });
         }
 
@@ -443,6 +602,141 @@ namespace Services.Broadcast.Repositories
                             .ToList()
                     })
                     .ToList();
+            });
+        }
+
+        /// <inheritdoc/>
+        public List<PlanBuyingInventoryProgram> GetProgramsForBuyingModelv2(
+            DateTime startDate,
+            DateTime endDate,
+            List<int> spotLengthIds,
+            IEnumerable<int> inventorySourceIds,
+            List<int> stationIds)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                /*
+                 * In some plans the size of the data used up the resources on the server and this blew up.
+                 * We have split up the query to bring down the memory footprint.
+                 * 
+                 * 1. Query to get just the list of manifests to get.
+                 * 2. Gather the details in chunks.
+                 * 3. Transform at query-time to not bring back all that unused data.
+                 * */
+
+                // use the media weeks ids for a more direct and faster query.
+                var startMediaWeekId = context.media_weeks
+                    .Single(w => w.start_date <= startDate && w.end_date >= startDate).id;
+
+                var endMediaWeekId = context.media_weeks
+                    .Single(w => w.start_date <= endDate.Date && w.end_date >= endDate.Date).id;
+
+                var manifestIds = context.station_inventory_manifest
+                    .Where(s =>
+                        inventorySourceIds.Contains(s.inventory_source_id)
+                        // has weeks within this time frame. 
+                        // that it has weeks at all guarantees that it is "active"
+                        && s.station_inventory_manifest_weeks.Any(w => w.media_week_id >= startMediaWeekId && w.media_week_id <= endMediaWeekId)
+                        // within our list of target stations
+                        && s.station_id.HasValue && stationIds.Contains(s.station_id.Value)
+                        // has a program
+                        && s.station_inventory_manifest_dayparts.Any(d => d.primary_program_id != null)
+                        // has rates
+                        && spotLengthIds.Intersect(s.station_inventory_manifest_rates.Select(r => r.spot_length_id)).Any()
+                    )
+                    .Select(s => s.id)
+                    .Distinct()
+                    .ToList();
+
+                // Chunk up what we found to minimize the memory of each query.
+                // 10,000 hits the resource issue.
+                //  7,500 clears it and plays nicer with the neighbors.
+                const int chunkSize = 7500;
+                var idChunks = manifestIds.GetChunks(chunkSize);
+
+                var foundManifests = new List<PlanBuyingInventoryProgram>();
+
+                foreach (var chunk in idChunks)
+                {
+                    var queryResult = context.station_inventory_manifest
+                    // .Includes(...) slowed this down, so don't use them.
+                    // They are not needed since we transform in-line with the query.
+                    .Where(s => chunk.Contains(s.id))
+                    // Transform in-line here to not bring back all that unused data.
+                    .Select(x => new PlanBuyingInventoryProgram
+                    {
+                        ManifestId = x.id,
+                        SpotLengthId = x.spot_length_id,
+                        ManifestWeeks = x.station_inventory_manifest_weeks
+                            .Where(w => w.media_week_id >= startMediaWeekId && w.media_week_id <= endMediaWeekId)
+                            .Select(w => new PlanBuyingInventoryProgram.ManifestWeek
+                            {
+                                Id = w.id,
+                                InventoryMediaWeekId = w.media_week_id,
+                                Spots = w.spots
+                            })
+                            .ToList(),
+                        ManifestRates = x.station_inventory_manifest_rates
+                            .Where(r => spotLengthIds.Contains(r.spot_length_id))
+                            .Select(r => new BasePlanInventoryProgram.ManifestRate
+                            {
+                                SpotLengthId = r.spot_length_id,
+                                Cost = r.spot_cost
+                            })
+                            .ToList(),
+                        Station = new DisplayBroadcastStation()
+                        {
+                            Id = x.station.id,
+                            Affiliation = x.station.affiliation,
+                            Code = x.station.station_code,
+                            CallLetters = x.station.station_call_letters,
+                            LegacyCallLetters = x.station.legacy_call_letters,
+                            MarketCode = x.station.market_code,
+                            IsTrueInd = x.station.is_true_ind
+                        },
+                        InventorySource = new InventorySource
+                        {
+                            Id = x.inventory_sources.id,
+                            InventoryType = (InventorySourceTypeEnum)x.inventory_sources.inventory_source_type,
+                            IsActive = x.inventory_sources.is_active,
+                            Name = x.inventory_sources.name
+                        },
+                        ManifestDayparts = x.station_inventory_manifest_dayparts
+                                                             .Where(d => d.primary_program_id.HasValue)
+                                                             .Select(d => new BasePlanInventoryProgram.ManifestDaypart
+                                                             {
+                                                                 Id = d.id,
+                                                                 Daypart = new DisplayDaypart
+                                                                 {
+                                                                     Id = d.daypart_id
+                                                                 },
+                                                                 ProgramName = d.program_name,
+                                                                 PrimaryProgramId = d.primary_program_id,
+                                                                 Programs = d.station_inventory_manifest_daypart_programs.Select(
+                                                                     z => new PlanBuyingInventoryProgram.ManifestDaypart.Program
+                                                                     {
+                                                                         Id = z.id,
+                                                                         Name = z.name,
+                                                                         ShowType = z.show_type,
+                                                                         Genre = z.maestro_genre.name,
+                                                                         StartTime = z.start_time,
+                                                                         EndTime = z.end_time
+                                                                     }).ToList()
+                                                             }).ToList(),
+                        ManifestAudiences = x.station_inventory_manifest_audiences
+                                                             .Where(a => a.is_reference)
+                                                             .Select(a => new PlanBuyingInventoryProgram.ManifestAudience
+                                                             {
+                                                                 AudienceId = a.audience_id,
+                                                                 Impressions = a.impressions
+                                                             })
+                                                             .ToList()
+                    }).ToList();
+
+                    foundManifests.AddRange(queryResult);
+                }
+
+                return foundManifests;
             });
         }
 

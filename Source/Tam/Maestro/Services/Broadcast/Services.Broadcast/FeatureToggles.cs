@@ -44,5 +44,10 @@
         public static string ENABLE_OPEN_MARKET_INVENTORY_INGEST_CREATES_UNKNOWN_STATIONS = "open-market-inventory-ingest-creates-unknown-stations";
 
         public static string ENABLE_ADU_FOR_PLANNING_V2 = "enable-adu-for-planning-v2";
+
+        /// <summary>
+        /// When enabled Pricing and Buying will gather Programs using the v2 methodology.
+        /// </summary>
+        public const string ENABLE_PRICING_BUYING_PROGRAMS_QUERY_V2 = "pricing-buying-programs-query-v-2";
     }
 }

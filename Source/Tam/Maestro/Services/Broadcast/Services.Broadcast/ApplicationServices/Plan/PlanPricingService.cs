@@ -33,7 +33,7 @@ using Services.Broadcast.Converters.Scx;
 namespace Services.Broadcast.ApplicationServices.Plan
 {
     public interface IPlanPricingService : IApplicationService
-    {
+    {        
         PlanPricingJob QueuePricingJob(PlanPricingParametersDto planPricingParametersDto, DateTime currentDate, string username);
         PlanPricingJob QueuePricingJob(PricingParametersWithoutPlanDto pricingParametersWithoutPlanDto, DateTime currentDate, string username);
         CurrentPricingExecution GetCurrentPricingExecution(int planId);
@@ -185,6 +185,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
         PlanPricingBandDto_v2 GetPricingBands_v2(int planId,
             SpotAllocationModelMode spotAllocationModelMode = SpotAllocationModelMode.Quality);
+
+        /// <summary>
+        /// Tests the repository query for getting the Inventory Programs.
+        /// Query dimensions are configured per the given Job Id.
+        /// </summary>
+        string TestGetProgramsForPricingModel(int jobId);
     }
 
     public class PlanPricingService : BroadcastBaseClass, IPlanPricingService
@@ -217,6 +223,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
         private readonly IInventoryProprietarySummaryRepository _InventoryProprietarySummaryRepository;
         private readonly IBroadcastAudienceRepository _BroadcastAudienceRepository;
+        private readonly IStationRepository _StationRepository;
         private readonly IAsyncTaskHelper _AsyncTaskHelper;
         private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
@@ -274,12 +281,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _CreativeLengthEngine = creativeLengthEngine;
             _InventoryProprietarySummaryRepository = broadcastDataRepositoryFactory.GetDataRepository<IInventoryProprietarySummaryRepository>();
             _BroadcastAudienceRepository = broadcastDataRepositoryFactory.GetDataRepository<IBroadcastAudienceRepository>();
+            _StationRepository = broadcastDataRepositoryFactory.GetDataRepository<IStationRepository>();
             _AsyncTaskHelper = asyncTaskHelper;
             _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
             _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
-        }
+        }        
 
         public Guid RunQuote(QuoteRequestDto request, string userName, string templatesFilePath)
         {
@@ -2974,5 +2982,43 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 Task = task;
             }
         }
-    }
+
+        /// <inheritdoc/>
+        public string TestGetProgramsForPricingModel(int jobId)
+        {
+            var txId = Guid.NewGuid();
+            var logMsgSuffix = $"Job Id {jobId};";
+
+            _LogInfo($"Beginning. {logMsgSuffix}", txId);
+
+            var job = _PlanRepository.GetPlanPricingJob(jobId);
+            var planId = _PlanRepository.GetPlanIdFromPlanVersion(job.PlanVersionId.Value);
+            var plan = _PlanRepository.GetPlan(planId.Value, job.PlanVersionId.Value);
+
+            var startDate = plan.FlightStartDate.Value;
+            var endDate = plan.FlightEndDate.Value;
+            var spotLengthIds = plan.CreativeLengths.Select(c => c.SpotLengthId).ToList();
+            var inventorySourceIds = new List<int> { (int)InventorySourceEnum.OpenMarket };
+            var availableMarkets = plan.AvailableMarkets.Select(m => m.MarketCode).ToList();
+
+            var stationIds = _StationRepository.GetBroadcastStationsWithLatestDetailsByMarketCodes(availableMarkets)
+                .Select(s => s.Id)
+                .ToList();
+
+            _LogInfo($"Found {stationIds.Count} station Ids. {logMsgSuffix}", txId);
+
+            var querySw = new Stopwatch();
+            querySw.Start();
+
+            var results = ((PlanPricingInventoryEngine) _PlanPricingInventoryEngine)._GetProgramsForPricingModel(
+                startDate, endDate, spotLengthIds, inventorySourceIds, stationIds, txId);
+
+            querySw.Stop();
+            var durationMs = querySw.ElapsedMilliseconds;
+
+            var resultsMsg = $"Found {results.Count} results in {durationMs}ms. {logMsgSuffix}";
+            _LogInfo(resultsMsg, txId);
+            return resultsMsg;
+        }
+    }    
 }
