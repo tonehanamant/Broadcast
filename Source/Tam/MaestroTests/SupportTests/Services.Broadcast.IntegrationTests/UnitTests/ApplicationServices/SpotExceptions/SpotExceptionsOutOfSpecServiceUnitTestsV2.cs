@@ -2202,6 +2202,116 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             };
         }
 
+        private List<OutOfSpecSpotsDoneDto> _GetOutOfSpecDoneDataWithComment()
+        {
+            return new List<OutOfSpecSpotsDoneDto>()
+            {
+                new OutOfSpecSpotsDoneDto
+                {
+                  Id = 3,
+                  ReasonCodeMessage="",
+                  EstimateId= 191758,
+                  IsciName="AB44NR58",
+                  RecommendedPlanId= 218,
+                  RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                  StationLegacyCallLetters = "KSTP",
+                  Affiliate = "ABC",
+                  Market = "Lincoln & Hastings-Krny",
+                  PlanId = 218,
+                   SpotLength = new SpotLengthDto
+                    {
+                        Id = 16,
+                        Length = 45
+                    },
+                  AudienceId= 426,
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartCode="PT",
+                  GenreName="Horror",
+                  ProgramNetwork = "",
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  IngestedMediaWeekId = 1,
+                  OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    },
+                  SpotUniqueHashExternal = "TE9DQUwtMTA1OTAxNTkzNQ==",
+                  HouseIsci = "289J76GN16H",
+                  Comment = "Comment for TEN O'CLOCK NEWS"
+                },
+                new OutOfSpecSpotsDoneDto
+                {
+                  Id = 4,
+                  ReasonCodeMessage="",
+                  EstimateId= 191759,
+                  IsciName="AB44NR59",
+                  RecommendedPlanId= 11726,
+                  RecommendedPlanName="2Q' 21 Reynolds Foil TDN and SYN Upfront",
+                  ProgramName="TEN O'CLOCK NEWS",
+                  AdvertiserMasterId = new Guid("3A9C5C03-3CE7-4652-955A-A6EA8CBC82FB"),
+                  StationLegacyCallLetters = "KSTP",
+                  Affiliate = "ABC",
+                  Market = "Lincoln & Hastings-Krny",
+                  PlanId = 218,
+                  SpotLength = new SpotLengthDto
+                  {
+                    Id = 16,
+                    Length = 45
+                  },
+                  AudienceId= 430,
+                  Product="Spotify",
+                  FlightStartDate =  new DateTime(2018, 7, 2),
+                  FlightEndDate = new DateTime(2018, 8, 2),
+                  DaypartCode="PT",
+                  GenreName="Horror",
+                  Audience = new AudienceDto
+                    {
+                        Id = 426,
+                        Code = "M50-64",
+                        Name = "Men 50-64"
+                    },
+                    DaypartDetail = new DaypartDetailDto
+                    {
+                        Id = 70642,
+                        Code = "CUS"
+                    },
+                    ProgramNetwork = "ABC",
+                  ProgramAirTime = new DateTime(2020,1,10,23,45,00),
+                  IngestedAt = new DateTime(2019,1,1),
+                  IngestedBy = "Repository Test User",
+                  IngestedMediaWeekId = 1,
+                  OutOfSpecSpotReasonCodes = new OutOfSpecSpotReasonCodesDto
+                    {
+                        Id = 4,
+                        ReasonCode = 3,
+                        Reason = "affiliate content restriction",
+                        Label = "Affiliate"
+                    },
+                    SpotUniqueHashExternal = "TE9DQUw TA1OTAxOTY3MA==",
+                    HouseIsci = "289J76GN16H",
+                    Comment = "Comment for TEN O'CLOCK NEWS"
+                }
+            };
+        }
         //ovo
         private List<OutOfSpecPlansDto> _GetOutOfSpecPlansToDo()
         {
@@ -3133,6 +3243,174 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 }
             };
             return reportData;
+        }
+        [Test]
+        public void GetOutOfSpecsPlanSpotsInQueue_WithoutComment_Exist()
+        {
+            // Arrange
+            var expectedValue = 2;
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            var outOfSpecDone = _GetOutOfSpecDoneData();
+            var timeZone = _GetTimeZones();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetMarketTimeZones())
+                .Returns(timeZone);
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+                .Returns(new List<PlanDaypartDetailsDto>
+                    {
+                        new PlanDaypartDetailsDto
+                        {
+                            PlanId=215,
+                            Code="ROSP",
+                            Name="ROS Programming"
+                        },
+                        new PlanDaypartDetailsDto
+                        {
+                            PlanId=215,
+                            Code="TDNS",
+                            Name="Total Day News and Syndication"
+                        }
+                    }
+                );
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequest);
+
+            // Assert
+            Assert.AreEqual(result.Count, expectedValue);
+        }
+
+        [Test]
+        public void GetOutOfSpecsPlanSpotsInQueue_WithComment_Exist()
+        {
+            // Arrange
+            var expectedValue = 2;
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            var outOfSpecDone = _GetOutOfSpecDoneDataWithComment();
+            var timeZone = _GetTimeZones();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetMarketTimeZones())
+                .Returns(timeZone);
+
+            _PlanRepositoryMock
+                .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+                .Returns(new List<PlanDaypartDetailsDto>
+                    {
+                        new PlanDaypartDetailsDto
+                        {
+                            PlanId=215,
+                            Code="ROSP",
+                            Name="ROS Programming"
+                        },
+                        new PlanDaypartDetailsDto
+                        {
+                            PlanId=215,
+                            Code="TDNS",
+                            Name="Total Day News and Syndication"
+                        }
+                    }
+                );
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequest);
+
+            // Assert
+            Assert.AreEqual(result.Count, expectedValue);
+        }
+        [Test]
+        public void GetOutOfSpecsPlanSpotsInQueue_DoesNotExist()
+        {
+            // Arrange
+            var expectedValue = 0;
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 215,
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            var outOfSpecDone = new List<OutOfSpecSpotsDoneDto>();
+            var timeZone = _GetTimeZones();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetMarketTimeZones())
+                .Returns(timeZone);
+            _PlanRepositoryMock
+               .Setup(s => s.GetPlanDaypartsByPlanIds(It.IsAny<List<int>>()))
+               .Returns(new List<PlanDaypartDetailsDto>
+                   {
+                        new PlanDaypartDetailsDto
+                        {
+                            PlanId=215,
+                            Code="ROSP",
+                            Name="ROS Programming"
+                        },
+                        new PlanDaypartDetailsDto
+                        {
+                            PlanId=215,
+                            Code="TDNS",
+                            Name="Total Day News and Syndication"
+                        }
+                   }
+               );
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequest);
+
+            // Assert
+            Assert.AreEqual(result.Count, expectedValue);
+        }
+        [Test]
+        public void GetOutOfSpecsPlanSpotsInQueue_ThrowsException()
+        {
+            // Arrange
+            OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest = new OutOfSpecSpotsRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            var outOfSpecDone = _GetOutOfSpecDoneData();
+            var timeZone = _GetTimeZones();
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                 .Setup(x => x.GetOutOfSpecSpotsDone(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                  .Callback(() =>
+                  {
+                      throw new CadentException("Could not retrieve Spot Exceptions Out Of Spec Spots in Queue");
+                  });
+
+            // Act           
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequest));
+
+            // Assert
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Spots in Queue", result.Message);
         }
     }
 }

@@ -204,6 +204,14 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="request">Request Dto to get outofspec report.</param>       
         /// <returns></returns>
         List<OutOfSpecExportReportDto> GenerateOutOfSpecExportReport(OutOfSpecExportRequestDto request);
+        /// <summary>
+        /// Gets the out of spec spots done.
+        /// </summary>
+        /// <param name="planId">The Plan Id.</param>
+        /// <param name="startDate">The week start date.</param>
+        /// <param name="endDate">The week end date.</param>
+        /// <returns></returns>
+        List<OutOfSpecSpotsDoneDto> GetOutOfSpecSpotsDone(int planId, DateTime startDate, DateTime endDate);
     }
 
     /// <summary>
@@ -1170,6 +1178,45 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 RecommendedPlanId=outOfSpecsEntity.recommended_plan_id,
             };
             return outOfSpecSpotsToDo;
+        }
+        /// <inheritdoc />
+        public List<OutOfSpecSpotsDoneDto> GetOutOfSpecSpotsDone(int planId, DateTime startDate, DateTime endDate)
+        {
+            startDate = startDate.Date;
+            endDate = endDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                var outOfSpecsEntities = context.spot_exceptions_out_of_specs_done
+                    .Where(OutOfSpecDoneDb => OutOfSpecDoneDb.recommended_plan_id == planId &&
+                            OutOfSpecDoneDb.program_air_time >= startDate && OutOfSpecDoneDb.program_air_time <= endDate)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.spot_exceptions_out_of_spec_done_decisions)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.plan)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.plan.campaign)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.plan.plan_versions)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.plan.plan_versions.Select(x => x.plan_version_dayparts))
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.spot_lengths)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.audience)
+                    .Include(OutOfSpecDoneDb => OutOfSpecDoneDb.spot_exceptions_out_of_spec_reason_codes)
+                    .GroupJoin
+                    (
+                        context.spot_exceptions_out_of_spec_comments,
+                        x => new { a = x.spot_unique_hash_external, b = x.execution_id_external, c = x.isci_name, d = x.program_air_time, e = x.reason_code_id, f = x.recommended_plan_id.Value },
+                        y => new { a = y.spot_unique_hash_external, b = y.execution_id_external, c = y.isci_name, d = y.program_air_time, e = y.reason_code_id, f = y.recommended_plan_id },
+                        (x, y) => new { outOfSpecDone = x, Comments = y.FirstOrDefault() }
+                    )
+                    .GroupJoin(
+                        context.stations
+                        .Include(stationDb => stationDb.market),
+                        OutOfSpecDoneDb => OutOfSpecDoneDb.outOfSpecDone.station_legacy_call_letters,
+                        stationDb => stationDb.legacy_call_letters,
+                        (outOfSpecDoneDb, stationDb) => new { outOfSpec = outOfSpecDoneDb, Station = stationDb.FirstOrDefault() })
+                    .ToList();
+
+                var outOfSpecDonePosts = outOfSpecsEntities.Select(outOfSpecEntity => _MapOutOfSpecSpotsDoneToDto(outOfSpecEntity.outOfSpec.outOfSpecDone, outOfSpecEntity.Station, outOfSpecEntity.outOfSpec.Comments)).ToList();
+                return outOfSpecDonePosts;
+
+            });
         }
     }
 }
