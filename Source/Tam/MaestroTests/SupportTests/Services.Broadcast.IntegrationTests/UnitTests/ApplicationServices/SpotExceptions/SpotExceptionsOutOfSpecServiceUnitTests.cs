@@ -1426,7 +1426,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     MarketCode = 289,
                     MarketRank = 69,
                     HouseIsci = "009ARD0075H",
-                    TimeZone = "EST",
+                    TimeZone = "ET",
                     DMA = 58,
                     Comments = null,
                     InventorySourceName = "Business First AM"
@@ -1529,7 +1529,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     MarketCode = 289,
                     MarketRank = 69,
                     HouseIsci = "009ARD0075H",
-                    TimeZone = "EST",
+                    TimeZone = "CT",
                     DMA = 58,
                     Comments = null,
                     InventorySourceName = "Business First AM"
@@ -1593,7 +1593,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     MarketCode = 289,
                     MarketRank = 69,
                     HouseIsci = "009ARD0075H",
-                    TimeZone = "EST",
+                    TimeZone = "MT",
                     DMA = 58,
                     Comments = null,
                     InventorySourceName = "Business First AM"

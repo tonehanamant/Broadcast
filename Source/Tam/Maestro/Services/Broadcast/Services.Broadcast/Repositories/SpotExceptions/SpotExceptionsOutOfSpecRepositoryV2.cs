@@ -934,7 +934,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 AdvertiserMasterId = outOfSpecsEntity.plan?.campaign.advertiser_master_id,
                 Product = null,
                 OutOfSpecSpotReasonCodes = _MapOutOfSpecSpotReasonCodesToDto(outOfSpecsEntity.spot_exceptions_out_of_spec_reason_codes),
-                MarketCode = outOfSpecsEntity.market_code,
+                MarketCode = stationEntity?.market?.market_code,
                 MarketRank = outOfSpecsEntity.market_rank,
                 Comment = commentsEntity != null ? commentsEntity.comment : null,
                 InventorySourceName = outOfSpecsEntity.inventory_source_name

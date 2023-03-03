@@ -983,7 +983,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 AdvertiserMasterId = spotExceptionsOutOfSpecToDoEntity.plan?.campaign.advertiser_master_id,
                 Product = null,
                 SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecToDoEntity.spot_exceptions_out_of_spec_reason_codes),
-                MarketCode = spotExceptionsOutOfSpecToDoEntity.market_code,
+                MarketCode = stationEntity?.market?.market_code,
                 MarketRank = spotExceptionsOutOfSpecToDoEntity.market_rank,
                 Comments = outOfSpecComment !=null ? outOfSpecComment.comment: null,
                 InventorySourceName = spotExceptionsOutOfSpecToDoEntity.inventory_source_name
@@ -1033,7 +1033,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                 AdvertiserMasterId = spotExceptionsOutOfSpecDoneEntity.plan?.campaign.advertiser_master_id,
                 Product = null,
                 SpotExceptionsOutOfSpecReasonCode = _MapSpotExceptionsOutOfSpecReasonCodeToDto(spotExceptionsOutOfSpecDoneEntity.spot_exceptions_out_of_spec_reason_codes),
-                MarketCode = spotExceptionsOutOfSpecDoneEntity.market_code,
+                MarketCode = stationEntity?.market?.market_code,
                 MarketRank = spotExceptionsOutOfSpecDoneEntity.market_rank,
                 Comments = outOfSpecComment != null ? outOfSpecComment.comment : null,
                 InventorySourceName = spotExceptionsOutOfSpecDoneEntity.inventory_source_name,
