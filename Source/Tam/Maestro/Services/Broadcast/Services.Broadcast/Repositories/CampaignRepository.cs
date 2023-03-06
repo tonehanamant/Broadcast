@@ -380,6 +380,7 @@ namespace Services.Broadcast.Repositories
                             PostingType = (PostingTypeEnum)version.posting_type,
                             Status = (PlanStatusEnum)version.status,
                             Name = version.plan.name,
+                            IsAduPlan = version.is_adu_plan ?? false,
                             SpotLengthValues = version.plan_version_creative_lengths.Select(x => x.spot_lengths.length).ToList(),
                             FlightStartDate = version.flight_start_date,
                             FlightEndDate = version.flight_end_date,
