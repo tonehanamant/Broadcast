@@ -158,6 +158,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="outOfSpecSpotsRequest">The spot exceptions out of spec request.</param>
         /// <returns></returns>
         List<OutOfSpecDonePlanSpotsDto> GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest);
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec plan history data.
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest">The spot exceptions out of spec request.</param>
+        /// <returns></returns>
+        List<OutOfSpecDonePlanSpotsDto> GetOutOfSpecSpotsHistory(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest);
     }
 
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
@@ -1506,5 +1513,72 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
             return outOfSpecSpots;
         }
+
+        /// <inheritdoc />
+        public List<OutOfSpecDonePlanSpotsDto> GetOutOfSpecSpotsHistory(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            int marketRank = 0;
+            int DMA = 0;
+            string timeZone = String.Empty;
+            var outOfSpecSpots = new List<OutOfSpecDonePlanSpotsDto>();
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Spots in History");
+            try
+            {
+                var outOfSpecSpotsDone = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDone(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
+                var timeZones = _SpotExceptionsOutOfSpecRepositoryV2.GetMarketTimeZones();
+
+                if (outOfSpecSpotsDone?.Any() ?? false)
+                {
+                    var planIds = outOfSpecSpotsDone.Select(p => p.PlanId).Distinct().ToList();
+                    var daypartsList = _PlanRepository.GetPlanDaypartsByPlanIds(planIds);
+
+                    outOfSpecSpots = outOfSpecSpotsDone.Where(syncedSpot => syncedSpot.OutOfSpecSpotDoneDecisions.SyncedAt != null)
+                    .Select(syncedPlan =>
+                    {
+                        marketRank = syncedPlan.MarketRank == null ? 0 : syncedPlan.MarketRank.Value;
+                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : syncedPlan.DMA;
+                        timeZone = _GetMarketTimeZoneCode(timeZones, syncedPlan.MarketCode);
+                        return new OutOfSpecDonePlanSpotsDto
+                        {
+                            Id = syncedPlan.Id,
+                            EstimateId = syncedPlan.EstimateId,
+                            Reason = syncedPlan.OutOfSpecSpotReasonCodes.Reason,
+                            ReasonLabel = syncedPlan.OutOfSpecSpotReasonCodes.Label,
+                            MarketRank = marketRank,
+                            DMA = DMA,
+                            Market = syncedPlan.Market,
+                            Station = syncedPlan.StationLegacyCallLetters,
+                            TimeZone = timeZone,
+                            Affiliate = syncedPlan.Affiliate,
+                            Day = syncedPlan.ProgramAirTime.DayOfWeek.ToString(),
+                            GenreName = syncedPlan.OutOfSpecSpotDoneDecisions.GenreName == null ? syncedPlan.GenreName : syncedPlan.OutOfSpecSpotDoneDecisions.GenreName,
+                            HouseIsci = syncedPlan.HouseIsci,
+                            ClientIsci = syncedPlan.IsciName,
+                            ProgramAirDate = DateTimeHelper.GetForDisplay(syncedPlan.ProgramAirTime, SpotExceptionsConstants.DateFormat),
+                            ProgramAirTime = DateTimeHelper.GetForDisplay(syncedPlan.ProgramAirTime, SpotExceptionsConstants.TimeFormat),
+                            FlightEndDate = DateTimeHelper.GetForDisplay(syncedPlan.FlightEndDate, SpotExceptionsConstants.DateFormat),
+                            ProgramName = syncedPlan.OutOfSpecSpotDoneDecisions.ProgramName == null ? syncedPlan.ProgramName : syncedPlan.OutOfSpecSpotDoneDecisions.ProgramName,
+                            SpotLengthString = syncedPlan.SpotLength != null ? $":{syncedPlan.SpotLength.Length}" : null,
+                            DaypartCode = syncedPlan.OutOfSpecSpotDoneDecisions.DaypartCode == null ? syncedPlan.DaypartCode : syncedPlan.OutOfSpecSpotDoneDecisions.DaypartCode,
+                            DecisionString = syncedPlan.OutOfSpecSpotDoneDecisions.DecisionNotes,
+                            SyncedTimestamp = DateTimeHelper.GetForDisplay(syncedPlan.OutOfSpecSpotDoneDecisions.SyncedAt, SpotExceptionsConstants.DateTimeFormat),
+                            Comments = syncedPlan.Comment,
+                            PlanDaypartCodes = daypartsList.Where(d => d.PlanId == syncedPlan.PlanId).Select(s => s.Code).Distinct().ToList(),
+                            InventorySourceName = syncedPlan.InventorySourceName
+                        };
+                    }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Spots in History";
+                throw new CadentException(msg, ex);
+            }
+
+            _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Spots in History");
+
+            return outOfSpecSpots;
+        }
+    
     }
 }

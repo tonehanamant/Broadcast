@@ -992,7 +992,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     GenreName = outOfSpecsDecisionDb?.genre_name,
                     DaypartCode = outOfSpecsDecisionDb.daypart_code
                 }).SingleOrDefault(),
-                MarketCode = outOfSpecsEntity.market_code,
+                MarketCode = stationEntity?.market?.market_code,
                 MarketRank = outOfSpecsEntity.market_rank,
                 Comment = commentsEntity != null ? commentsEntity.comment : null,
                 InventorySourceName = outOfSpecsEntity.inventory_source_name

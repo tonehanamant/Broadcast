@@ -175,6 +175,19 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Get the out of spec spots history.
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest">Get Out Of Spec spots History data.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-spots-history")]
+        public BaseResponse<List<OutOfSpecDonePlanSpotsDto>> GetOutOfSpecSpotsHistory(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GetOutOfSpecSpotsHistory(outOfSpecSpotsRequest));
+        }
+
+        /// <summary>
         /// save the bulk edit for out of spec todo
         /// </summary>
         [HttpPost]
