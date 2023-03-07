@@ -1,0 +1,14 @@
+[
+  {
+    "Count": 1,
+    "Name": "Detroit"
+  },
+  {
+    "Count": 2,
+    "Name": "New York"
+  },
+  {
+    "Count": 1,
+    "Name": "Philadelphia"
+  }
+]

@@ -322,5 +322,18 @@ namespace BroadcastComposerWeb.Controllers
             var userName = _GetCurrentUserFullName();
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecDecisionsDonePlans(outOfSpecTodoAcceptanceRequest, userName));
         }
+
+        /// <summary>
+        /// Gets the spot exceptions out of spec Markets.
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-spot-markets")]
+        public BaseResponse<List<OutOfSpecSpotMarketsDtoV2>> GetOutOfSpecSpotMarkets(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GetSpotExceptionsOutOfSpecMarkets(outOfSpecSpotsRequest));
+        }
     }
 }

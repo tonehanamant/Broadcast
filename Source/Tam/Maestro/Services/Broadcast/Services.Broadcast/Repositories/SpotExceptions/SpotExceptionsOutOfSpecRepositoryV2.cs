@@ -212,6 +212,24 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         /// <param name="endDate">The week end date.</param>
         /// <returns></returns>
         List<OutOfSpecSpotsDoneDto> GetOutOfSpecSpotsDone(int planId, DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// Get the out of spec done markets
+        /// </summary>
+        /// <param name="planId">plan id</param>
+        /// <param name="startDate">start date</param>
+        /// <param name="endDate">end date</param>
+        /// <returns>List of Done markets</returns>
+        List<string> GetOutOfSpecSpotsDoneMarkets(int planId, DateTime startDate, DateTime endDate);
+
+        /// <summary>
+        /// get the out of spec to do markets
+        /// </summary>
+        /// <param name="planId">plan id </param>
+        /// <param name="weekStartDate">week start date</param>
+        /// <param name="weekEndDate">week end date</param>
+        /// <returns>List of to do markets</returns>
+        List<string> GetOutOfSpecSpotsToDoMarkets(int planId, DateTime weekStartDate, DateTime weekEndDate);
     }
 
     /// <summary>
@@ -1215,6 +1233,58 @@ namespace Services.Broadcast.Repositories.SpotExceptions
 
                 var outOfSpecDonePosts = outOfSpecsEntities.Select(outOfSpecEntity => _MapOutOfSpecSpotsDoneToDto(outOfSpecEntity.outOfSpec.outOfSpecDone, outOfSpecEntity.Station, outOfSpecEntity.outOfSpec.Comments)).ToList();
                 return outOfSpecDonePosts;
+
+            });
+        }
+
+        /// <inheritdoc />
+        public List<string> GetOutOfSpecSpotsToDoMarkets(int planId, DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+            List<string> spotExceptionsToDoMarkets = new List<string>();
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                spotExceptionsToDoMarkets = context.spot_exceptions_out_of_specs
+                   .Where(spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.recommended_plan_id == planId &&
+                           spotExceptionsOutOfSpecDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecDb.program_air_time <= weekEndDate)
+                   .GroupJoin(
+                       context.stations
+                       .Include(stationDb => stationDb.market),
+                       spotExceptionsOutOfSpecDb => spotExceptionsOutOfSpecDb.station_legacy_call_letters,
+                       stationDb => stationDb.legacy_call_letters,
+                       (spotExceptionsOutOfSpecDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDb, Station = stationDb.FirstOrDefault() })
+                   .Select(r => r.Station.market.geography_name ?? "Unknown")
+                   .ToList();
+
+                return spotExceptionsToDoMarkets;
+
+            });
+        }
+
+        /// <inheritdoc />
+        public List<string> GetOutOfSpecSpotsDoneMarkets(int planId, DateTime startDate, DateTime endDate)
+        {
+            startDate = startDate.Date;
+            endDate = endDate.Date.AddDays(1).AddMinutes(-1);
+            List<string> spotExceptionsDoneMarkets = new List<string>();
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                spotExceptionsDoneMarkets = context.spot_exceptions_out_of_specs_done
+                    .Where(spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.recommended_plan_id == planId &&
+                            spotExceptionsOutOfSpecDoneDb.program_air_time >= startDate && spotExceptionsOutOfSpecDoneDb.program_air_time <= endDate)
+                    .GroupJoin(
+                        context.stations
+                        .Include(stationDb => stationDb.market),
+                        spotExceptionsOutOfSpecDoneDb => spotExceptionsOutOfSpecDoneDb.station_legacy_call_letters,
+                        stationDb => stationDb.legacy_call_letters,
+                        (spotExceptionsOutOfSpecDoneDb, stationDb) => new { SpotExceptionsOutOfSpec = spotExceptionsOutOfSpecDoneDb, Station = stationDb.FirstOrDefault() })
+                    .Select(r => r.Station.market.geography_name ?? "Unknown")
+                    .ToList();
+
+                return spotExceptionsDoneMarkets;
 
             });
         }

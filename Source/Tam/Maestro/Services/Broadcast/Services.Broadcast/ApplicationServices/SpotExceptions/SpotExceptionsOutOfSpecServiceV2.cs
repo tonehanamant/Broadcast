@@ -165,6 +165,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// <param name="outOfSpecSpotsRequest">The spot exceptions out of spec request.</param>
         /// <returns></returns>
         List<OutOfSpecDonePlanSpotsDto> GetOutOfSpecSpotsHistory(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest);
+
+        /// <summary>
+        /// Get the out of spec markets
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest">out of spec market request</param>
+        /// <returns>List of markets and count of each market</returns>
+        List<OutOfSpecSpotMarketsDtoV2> GetSpotExceptionsOutOfSpecMarkets(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest);
     }
 
     public class SpotExceptionsOutOfSpecServiceV2 : BroadcastBaseClass, ISpotExceptionsOutOfSpecServiceV2
@@ -1580,5 +1587,42 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             return outOfSpecSpots;
         }
     
+
+        /// <inheritdoc />
+        public List<OutOfSpecSpotMarketsDtoV2> GetSpotExceptionsOutOfSpecMarkets(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            var outOfSpecSpotsToDo = new List<string>();
+            var outOfSpecSpotsDone = new List<string>();
+            List<OutOfSpecSpotMarketsDtoV2> markets = new List<OutOfSpecSpotMarketsDtoV2>();
+
+            _LogInfo($"Starting: Retrieving Spot Exceptions Out Of Spec Markets");
+            try
+            {
+                outOfSpecSpotsToDo = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsToDoMarkets(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
+                outOfSpecSpotsDone = _SpotExceptionsOutOfSpecRepositoryV2.GetOutOfSpecSpotsDoneMarkets(outOfSpecSpotsRequest.PlanId, outOfSpecSpotsRequest.WeekStartDate, outOfSpecSpotsRequest.WeekEndDate);
+
+                var concatTodoAndDoneStringList = outOfSpecSpotsToDo.Concat(outOfSpecSpotsDone).OrderBy(y => y).ToList();
+                var groupedMarkets = concatTodoAndDoneStringList.GroupBy(x => x).ToList();
+                foreach (var Market in groupedMarkets)
+                {
+                    int count = Market.Count();
+                    string name = Market.Select(x => x).FirstOrDefault();
+                    var result = new OutOfSpecSpotMarketsDtoV2
+                    {
+                        Name = name,
+                        Count = count
+                    };
+                    markets.Add(result);
+                }
+
+                _LogInfo($"Finished: Retrieving Spot Exceptions Out Of Spec Markets");
+            }
+            catch (Exception ex)
+            {
+                var msg = $"Could not retrieve Spot Exceptions Out Of Spec Markets";
+                throw new CadentException(msg, ex);
+            }
+            return markets;
+        }
     }
 }

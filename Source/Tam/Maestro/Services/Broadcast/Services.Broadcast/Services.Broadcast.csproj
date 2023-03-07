@@ -935,6 +935,7 @@
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotCommentsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotDoneDecisionsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotInventorySourcesDto.cs" />
+    <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotMarketsDtoV2.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotProgramsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodeResultsDto.cs" />
     <Compile Include="Entities\SpotExceptions\OutOfSpecs\OutOfSpecSpotReasonCodesDto.cs" />

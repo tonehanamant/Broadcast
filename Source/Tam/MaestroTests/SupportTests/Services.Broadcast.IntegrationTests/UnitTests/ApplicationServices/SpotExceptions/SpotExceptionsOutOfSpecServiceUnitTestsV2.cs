@@ -3820,5 +3820,164 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         }
 
 
+        [Test]
+        public void GetOutOfSpecSpotMarkets_Exist()
+        {
+            // Arrange
+            var request = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 847,
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+
+            List<string> outOfSpecToDo = new List<string> { "New York", "Philadelphia" };
+            List<string> outOfSpecDone = new List<string> { "Detroit", "New York" };
+
+            int expectedMarketCount = 3;
+            int expectedIndividualMarketCount = 2; //here mapping New York market count  
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetSpotExceptionsOutOfSpecMarkets(request);
+
+            // Assert
+            Assert.AreEqual(result[1].Count, expectedIndividualMarketCount);
+            Assert.AreEqual(result.Count, expectedMarketCount);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetOutOfSpecSpotMarkets_DoesNotExist()
+        {
+            // Arrange
+            var request = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 847,
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+
+            List<string> outOfSpecToDo = new List<string> { };
+            List<string> outOfSpecDone = new List<string>();
+
+            int expectedCount = 0;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetSpotExceptionsOutOfSpecMarkets(request);
+
+            // Assert
+            Assert.AreEqual(expectedCount, result.Count);
+        }
+
+        [Test]
+        public void GetOutOfSpecSpotMarkets_ThrowsException()
+        {
+            // Arrange
+            var request = new OutOfSpecSpotsRequestDto
+            {
+                WeekStartDate = new DateTime(2021, 01, 04),
+                WeekEndDate = new DateTime(2021, 01, 10)
+            };
+
+            var outOfSpecToDo = new List<string> { "TBA" };
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Callback(() =>
+                {
+                    throw new CadentException("Throwing a test exception.");
+                });
+
+            // Act           
+            var result = Assert.Throws<CadentException>(() => _SpotExceptionsOutOfSpecServiceV2.GetSpotExceptionsOutOfSpecMarkets(request));
+
+            // Assert
+            Assert.AreEqual("Could not retrieve Spot Exceptions Out Of Spec Markets", result.Message);
+        }
+
+        [Test]
+        public void GetOutOfSpecSpotMarkets_ToDo_Exist()
+        {
+            // Arrange
+            var request = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 847,
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+
+            List<string> outOfSpecToDo = new List<string> { "New York", "Philadelphia" };
+            List<string> outOfSpecDone = new List<string> {};
+
+            int expectedMarketCount = 2;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetSpotExceptionsOutOfSpecMarkets(request);
+
+            // Assert
+            Assert.AreEqual(result.Count, expectedMarketCount);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
+        [Test]
+        public void GetOutOfSpecSpotMarkets_Done_Exist()
+        {
+            // Arrange
+            var request = new OutOfSpecSpotsRequestDto
+            {
+                PlanId = 847,
+                WeekStartDate = new DateTime(2022, 01, 01),
+                WeekEndDate = new DateTime(2022, 12, 31)
+            };
+
+            List<string> outOfSpecToDo = new List<string> { };
+            List<string> outOfSpecDone = new List<string> { "New York", "Philadelphia" };
+
+            int expectedMarketCount = 2;
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsToDoMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecToDo);
+
+            _SpotExceptionsOutOfSpecRepositoryV2Mock
+                .Setup(x => x.GetOutOfSpecSpotsDoneMarkets(It.IsAny<int>(), It.IsAny<DateTime>(), It.IsAny<DateTime>()))
+                .Returns(outOfSpecDone);
+
+            // Act
+            var result = _SpotExceptionsOutOfSpecServiceV2.GetSpotExceptionsOutOfSpecMarkets(request);
+
+            // Assert
+            Assert.AreEqual(result.Count, expectedMarketCount);
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
+        }
+
     }
 }
