@@ -1,8 +1,6 @@
 [
   {
-    "Genres": [
-      null
-    ],
+    "Genres": [],
     "ProgramName": "WNRUSH"
   }
 ]

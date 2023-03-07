@@ -926,6 +926,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                 genres.AddRange(split.Select(s => s.Trim()).ToList());
                 genres = genres.OrderBy(s => s).ToList();
             }
+            genres.RemoveAll(g => g == null);
             return genres;
         }
 
