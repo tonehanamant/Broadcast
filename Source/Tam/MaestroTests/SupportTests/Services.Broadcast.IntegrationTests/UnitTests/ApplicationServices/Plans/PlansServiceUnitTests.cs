@@ -61,7 +61,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<ICampaignRepository> _CampaignRepositoryMock;
         private Mock<IPlanIsciRepository> _PlanIsciRepositoryMock;
-        private Mock<ICampaignServiceApiClient> _CampaignServiceApiClient;        
+        private Mock<ICampaignServiceApiClient> _CampaignServiceApiClient;
+
+        private Mock<INtiUniverseService> _NtiUniverseService;
 
         [SetUp]
         public void CreatePlanService()
@@ -93,7 +95,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _CampaignRepositoryMock = new Mock<ICampaignRepository>();
             _PlanIsciRepositoryMock = new Mock<IPlanIsciRepository>();
-            _CampaignServiceApiClient = new Mock<ICampaignServiceApiClient>();            
+            _CampaignServiceApiClient = new Mock<ICampaignServiceApiClient>();
+            _NtiUniverseService = new Mock<INtiUniverseService>();
+
             _BroadcastLockingManagerApplicationServiceMock
                 .Setup(x => x.LockObject(It.IsAny<string>()))
                 .Returns(new LockResponse
@@ -222,7 +226,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     _ConfigurationSettingsHelperMock.Object,
                     _LockingEngineMock.Object,
                     _DateTimeEngineMock.Object,
-                    _CampaignServiceApiClient.Object
+                    _CampaignServiceApiClient.Object,
+                    _NtiUniverseService.Object
                 );
 
             _SpotLengthEngineMock

@@ -656,7 +656,7 @@ namespace Services.Broadcast.Repositories
                         FlightEndDate = x.flight_end_date,
                         FlightStartDate = x.flight_start_date,
                         IsDraft = x.is_draft,
-                        IsAduPlan = x.is_adu_plan,
+                        IsAduPlan = x.is_adu_plan ?? false,
                         ModifiedBy = x.modified_by ?? x.created_by,
                         ModifiedDate = x.modified_date ?? x.created_date,
                         Status = x.status,
@@ -732,6 +732,8 @@ namespace Services.Broadcast.Repositories
             //drafts don't have summary, so we're doing SingleOrDefault
             var planSummary = planVersion.plan_version_summaries.SingleOrDefault();
 
+            var totalAduImpresions = planVersion.plan_version_weekly_breakdown.Sum(w => w.adu_impressions);
+
             var dto = new PlanDto
             {
                 Id = entity.id,
@@ -772,11 +774,12 @@ namespace Services.Broadcast.Repositories
                 ModifiedBy = planVersion.modified_by ?? planVersion.created_by,
                 ModifiedDate = entity.plan_versions.Max(x => x.modified_date) ?? entity.plan_versions.Max(x => x.created_date), //planVersion.modified_date ?? planVersion.created_date,
                 Vpvh = planVersion.target_vpvh,
-                TargetUniverse = planVersion.target_universe,
+                TargetUniverse = planVersion.target_universe,                
                 HHCPM = planVersion.hh_cpm,
                 HHCPP = planVersion.hh_cpp,
                 HHImpressions = planVersion.hh_impressions,
                 HHRatingPoints = planVersion.hh_rating_points,
+                AduImpressions = totalAduImpresions,
                 HHUniverse = planVersion.hh_universe,
                 AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
                 BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
@@ -795,7 +798,7 @@ namespace Services.Broadcast.Repositories
                 UnifiedTacticLineId = entity.unified_tactic_line_id,
                 UnifiedCampaignLastSentAt = entity.unified_campaign_last_sent_at,
                 UnifiedCampaignLastReceivedAt = entity.unified_campaign_last_received_at,
-                NielsenTransmittalCode = entity.nielsen_transmittal_code
+                NielsenTransmittalCode = entity.nielsen_transmittal_code,                
             };
 
             if (dto.PricingParameters != null)

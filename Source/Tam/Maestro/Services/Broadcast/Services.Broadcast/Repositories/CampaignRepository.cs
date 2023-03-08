@@ -230,6 +230,7 @@ namespace Services.Broadcast.Repositories
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(z => z.standard_dayparts))))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths)))
                         .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths.Select(z => z.spot_lengths))))
+                        .Include(campaign => campaign.plans.Select(x => x.plan_versions.Select(y => y.plan_version_weekly_breakdown)))
                         .Include(campaign => campaign.campaign_summaries)
                          .ToList();
 
@@ -333,10 +334,11 @@ namespace Services.Broadcast.Repositories
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths)))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_creative_lengths.Select(w => w.spot_lengths))))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries)))
-                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts)))                        
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t => t.standard_dayparts))))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_dayparts.Select(t => t.standard_dayparts.daypart))))
                         .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_summaries.Select(t => t.plan_version_summary_quarters))))
+                        .Include(z => z.plans.Select(x => x.plan_versions.Select(y => y.plan_version_weekly_breakdown)))
                         .Single(c => c.id.Equals(campaignId), $"Could not find existing campaign with id '{campaignId}'");
 
                     return _MapToDto(campaign);
@@ -372,6 +374,8 @@ namespace Services.Broadcast.Repositories
                         var draft = planVersions
                              .Where(x => x.plan_id == version.plan_id && x.is_draft == true).OrderBy(x => x.id).FirstOrDefault();
 
+                        var totalAduImpressions = version.plan_version_weekly_breakdown.Sum(w => w.adu_impressions);
+
                         return new PlanSummaryDto
                         {
                             ProcessingStatus = (PlanAggregationProcessingStatusEnum)summary.processing_status,
@@ -397,6 +401,7 @@ namespace Services.Broadcast.Repositories
                             Dayparts = version.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
                             TargetImpressions = version.target_impression,
                             TRP = version.target_rating_points,
+                            AduImpressions = totalAduImpressions,
                             TotalActiveDays = summary.active_day_count,
                             TotalHiatusDays = summary.hiatus_days_count,
                             HasHiatus = summary.hiatus_days_count.HasValue && summary.hiatus_days_count.Value > 0,

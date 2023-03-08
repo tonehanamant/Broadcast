@@ -42,6 +42,7 @@ namespace Services.Broadcast.Entities.Plan
         public double TotalImpressionsPercentage { get; set; }
         public int TotalActiveDays { get; set; }
         public double TotalUnits { get; set; }
+        public double TotalAduImpressions { get; set; }
     }
 
     public class WeeklyBreakdownByWeek
@@ -104,6 +105,7 @@ namespace Services.Broadcast.Entities.Plan
     public class WeeklyBreakdownByStandardDaypart
     {
         public double Impressions { get; set; }
+        public double AduImpressions { get; set; }
         public decimal Budget { get; set; }
         public int StandardDaypartId { get; set; }
     }

@@ -8,7 +8,7 @@ namespace Services.Broadcast.Entities.Plan
         public int VersionId { get; set; }
         public int? VersionNumber { get; set; }
         public bool? IsDraft { get; set; }
-        public bool? IsAduPlan { get; set; }
+        public bool IsAduPlan { get; set; }
         public int? Status { get; set; }
         public DateTime FlightStartDate { get; set; }
         public DateTime FlightEndDate { get; set; }

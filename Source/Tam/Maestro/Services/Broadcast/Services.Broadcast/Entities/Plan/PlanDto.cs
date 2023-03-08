@@ -227,7 +227,7 @@ namespace Services.Broadcast.Entities.Plan
         /// <value>
         /// The target impressions.
         /// </value>
-        public double? TargetImpressions { get; set; }
+        public double? TargetImpressions { get; set; }        
 
         /// <summary>
         /// Gets or sets the target rating points.
@@ -236,6 +236,11 @@ namespace Services.Broadcast.Entities.Plan
         /// The target rating points.
         /// </value>
         public double? TargetRatingPoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the adu impressions.
+        /// </summary>
+        public double AduImpressions { get; set; }
 
         /// <summary>
         /// Gets or sets the target CPP.

@@ -31,6 +31,7 @@
     "Notes": "Notes for CampaignOne.",
     "Plans": [
       {
+        "AduImpressions": 0.0,
         "AudienceId": null,
         "AvailableMarketCount": null,
         "AvailableMarketsWithSovCount": null,
@@ -70,6 +71,7 @@
         "VersionNumber": 4
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": null,
         "AvailableMarketCount": null,
         "AvailableMarketsWithSovCount": null,
@@ -155,6 +157,7 @@
     "Notes": "Notes for CampaignTwo.",
     "Plans": [
       {
+        "AduImpressions": 0.0,
         "AudienceId": null,
         "AvailableMarketCount": null,
         "AvailableMarketsWithSovCount": null,

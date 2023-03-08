@@ -145,6 +145,11 @@ namespace Services.Broadcast.Entities.Plan
 
         public double? HHImpressions { get; set; }
 
+        /// <summary>
+        /// The Total number of ADU Impressions for the plan.
+        /// </summary>
+        public double AduImpressions { get; set; }
+
         public double? TRP { get; set; }
 
         public bool HasHiatus { get; set; }
@@ -185,12 +190,11 @@ namespace Services.Broadcast.Entities.Plan
         /// Specify that the Plan is an ADU Only Plan.
         /// </summary>
         public bool IsAduPlan { get; set; }
-        
+
         /// <summary>
         /// Specify the version number of the plan
         /// </summary>
         public int? VersionNumber { get; set; }
-
 
         /// <summary>
         /// Gets or sets the Fluidity Percentage.

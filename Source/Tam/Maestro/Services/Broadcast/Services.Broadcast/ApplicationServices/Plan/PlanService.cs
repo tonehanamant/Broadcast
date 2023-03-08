@@ -327,6 +327,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanBuyingService _PlanBuyingService;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
         private readonly IStandardDaypartService _StandardDaypartService;
+        private readonly INtiUniverseService _NtiUniverseService;
+
         private readonly IDayRepository _DayRepository;
         private readonly IWeeklyBreakdownEngine _WeeklyBreakdownEngine;
         private readonly IPlanMarketSovCalculator _PlanMarketSovCalculator;
@@ -336,14 +338,16 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private const string _StandardDaypartNotFoundMessage = "Unable to find standard daypart";
         private readonly ILockingEngine _LockingEngine;       
         private readonly IDateTimeEngine _DateTimeEngine;
-        private readonly IPlanIsciRepository _PlanIsciRepository;
+        private readonly IPlanIsciRepository _PlanIsciRepository;        
+
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
         private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
         private readonly Lazy<bool> _IsAduForPlanningv2Enabled;
+        private readonly Lazy<bool> _IsUnifiedCampaignEnabled;
 
         private readonly ICampaignServiceApiClient _CampaignServiceApiClient;
-        private Lazy<bool> _IsUnifiedCampaignEnabled;
+        
         public const decimal BudgetDivisor = 0.85m;
         public PlanService(IDataRepositoryFactory broadcastDataRepositoryFactory
             , IPlanValidator planValidator
@@ -365,6 +369,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             , ILockingEngine lockingEngine
             , IDateTimeEngine dateTimeEngine
             , ICampaignServiceApiClient campaignServiceApiClient
+            , INtiUniverseService ntiUniverseService
             ) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _MediaWeekCache = mediaMonthAndWeekAggregateCache;
@@ -385,6 +390,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _PlanBuyingService = planBuyingService;
             _QuarterCalculationEngine = quarterCalculationEngine;
             _StandardDaypartService = standardDaypartService;
+            _NtiUniverseService = ntiUniverseService;
+
             _WeeklyBreakdownEngine = weeklyBreakdownEngine;
             _CreativeLengthEngine = creativeLengthEngine;
             _PlanMarketSovCalculator = planMarketSovCalculator;
@@ -516,7 +523,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 processTimers.End(SW_KEY_PLAN_VALIDATION);
                 processTimers.Start(SW_KEY_PRE_PLAN_SAVE);
 
-                _ConvertImpressionsToRawFormat(plan);
+                _ConvertImpressionsToRawFormat(plan);                
 
                 if (plan.Status == PlanStatusEnum.Contracted &&
                     plan.GoalBreakdownType == PlanGoalBreakdownTypeEnum.EvenDelivery)
@@ -527,6 +534,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.WeeklyBreakdownWeeks =
                     _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                 _CalculateDeliveryDataPerAudience(plan);
+                _CalculatePlanVpvh(plan);
                 _SetPlanVersionNumber(plan);
                 _SetPlanFlightDays(plan);
 
@@ -667,6 +675,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                     _CalculateDeliveryDataPerAudience(plan);
+                    _CalculatePlanVpvh(plan);
                 }
                 else if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
                 {
@@ -725,7 +734,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
         }
 
-        private static void _InitAduOnlyPlanGoals(PlanDto plan)
+        private void _InitAduOnlyPlanGoals(PlanDto plan)
         {
             // make sure this is set to true
             plan.IsAduEnabled = true;
@@ -735,7 +744,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.TargetImpressions =  0;
             plan.TargetRatingPoints = 0;
             plan.TargetCPM = 0;
-            plan.TargetCPP = 0;
+            plan.TargetCPP = 0;            
 
             plan.HHImpressions = 0;
             plan.HHRatingPoints = 0;
@@ -755,7 +764,20 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 weekItem.WeeklyRatings = 0;
                 weekItem.WeeklyUnits = 0;
             }
-        }        
+
+            // provide calculated values that were bypassed in the 'Adu Plan' mode.
+            plan.TargetUniverse = _NtiUniverseService.GetLatestNtiUniverse(plan.AudienceId);
+        }
+
+        private void _CalculatePlanVpvh(PlanDto plan)
+        {
+            var audienceImpression = plan.TargetImpressions.Value;
+            if (plan.IsAduPlan && _IsAduForPlanningv2Enabled.Value)
+            {
+                audienceImpression = plan.WeeklyBreakdownWeeks.Sum(w => w.AduImpressions);
+            }
+            plan.Vpvh = ProposalMath.CalculateVpvh(audienceImpression, plan.HHImpressions.Value);
+        }
 
         internal List<PlanDaypartDto> _FilterValidDaypart(List<PlanDaypartDto> sourceDayparts)
         {
@@ -1010,8 +1032,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
             foreach (var week in plan.WeeklyBreakdownWeeks)
             {
-                week.WeeklyImpressions = week.WeeklyImpressions * 1000;
+                week.WeeklyImpressions *= 1000;
             }
+
+            plan.AduImpressions *= 1000;
 
             if (_IsAduForPlanningv2Enabled.Value)
             {
@@ -1033,6 +1057,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             plan.HHImpressions /= 1000;
+            plan.AduImpressions /= 1000;
 
             foreach (var audience in plan.SecondaryAudiences)
             {
@@ -1335,6 +1360,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.WeeklyBreakdownTotals.TotalImpressionsPercentage = Math.Round(GeneralMath.ConvertFractionToPercentage(impressionsTotalsRatio), 0);
             plan.WeeklyBreakdownTotals.TotalBudget = (plan.Budget ?? 0) * (decimal)impressionsTotalsRatio;
             plan.WeeklyBreakdownTotals.TotalUnits = Math.Round(plan.WeeklyBreakdownWeeks.Sum(w => w.WeeklyUnits), 2);
+
+            plan.WeeklyBreakdownTotals.TotalAduImpressions = Math.Floor(plan.WeeklyBreakdownWeeks.Sum(w => w.AduImpressions) / 1000);
         }
 
         private void _SortPlanDayparts(PlanDto plan)
@@ -1869,6 +1896,10 @@ namespace Services.Broadcast.ApplicationServices.Plan
             const int defaultSpotLength = 30;
             var defaultSpotLengthId = _SpotLengthEngine.GetSpotLengthIdByValue(defaultSpotLength);
 
+            var goalBreakdownType = _IsAduForPlanningv2Enabled.Value
+                ? PlanGoalBreakdownTypeEnum.CustomByWeek
+                : PlanGoalBreakdownTypeEnum.EvenDelivery;
+
             return new PlanDefaultsDto
             {
                 Name = string.Empty,
@@ -1884,7 +1915,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 PostingType = PostingTypeEnum.NTI,
                 Status = PlanStatusEnum.Working,
                 Currency = PlanCurrenciesEnum.Impressions,
-                GoalBreakdownType = PlanGoalBreakdownTypeEnum.EvenDelivery,
+                GoalBreakdownType = goalBreakdownType,
                 ShowTypeContainType = ContainTypeEnum.Exclude,
                 GenreContainType = ContainTypeEnum.Exclude,
                 ProgramContainType = ContainTypeEnum.Exclude,
@@ -1919,6 +1950,12 @@ namespace Services.Broadcast.ApplicationServices.Plan
             foreach (var item in weeklyBreakdownByStandardDaypart)
             {
                 var targetAudienceImpressions = item.Impressions;
+
+                if (plan.IsAduPlan && _IsAduForPlanningv2Enabled.Value)
+                {
+                    targetAudienceImpressions = item.AduImpressions;
+                }
+
                 var targetAudienceVpvh = plan
                    .Dayparts.Where(x => x.DaypartCodeId == item.StandardDaypartId)
                    .SelectMany(s => s.VpvhForAudiences)
@@ -1963,7 +2000,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             plan.HHCPM = householdPlanDeliveryBudget.CPM.Value;
             plan.HHRatingPoints = householdPlanDeliveryBudget.RatingPoints.Value;
             plan.HHCPP = householdPlanDeliveryBudget.CPP.Value;
-            plan.Vpvh = ProposalMath.CalculateVpvh(plan.TargetImpressions.Value, hhImpressions);
         }
 
         private void _CalculateSecondaryAudiencesDeliveryData(
@@ -2311,11 +2347,23 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planToCopy.UnifiedCampaignLastSentAt = null;
                 planToCopy.UnifiedCampaignLastReceivedAt = null;
                 DaypartTimeHelper.SubtractOneSecondToEndTime(planToCopy.Dayparts);
-                _PlanValidator.ValidatePlan(planToCopy);
+
+                if (planToCopy.IsAduPlan && _IsAduForPlanningv2Enabled.Value)
+                {
+                    _PlanValidator.ValidateAduPlan(planToCopy);
+                    // init goal related properties
+                    _InitAduOnlyPlanGoals(planToCopy);
+                }
+                else
+                {
+                    _PlanValidator.ValidatePlan(planToCopy);
+                }
+                
                 _ConvertImpressionsToRawFormat(planToCopy);
                 planToCopy.WeeklyBreakdownWeeks =
                     _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
                 _CalculateDeliveryDataPerAudience(planToCopy);
+                _CalculatePlanVpvh(planToCopy);
                 plans.Add(planToCopy);
             }
             _PlanRepository.CopyPlans(plans, createdBy, createdDate);

@@ -14,6 +14,7 @@
     "apiVersion": "4",
     "jobId": 1,
     "plan": {
+      "AduImpressions": 0.0,
       "AudienceId": 0,
       "AudienceType": 0,
       "AvailableMarkets": [
@@ -215,6 +216,7 @@
       "Vpvh": null,
       "WeeklyBreakdownTotals": {
         "TotalActiveDays": 0,
+        "TotalAduImpressions": 0.0,
         "TotalBudget": 0.0,
         "TotalImpressions": 0.0,
         "TotalImpressionsPercentage": 0.0,
@@ -886,6 +888,7 @@
     "apiVersion": "4",
     "jobId": 1,
     "plan": {
+      "AduImpressions": 0.0,
       "AudienceId": 0,
       "AudienceType": 0,
       "AvailableMarkets": [
@@ -1087,6 +1090,7 @@
       "Vpvh": null,
       "WeeklyBreakdownTotals": {
         "TotalActiveDays": 0,
+        "TotalAduImpressions": 0.0,
         "TotalBudget": 0.0,
         "TotalImpressions": 0.0,
         "TotalImpressionsPercentage": 0.0,
@@ -1758,6 +1762,7 @@
     "apiVersion": "4",
     "jobId": 1,
     "plan": {
+      "AduImpressions": 0.0,
       "AudienceId": 0,
       "AudienceType": 0,
       "AvailableMarkets": [
@@ -1959,6 +1964,7 @@
       "Vpvh": null,
       "WeeklyBreakdownTotals": {
         "TotalActiveDays": 0,
+        "TotalAduImpressions": 0.0,
         "TotalBudget": 0.0,
         "TotalImpressions": 0.0,
         "TotalImpressionsPercentage": 0.0,

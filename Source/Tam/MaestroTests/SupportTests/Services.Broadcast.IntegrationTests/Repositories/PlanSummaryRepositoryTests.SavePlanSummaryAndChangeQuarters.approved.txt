@@ -1,4 +1,5 @@
 ﻿{
+  "AduImpressions": 0.0,
   "AudienceId": null,
   "AvailableMarketCount": 12,
   "AvailableMarketsWithSovCount": 2,
@@ -17,6 +18,7 @@
   "HasHiatus": false,
   "HHCPM": null,
   "HHImpressions": null,
+  "IsAduPlan": false,
   "IsDraft": null,
   "ModifiedBy": null,
   "ModifiedDate": null,

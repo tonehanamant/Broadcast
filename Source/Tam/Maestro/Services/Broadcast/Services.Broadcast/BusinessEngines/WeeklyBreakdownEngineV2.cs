@@ -1696,6 +1696,7 @@ namespace Services.Broadcast.BusinessEngines
                     {
                         StandardDaypartId = grouping.Key,
                         Impressions = grouping.Sum(x => x.WeeklyImpressions),
+                        AduImpressions = grouping.Sum(x => x.AduImpressions),
                         Budget = grouping.Sum(x => x.WeeklyBudget)
                     };
                 })

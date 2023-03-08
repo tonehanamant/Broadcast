@@ -1,4 +1,5 @@
 {
+  "AduImpressions": 0.0,
   "AudienceId": 31,
   "AudienceType": 1,
   "AvailableMarkets": [
@@ -265,6 +266,7 @@
   "Vpvh": 0.234543,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 10,
+    "TotalAduImpressions": 1000.0,
     "TotalBudget": 50000.0,
     "TotalImpressions": 50.0,
     "TotalImpressionsPercentage": 50000.0,
