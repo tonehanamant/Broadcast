@@ -692,6 +692,7 @@ namespace Services.Broadcast.BusinessEngines
                         week.WeeklyImpressions = 0;
                         week.WeeklyImpressionsPercentage = 0;
                         week.WeeklyAdu = 0;
+                        week.AduImpressions = 0;
                         week.IsUpdated = false;
                     }
                 }
@@ -710,6 +711,7 @@ namespace Services.Broadcast.BusinessEngines
             result.TotalImpressions = request.Weeks.Sum(x => x.WeeklyImpressions);
             result.TotalRatingPoints = request.Weeks.Sum(x => x.WeeklyRatings);
             result.TotalImpressionsPercentage = totalImpressionsPercentage;
+            result.TotalAduImpressions = request.Weeks.Sum(x => x.AduImpressions);
 
             result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
             foreach (var rawWeek in result.RawWeeklyBreakdownWeeks)
@@ -1029,6 +1031,8 @@ namespace Services.Broadcast.BusinessEngines
             weeklyBreakdown.TotalActiveDays = GroupWeeklyBreakdownByWeek(weeklyBreakdown.Weeks)
                 .Sum(x => x.NumberOfActiveDays);
 
+            weeklyBreakdown.TotalAduImpressions = weeklyBreakdown.Weeks.Sum(x => x.AduImpressions);
+
             if (request.IsAduOnly && _IsAduForPlanningv2Enabled.Value)
             {
                 weeklyBreakdown.TotalImpressions = 0;
@@ -1049,7 +1053,7 @@ namespace Services.Broadcast.BusinessEngines
 
             weeklyBreakdown.TotalRatingPoints = Math.Round(request.TotalRatings * impressionsTotalRatio, 1);
             weeklyBreakdown.TotalBudget = request.TotalBudget * (decimal)impressionsTotalRatio;
-            weeklyBreakdown.TotalUnits = weeklyBreakdown.Weeks.Sum(w => w.WeeklyUnits);
+            weeklyBreakdown.TotalUnits = weeklyBreakdown.Weeks.Sum(w => w.WeeklyUnits);            
         }
 
         private void _RemoveOutOfFlightWeeks(List<WeeklyBreakdownWeek> requestWeeks, List<DisplayMediaWeek> flightWeeks)

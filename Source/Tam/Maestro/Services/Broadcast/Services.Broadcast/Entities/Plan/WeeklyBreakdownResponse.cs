@@ -13,5 +13,6 @@ namespace Services.Broadcast.Entities.Plan
         public double TotalImpressionsPercentage { get; set; }
         public decimal TotalBudget { get; set; }
         public double TotalUnits { get; set; }
+        public double TotalAduImpressions { get; set; }
     }
 }
