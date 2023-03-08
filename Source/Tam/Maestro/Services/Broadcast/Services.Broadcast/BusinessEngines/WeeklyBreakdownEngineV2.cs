@@ -1427,6 +1427,12 @@ namespace Services.Broadcast.BusinessEngines
                 var impressions = impressionsByWeeks[breakdownItem.MediaWeekId];
                 _UpdateGoalsForWeeklyBreakdownItem(request.TotalImpressions, request.TotalRatings
                     , request.TotalBudget, breakdownItem, impressions, roundRatings: true);
+
+                // handle ADU Impressions
+                var weekAduImpressions = request.Weeks.Where(w => w.MediaWeekId == breakdownItem.MediaWeekId).Sum(s => s.AduImpressions);
+                var weeklyAdu = request.Weeks.Where(w => w.MediaWeekId == breakdownItem.MediaWeekId).Sum(s => s.WeeklyAdu);
+                breakdownItem.AduImpressions = weekAduImpressions;
+                breakdownItem.WeeklyAdu = weeklyAdu;
             }
         }
 
