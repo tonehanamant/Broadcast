@@ -2476,7 +2476,7 @@
           <Property Name="execution_id_external" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="isci_name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="program_air_time" Type="datetime" Nullable="false" />
-          <Property Name="station_legacy_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="station_legacy_call_letters" Type="varchar" MaxLength="15" />
           <Property Name="reason_code_id" Type="int" Nullable="false" />
           <Property Name="recommended_plan_id" Type="int" Nullable="false" />
           <Property Name="comment" Type="nvarchar" MaxLength="1024" />
@@ -19246,7 +19246,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="execution_id_external" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="isci_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="program_air_time" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="station_legacy_call_letters" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="station_legacy_call_letters" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
           <Property Name="reason_code_id" Type="Int32" Nullable="false" />
           <Property Name="recommended_plan_id" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />

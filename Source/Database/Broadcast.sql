@@ -2542,7 +2542,7 @@ GO
 
 /*************************************** START BS-692 ***************************************/
 
-IF EXISTS (SELECT COLUMNPROPERTY(OBJECT_ID('spot_exceptions_out_of_specs', 'U'), 'estimate_id', 'AllowsNull'))
+IF (SELECT COLUMNPROPERTY(OBJECT_ID('spot_exceptions_out_of_specs', 'U'), 'estimate_id', 'AllowsNull')) = 0
 BEGIN
 
 	ALTER TABLE staged_out_of_specs
@@ -2576,8 +2576,20 @@ BEGIN
 		ALTER COLUMN estimate_id int NULL;
 
 END
+GO
+/*************************************** END BS-692 ***************************************/
 
-/*************************************** END Bs-692 ***************************************/
+/*************************************** START BP-6481 ***************************************/
+
+IF (SELECT COLUMNPROPERTY(OBJECT_ID('spot_exceptions_out_of_spec_comments', 'U'), 'station_legacy_call_letters', 'AllowsNull')) = 0
+BEGIN
+
+	ALTER TABLE spot_exceptions_out_of_spec_comments
+		ALTER COLUMN station_legacy_call_letters varchar(15) NULL;
+
+END
+GO
+/*************************************** END BP-6481 ***************************************/
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
