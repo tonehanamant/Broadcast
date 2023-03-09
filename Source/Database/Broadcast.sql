@@ -2591,6 +2591,41 @@ END
 GO
 /*************************************** END BP-6481 ***************************************/
 
+/*************************************** START BS-640 - 2 ***************************************/
+
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_weekly_breakdown]
+/* View for external consumers. */
+AS
+SELECT [id]
+      ,[media_week_id]
+      ,[number_active_days]
+      ,[active_days_label]
+      ,[impressions]
+      ,[impressions_percentage]
+      ,[plan_version_id]
+      ,[rating_points]
+      ,[budget]
+      ,[spot_length_id]
+      ,[standard_daypart_id]
+      ,[percentage_of_week]
+      ,[adu_impressions]
+      ,[unit_impressions]
+      ,[is_locked]
+      ,[custom_daypart_organization_id]
+      ,[custom_daypart_name]
+  FROM [dbo].[plan_version_weekly_breakdown]
+
+GO
+
+IF EXISTS(SELECT 1 FROM sys.views WHERE [name] = 'vw_plan_version_daypart_weekly_breakdown')
+BEGIN
+	DROP VIEW vw_plan_version_daypart_weekly_breakdown
+END
+
+GO
+
+/*************************************** END BS-640 - 2 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
