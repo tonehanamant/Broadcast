@@ -563,6 +563,14 @@ namespace Services.Broadcast.BusinessEngines
             var weightedDayparts = PlanGoalHelper.GetStandardDaypardWeightingGoals(request.Dayparts);
             _PlanValidator.ValidateWeeklyBreakdownItemWeights(weightedDayparts, weightedSpotLengths, request.DeliveryType);
 
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                foreach (var week in request.Weeks)
+                {
+                    week.AduImpressions = week.WeeklyAdu;
+                }
+            }
+
             if (!request.IsAduOnly)
             {
                 if (request.ImpressionsPerUnit <= 0) //old plan
@@ -671,8 +679,7 @@ namespace Services.Broadcast.BusinessEngines
             }
 
             return response;
-        }
-
+        }        
 
         public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
