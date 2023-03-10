@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,7 +13,6 @@ using System.Runtime.CompilerServices;
 
 namespace Services.Broadcast
 {
-
     public interface IConfigurationSettingsHelper
     {
         /// <summary>
@@ -29,6 +29,7 @@ namespace Services.Broadcast
        /// <returns>configuration value against provided key </returns>
         T GetConfigValue<T>(string key);
     }
+
     public class ConfigurationSettingsHelper : IConfigurationSettingsHelper
     {
         private readonly ILog _Log;
@@ -40,6 +41,7 @@ namespace Services.Broadcast
             _ConfigDataDictionary = new Lazy<Dictionary<object, object>>(() => _LoadConfigItems(BroadcastConstants.CONFIG_FILE_NAME));
 
         }
+
         public T GetConfigValueWithDefault<T>(string key, T defaultValue)
         {
 
@@ -70,6 +72,7 @@ namespace Services.Broadcast
             }
             return result;
         }
+
         public T GetConfigValue<T>(string key)
         {
             T result;
@@ -97,6 +100,7 @@ namespace Services.Broadcast
             }
             return result;
         }
+
         internal Dictionary<object, object> _LoadConfigItems(string fileName)
         {
             Dictionary<object, object> configData = new Dictionary<object, object>();
@@ -127,31 +131,50 @@ namespace Services.Broadcast
                         configData.Add(node.Key, node.Value.ToObject<object>());
                     }
                 }
-
             }
+
+            // Load from the file last to override settings.
+            _LoadAppConfigFile(configData);
 
             return configData;
         }
+
+        /// <summary>
+        /// This is for local Dev and Debug.
+        /// It's expected that sensitive or environment specific values are left empty in the Repo 
+        /// and populated at Deployment time using TFS Pipeline Variables.
+        /// 
+        /// We use User Secrets to provide those values during development.
+        /// The User Secrets override key values from the app.config for web.config with values provided by the user.
+        /// </summary>
+        private void _LoadAppConfigFile(Dictionary<object, object> configData)
+        {
+            foreach(string appSettingKey in ConfigurationManager.AppSettings.Keys)
+            {
+                var appSettingValue = ConfigurationManager.AppSettings[appSettingKey];
+                configData[appSettingKey] = appSettingValue;
+            }
+        }
+
         private void _LogError(string message, Exception ex = null, [CallerMemberName] string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Error(logMessage.ToJson(), ex);
             _ConsiderLogDebug(logMessage);
         }
+
         private void _ConsiderLogDebug(LogMessage logMessage)
         {
 #if DEBUG
             _Log.Debug(logMessage.ToJson());
 #endif
         }
+
         private void _LogWarning(string message, [CallerMemberName] string memberName = "")
         {
             var logMessage = BroadcastLogMessageHelper.GetApplicationLogMessage(message, GetType(), memberName);
             _Log.Warn(logMessage.ToJson());
             _ConsiderLogDebug(logMessage);
         }
-
-
     }
-
 }
