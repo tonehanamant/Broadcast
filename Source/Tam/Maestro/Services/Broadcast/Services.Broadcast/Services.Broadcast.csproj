@@ -1913,6 +1913,7 @@
     <Compile Include="Repositories\StationRepository.cs" />
     <Compile Include="Repositories\TrackerMappingRepository.cs" />
     <Compile Include="Repositories\TrafficRepository.cs" />
+    <Compile Include="Repositories\VpvhForecastRepository.cs" />
     <Compile Include="Repositories\VpvhRepository.cs" />
     <Compile Include="Service\ScheduledServiceMethod.cs" />
     <Compile Include="Service\ScheduledWindowsServiceMethodRunner.cs" />

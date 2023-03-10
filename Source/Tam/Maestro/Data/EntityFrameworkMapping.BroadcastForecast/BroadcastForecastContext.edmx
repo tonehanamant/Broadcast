@@ -283,6 +283,19 @@
           <Property Name="id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="legacy_call_letters" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
+        <EntityType Name="vpvh_quarters">
+          <Key>
+            <PropertyRef Name="year" />
+            <PropertyRef Name="quarter" />
+            <PropertyRef Name="audience_id" />
+            <PropertyRef Name="standard_daypart_id" />
+          </Key>
+          <Property Name="year" Type="int" Nullable="false" />
+          <Property Name="quarter" Type="tinyint" Nullable="false" />
+          <Property Name="audience_id" Type="int" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="int" Nullable="false" />
+          <Property Name="vpvh" Type="float" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="broadcast_forecastModelStoreContainer">
           <EntitySet Name="codes" EntityType="Self.codes" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="market_headers" EntityType="Self.market_headers" Schema="nsi" store:Type="Tables" />
@@ -298,6 +311,7 @@
           <EntitySet Name="viewers" EntityType="Self.viewers" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="viewers_arc" EntityType="Self.viewers_arc" Schema="nsi" store:Type="Tables" />
           <EntitySet Name="viewers_trunc" EntityType="Self.viewers_trunc" Schema="nsi" store:Type="Tables" />
+          <EntitySet Name="vpvh_quarters" EntityType="Self.vpvh_quarters" Schema="nsi" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -321,6 +335,7 @@
           <EntitySet Name="viewers_arc" EntityType="broadcast_forecastModel.viewers_arc" />
           <EntitySet Name="viewers_trunc" EntityType="broadcast_forecastModel.viewers_trunc" />
           <EntitySet Name="stations" EntityType="broadcast_forecastModel.stations" />
+          <EntitySet Name="vpvh_quarters" EntityType="broadcast_forecastModel.vpvh_quarters" />
         </EntityContainer>
         <EntityType Name="universe">
           <Key>
@@ -600,6 +615,19 @@
           <Property Name="station_type_code" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="reportability_status" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vpvh_quarters">
+          <Key>
+            <PropertyRef Name="year" />
+            <PropertyRef Name="quarter" />
+            <PropertyRef Name="audience_id" />
+            <PropertyRef Name="standard_daypart_id" />
+          </Key>
+          <Property Name="year" Type="Int32" Nullable="false" />
+          <Property Name="quarter" Type="Byte" Nullable="false" />
+          <Property Name="audience_id" Type="Int32" Nullable="false" />
+          <Property Name="standard_daypart_id" Type="Int32" Nullable="false" />
+          <Property Name="vpvh" Type="Double" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -854,6 +882,17 @@
                 <ScalarProperty Name="market_code" ColumnName="market_code" />
                 <ScalarProperty Name="distributor_code" ColumnName="distributor_code" />
                 <ScalarProperty Name="media_month_id" ColumnName="media_month_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vpvh_quarters">
+            <EntityTypeMapping TypeName="broadcast_forecastModel.vpvh_quarters">
+              <MappingFragment StoreEntitySet="vpvh_quarters">
+                <ScalarProperty Name="vpvh" ColumnName="vpvh" />
+                <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />
+                <ScalarProperty Name="audience_id" ColumnName="audience_id" />
+                <ScalarProperty Name="quarter" ColumnName="quarter" />
+                <ScalarProperty Name="year" ColumnName="year" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

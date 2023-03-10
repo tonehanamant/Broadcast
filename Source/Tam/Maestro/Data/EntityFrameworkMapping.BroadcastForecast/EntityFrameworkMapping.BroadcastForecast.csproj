@@ -404,6 +404,9 @@
     <Compile Include="viewer_details_trunc.cs">
       <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="vpvh_quarters.cs">
+      <DependentUpon>BroadcastForecastContext.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

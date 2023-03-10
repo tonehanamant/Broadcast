@@ -10,6 +10,8 @@ using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Vpvh;
+using Services.Broadcast.Helpers;
+using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -35,7 +37,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private Mock<IVpvhExportEngine> _VpvhExportEngine;
         private Mock<IDateTimeEngine> _DateTimeEngineMock;
         private Mock<IStandardDaypartRepository> _StandardDaypartRepositoryMock;
-        private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;
+        private Mock<IQuarterCalculationEngine> _QuarterCalculationEngineMock;        
+        private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private Mock<IConfigurationSettingsHelper> configurationSettingsHelper;
+        
+
 
         [SetUp]
         public void SetUp()
@@ -48,7 +54,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _StandardDaypartRepositoryMock = new Mock<IStandardDaypartRepository>();
             _QuarterCalculationEngineMock = new Mock<IQuarterCalculationEngine>();
-
+            configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             _DateTimeEngineMock
                 .Setup(x => x.GetCurrentMoment())
                 .Returns(CreatedDate);
@@ -72,13 +78,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _VpvhRepositoryMock
                 .Setup(x => x.GetQuartersByYears(It.IsAny<IEnumerable<int>>()))
                 .Returns(_GetVpvhQuarters());
-
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             _VpvhService = new VpvhService(
                 dataRepositoryFactoryMock.Object,
                 _VpvhFileImporterMock.Object,
                 _BroadcastAudiencesCacheMock.Object,
                 _VpvhExportEngine.Object,
                 _DateTimeEngineMock.Object,
+                featureToggleHelper,
+                configurationSettingsHelper.Object,
                 _QuarterCalculationEngineMock.Object);
         }
 

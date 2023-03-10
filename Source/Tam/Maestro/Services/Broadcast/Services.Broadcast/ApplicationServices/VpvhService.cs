@@ -1,13 +1,13 @@
 ﻿using Common.Services.ApplicationServices;
 using Common.Services.Extensions;
 using Common.Services.Repositories;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Services.Broadcast.BusinessEngines;
 using Services.Broadcast.Cache;
 using Services.Broadcast.Converters;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Vpvh;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
@@ -60,16 +60,17 @@ namespace Services.Broadcast.ApplicationServices
         List<VpvhResponse> GetVpvhs(VpvhRequest request);
     }
 
-    public class VpvhService : IVpvhService
+    public class VpvhService : BroadcastBaseClass, IVpvhService
     {
         private readonly IBroadcastAudiencesCache _BroadcastAudiencesCache;
         private readonly IVpvhFileImporter _VpvhFileImporter;
         private readonly IVpvhRepository _VpvhRepository;
+        private readonly IVpvhForecastRepository _VpvhForecastRepository;
         private readonly IVpvhExportEngine _VpvhExportEngine;
         private readonly IStandardDaypartRepository _StandardDaypartRepository;
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IQuarterCalculationEngine _QuarterCalculationEngine;
-
+        private readonly Lazy<bool> _IsPlanningVpvhSourceV2Enabled;        
         private readonly Dictionary<VpvhCalculationSourceTypeEnum, Func<VpvhQuarter, double>> _VpvhValueExtractors = new Dictionary<VpvhCalculationSourceTypeEnum, Func<VpvhQuarter, double>>
             {
                 { VpvhCalculationSourceTypeEnum.AM_NEWS, x => x.AMNews },
@@ -85,15 +86,19 @@ namespace Services.Broadcast.ApplicationServices
             IBroadcastAudiencesCache broadcastAudiencesCache,
             IVpvhExportEngine vpvhExportEngine,
             IDateTimeEngine dateTimeEngine,
-            IQuarterCalculationEngine quarterCalculationEngine)
+            IFeatureToggleHelper featureToggleHelper,             
+            IConfigurationSettingsHelper configurationSettingsHelper,
+            IQuarterCalculationEngine quarterCalculationEngine) : base(featureToggleHelper, configurationSettingsHelper)
         {
+            _VpvhForecastRepository = broadcastDataRepositoryFactory.GetDataRepository<IVpvhForecastRepository>();
             _VpvhRepository = broadcastDataRepositoryFactory.GetDataRepository<IVpvhRepository>();
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
             _VpvhFileImporter = vpvhFileImporter;
             _BroadcastAudiencesCache = broadcastAudiencesCache;
             _VpvhExportEngine = vpvhExportEngine;
             _DateTimeEngine = dateTimeEngine;
-            _QuarterCalculationEngine = quarterCalculationEngine;
+            _QuarterCalculationEngine = quarterCalculationEngine;            
+            _IsPlanningVpvhSourceV2Enabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_STATION_SECONDARY_AFFILIATIONS));
         }
 
         public List<VpvhDefaultResponse> GetVpvhDefaults(VpvhDefaultsRequest request)
@@ -401,13 +406,29 @@ namespace Services.Broadcast.ApplicationServices
 
                 var previousVpvhQuarter = previousVpvhQuarters.SingleOrDefault(v => v.Year == previousQuarter.Year && v.Quarter == previousQuarter.Quarter && v.Audience.Id == audienceId);
                 var lastYearVpvhQuarter = lastYearVpvhQuarters.SingleOrDefault(v => v.Year == lastYearQuarter.Year && v.Quarter == lastYearQuarter.Quarter && v.Audience.Id == audienceId);
+                double? lastYearVpvh = 0;
+                double? previousQuarterVpvh = 0;
+
+                if (_IsPlanningVpvhSourceV2Enabled.Value)
+                {
+                    lastYearVpvh = _GetVpvhValueFromForecastDb(standardDaypart.Id, audienceId, lastYearQuarter.Quarter, lastYearQuarter.Year);
+                    previousQuarterVpvh = _GetVpvhValueFromForecastDb(standardDaypart.Id, audienceId, previousQuarter.Quarter, previousQuarter.Year);
+                    _LogInfo($"Last Year VPVH and Previous Year VPVH is populated from BroadcastForecastDB.");
+                }
+                else
+                {
+                    lastYearVpvh = _GetVpvhValue(lastYearVpvhQuarter, standardDaypart.VpvhCalculationSourceType);
+                    previousQuarterVpvh = _GetVpvhValue(previousVpvhQuarter, standardDaypart.VpvhCalculationSourceType);
+                    _LogInfo($"Last Year VPVH and Previous Year VPVH is populated from BroadcastDB.");
+                }
+
                 var vpvhResponseForAudience = new VpvhResponse
                 {
                     AudienceId = audienceId,
                     StartingPoint = currentDate,
                     StandardDaypartId = standardDaypart.Id,
-                    LastYearVpvh = _GetVpvhValue(lastYearVpvhQuarter, standardDaypart.VpvhCalculationSourceType),
-                    PreviousQuarterVpvh = _GetVpvhValue(previousVpvhQuarter, standardDaypart.VpvhCalculationSourceType),
+                    LastYearVpvh = lastYearVpvh,
+                    PreviousQuarterVpvh = previousQuarterVpvh,
                     FourBookAverageVpvh = fourBookAverages.SingleOrDefault(v => v.AudienceId == audienceId)?.Vpvh,
                     PreviousQuarter = new QuarterDto(previousQuarter.Quarter, previousQuarter.Year),
                     LastYearQuarter = new QuarterDto(lastYearQuarter.Quarter, lastYearQuarter.Year)
@@ -440,6 +461,11 @@ namespace Services.Broadcast.ApplicationServices
             _VpvhValueExtractors.TryGetValue(vpvhCalculationSourceType, out var vpvhValueExtractor);
 
             return vpvhValueExtractor.Invoke(vpvhQuarter);
+        }
+        private double _GetVpvhValueFromForecastDb(int stadardDaypartId, int audienceId, int VpvhQuarter, int year)
+        { 
+            var result=_VpvhForecastRepository.GetVpvhValueFromForecastDb(stadardDaypartId, audienceId, VpvhQuarter,year);
+            return result;
         }
     }
 }
