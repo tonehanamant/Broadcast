@@ -113,7 +113,7 @@ namespace Services.Broadcast.BusinessEngines
                     weeklyBreakdown,
                     plan.Equivalized,
                     plan.ImpressionsPerUnit.Value,
-                    plan.CreativeLengths);
+                    plan.CreativeLengths);               
 
                 var unitsImpressionsForBreakdownItem = weeklyBreakdown.WeeklyUnits == 0 ? 0 : weeklyBreakdown.WeeklyImpressions / weeklyBreakdown.WeeklyUnits;
                 var week = weeks.Single(w => w.MediaWeekId == weeklyBreakdown.MediaWeekId);
@@ -124,6 +124,13 @@ namespace Services.Broadcast.BusinessEngines
                 foreach (var distributedSpotLength in plan.CreativeLengths)
                 {
                     var weighting = GeneralMath.ConvertPercentageToFraction(distributedSpotLength.Weight.GetValueOrDefault());
+
+                    var itemAduImpressions = aduImpressionsForBreakdownItem * weighting;
+                    var itemWeeklyAdu = weeklyBreakdown.WeeklyAdu;
+                    if (_IsAduForPlanningv2Enabled.Value)
+                    {
+                        itemWeeklyAdu = Convert.ToInt32(itemAduImpressions);
+                    }
 
                     var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                     {
@@ -136,14 +143,14 @@ namespace Services.Broadcast.BusinessEngines
                         SpotLengthId = distributedSpotLength.SpotLengthId,
                         SpotLengthDuration = _GetWeeklySpotLengthDuration(distributedSpotLength.SpotLengthId),
                         DaypartCodeId = weeklyBreakdown.DaypartCodeId,
-                        AduImpressions = aduImpressionsForBreakdownItem * weighting,
+                        AduImpressions = itemAduImpressions,
                         UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
                         IsLocked = weeklyBreakdown.IsLocked,
                         DaypartOrganizationId = weeklyBreakdown.DaypartOrganizationId,
                         CustomName = weeklyBreakdown.CustomName,
                         DaypartOrganizationName = weeklyBreakdown.DaypartOrganizationName,
                         PlanDaypartId = weeklyBreakdown.PlanDaypartId,
-                        WeeklyAdu = weeklyBreakdown.WeeklyAdu
+                        WeeklyAdu = itemWeeklyAdu
                     };
 
                     var impressions = weeklyBreakdown.WeeklyImpressions * weighting;
@@ -198,6 +205,13 @@ namespace Services.Broadcast.BusinessEngines
                     {
                         var weighting = GeneralMath.ConvertPercentageToFraction(item.WeightingGoalPercent);
 
+                        var itemAduImpressions = aduImpressionsForBreakdownItem * weighting;
+                        var itemWeeklyAdu = week.Adu;
+                        if (_IsAduForPlanningv2Enabled.Value)
+                        {
+                            itemWeeklyAdu = Convert.ToInt32(itemAduImpressions);
+                        }
+
                         var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                         {
                             WeekNumber = week.WeekNumber,
@@ -209,14 +223,14 @@ namespace Services.Broadcast.BusinessEngines
                             SpotLengthId = breakdownItem.SpotLengthId,
                             SpotLengthDuration = _GetWeeklySpotLengthDuration(breakdownItem.SpotLengthId),
                             DaypartCodeId = item.StandardDaypartId,
-                            AduImpressions = aduImpressionsForBreakdownItem * weighting,
+                            AduImpressions = itemAduImpressions,
                             UnitImpressions = unitsImpressionsForBreakdownItem * weighting,
                             IsLocked = week.IsLocked,
                             CustomName = item.CustomName,
                             DaypartOrganizationName = item.DaypartOrganizationName,
                             DaypartOrganizationId = item.DaypartOrganizationId,
                             PlanDaypartId = item.PlanDaypartId,
-                            WeeklyAdu = week.Adu
+                            WeeklyAdu = itemWeeklyAdu
                         };
 
                         var impressions = Math.Floor(breakdownItem.WeeklyImpressions * weighting);
@@ -262,12 +276,19 @@ namespace Services.Broadcast.BusinessEngines
                     week,
                     plan.Equivalized,
                     plan.ImpressionsPerUnit.Value,
-                    plan.CreativeLengths);
+                    plan.CreativeLengths);                
 
                 var unitsImpressions = week.WeeklyUnits == 0 ? 0 : week.WeeklyImpressions / week.WeeklyUnits;
 
                 foreach (var combination in allSpotLengthIdAndStandardDaypartIdCombinations)
                 {
+                    var itemAduImpressions = weeklyAduImpressions * combination.Weighting;
+                    var itemWeeklyAdu = week.WeeklyAdu;
+                    if (_IsAduForPlanningv2Enabled.Value)
+                    {
+                        itemWeeklyAdu = Convert.ToInt32(itemAduImpressions);
+                    }
+
                     var newWeeklyBreakdownItem = new WeeklyBreakdownWeek
                     {
                         WeekNumber = week.WeekNumber,
@@ -279,15 +300,14 @@ namespace Services.Broadcast.BusinessEngines
                         SpotLengthId = combination.SpotLengthId,
                         SpotLengthDuration = _GetWeeklySpotLengthDuration(combination.SpotLengthId),
                         DaypartCodeId = combination.DaypartCodeId,
-                        AduImpressions = weeklyAduImpressions * combination.Weighting,
+                        AduImpressions = itemAduImpressions,
                         UnitImpressions = unitsImpressions * combination.Weighting,
                         IsLocked = week.IsLocked,
                         CustomName = combination.CustomName,
                         DaypartOrganizationName = combination.DaypartOrganizationName,
                         DaypartOrganizationId = combination.DaypartOrganizationId,
                         PlanDaypartId = combination.PlanDaypartId,
-                        WeeklyAdu = week.WeeklyAdu
-
+                        WeeklyAdu = itemWeeklyAdu
                     };
 
                     var impressions = week.WeeklyImpressions * combination.Weighting;
