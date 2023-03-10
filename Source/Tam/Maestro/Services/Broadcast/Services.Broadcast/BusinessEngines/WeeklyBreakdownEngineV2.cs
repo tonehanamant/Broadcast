@@ -642,6 +642,97 @@ namespace Services.Broadcast.BusinessEngines
             /*** Calculate per the Delivery Type  ***/
             WeeklyBreakdownResponseDto response;
 
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                response = _DoCalculateResponse_V2(request, weeks, weightedSpotLengths, weightedDayparts, isDeliveryTypeChange, isInitialLoad);
+            }
+            else
+            {
+                response = _DoCalculateResponse_V1(request, weeks, weightedSpotLengths, weightedDayparts, isDeliveryTypeChange, isInitialLoad);
+            }
+
+            /*** Calculate what is not Delivery Type specific  ***/
+            _CalculateUnits(response.Weeks, request.Equivalized, request.ImpressionsPerUnit, request.CreativeLengths);
+            _AdjustSpotLengthBudget(response.Weeks, request.DeliveryType, request.Equivalized, request.TotalBudget);
+            _CalculateWeeklyGoalBreakdownTotals(response, request);
+            SetWeekNumberAndSpotLengthDuration(response.Weeks);
+            _OrderWeeks(request, response);
+            _AddDaypartToWeeklyBreakdownResult(request, response);
+            RecalculatePercentageOfWeekBasedOnImpressions(response.Weeks);
+
+            /*** Get the Weekly Breakdown ***/
+            if (isDeliveryTypeChange && request.DeliveryType != PlanGoalBreakdownTypeEnum.EvenDelivery)
+            {
+                // pass these back as they were the raw weekly breakdown
+                response.RawWeeklyBreakdownWeeks = request.Weeks;
+            }
+            else
+            {
+                response.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, response.Weeks);
+            }
+
+            return response;
+        }        
+
+        private WeeklyBreakdownResponseDto _DoCalculateResponse_V2(
+            WeeklyBreakdownRequest request,
+            List<DisplayMediaWeek> weeks,
+            List<CreativeLength> weightedSpotLengths,
+            List<StandardDaypartWeightingGoal> weightedDayparts, 
+            bool isDeliveryTypeChange, bool isInitialLoad
+            )
+        {
+            WeeklyBreakdownResponseDto response;
+
+            if (isDeliveryTypeChange)
+            {
+                var responseWeeks = _CalculateResponseWeeksForDeliveryTypeChange(request, request.DeliveryType);
+                response = new WeeklyBreakdownResponseDto { Weeks = responseWeeks };
+            }
+            else if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
+            {
+                response = _CalculateEvenDeliveryPlanWeeklyGoalBreakdown(request, weeks);
+            }
+            else if (request.DeliveryType == PlanGoalBreakdownTypeEnum.CustomByWeek)
+            {
+                // we can use EvenDelivery calculation for the request because it has the same structure
+                if (isInitialLoad)
+                    response = _CalculateEvenDeliveryPlanWeeklyGoalBreakdown(request, weeks);
+                else
+                    response = _CalculateCustomByWeekPlanWeeklyGoalBreakdown(request, weeks);
+            }
+            else if (request.DeliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByAdLength)
+            {
+                if (isInitialLoad)
+                    response = _CalculateInitialCustomByWeekByAdLengthPlanWeeklyGoalBreakdown(request, weeks, weightedSpotLengths);
+                else
+                    response = _CalculateCustomByWeekByAdLengthPlanWeeklyGoalBreakdown(request, weeks, weightedSpotLengths);
+            }
+            else if (request.DeliveryType == PlanGoalBreakdownTypeEnum.CustomByWeekByDaypart)
+            {
+                if (isInitialLoad)
+                    response = _CalculateInitialCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, weightedDayparts);
+                else
+                    response = _CalculateCustomByWeekByDaypartWeeklyGoalBreadkdown(request, weeks, weightedDayparts);
+            }
+            else
+            {
+                throw new CadentException(_UnsupportedDeliveryTypeMessage);
+            }
+
+            return response;
+        }
+
+        private WeeklyBreakdownResponseDto _DoCalculateResponse_V1(
+            WeeklyBreakdownRequest request,
+            List<DisplayMediaWeek> weeks,
+            List<CreativeLength> weightedSpotLengths,
+            List<StandardDaypartWeightingGoal> weightedDayparts,
+            bool isDeliveryTypeChange, bool isInitialLoad
+            )
+        {
+            WeeklyBreakdownResponseDto response;
+            
             if (request.DeliveryType == PlanGoalBreakdownTypeEnum.EvenDelivery)
             {
                 response = _CalculateEvenDeliveryPlanWeeklyGoalBreakdown(request, weeks);
@@ -678,28 +769,8 @@ namespace Services.Broadcast.BusinessEngines
                 throw new CadentException(_UnsupportedDeliveryTypeMessage);
             }
 
-            /*** Calculate what is not Delivery Type specific  ***/
-            _CalculateUnits(response.Weeks, request.Equivalized, request.ImpressionsPerUnit, request.CreativeLengths);
-            _AdjustSpotLengthBudget(response.Weeks, request.DeliveryType, request.Equivalized, request.TotalBudget);
-            _CalculateWeeklyGoalBreakdownTotals(response, request);
-            SetWeekNumberAndSpotLengthDuration(response.Weeks);
-            _OrderWeeks(request, response);
-            _AddDaypartToWeeklyBreakdownResult(request, response);
-            RecalculatePercentageOfWeekBasedOnImpressions(response.Weeks);
-
-            /*** Get the Weekly Breakdown ***/
-            if (isDeliveryTypeChange && request.DeliveryType != PlanGoalBreakdownTypeEnum.EvenDelivery)
-            {
-                // pass these back as they were the raw weekly breakdown
-                response.RawWeeklyBreakdownWeeks = request.Weeks;
-            }
-            else
-            {
-                response.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, response.Weeks);
-            }
-
             return response;
-        }        
+        }
 
         public WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request)
         {
