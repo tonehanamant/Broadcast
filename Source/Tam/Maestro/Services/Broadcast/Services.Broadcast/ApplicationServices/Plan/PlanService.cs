@@ -341,8 +341,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IPlanIsciRepository _PlanIsciRepository;        
 
         private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
-        private readonly Lazy<bool> _IsBroadcastEnableFluidityIntegrationEnabled;
-        private readonly Lazy<bool> _IsBroadcastEnableFluidityExternalIntegrationEnabled;
         private readonly Lazy<bool> _IsAduForPlanningv2Enabled;
         private readonly Lazy<bool> _IsUnifiedCampaignEnabled;
 
@@ -401,10 +399,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _DateTimeEngine = dateTimeEngine;
             _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
             _IsPartialPlanSaveEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE));
-            _IsBroadcastEnableFluidityIntegrationEnabled = new Lazy<bool>(() =>
-                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_INTEGRATION));
-            _IsBroadcastEnableFluidityExternalIntegrationEnabled = new Lazy<bool>(() =>
-                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_FLUIDITY_EXTERNAL_INTEGRATION));
             _CampaignServiceApiClient = campaignServiceApiClient;
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
@@ -620,12 +614,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
                     _HandleBuyingOnPlanSave(saveState, plan, beforePlan, afterPlan, shouldPromotePlanBuyingResults);
                 }
 
-                if (_IsBroadcastEnableFluidityExternalIntegrationEnabled.Value && _IsBroadcastEnableFluidityIntegrationEnabled.Value)
+                if (plan.Status == PlanStatusEnum.Contracted && plan.FluidityPercentage != null)
                 {
-                    if (plan.Status == PlanStatusEnum.Contracted && plan.FluidityPercentage != null)
-                    {
-                        await _CampaignServiceApiClient.NotifyFluidityPlanAsync(plan.Id, plan.VersionId);
-                    }
+                    await _CampaignServiceApiClient.NotifyFluidityPlanAsync(plan.Id, plan.VersionId);
                 }
 
                 processTimers.End(SW_KEY_POST_PLAN_SAVE);

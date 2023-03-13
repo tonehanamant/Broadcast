@@ -24,6 +24,7 @@
   "FlightHiatusDays": [],
   "GenreContainType": 2,
   "GoalBreakdownType": 1,
+  "IsAduPlan": false,
   "Name": "",
   "PostingType": 2,
   "ProgramContainType": 2,

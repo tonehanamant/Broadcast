@@ -21,8 +21,6 @@
         public static string ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2 = "broadcast-weekly-breakdown-engine-v-2";
         public static string ENABLE_PRICING_REMOVE_UNMATCHED = "broadcast-enable-pricing-remove-unmatched";
         public static string ENABLE_VARIOUS_GENRE_RESTRICTION = "broadcast-enable-various-genre-restriction";
-        public static string ENABLE_FLUIDITY_EXTERNAL_INTEGRATION = "broadcast-enable-fluidity-external-integration";
-        public static string ENABLE_FLUIDITY_INTEGRATION = "broadcast-enable-fluidity-integration";
         public static string ENABLE_BUYING_NAVIGATION_PANEL_TOOLS = "broadcast-enable-buying-navigation-panel-tools";
         public static string ENABLE_UM_REEL_ROSTER = "broadcast-enable-um-reel-roster";
         /// <summary>
