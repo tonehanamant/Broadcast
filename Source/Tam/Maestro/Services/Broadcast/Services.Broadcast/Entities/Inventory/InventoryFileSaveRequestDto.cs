@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Broadcast.Entities.Inventory
 {
-    public class InventoryFileSaveRequestDto
+    public class InventoryFileSaveRequestDto: UserInformation
     {
         public string FileName { get; set; }
         public string RawData { get; set; }

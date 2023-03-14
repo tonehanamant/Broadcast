@@ -1,6 +1,6 @@
 ﻿namespace Services.Broadcast.Entities.InventoryMarketAffiliates
 {
-    public class InventoryMarketAffiliatesRequest
+    public class InventoryMarketAffiliatesRequest:UserInformation
     {
         /// <summary>
         /// Gets or sets the inventory source identifier.

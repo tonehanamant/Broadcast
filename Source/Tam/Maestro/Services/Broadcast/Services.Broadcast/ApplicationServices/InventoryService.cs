@@ -211,6 +211,7 @@ namespace Services.Broadcast.ApplicationServices
                 {
                     FileName = request.FileName,
                     RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
+                    UserName = userName
                 };
                 result=_InventoryApiClient.SaveInventoryFile(fileRequest);
                 if (result.Status == FileStatusEnum.Loaded)

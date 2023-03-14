@@ -4,12 +4,14 @@ using Common.Services;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using Services.Broadcast.ApplicationServices;
+using Services.Broadcast.Clients;
 using Services.Broadcast.Converters.RateImport;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.InventorySummary;
 using Services.Broadcast.Entities.StationInventory;
 using Services.Broadcast.Exceptions;
+using Services.Broadcast.Helpers;
 using Services.Broadcast.IntegrationTests.Helpers;
 using Services.Broadcast.IntegrationTests.Stubs;
 using Services.Broadcast.Repositories;
@@ -37,17 +39,19 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         private static InventorySource _openMarketInventorySource;
         private InventoryFileTestHelper _InventoryFileTestHelper;
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
+        private static IFeatureToggleHelper _FeatureToggleHelper;
 
         [SetUp]
         public void SetUp()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
+            _LaunchDarklyClientStub = (LaunchDarklyClientStub)IntegrationTestApplicationServiceFactory.Instance.Resolve<ILaunchDarklyClient>();
             _InventoryService = IntegrationTestApplicationServiceFactory.GetApplicationService<IInventoryService>();
             _InventoryRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryRepository>();
             _StationInventoryGroupService = IntegrationTestApplicationServiceFactory.GetApplicationService<IStationInventoryGroupService>();
             _InventoryFileRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory.GetDataRepository<IInventoryFileRepository>();
             _openMarketInventorySource = _InventoryRepository.GetInventorySourceByName("Open Market");
             _InventoryFileTestHelper = new InventoryFileTestHelper();
+            _FeatureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
         }
 
         [Test]
@@ -1434,6 +1438,30 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 };
                 // only 15 and 30 are used at the moment.
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(manifests.SelectMany(x => x.ManifestRates), jsonSettings));
+            }
+        }
+
+        [Test]
+        [UseReporter(typeof(DiffReporter))]
+        [Category("short_running")]
+        public void CanLoadInventoryFileAndCheckUserName()
+        {
+            using (new TransactionScopeWrapper())
+            {
+                string filename = @".\Files\single_program_rate_file_wvtm.xml";
+                var request = new InventoryFileSaveRequest
+                {
+                    StreamData = new FileStream(filename, FileMode.Open, FileAccess.Read),
+                    RatingBook = 416,
+                    FileName = filename
+                };
+                _SetFeatureToggle(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION, true);
+
+                var result = _InventoryService.SaveInventoryFile(request, "IntegrationTestUser", new DateTime(2016, 09, 26));
+
+                var inventoryFile = _InventoryFileRepository.GetInventoryFileById(result.FileId);
+                var expectedResult = "IntegrationTestUser";
+                Assert.AreEqual(expectedResult, inventoryFile.CreatedBy);
             }
         }
 

@@ -75,6 +75,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
+                request.UserName = userName;
                 return _InventoryManagementApiClient.GenerateOpenMarketAffiliates(request);
             }
             _LogInfo($"Gathering the report data...");

@@ -193,5 +193,78 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
             ).ToList();
             return programs;
         }
+
+
+        [Test]
+        public void GenerateExportForOpenMarketAndDownloadIt_CheckUserName()
+        {
+            const string testUser = "TestUser";
+            const string templatePath = @".\Files\Excel templates";
+
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION] = true;
+            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION] = true;
+
+            var testRequest = new InventoryExportRequestDto
+            {
+                Genre = InventoryExportGenreTypeEnum.News,
+                Quarter = new QuarterDetailDto
+                {
+                    Year = 2018,
+                    Quarter = 4,
+                    StartDate = new DateTime(2018, 03, 25),
+                    EndDate = new DateTime(2018, 12, 30)
+                }
+            };
+
+            var daypartIds = new[] { 576682, 576683, 576683, 576683, 576683, 576683, 576684, 576685, 576685, 576685, 576685, 576685 };
+
+            var jobId = -1;
+            InventoryExportJobDto job = null;
+
+            var programs = _GetProgramsForTest(daypartIds);
+
+            _FileService.CreatedFileStreams.Clear();
+            string generatedFileContent;
+            using (new TransactionScopeWrapper())
+            {
+                // setup the test data
+                using (var transCreateData = new TransactionScopeWrapper())
+                {
+                    _InventoryRepository.CreateInventoryPrograms(programs, DateTime.Now);
+
+                    // make them primary on the dayparts
+                    var dayparts = new List<StationInventoryManifestDaypart>();
+                    foreach (var id in daypartIds.Distinct())
+                    {
+                        // last to ensure it's the programs we think.
+                        var primaryProgram = _InventoryRepository.GetDaypartProgramsForInventoryDayparts(new List<int> { id }).Last();
+                        var daypart = new StationInventoryManifestDaypart
+                        {
+                            Id = id,
+                            PrimaryProgramId = primaryProgram.Id
+                        };
+                        dayparts.Add(daypart);
+                    }
+                    _InventoryRepository.UpdatePrimaryProgramsForManifestDayparts(dayparts);
+
+                    transCreateData.Complete();
+                }
+                // generate the file
+                jobId = _InventoryExportService.GenerateExportForOpenMarket(testRequest, testUser, templatePath);
+                job = _InventoryExportJobRepository.GetJob(jobId);
+
+                // download the file 
+                var downloadedFileResult = _InventoryExportService.DownloadOpenMarketExportFile(jobId);
+                using (var reader = new StreamReader(downloadedFileResult.Item2))
+                {
+                    generatedFileContent = reader.ReadToEnd();
+                }
+            }
+
+            // Verify the job is as expected
+            Assert.AreEqual(BackgroundJobProcessingStatus.Succeeded, job.Status);
+            Assert.AreEqual(testUser, job.CreatedBy);
+            
+        }
     }
 }

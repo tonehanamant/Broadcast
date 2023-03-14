@@ -31,4 +31,11 @@ namespace Services.Broadcast.Entities
             set { _StreamData = value; }
         }
     }
+    public class UserInformation
+    {
+        /// <summary>
+        /// The full name of the use who performed this action
+        /// </summary>
+        public string UserName { get; set; }
+    }
 }
