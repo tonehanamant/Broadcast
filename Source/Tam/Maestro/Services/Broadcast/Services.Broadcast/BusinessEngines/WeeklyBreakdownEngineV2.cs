@@ -547,6 +547,7 @@ namespace Services.Broadcast.BusinessEngines
                 FlightEndDate = request.FlightEndDate,
                 FlightHiatusDays = request.FlightHiatusDays
             };
+
             var groupedWeeks = GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
 
             // post processing aligns with the other global recalculations.
@@ -602,6 +603,16 @@ namespace Services.Broadcast.BusinessEngines
                 }
 
                 _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
+            }
+            else if (request.IsAduOnly && _IsAduForPlanningv2Enabled.Value)
+            {
+                // Init goal related properties
+                request.TotalBudget = 0;
+                request.TotalImpressions = 0;
+                request.TotalRatings = 0;
+                request.TotalBudget = 0;
+
+                request.ImpressionsPerUnit = 1;
             }
 
             /*** Prepare to calculate ***/

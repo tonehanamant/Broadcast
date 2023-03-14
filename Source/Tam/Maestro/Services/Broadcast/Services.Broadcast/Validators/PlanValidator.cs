@@ -88,7 +88,7 @@ namespace Services.Broadcast.Validators
     public class PlanValidator : IPlanValidator
     {
         private readonly IBroadcastAudiencesCache _AudienceCache;
-        private readonly List<MediaMonth> _PostingBooks;
+        private readonly Lazy<List<MediaMonth>> _PostingBooks;
         private readonly ICreativeLengthEngine _CreativeLengthEngine;
 
         private readonly ICampaignRepository _CampaignRepository;
@@ -162,10 +162,7 @@ namespace Services.Broadcast.Validators
             _RatingForecastService = ratingForecastService;
             _AudienceCache = broadcastAudiencesCache;
             _CreativeLengthEngine = creativeLengthEngine;
-            _PostingBooks = ratingForecastService.GetMediaMonthCrunchStatuses()
-                .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
-                .Select(m => m.MediaMonth)
-                .ToList();
+            _PostingBooks = new Lazy<List<MediaMonth>>(() => _GetPostingBooks());
 
             _CampaignRepository = broadcastDataRepositoryFactory.GetDataRepository<ICampaignRepository>();
 
@@ -173,6 +170,16 @@ namespace Services.Broadcast.Validators
             _FeatureToggleHelper = featureToggleHelper;
             _PlanMarketSovCalculator = planMarketSovCalculator;
             _QuarterCalculationEngine = quarterCalculationEngine;
+        }
+
+        private List<MediaMonth> _GetPostingBooks()
+        {
+            var result = _RatingForecastService.GetMediaMonthCrunchStatuses()
+                .Where(a => a.Crunched == CrunchStatusEnum.Crunched)
+                .Select(m => m.MediaMonth)
+                .ToList();
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -408,21 +415,21 @@ namespace Services.Broadcast.Validators
                 throw new PlanValidationException(INVALID_AUDIENCE);
             }
 
-            if (!_PostingBooks.Any(x => x.Id == plan.ShareBookId))
+            if (!_PostingBooks.Value.Any(x => x.Id == plan.ShareBookId))
             {
                 throw new PlanValidationException(INVALID_SHARE_BOOK);
             }
 
             //if the hutbook is set but it's 0 or a value not available throw exception
-            if (plan.HUTBookId.HasValue && (plan.HUTBookId <= 0 || !_PostingBooks.Any(x => x.Id == plan.HUTBookId)))
+            if (plan.HUTBookId.HasValue && (plan.HUTBookId <= 0 || !_PostingBooks.Value.Any(x => x.Id == plan.HUTBookId)))
             {
                 throw new PlanValidationException(INVALID_HUT_BOOK);
             }
 
             if (plan.HUTBookId.HasValue)
             {
-                var shareBook = _PostingBooks.Single(x => x.Id == plan.ShareBookId);
-                var hutBook = _PostingBooks.Single(x => x.Id == plan.HUTBookId);
+                var shareBook = _PostingBooks.Value.Single(x => x.Id == plan.ShareBookId);
+                var hutBook = _PostingBooks.Value.Single(x => x.Id == plan.HUTBookId);
                 if (hutBook.StartDate > shareBook.StartDate)
                 {
                     throw new PlanValidationException(INVALID_SHARE_HUT_BOOKS);
