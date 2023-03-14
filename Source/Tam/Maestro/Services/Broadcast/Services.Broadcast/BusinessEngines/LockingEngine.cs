@@ -41,18 +41,14 @@ namespace Services.Broadcast.BusinessEngines
     {
         private readonly IBroadcastLockingManagerApplicationService _LockingManager;
         private readonly IBroadcastLockingService _LockingService;
-        internal static Lazy<bool> _IsLockingConsolidationEnabled;
-        private readonly IFeatureToggleHelper _FeatureToggleHelper;
         private readonly IBroadcastLockingManagerApplicationService _LockingManagerApplicationService;
         private readonly IPlanRepository _PlanRepository;
         public LockingEngine(
             IBroadcastLockingManagerApplicationService lockingManager,
-            IBroadcastLockingService lockingService, IFeatureToggleHelper featureToggleHelper, IBroadcastLockingManagerApplicationService lockingManagerApplicationService, IDataRepositoryFactory broadcastDataRepositoryFactory)
+            IBroadcastLockingService lockingService, IBroadcastLockingManagerApplicationService lockingManagerApplicationService, IDataRepositoryFactory broadcastDataRepositoryFactory)
         {
             _LockingManager = lockingManager;
             _LockingService = lockingService;
-            _FeatureToggleHelper = featureToggleHelper;
-            _IsLockingConsolidationEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION));
             _LockingManagerApplicationService = lockingManagerApplicationService;
             _PlanRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanRepository>();
         }
@@ -89,26 +85,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastLockResponse broadcastLockResponse = null;
             var key = KeyHelper.GetStationLockingKey(stationId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-                broadcastLockResponse = _LockingService.LockObject(key);
-            }
-            else
-            {
-                var lockResponse = _LockingManager.LockObject(key);
-
-                if (lockResponse != null)
-                {
-                    broadcastLockResponse = new BroadcastLockResponse
-                    {
-                        Error = lockResponse.Error,
-                        Key = lockResponse.Key,
-                        LockedUserId = lockResponse.LockedUserId,
-                        LockTimeoutInSeconds = lockResponse.LockTimeoutInSeconds,
-                        Success = lockResponse.Success
-                    };
-                }
-            }
+            broadcastLockResponse = _LockingService.LockObject(key);
             return broadcastLockResponse;
         }
 
@@ -116,23 +93,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
             var key = KeyHelper.GetStationLockingKey(stationId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-                broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
-            }
-            else
-            {
-                var releaseLockResponse = _LockingManager.ReleaseObject(key);
-                if (releaseLockResponse != null)
-                {
-                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
-                    {
-                        Error = releaseLockResponse.Error,
-                        Key = releaseLockResponse.Key,
-                        Success = releaseLockResponse.Success
-                    };
-                }
-            }
+            broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
             return broadcastReleaseLockResponse;
         }
 
@@ -141,8 +102,6 @@ namespace Services.Broadcast.BusinessEngines
             PlanLockResponse planLockResponse = null;
             var key = KeyHelper.GetStationLockingKey(planId);
             var planName = _PlanRepository.GetPlanNameById(planId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
               var  broadcastLockResponse = _LockingService.LockObject(key);
                 if (broadcastLockResponse != null)
                 {
@@ -157,25 +116,6 @@ namespace Services.Broadcast.BusinessEngines
                         PlanName = planName
                     };
                 }
-
-            }
-            else
-            {
-                var lockingResponse = _LockingManagerApplicationService.LockObject(key);
-                if (lockingResponse != null)
-                {
-                    planLockResponse = new PlanLockResponse
-                    {
-                        Key = lockingResponse.Key,
-                        Success = lockingResponse.Success,
-                        LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
-                        LockedUserId = lockingResponse.LockedUserId,
-                        LockedUserName = lockingResponse.LockedUserName,
-                        Error = lockingResponse.Error,
-                        PlanName = planName
-                    };
-                }
-            }
             return planLockResponse;
         }
 
@@ -183,24 +123,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
             var key = KeyHelper.GetStationLockingKey(planId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-              broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
-            }
-            else
-            {
-                var releaseLockResponse = _LockingManager.ReleaseObject(key);
-
-                if (releaseLockResponse != null)
-                {
-                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
-                    {
-                        Error = releaseLockResponse.Error,
-                        Key = releaseLockResponse.Key,
-                        Success = releaseLockResponse.Success
-                    };
-                }
-            }
+            broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
             return broadcastReleaseLockResponse;
         }
 
@@ -208,25 +131,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastLockResponse broadcastLockResponse = null;
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-               broadcastLockResponse = _LockingService.LockObject(key);
-            }
-            else
-            {
-                var lockingResponse = _LockingManagerApplicationService.LockObject(key);
-                if (lockingResponse != null)
-                {
-                    broadcastLockResponse = new BroadcastLockResponse
-                    {
-                        Key = lockingResponse.Key,
-                        Success = lockingResponse.Success,
-                        LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
-                        LockedUserId = lockingResponse.LockedUserId,
-                        Error = lockingResponse.Error
-                    };
-                }
-            }
+            broadcastLockResponse = _LockingService.LockObject(key);
             return broadcastLockResponse;
         }
 
@@ -234,24 +139,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
             var key = KeyHelper.GetCampaignLockingKey(campaignId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-                broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
-            }
-            else
-            {
-                var releaseLockResponse = _LockingManager.ReleaseObject(key);
-
-                if (releaseLockResponse != null)
-                {
-                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
-                    {
-                        Error = releaseLockResponse.Error,
-                        Key = releaseLockResponse.Key,
-                        Success = releaseLockResponse.Success
-                    };
-                }
-            }
+            broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
             return broadcastReleaseLockResponse;
         }
 
@@ -273,25 +161,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastLockResponse broadcastLockResponse = null;
             var key = KeyHelper.GetProposalLockingKey(proposalId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-                broadcastLockResponse = _LockingService.LockObject(key);
-            }
-            else
-            {
-                var lockingResponse = _LockingManagerApplicationService.LockObject(key);
-                if (lockingResponse != null)
-                {
-                    broadcastLockResponse = new BroadcastLockResponse
-                    {
-                        Key = lockingResponse.Key,
-                        Success = lockingResponse.Success,
-                        LockTimeoutInSeconds = lockingResponse.LockTimeoutInSeconds,
-                        LockedUserId = lockingResponse.LockedUserId,
-                        Error = lockingResponse.Error
-                    };
-                }
-            }
+            broadcastLockResponse = _LockingService.LockObject(key);
             return broadcastLockResponse;
         }
 
@@ -299,24 +169,7 @@ namespace Services.Broadcast.BusinessEngines
         {
             BroadcastReleaseLockResponse broadcastReleaseLockResponse = null;
             var key = KeyHelper.GetProposalLockingKey(proposalId);
-            if (_IsLockingConsolidationEnabled.Value)
-            {
-                broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
-            }
-            else
-            {
-                var releaseLockResponse = _LockingManager.ReleaseObject(key);
-
-                if (releaseLockResponse != null)
-                {
-                    broadcastReleaseLockResponse = new BroadcastReleaseLockResponse
-                    {
-                        Error = releaseLockResponse.Error,
-                        Key = releaseLockResponse.Key,
-                        Success = releaseLockResponse.Success
-                    };
-                }
-            }
+            broadcastReleaseLockResponse = _LockingService.ReleaseObject(key);
             return broadcastReleaseLockResponse;
         }
     }

@@ -1219,7 +1219,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     StationLegacyCallLetters = toDoOutOfSpecToAdd.StationLegacyCallLetters,
                     ProgramAirTime = toDoOutOfSpecToAdd.ProgramAirTime,
                     ReasonCode = toDoOutOfSpecToAdd.OutOfSpecSpotReasonCodes.Id,
-                    Comment = outOfSpecTodoAcceptanceRequest.Comment == null ? toDoOutOfSpecToAdd.Comment : outOfSpecTodoAcceptanceRequest.Comment
+                    Comment = outOfSpecTodoAcceptanceRequest.Comment == "" ? toDoOutOfSpecToAdd.Comment : outOfSpecTodoAcceptanceRequest.Comment
                 }).ToList();
 
                 var doneOutOfSpecsToAdd = existingOutOfSpecsToDo.Select(existingOutOfSpecToDo => new OutOfSpecSpotsDoneDto
@@ -1310,7 +1310,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
                     ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
                     ReasonCode = doneOutOfSpecToAdd.OutOfSpecSpotReasonCodes.Id,
-                    Comment = spotExceptionsOutOfSpecSaveRequest.Comment == null ? doneOutOfSpecToAdd.Comment : spotExceptionsOutOfSpecSaveRequest.Comment
+                    Comment = spotExceptionsOutOfSpecSaveRequest.Comment == "" ? doneOutOfSpecToAdd.Comment : spotExceptionsOutOfSpecSaveRequest.Comment
                 }).ToList();
 
                 foreach (var spotExceptionsOutOfSpec in spotExceptionsOutOfSpecSaveRequest.SpotIds)

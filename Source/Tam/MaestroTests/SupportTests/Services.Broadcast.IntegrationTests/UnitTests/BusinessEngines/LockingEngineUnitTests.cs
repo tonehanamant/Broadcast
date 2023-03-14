@@ -24,18 +24,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         private Mock<IBroadcastLockingService> _LockingService;
         private Mock<IBroadcastLockingManagerApplicationService> _LockingManagerApplicationService;
         private Mock<IPlanRepository> _PlanRepository;
-        private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IDataRepositoryFactory> dataRepositoryFactory;
-        protected LockingEngine _GetService(bool isEnableLockingConsolidation = false)
+        protected LockingEngine _GetService()
         {
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_CONSOLIDATION, isEnableLockingConsolidation);
-
-            var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             return new LockingEngine(
                     _LockingManager.Object,
                     _LockingService.Object,
-                    featureToggleHelper,
                     _LockingManagerApplicationService.Object,
                     dataRepositoryFactory.Object
             );
@@ -83,7 +77,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void LockPlan_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int planId = 291;
             bool expectedResult = true;
@@ -111,7 +105,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void UnlockPlan_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int planId = 291;
             bool expectedResult = true;
@@ -137,7 +131,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void LockCampaign_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int campaignId = 271;
             bool expectedResult = true;
@@ -161,7 +155,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void UnlockCampaign_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int campaignId = 2711;
             bool expectedResult = true;
@@ -183,7 +177,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void LockStationContact_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int stationCode = 9089;
             bool expectedResult = true;
@@ -207,7 +201,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void UnlockStationContact_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int stationCode = 9089;
             bool expectedResult = true;
@@ -228,7 +222,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void LockProposal_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int proposalId = 52;
             bool expectedResult = true;
@@ -252,7 +246,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
         public void UnlockProposal_ToggleOn()
         {
             // Arrange
-            var service = _GetService(true);
+            var service = _GetService();
             var launchDarklyClientStub = new LaunchDarklyClientStub();
             int proposalId = 52;
             bool expectedResult = true;

@@ -3958,7 +3958,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void LockPlan_ToggleOn()
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_LOCKING_CONSOLIDATION] = true;
             int planId = 291;
             bool expectedResult = true;
             _LockingEngineMock
@@ -3982,7 +3981,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         public void UnlockPlan_ToggleOn()
         {
             // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_LOCKING_CONSOLIDATION] = true;
             int planId = 291;
             bool expectedResult = true;
             _LockingEngineMock

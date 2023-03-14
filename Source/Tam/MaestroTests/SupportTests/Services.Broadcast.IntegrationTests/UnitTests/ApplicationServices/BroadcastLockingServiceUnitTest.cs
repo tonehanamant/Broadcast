@@ -28,8 +28,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         protected BroadcastLockingService _GetBroadcastLockingService(bool isLockingMigrationEnabled = false)
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_LOCKING_MIGRATION, isLockingMigrationEnabled);
-
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
             return new BroadcastLockingService(
                 _SmsClientMock.Object,
@@ -48,42 +46,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
             _FeatureToggleHelper = new Mock<IFeatureToggleHelper>();
         }
-        [Test]
-        public void GetLockObject_WhenNotLocked()
-        {
-            string key = "broadcast_261";
-            _SmsClientMock
-               .Setup(x => x.IsObjectLocked(It.IsAny<string>(), It.IsAny<string>()))
-               .Returns(false);
-            var tc = _GetBroadcastLockingService();
-            var result = tc.GetLockObject(key);
-            Assert.IsTrue(result.Success);
-        }
-        [Test]
-        public void GetLockObject_WhenLocked()
-        {
-            string key = "broadcast_plan : 171";
-            _SmsClientMock
-               .Setup(x => x.LockObject(It.IsAny<string>(), It.IsAny<string>()))
-               .Returns(
-                    new LockResponse
-                    {
-                        Key = "broadcast_plan : 171",
-                        Success = false,
-                        LockTimeoutInSeconds = 900,
-                        LockedUserId = "123",
-                        LockedUserName = "TestUser",
-                        Error = null
-                    });
-
-            _SmsClientMock
-               .Setup(x => x.IsObjectLocked(It.IsAny<string>(), It.IsAny<string>()))
-               .Returns(true);
-            var tc = _GetBroadcastLockingService();
-            var result = tc.GetLockObject(key);
-            Assert.IsFalse(result.Success);
-
-        }
+        
         [Test]
         public void GetNotUserBasedLockObjectForKey()
         {
@@ -91,20 +54,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var tc = _GetBroadcastLockingService();
             var result = tc.GetNotUserBasedLockObjectForKey(key);
             Assert.IsNotNull(result);
-        }
-        [Test]
-        public void GetLockObject_Failed()
-        {
-            string key = "broadcast_261";
-            _SmsClientMock
-               .Setup(x => x.IsObjectLocked(It.IsAny<string>(), It.IsAny<string>()))
-               .Callback(() =>
-               {
-                   throw new Exception("Throwing a test exception.");
-               });
-            var tc = _GetBroadcastLockingService();
-            var result = Assert.Throws<Exception>(() => tc.GetLockObject(key));
-            Assert.AreEqual("Throwing a test exception.", result.Message);
         }
         [Test]
         public void LockObject_ToggleOn()

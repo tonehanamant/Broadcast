@@ -5,8 +5,7 @@
         public static string USE_TRUE_INDEPENDENT_STATIONS = "broadcast-use-true-independent-stations";
         public static string ENABLE_PROPRIETARY_INVENTORY_SUMMARY = "broadcast-enable-proprietary-inventory-summary";           
         public static string DISPLAY_BUYING_LINK = "broadcast-display-buying-link";
-        public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";        
-        public static string ENABLE_LOCKING_CONSOLIDATION = "broadcast-enable-locking-consolidation";
+        public static string ENABLE_POSTING_TYPE_TOGGLE = "broadcast-enable-posting-type-toggle";
         public static string PRICING_MODEL_OPEN_MARKET_INVENTORY = "broadcast-pricing-model-open-market-inventory";
         public static string EMAIL_NOTIFICATIONS = "broadcast-email-notifications";
         public static string PRICING_MODEL_BARTER_INVENTORY = "broadcast-pricing-model-barter-inventory";
@@ -26,7 +25,6 @@
         /// <summary>
         /// This feature toggle is used to check the new locking microservice
         /// </summary>
-        public static string ENABLE_LOCKING_MIGRATION = "broadcast-enable-locking-migration";
         public static string ENABLE_UNIFIED_CAMPAIGN = "broadcast-enable-unified-campaign";
         public static string ENABLE_ATTACHMENT_MICRO_SERVICE = "broadcast-enable-attachment-micro-service";
         public static string ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE = "broadcast-program-lineup-allocation-by-affiliate";
