@@ -30,6 +30,7 @@
     "Notes": null,
     "Plans": [
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -78,6 +79,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -126,6 +128,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -174,6 +177,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -222,6 +226,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -270,6 +275,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -318,6 +324,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -366,6 +373,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -414,6 +422,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -462,6 +471,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -510,6 +520,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -558,6 +569,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -606,6 +618,7 @@
         "VersionNumber": 1
       },
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": 2,
@@ -759,6 +772,7 @@
     "Notes": "This is a test note for a test campaign.",
     "Plans": [
       {
+        "AduImpressions": 0.0,
         "AudienceId": 31,
         "AvailableMarketCount": 2,
         "AvailableMarketsWithSovCount": null,

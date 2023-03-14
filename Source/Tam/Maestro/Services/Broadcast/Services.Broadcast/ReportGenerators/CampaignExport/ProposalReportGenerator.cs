@@ -1,6 +1,7 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Services.Broadcast.Entities.Campaign;
+using Services.Broadcast.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using SecondaryDemoTable = Services.Broadcast.Entities.Campaign.ProposalQuarterT
 
 namespace Services.Broadcast.ReportGenerators.CampaignExport
 {
-    public class ProposalReportGenerator
+    public class ProposalReportGenerator : BroadcastBaseClass
     {
         public string MarketsCoverage { get; private set; }
         public string Dayparts { get; private set; }
@@ -55,24 +56,44 @@ namespace Services.Broadcast.ReportGenerators.CampaignExport
         private const string customDaypartSportCode = "CSP";
         private const string isCustomDaypartOrganizationNameisOther = "Other";
 
-        public void PopulateProposalTab(CampaignReportData campaignReportData, ExcelWorksheet proposalWorksheet)
+        public ProposalReportGenerator(IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configSettingsHelper)
+            : base(featureToggleHelper, configSettingsHelper)
+        {
+        }
+
+        public void PopulateProposalTab(CampaignReportData campaignReportData, ExcelWorksheet proposalWorksheet)            
         {
             WORKSHEET = proposalWorksheet;
             HasSecondaryAudiences = campaignReportData.HasSecondaryAudiences;
             SecondaryAudiencesOffset = HasSecondaryAudiences ? 1 : 0;
 
+            _LogInfo("Campaign Export Generation: Populating headers...");
             _PopulateHeader(campaignReportData);
+
+            _LogInfo("Campaign Export Generation: Populating quarters tables...");
             _PopulateQuarterTables(campaignReportData);
+
+            _LogInfo("Campaign Export Generation: Populating totals tables...");
             _PopulateTotalsTable(campaignReportData);
+
+            _LogInfo("Campaign Export Generation: Populating market coverages...");
             _PopulateMarketCoverage(campaignReportData.MarketCoverageData);
+
+            _LogInfo("Campaign Export Generation: Populating dayparts...");
             _PopulateDayparts(campaignReportData.DaypartsData);
 
             //content restrictions row is the second row after current index
+            _LogInfo("Campaign Export Generation: Populating Content Restrictions...");
             currentRowIndex += 2;
             ExportSharedLogic.PopulateContentRestrictions(WORKSHEET, campaignReportData.DaypartsData
-                , $"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}");
+                , $"{FOOTER_INFO_COLUMN_INDEX}{currentRowIndex}" +
+                $"" +
+                $"");
 
+            _LogInfo("Campaign Export Generation: Populating flight hiatuses...");
             _PopulateFlightHiatuses(campaignReportData.FlightHiatuses);
+
+            _LogInfo("Campaign Export Generation: Populating notes...");
             _PopulateNotes(campaignReportData.Notes);
         }
 

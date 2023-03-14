@@ -1052,12 +1052,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             {
                 if (typeof(T).Name.Equals("CampaignReportData"))
                 {
-                    var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates", _FeatureToggleHelper).Generate(reportData as CampaignReportData);
+                    var reportOutput = new CampaignReportGenerator(@".\Files\Excel templates", _FeatureToggleHelper, new ConfigurationSettingsHelper())
+                        .Generate(reportData as CampaignReportData);
                     reportOutput.Filename = filename;
                     _WriteStream(reportOutput);
                     Assert.AreEqual(reportOutput.Stream.Length,
                         File.ReadAllBytes($@".\Files\Campaign export\{reportOutput.Filename}").LongLength);
                 }
+
                 if (typeof(T).Name.Equals("ProgramLineupReportData"))
                 {
                     var reportOutput = new ProgramLineupReportGenerator(@".\Files\Excel templates").Generate(reportData as ProgramLineupReportData);
