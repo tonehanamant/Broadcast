@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Amazon.Runtime.Internal;
+using Newtonsoft.Json;
 using Services.Broadcast.Entities.DTO.SpotExceptionsApi;
 using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
 using Services.Broadcast.Helpers;
@@ -32,6 +33,13 @@ namespace Services.Broadcast.Clients
         /// <param name="runningSyncId">The running synchronize identifier.</param>
         /// <returns></returns>
         Task<GetSyncStateResponseDto> GetSyncStateAsync(int runningSyncId);
+
+        /// <summary>
+        /// Synchronizes the successfully ran by time of day asynchronous.
+        /// </summary>
+        /// <param name="ranByHour">The ran by hour.</param>
+        /// <returns></returns>
+        Task<bool> SyncSuccessfullyRanByTimeOfDayAsync(int ranByHour);
     }
 
     public class SpotExceptionsApiClient : CadentSecuredClientBase, ISpotExceptionsApiClient
@@ -109,6 +117,32 @@ namespace Services.Broadcast.Clients
             }
 
             _LogInfo($"Successfully verified the state of last running job with a runId '{runningSyncId}'.");
+
+            return result;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> SyncSuccessfullyRanByTimeOfDayAsync(int ranByHour)
+        {
+            var maxRanByDate = DateTime.Now.Add(new TimeSpan(ranByHour, 0, 0));
+            _LogInfo($"Attempting to verify a sync successfully ran for the current week by '{maxRanByDate}'.");
+
+            var ingestUrl = @"pull-spot-exceptions/api/ingest/status";
+            var ingestContent = new StringContent(JsonSerializerHelper.ConvertToJson(ranByHour), Encoding.UTF8, "application/json");
+
+            var client = await _GetSecureHttpClientAsync(AppName_Ingest);
+
+            var postReponse = await client.PostAsync(ingestUrl, ingestContent);
+            var result = await postReponse.Content.ReadAsAsync<bool>();
+
+            if (result.Equals(true))
+            {
+                _LogInfo($"A sync has successfully run for the current week by '{maxRanByDate}'.");
+            }
+            else
+            {
+                _LogInfo($"a sync has not successfully run for the current week by '{maxRanByDate}'.");
+            }
 
             return result;
         }

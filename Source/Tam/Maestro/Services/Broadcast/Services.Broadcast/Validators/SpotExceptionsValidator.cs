@@ -3,7 +3,6 @@ using Services.Broadcast.Clients;
 using Services.Broadcast.Entities.SpotExceptions.DecisionSync;
 using Services.Broadcast.Exceptions;
 using Services.Broadcast.Repositories.SpotExceptions;
-using System.Management.Automation;
 using System.Threading.Tasks;
 
 namespace Services.Broadcast.Validators

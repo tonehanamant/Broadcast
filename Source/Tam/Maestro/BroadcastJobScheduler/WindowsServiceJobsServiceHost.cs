@@ -2,6 +2,7 @@
 using Hangfire;
 using Services.Broadcast.ApplicationServices;
 using Services.Broadcast.ApplicationServices.Plan;
+using Services.Broadcast.ApplicationServices.SpotExceptions;
 using System;
 
 namespace BroadcastJobScheduler
@@ -18,13 +19,15 @@ namespace BroadcastJobScheduler
         private readonly IStationService _StationService;
         //private readonly IReelIsciIngestService _IsciIngestService;
         private readonly IPlanService _IPlanService;
+        private readonly ISpotExceptionsServiceV2 _ISpotExceptionsServiceV2;
 
         public WindowsServiceJobsServiceHost(IRecurringJobManager recurringJobManager,
             ILongRunQueueMonitors longRunQueueMonitors,
             IInventoryAggregationQueueMonitor inventoryAggregationQueueMonitor,
             IStationService stationService,
             IReelIsciIngestService isciIngestService,
-            IPlanService planService)
+            IPlanService planService,
+            ISpotExceptionsServiceV2 spotExceptionsServiceV2)
             : base(recurringJobManager)
         {
             _LongRunQueueMonitors = longRunQueueMonitors;
@@ -33,6 +36,7 @@ namespace BroadcastJobScheduler
             _StationService = stationService;
            // _IsciIngestService = isciIngestService;
             _IPlanService = planService;
+            _ISpotExceptionsServiceV2 = spotExceptionsServiceV2;
         }
 
         protected override void OnStart()
@@ -70,6 +74,13 @@ namespace BroadcastJobScheduler
                 Cron.Daily(_GetPlanAutomaticStatusTransitionJobRunHour()),
                 TimeZoneInfo.Local,
                 queue: "planstatustransitionv2");
+
+            _RecurringJobManager.AddOrUpdate(
+                "spot-exception-ingest-run",
+                () => _ISpotExceptionsServiceV2.SpotExceptionIngestRan(_GetSpotExceptionIngestJobRunHour()),
+                Cron.Daily(_GetSpotExceptionIngestJobRunHour()),
+                TimeZoneInfo.Local,
+                queue: "spotexceptioningestrun");
         }
 
         private int _StationsUpdateJobRunHour()
@@ -83,6 +94,11 @@ namespace BroadcastJobScheduler
         private int _GetPlanAutomaticStatusTransitionJobRunHour()
         {
             return AppSettingHelper.GetConfigSetting("PlanAutomaticStatusTransitionJobRunHour", 0);
+        }
+
+        private int _GetSpotExceptionIngestJobRunHour()
+        {
+            return AppSettingHelper.GetConfigSetting("SpotExceptioningestJobRunHours", 0);
         }
     }
 }

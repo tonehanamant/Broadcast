@@ -10,6 +10,7 @@ using Services.Broadcast.Helpers;
 using Services.Broadcast.Repositories.SpotExceptions;
 using Services.Broadcast.Validators;
 using Services.Broadcast.BusinessEngines;
+using Hangfire;
 
 namespace Services.Broadcast.ApplicationServices.SpotExceptions
 {
@@ -27,6 +28,12 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// </summary>
         /// <returns></returns>
         bool ResetSpotExceptionResultsIndicator();
+
+        /// <summary>
+        /// Spots the exception ingest ran.
+        /// </summary>
+        /// <param name="ranByHour">Name of the user.</param>
+        void SpotExceptionIngestRan(int ranByHour);
     }
 
     public class SpotExceptionsServiceV2 : BroadcastBaseClass, ISpotExceptionsServiceV2
@@ -145,6 +152,13 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _LogInfo($"The results sync indicator has been manually reset by Maintenance.");
 
             return result;
+        }
+
+        /// <inheritdoc />
+        [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
+        public void SpotExceptionIngestRan(int ranByHour)
+        {
+            _SpotExceptionsApiClient.SyncSuccessfullyRanByTimeOfDayAsync(ranByHour);
         }
     }
 }
