@@ -2626,6 +2626,39 @@ GO
 
 /*************************************** END BS-640 - 2 ***************************************/
 
+/*************************************** START BS-2281 ***************************************/
+
+DECLARE @NewDiginetPlatformCodesUser VARCHAR(40) = 'NewDiginetPlatformCodes_2023_3'
+
+IF OBJECT_ID('tempdb..#affiliatesToAdd') IS NOT NULL
+BEGIN
+	DROP TABLE #affiliatesToAdd
+END
+
+CREATE TABLE #affiliatesToAdd
+(
+	affiliate VARCHAR(5) 
+)
+
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('MYS')
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('LAF')
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('CTV')
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('BOU')
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('DFY')
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('TRN')
+INSERT INTO #affiliatesToAdd (affiliate) VALUES ('ANT')
+
+INSERT INTO affiliates ([name], created_by, created_date, modified_by, modified_date)
+	SELECT n.affiliate, @NewDiginetPlatformCodesUser, SYSDATETIME(), @NewDiginetPlatformCodesUser, SYSDATETIME()
+	FROM #affiliatesToAdd n
+	LEFT OUTER JOIN affiliates a
+		ON n.affiliate = a.[name]
+	WHERE a.[name] IS NULL
+
+GO
+
+/*************************************** END BS-2281 *****************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
