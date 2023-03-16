@@ -11,8 +11,7 @@
         public bool EnableAabNavigation { get; set; }
 
         // Keep These : these are referenced by the NavBar.cshtml       
-        public bool DisplayBuyingLink { get; set; }
-        public bool DisplayIsciMappingLink { get; set; }
+        public bool DisplayBuyingLink { get; set; }     
         public bool DisplaySpotExceptionsLink { get; set; }
     }
 }

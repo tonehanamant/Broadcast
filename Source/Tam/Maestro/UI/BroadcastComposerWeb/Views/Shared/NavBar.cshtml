@@ -18,10 +18,8 @@
                 <li><a href="/broadcastreact/inventory">Inventory</a></li>
                 @* Campaigns link is displayed according to system parameter. *@              
                     <li class="@(ViewContext.RouteData.Values["Controller"].ToString().ToLowerInvariant() == "campaigns" ? "active" : "")"><a href="/broadcastreact/campaigns">Campaigns</a></li>               
-                @if (ViewBag.DisplayIsciMappingLink != null && ViewBag.DisplayIsciMappingLink)
-                {
                     <li><a href="/broadcastreact/isci-mapping">Isci Mapping</a></li>
-                }
+               
                 @if (ViewBag.DisplaySpotExceptionsLink != null && ViewBag.DisplaySpotExceptionsLink)
                 {
                     <li><a href="/broadcastreact/spot-exceptions">Spot Exceptions</a></li>

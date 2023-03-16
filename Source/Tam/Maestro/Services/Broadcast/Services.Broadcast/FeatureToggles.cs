@@ -9,8 +9,7 @@
         public static string EMAIL_NOTIFICATIONS = "broadcast-email-notifications";
         public static string PRICING_MODEL_BARTER_INVENTORY = "broadcast-pricing-model-barter-inventory";
         public static string PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = "broadcast-pricing-model-proprietary-o-and-o-inventory";
-        public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";
-        public static string ENABLE_ISCI_MAPPING = "broadcast-enable-isci-mapping";              
+        public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";              
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
         public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
