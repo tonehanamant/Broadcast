@@ -104,7 +104,6 @@ namespace Services.Broadcast.IntegrationTests
         private static void _SetupGlobalFeatureToggles(LaunchDarklyClientStub launchDarklyClientStub)
         {
             /*** These are set as they are in production. ***/
-            launchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = true;
             launchDarklyClientStub.FeatureToggles[FeatureToggles.EMAIL_NOTIFICATIONS] = true;
 
             // TODO: Affected tests should be reworked for these to be false, as they are in production

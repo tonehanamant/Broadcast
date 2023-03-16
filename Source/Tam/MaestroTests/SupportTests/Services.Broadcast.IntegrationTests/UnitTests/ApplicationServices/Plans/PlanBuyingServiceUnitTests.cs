@@ -92,7 +92,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY, true);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
 
@@ -5333,17 +5332,15 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 };
         }
 
-        [Test]
-        [TestCase(false, false, false, 0)]
-        [TestCase(true, false, false, 1)]
-        [TestCase(true, true, false, 2)]
-        [TestCase(true, true, true, 3)]
-        public void GetSupportedInventorySourceTypes(bool isPricingModelOpenMarketInventoryEnabled, bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
+        [Test]       
+        [TestCase(false, false, 1)]
+        [TestCase(true, false, 2)]
+        [TestCase(true, true, 3)]
+        public void GetSupportedInventorySourceTypes(bool isPricingModelBarterInventoryEnabled, bool isPricingModelProprietaryOAndOInventoryEnabled, int expectedResult)
         {
             // Arrange
             var service = _GetService();
 
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY] = isPricingModelOpenMarketInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_BARTER_INVENTORY] = isPricingModelBarterInventoryEnabled;
             _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY] = isPricingModelProprietaryOAndOInventoryEnabled;
 

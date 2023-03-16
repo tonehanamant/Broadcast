@@ -289,8 +289,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly ISpotLengthRepository _SpotLengthRepository;
         private readonly IDaypartCache _DaypartCache;
         private readonly IPlanValidator _PlanValidator;
-
-        private readonly Lazy<bool> _IsPricingModelOpenMarketInventoryEnabled;
+        
         private readonly Lazy<bool> _IsPricingModelBarterInventoryEnabled;
         private readonly Lazy<bool> _IsPricingModelProprietaryOAndOInventoryEnabled;
         private readonly Lazy<bool> _IsParallelPricingEnabled;
@@ -358,8 +357,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _SpotLengthRepository = broadcastDataRepositoryFactory.GetDataRepository<ISpotLengthRepository>();
             _DaypartCache = daypartCache;
             _PlanValidator = planValidator;
-
-            _IsPricingModelOpenMarketInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_OPEN_MARKET_INVENTORY));
+           
             _IsPricingModelBarterInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY));
             _IsPricingModelProprietaryOAndOInventoryEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY));
             _IsParallelPricingEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS));
@@ -2152,8 +2150,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             var result = new List<InventorySourceTypeEnum>();
 
-            if (_IsPricingModelOpenMarketInventoryEnabled.Value)
-                result.Add(InventorySourceTypeEnum.OpenMarket);
+            result.Add(InventorySourceTypeEnum.OpenMarket);
 
             if (_IsPricingModelBarterInventoryEnabled.Value)
                 result.Add(InventorySourceTypeEnum.Barter);
