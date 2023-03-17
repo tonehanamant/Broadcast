@@ -615,8 +615,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var user = "IntegrationTestsUser";
-
-                var fileServiceMock = new Mock<IFileService>();
                 var attachmentMicroServiceApiClientMock = new Mock<IAttachmentMicroServiceApiClient>();
                 attachmentMicroServiceApiClientMock.Setup(m => m.RegisterAttachment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(
@@ -628,8 +626,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     });
                 var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
                 var featureToggleHelperMock = new Mock<IFeatureToggleHelper>();
-                fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
-                var campaignService = _SetupCampaignService(fileServiceMock.Object, attachmentMicroServiceApiClientMock.Object, featureToggleHelperMock.Object,configurationSettingsHelper.Object);
+                var campaignService = _SetupCampaignService(attachmentMicroServiceApiClientMock.Object, featureToggleHelperMock.Object,configurationSettingsHelper.Object);
                 var fileId = Guid.Empty;
                 var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                     .GetDataRepository<ISharedFolderFilesRepository>();
@@ -644,23 +641,14 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 sharedFolderFile = sharedFolderRepository.GetFileById(fileId);
                 Assert.AreNotEqual(Guid.Empty, fileId);
-#if DEBUG
-                //we don't care where the file is saved
-#else
-            fileServiceMock.Verify(x => x.Create(
-                @"c:\temp\Broadcast\IntegrationTests\CampaignExportReports",
-                fileId + ".xlsx",
-                It.Is<Stream>(y => y != null && y.Length > 0)), Times.Once);
-#endif
 
                 Approvals.Verify(IntegrationTestHelper.ConvertToJson(sharedFolderFile, _GetJsonSettingsForCampaignExport()));
             }
         }
 
-        private ICampaignService _SetupCampaignService(IFileService fileService, IAttachmentMicroServiceApiClient attachmentMicroServiceApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
+        private ICampaignService _SetupCampaignService(IAttachmentMicroServiceApiClient attachmentMicroServiceApiClient, IFeatureToggleHelper featureToggleHelper,IConfigurationSettingsHelper configurationSettingsHelper)
         {
             var sharedFolderService = new SharedFolderService(
-                fileService,
                 IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory, attachmentMicroServiceApiClient, featureToggleHelper,configurationSettingsHelper);
 
             var campaignService = new CampaignService(
@@ -1127,14 +1115,12 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
             using (new TransactionScopeWrapper())
             {
                 var user = "IntegrationTestsUser";
-                bool isAttachementMicroServiceEnable = true;
                 var registerResult = new RegisterResponseDto
                 {
                     AttachmentId = new Guid("a11a76ba-6594-4c62-9ad7-aa8589d8e97b"),
                     Success = true,
                     Message = "No Error"
                 };
-                var fileServiceMock = new Mock<IFileService>();
                 var attachmentMicroServiceApiClientMock = new Mock<IAttachmentMicroServiceApiClient>();
                 attachmentMicroServiceApiClientMock.Setup(m => m.RegisterAttachment(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(registerResult);
@@ -1162,9 +1148,7 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     });
                 var configurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
                 var featureToggleHelperMock = new Mock<IFeatureToggleHelper>();
-                featureToggleHelperMock.Setup(x => x.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_ATTACHMENT_MICRO_SERVICE)).Returns(isAttachementMicroServiceEnable);
-                fileServiceMock.Setup(x => x.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()));
-                var campaignService = _SetupCampaignService(fileServiceMock.Object, attachmentMicroServiceApiClientMock.Object, featureToggleHelperMock.Object,configurationSettingsHelper.Object);
+                var campaignService = _SetupCampaignService(attachmentMicroServiceApiClientMock.Object, featureToggleHelperMock.Object,configurationSettingsHelper.Object);
                 var fileId = Guid.Empty;
                 var sharedFolderRepository = IntegrationTestApplicationServiceFactory.BroadcastDataRepositoryFactory
                     .GetDataRepository<ISharedFolderFilesRepository>();

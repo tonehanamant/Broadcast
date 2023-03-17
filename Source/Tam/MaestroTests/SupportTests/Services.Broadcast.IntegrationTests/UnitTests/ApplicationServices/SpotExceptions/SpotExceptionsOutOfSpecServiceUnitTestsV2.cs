@@ -38,7 +38,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
         private Mock<IAabEngine> _AabEngineMock;
         private Mock<IFeatureToggleHelper> _FeatureToggleMock;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
-        private Mock<IFileService> _FileServicesMock;
         private Mock<ISharedFolderService> _SharedFolderServiceMock;
        
         [SetUp]
@@ -50,7 +49,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
 
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
             _SharedFolderServiceMock=new Mock<ISharedFolderService>();
-            _FileServicesMock=new Mock<IFileService>();
             _GenreCacheMock = new Mock<IGenreCache>();
             _AabEngineMock = new Mock<IAabEngine>();
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
@@ -68,8 +66,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                 (
                     _DataRepositoryFactoryMock.Object,
                     _FeatureToggleMock.Object,                   
-                    _DateTimeEngineMock.Object,                    
-                    _FileServicesMock.Object,
+                    _DateTimeEngineMock.Object,
                     _SharedFolderServiceMock.Object,
                     _GenreCacheMock.Object,
                     _AabEngineMock.Object,

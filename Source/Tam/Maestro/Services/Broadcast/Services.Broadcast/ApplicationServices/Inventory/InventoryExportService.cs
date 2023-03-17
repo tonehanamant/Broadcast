@@ -64,12 +64,8 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         private readonly IDaypartCache _DaypartCache;
         private readonly IMarketService _MarketService;
         private readonly INsiPostingBookService _NsiPostingBookService;
-
-        private readonly IFileService _FileService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IDateTimeEngine _DateTimeEngine;
-
-        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
         private readonly IInventoryManagementApiClient _InventoryManagementApiClient;
         protected Lazy<bool> _IsInventoryServiceMigrationEnabled;
 
@@ -77,7 +73,6 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             IQuarterCalculationEngine quarterCalculationEngine,
             IMediaMonthAndWeekAggregateCache mediaMonthAndWeekAggregateCache,
             IInventoryExportEngine inventoryExportEngine,
-            IFileService fileService,
             ISharedFolderService sharedFolderService,
             ISpotLengthEngine spotLengthEngine,
             IDaypartCache daypartCache,
@@ -99,15 +94,12 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             _QuarterCalculationEngine = quarterCalculationEngine;
             _MediaMonthAndWeekAggregateCache = mediaMonthAndWeekAggregateCache;
             _InventoryExportEngine = inventoryExportEngine;
-            _FileService = fileService;
             _SharedFolderService = sharedFolderService;
             _SpotLengthEngine = spotLengthEngine;
             _DaypartCache = daypartCache;
             _MarketService = marketService;
             _NsiPostingBookService = nsiPostingBookService;
             _DateTimeEngine = dateTimeEngine;
-
-            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
             _InventoryManagementApiClient = inventoryManagementApiClient;
             _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
@@ -298,43 +290,24 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             };
             var fileId = _SharedFolderService.SaveFile(sharedFolderFile);
 
-            // Save to the File Service until the toggle is enabled and then we can remove it.
-            if (!_EnableSharedFileServiceConsolidation.Value)
-            {
-                _FileService.CreateDirectory(folderPath);
-                _FileService.Create(folderPath, fileName, fileStream);
-            }
-
             return fileId;
         }
 
         /// <inheritdoc />
         public Tuple<string, Stream, string> DownloadOpenMarketExportFile(int jobId)
         {
-            if (_IsInventoryServiceMigrationEnabled.Value)
+            Tuple<string, Stream, string> result = new Tuple<string, Stream, string>("", null, "");
+            var job = _InventoryExportJobRepository.GetJob(jobId);
+
+            if (job.SharedFolderFileId.HasValue)
             {
-                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
-                // at that time this API will be directly called by FE from inventory microservice
-
-               // return _InventoryManagementApiClient.DownloadInventoeyForOpenMarket(jobId);
-            }
-            //else
-            //{
-                Tuple<string, Stream, string> result;
-                var job = _InventoryExportJobRepository.GetJob(jobId);
-
-                if (_EnableSharedFileServiceConsolidation.Value && job.SharedFolderFileId.HasValue)
-                {
-                    _LogInfo($"Translated jobId '{job.Id}' as sharedFolderFileId '{job.SharedFolderFileId.Value}'");
-                    var file = _SharedFolderService.GetFile(job.SharedFolderFileId.Value);
-                    result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
-                    _SharedFolderService.RemoveFileFromFileShare(job.SharedFolderFileId.Value);
-                    return result;
-                }
-
-                result = _GetFileFromFileService(job);
+                _LogInfo($"Translated jobId '{job.Id}' as sharedFolderFileId '{job.SharedFolderFileId.Value}'");
+                var file = _SharedFolderService.GetFile(job.SharedFolderFileId.Value);
+                result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                _SharedFolderService.RemoveFileFromFileShare(job.SharedFolderFileId.Value);
                 return result;
-           // }
+            }
+            return result;
         }
 
         private Tuple<string, Stream, string> _BuildPackageReturn(Stream fileStream, string fileName)
@@ -344,26 +317,10 @@ namespace Services.Broadcast.ApplicationServices.Inventory
             return result;
         }
 
-        private Tuple<string, Stream, string> _GetFileFromFileService(InventoryExportJobDto job)
-        {
-            var saveDirectory = _GetExportFileSaveDirectory();
-            var fileName = job.FileName;
-            var fileStream = _FileService.GetFileStream(saveDirectory, fileName);
-
-            var result = _BuildPackageReturn(fileStream, fileName);
-            return result;
-        }
-
         private string _GetExportFileSaveDirectory()
         {
             var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.INVENTORY_EXPORTS);
             return path;
-        }
-
-        private bool _GetEnableSharedFileServiceConsolidation()
-        {
-            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
-            return result;
         }
     }
 }

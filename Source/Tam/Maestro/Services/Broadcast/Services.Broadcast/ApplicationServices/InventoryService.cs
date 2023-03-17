@@ -101,7 +101,6 @@ namespace Services.Broadcast.ApplicationServices
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly Lazy<bool> _EnableSaveIngestedInventoryFile;
         private readonly Lazy<bool> _IsInventoryServiceMigrationEnabled;
-        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
         private readonly IInventoryManagementApiClient _InventoryApiClient;
         public InventoryService(IDataRepositoryFactory broadcastDataRepositoryFactory,
             IInventoryFileValidator inventoryFileValidator,
@@ -157,9 +156,8 @@ namespace Services.Broadcast.ApplicationServices
               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
 
             _EnableSaveIngestedInventoryFile = new Lazy<bool>(_GetEnableSaveIngestedInventoryFile);
-            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
         }
-        
+
         private bool _GetEnableSaveIngestedInventoryFile()
         {
             var toggle =
@@ -194,7 +192,7 @@ namespace Services.Broadcast.ApplicationServices
             var hasConflict = hasDateRangeConflict && hasDaypartConflict;
 
             return hasConflict;
-        }        
+        }
         /// <summary>
         /// Saves an open market inventory file
         /// </summary>
@@ -203,7 +201,7 @@ namespace Services.Broadcast.ApplicationServices
         /// <param name="nowDate">Now date</param>
         /// <returns>InventoryFileSaveResult object</returns>
         public InventoryFileSaveResult SaveInventoryFile(InventoryFileSaveRequest request, string userName, DateTime nowDate)
-        {            
+        {
             InventoryFileSaveResult result;
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
@@ -213,7 +211,7 @@ namespace Services.Broadcast.ApplicationServices
                     RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
                     UserName = userName
                 };
-                result=_InventoryApiClient.SaveInventoryFile(fileRequest);
+                result = _InventoryApiClient.SaveInventoryFile(fileRequest);
                 if (result.Status == FileStatusEnum.Loaded)
                 {
                     _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
@@ -332,11 +330,6 @@ namespace Services.Broadcast.ApplicationServices
 
         internal void _SaveUploadedInventoryFileToFileStore(InventoryFileSaveRequest request, int inventoryFileId, string userName)
         {
-            // Once the feature is enabled this can be removed.
-            if (!_EnableSharedFileServiceConsolidation.Value)
-            {
-                _SaveUploadedInventoryFileWithFileService(request);
-            }
 
             const string fileMediaType = "application/xml";
             var folderPath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
@@ -358,21 +351,6 @@ namespace Services.Broadcast.ApplicationServices
             _InventoryFileRepository.SaveUploadedFileId(inventoryFileId, sharedFolderFileId);
         }
 
-        private void _SaveUploadedInventoryFileWithFileService(InventoryFileSaveRequest request)
-        {
-            try
-            {
-                var filePath = Path.Combine(_GetInventoryUploadFolder(), request.FileName);
-                _CreateDirectoryIfNotExists(filePath);
-                _FileService.Copy(request.StreamData, filePath, overwriteExisting: true);
-            }
-            catch (Exception ex)
-            {
-                var msg = "Unable to send file to shared folder and e-mail reporting the error.";
-                _LogError(msg, ex);
-            }
-        }
-
         private void _ProcessFileWithProblems(InventoryFile inventoryFile, string[] problems, string userName)
         {
             inventoryFile.FileStatus = FileStatusEnum.Failed;
@@ -386,11 +364,6 @@ namespace Services.Broadcast.ApplicationServices
 
         internal void _WriteErrorFileToDisk(int inventoryFileId, string fileName, List<string> validationErrors, string userName)
         {
-            // Once the feature is enabled this can be removed.
-            if (!_EnableSharedFileServiceConsolidation.Value)
-            {
-                _SaveErrorInventoryFileWithFileService(inventoryFileId, fileName, validationErrors);
-            }
 
             // create the text file
             var errorFileName = $"{fileName}.txt";
@@ -418,15 +391,6 @@ namespace Services.Broadcast.ApplicationServices
             _LogInfo($"Saved error file '{errorFileName}' for inventory file '{fileName}' as ID '{sharedFolderFileId}'");
 
             _InventoryFileRepository.SaveErrorFileId(inventoryFileId, sharedFolderFileId);
-        }
-
-        private void _SaveErrorInventoryFileWithFileService(int fileId, string fileName, List<string> validationErrors)
-        {
-            var saveDirectory = _GetInventoryUploadErrorsFolder();
-            string fullFileName = $@"{fileId}_{fileName}.txt";
-            string path = Path.Combine(saveDirectory, fullFileName);
-            _CreateDirectoryIfNotExists(path);
-            _FileService.CreateTextFile(path, validationErrors);
         }
 
         private InventoryFileSaveResult _SetInventoryFileSaveResult(InventoryFile file)
@@ -607,60 +571,60 @@ namespace Services.Broadcast.ApplicationServices
                 throw new Exception("Cannot save station contact with invalid data.");
             _LockingEngine.LockStationContact(stationContact.StationCode.Value);
             try
+            {
+                if (stationContact.StationId <= 0)
+                    throw new Exception("Cannot save station contact with invalid station Id.");
+
+                if (string.IsNullOrWhiteSpace(stationContact.Name))
+                    throw new Exception("Cannot save station contact without specifying name value.");
+
+                if (string.IsNullOrWhiteSpace(stationContact.Phone))
+                    throw new Exception("Cannot save station contact without specifying phone value.");
+
+                if (string.IsNullOrWhiteSpace(stationContact.Email))
+                    throw new Exception("Cannot save station contact without specifying email value.");
+
+                if (stationContact.Type <= 0)
+                    throw new Exception("Cannot save station contact without specifying valid type value.");
+
+                using (var transaction = new TransactionScopeWrapper())
                 {
-                    if (stationContact.StationId <= 0)
-                        throw new Exception("Cannot save station contact with invalid station Id.");
-
-                    if (string.IsNullOrWhiteSpace(stationContact.Name))
-                        throw new Exception("Cannot save station contact without specifying name value.");
-
-                    if (string.IsNullOrWhiteSpace(stationContact.Phone))
-                        throw new Exception("Cannot save station contact without specifying phone value.");
-
-                    if (string.IsNullOrWhiteSpace(stationContact.Email))
-                        throw new Exception("Cannot save station contact without specifying email value.");
-
-                    if (stationContact.Type <= 0)
-                        throw new Exception("Cannot save station contact without specifying valid type value.");
-
-                    using (var transaction = new TransactionScopeWrapper())
+                    if (stationContact.Id <= 0)
                     {
-                        if (stationContact.Id <= 0)
-                        {
-                            _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-                                .CreateNewStationContacts(
-                                    new List<StationContact>()
-                                    {
+                        _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                            .CreateNewStationContacts(
+                                new List<StationContact>()
+                                {
                                     stationContact
-                                    },
-                                    userName,
-                                    null);
-                        }
-                        else
-                        {
-                            _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-                                .UpdateExistingStationContacts(
-                                    new List<StationContact>()
-                                    {
-                                    stationContact
-                                    },
-                                    userName,
-                                    null);
-                        }
-                        _StationRepository.UpdateStation(stationContact.StationCode.Value, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
-
-                        transaction.Complete();
+                                },
+                                userName,
+                                null);
                     }
-                    isStationContactUpdated = true;
+                    else
+                    {
+                        _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                            .UpdateExistingStationContacts(
+                                new List<StationContact>()
+                                {
+                                    stationContact
+                                },
+                                userName,
+                                null);
+                    }
+                    _StationRepository.UpdateStation(stationContact.StationCode.Value, userName, DateTime.Now, _ParseInventorySourceOrDefault(stationContact.InventorySourceString).Id);
+
+                    transaction.Complete();
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
-                finally
-                {
-                    _LockingEngine.UnlockStationContact(stationContact.StationCode.Value);
-                }
+                isStationContactUpdated = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                _LockingEngine.UnlockStationContact(stationContact.StationCode.Value);
+            }
             return isStationContactUpdated;
         }
 
@@ -669,35 +633,35 @@ namespace Services.Broadcast.ApplicationServices
             bool isStationContactDeleted = false;
             if (stationContactId <= 0)
                 throw new Exception("Cannot delete station contact with invalid data.");
-            
+
             var stationCode = _StationRepository.GetBroadcastStationCodeByContactId(stationContactId);
             _LockingEngine.LockStationContact(stationCode);
             try
-                {
-                    if (stationCode <= 0)
-                        throw new Exception("Cannot delete station contact with invalid station code.");
-                    
-                    using (var transaction = new TransactionScopeWrapper())
-                    {
+            {
+                if (stationCode <= 0)
+                    throw new Exception("Cannot delete station contact with invalid station code.");
 
-                        _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
-                            .DeleteStationContact(stationContactId);
-
-                        // update staion modified date
-                        _StationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
-
-                        transaction.Complete();
-                    }
-                    isStationContactDeleted = true;
-                }
-                catch (Exception ex)
+                using (var transaction = new TransactionScopeWrapper())
                 {
-                    throw new Exception(ex.Message);
+
+                    _broadcastDataRepositoryFactory.GetDataRepository<IStationContactsRepository>()
+                        .DeleteStationContact(stationContactId);
+
+                    // update staion modified date
+                    _StationRepository.UpdateStation(stationCode, userName, DateTime.Now, _ParseInventorySourceOrDefault(inventorySourceString).Id);
+
+                    transaction.Complete();
                 }
-                finally
-                {
-                    _LockingEngine.UnlockStationContact(stationCode);
-                }
+                isStationContactDeleted = true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                _LockingEngine.UnlockStationContact(stationCode);
+            }
             return isStationContactDeleted;
         }
 
@@ -848,7 +812,7 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryApiClient.GetInventoryUploadHistory(inventorySourceId,quarter,year);
+                return _InventoryApiClient.GetInventoryUploadHistory(inventorySourceId, quarter, year);
             }
             else
             {
@@ -908,32 +872,19 @@ namespace Services.Broadcast.ApplicationServices
 
         public Tuple<string, Stream, string> DownloadErrorFile(int fileId)
         {
-            if (_IsInventoryServiceMigrationEnabled.Value)
+            Tuple<string, Stream, string> result;
+            // get the file 
+            var inventoryFileDetails = _GetInventoryFileById(fileId);
+            if (inventoryFileDetails.ErrorFileSharedFolderFileId.HasValue)
             {
-                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
-                // at that time this API will be directly called by FE from inventory microservice
-
-               // return _InventoryApiClient.DownloadErrorFile(fileId);
-            }
-            //else
-            //{
-                Tuple<string, Stream, string> result;
-                if (_EnableSharedFileServiceConsolidation.Value)
-                {
-                    // get the file 
-                    var inventoryFileDetails = _GetInventoryFileById(fileId);
-                    if (inventoryFileDetails.ErrorFileSharedFolderFileId.HasValue)
-                    {
-                        _LogInfo($"Translated fileId '{fileId}' as errorFileSharedFolderFileId '{inventoryFileDetails.ErrorFileSharedFolderFileId.Value}'");
-                        var file = _SharedFolderService.GetFile(inventoryFileDetails.ErrorFileSharedFolderFileId.Value);
-                        result = _BuildPackageReturnForSingleFile(file.FileContent, file.FileNameWithExtension);
-                        return result;
-                    }
-                }
-
-                result = _RetrieveErrorFileWithFileService(fileId);
+                _LogInfo($"Translated fileId '{fileId}' as errorFileSharedFolderFileId '{inventoryFileDetails.ErrorFileSharedFolderFileId.Value}'");
+                var file = _SharedFolderService.GetFile(inventoryFileDetails.ErrorFileSharedFolderFileId.Value);
+                result = _BuildPackageReturnForSingleFile(file.FileContent, file.FileNameWithExtension);
                 return result;
-            //}
+            }
+
+            result = _RetrieveErrorFileWithFileService(fileId);
+            return result;
         }
 
         private Tuple<string, Stream, string> _RetrieveErrorFileWithFileService(int fileId)
@@ -965,36 +916,11 @@ namespace Services.Broadcast.ApplicationServices
         /// <returns>Returns a zip archive as stream and the zip name</returns>
         public Tuple<string, Stream> DownloadErrorFiles(List<int> fileIds)
         {
-            if (_IsInventoryServiceMigrationEnabled.Value)
-            {
-                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
-                // at that time this API will be directly called by FE from inventory microservice
-                // return _InventoryApiClient.DownloadErrorFiles(fileIds);
-            }
-            //else
-            //{
-                var archiveFileName = $"InventoryErrorFiles_{_DateTimeEngine.GetCurrentMoment().ToString("MMddyyyyhhmmss")}.zip";
-                Tuple<string, Stream> result;
-
-                if (_EnableSharedFileServiceConsolidation.Value)
-                {
-                    var sharedFolderFileIds = _InventoryFileRepository.GetErrorFileSharedFolderFileIds(fileIds);
-                    var archiveStream = _SharedFolderService.CreateZipArchive(sharedFolderFileIds);
-                    result = _BuildPackageReturnForArchiveFile(archiveFileName, archiveStream);
-                    return result;
-                }
-
-                result = _DownloadErrorFilesFromFileService(archiveFileName, fileIds);
-                return result;
-           // }
-        }
-
-        private Tuple<string, Stream> _DownloadErrorFilesFromFileService(string archiveFileName, List<int> fileIds)
-        {
-            var errorsFilesToProcess = fileIds.Select(_GetExistingInventoryErrorFileInfo).ToDictionary(fi => fi.FilePath, fi => fi.FriendlyFileName);
-
-            Stream archiveFile = _FileService.CreateZipArchive(errorsFilesToProcess);
-            var result = new Tuple<string, Stream>(archiveFileName, archiveFile);
+            var archiveFileName = $"InventoryErrorFiles_{_DateTimeEngine.GetCurrentMoment().ToString("MMddyyyyhhmmss")}.zip";
+            Tuple<string, Stream> result;
+            var sharedFolderFileIds = _InventoryFileRepository.GetErrorFileSharedFolderFileIds(fileIds);
+            var archiveStream = _SharedFolderService.CreateZipArchive(sharedFolderFileIds);
+            result = _BuildPackageReturnForArchiveFile(archiveFileName, archiveStream);
             return result;
         }
 
@@ -1061,9 +987,9 @@ namespace Services.Broadcast.ApplicationServices
             {
                 var uploadHistoryDates = _InventoryRepository.GetInventoryUploadHistoryDatesForInventorySource(inventorySourceId);
                 var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(uploadHistoryDates);
-                return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();               
+                return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();
             }
-           
+
         }
 
 
@@ -1082,21 +1008,6 @@ namespace Services.Broadcast.ApplicationServices
             var path = Path.Combine(_GetBroadcastAppFolder()
                 , BroadcastConstants.FolderNames.INVENTORY_UPLOAD);
             return path;
-        }
-
-        private void _CreateDirectoryIfNotExists(string filePath)
-        {
-            var dir = Path.GetDirectoryName(filePath);
-            if (!_FileService.DirectoryExists(dir))
-            {
-                _FileService.CreateDirectory(dir);
-            }
-        }
-
-        private bool _GetEnableSharedFileServiceConsolidation()
-        {
-            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
-            return result;
         }
 
         private class ExistingInventoryErrorFileInfo

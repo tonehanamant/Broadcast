@@ -1385,27 +1385,5 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         #endregion // #region Spot Exceptions Sync
-
-        #region Inventory Error File Migration to Attachment Service
-
-        public ActionResult PerformInventoryErrorFileMigrationToAttachmentService()
-        {
-            TempData["TabId"] = "migrations";
-            try
-            {
-                var username = _GetCurrentUserFullName();
-                var service = _ApplicationServiceFactory.GetApplicationService<IInventoryErrorFilesMigrationService>();
-                var results = service.MigrateFilesToAttachmentService(username);
-                TempData["Message"] = $"Migration process completed.  Results : {results.ResultsMessage};";
-            }
-            catch (Exception ex)
-            {
-                TempData["Message"] = ex.Message;
-            }
-
-            return RedirectToAction("Index");
-        }
-
-        #endregion // #region Inventory Error File Migration to Attachment Service
     }
 }

@@ -808,7 +808,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Stubs\LockingCacheStub.cs" />
-    <Compile Include="UnitTests\ApplicationServices\InventoryErrorFilesMigrationServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptionsSyncServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsOutOfSpecServiceUnitTestsV2.cs" />
@@ -894,7 +893,6 @@
     <Compile Include="UnitTests\ApplicationServices\ProgramMappingServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ProgramServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\ReelIsciIngestServiceUnitTests.cs" />
-    <Compile Include="UnitTests\ApplicationServices\SharedFolderServiceUnitTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\VpvhServiceUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\AabEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\CreativeLengthEngineUnitTests.cs" />

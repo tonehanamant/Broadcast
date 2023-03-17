@@ -1,4 +1,5 @@
 {
+  "AduImpressions": 0.0,
   "AudienceId": 34,
   "AudienceType": 1,
   "AvailableMarkets": [
@@ -2235,6 +2236,7 @@
   "Id": 1849,
   "ImpressionsPerUnit": 1000.0,
   "IsAduEnabled": false,
+  "IsAduPlan": false,
   "IsBuyingModelRunning": true,
   "IsDraft": false,
   "IsOutOfSync": false,
@@ -2660,6 +2662,7 @@
   "Vpvh": 1.1380000286776006,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 91,
+    "TotalAduImpressions": 0.0,
     "TotalBudget": 500000.0000,
     "TotalImpressions": 20000.0,
     "TotalImpressionsPercentage": 100.0,

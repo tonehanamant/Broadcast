@@ -166,10 +166,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public void DownloadErrorFile(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DownloadErrorFile(bool existInSharedFolderService)
         {
             // Arrange
             const int fileId = 23;
@@ -183,8 +182,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile
@@ -218,12 +215,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(@"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", result.Item3); // mimeType
 
             // validate correct locations were called
-            var timesCallSharedFileService = enableSharedFileServiceConsolidation && existInSharedFolderService
+            var timesCallSharedFileService = existInSharedFolderService
                 ? Times.Once()
                 : Times.Never();
             _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), timesCallSharedFileService);
 
-            var shouldCheckFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+            var shouldCheckFileService = !existInSharedFolderService;
             var timesCallFileServiceExists = shouldCheckFileService ? Times.Once() : Times.Never();
             _FileServiceMock.Verify(s => s.Exists(It.IsAny<string>()), timesCallFileServiceExists);
 
@@ -232,10 +229,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public void DownloadErrorFile_XmlFile(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DownloadErrorFile_XmlFile(bool existInSharedFolderService)
         {
             // Arrange
             const int fileId = 23;
@@ -249,8 +245,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
                 .Returns(new InventoryFile
@@ -284,12 +278,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(@"text/plain", result.Item3); // mimeType
 
             // validate correct locations were called
-            var timesCallSharedFileService = enableSharedFileServiceConsolidation && existInSharedFolderService
+            var timesCallSharedFileService = existInSharedFolderService
                 ? Times.Once()
                 : Times.Never();
             _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), timesCallSharedFileService);
             
-            var shouldCheckFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+            var shouldCheckFileService = !existInSharedFolderService;
             var timesCallFileServiceExists = shouldCheckFileService ? Times.Once() : Times.Never();
             _FileServiceMock.Verify(s => s.Exists(It.IsAny<string>()), timesCallFileServiceExists);
 
@@ -298,15 +292,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void DownloadErrorFile_IdNotFound(bool enableSharedFileServiceConsolidation)
+        public void DownloadErrorFile_IdNotFound()
         {
             const int fileId = 23;
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             var getInventoryFileByIdCalledCount = 0;
             _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
@@ -320,17 +310,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void DownloadErrorFile_FileNotFound(bool enableSharedFileServiceConsolidation)
+        public void DownloadErrorFile_FileNotFound()
         {
             // Arrange
             const int fileId = 23;
             const string fileName = "InventoryErrorFile.xlsx";
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             var getInventoryFileByIdCalledCount = 0;
             _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
@@ -356,16 +342,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             // Assert
             Assert.AreEqual($"File '{fileName}' with id '{fileId}' not found.", caught.Message);
-            var expectedGetInventoryFileByIdCalledCount = enableSharedFileServiceConsolidation ? 2 : 1;
-            Assert.AreEqual(expectedGetInventoryFileByIdCalledCount, getInventoryFileByIdCalledCount);
             Assert.AreEqual(1, fileExistsCalledCount);
             Assert.AreEqual(0, getFileStreamCalled);
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void DownloadErrorFiles(bool enableSharedFileServiceConsolidation)
+        public void DownloadErrorFiles()
         {
             // Arrange
             var fileIds = new List<int> { 27, 28, 52 };
@@ -374,8 +356,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var testDateTimeNow = new DateTime(2020, 01, 24, 12, 30, 07);
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _InventoryFileRepositoryMock.Setup(s => s.GetInventoryFileById(It.IsAny<int>()))
                 .Returns<int>((fileId) => new InventoryFile
@@ -411,31 +391,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(result);
             Assert.AreEqual(expectedArchiveFileName, result.Item1);
             Assert.IsNotNull(result.Item2); // stream
+            _InventoryFileRepositoryMock.Verify(s => s.GetErrorFileSharedFolderFileIds(It.IsAny<List<int>>()), Times.Once());
+            _SharedFolderService.Verify(s => s.CreateZipArchive(It.IsAny<List<Guid>>()), Times.Once());
 
-            if (enableSharedFileServiceConsolidation)
-            {
-                _InventoryFileRepositoryMock.Verify(s => s.GetErrorFileSharedFolderFileIds(It.IsAny<List<int>>()), Times.Once());
-                _SharedFolderService.Verify(s => s.CreateZipArchive(It.IsAny<List<Guid>>()), Times.Once());
-
-                _InventoryFileRepositoryMock.Verify(s => s.GetInventoryFileById(It.IsAny<int>()), Times.Never);
-                _FileServiceMock.Verify(s => s.Exists(It.IsAny<string>()), Times.Never);
-                _FileServiceMock.Verify(s => s.CreateZipArchive(It.IsAny<Dictionary<string, string>>()), Times.Never);
-            }
-            else
-            {
-                _InventoryFileRepositoryMock.Verify(s => s.GetErrorFileSharedFolderFileIds(It.IsAny<List<int>>()), Times.Never());
-                _SharedFolderService.Verify(s => s.CreateZipArchive(It.IsAny<List<Guid>>()), Times.Never());
-
-                _InventoryFileRepositoryMock.Verify(s => s.GetInventoryFileById(It.IsAny<int>()), Times.Exactly(3));
-                _FileServiceMock.Verify(s => s.Exists(It.IsAny<string>()), Times.Exactly(3));
-                _FileServiceMock.Verify(s => s.CreateZipArchive(It.IsAny<Dictionary<string, string>>()), Times.Once);
-            }
+            _InventoryFileRepositoryMock.Verify(s => s.GetInventoryFileById(It.IsAny<int>()), Times.Never);
+            _FileServiceMock.Verify(s => s.Exists(It.IsAny<string>()), Times.Never);
+            _FileServiceMock.Verify(s => s.CreateZipArchive(It.IsAny<Dictionary<string, string>>()), Times.Never);
         }
 
         [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void SaveUploadedInventoryFileToFileStore(bool enableSharedFileServiceConsolidation)
+        public void SaveUploadedInventoryFileToFileStore()
         {
             // Arrange
             const string username = "TestUser";
@@ -452,8 +417,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(testDateTimeNow);
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             var savedSharedFolderFiles = new List<SharedFolderFile>();
             _SharedFolderService.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
@@ -476,16 +439,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _InventoryFileRepositoryMock.Verify(s => s.SaveUploadedFileId(It.IsAny<int>(), It.IsAny<Guid>()), Times.Once);
             Assert.AreEqual(inventoryFileId, saveUploadedFileIdCalls[0].Item1);
             Assert.AreEqual(testSavedSharedFolderFileId, saveUploadedFileIdCalls[0].Item2);
-
-            // verify if it saved to the file service per the toggle
-            var fileServiceSaveTimesCalled = !enableSharedFileServiceConsolidation ? Times.Once() : Times.Never();
-            _FileServiceMock.Verify(s => s.Copy(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<bool>()), fileServiceSaveTimesCalled);
         }
 
         [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void WriteErrorFileToDisk(bool enableSharedFileServiceConsolidation)
+        public void WriteErrorFileToDisk()
         {
             // Arrange
             const string username = "TestUser";
@@ -500,8 +457,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns(testDateTimeNow);
             _ConfigurationSettingsHelperMock.Setup(s => s.GetConfigValue<string>(ConfigKeys.BroadcastAppFolder))
                 .Returns(@"C:\Temp");
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             var savedSharedFolderFiles = new List<SharedFolderFile>();
             _SharedFolderService.Setup(s => s.SaveFile(It.IsAny<SharedFolderFile>()))
@@ -525,10 +480,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             _InventoryFileRepositoryMock.Verify(s => s.SaveErrorFileId(It.IsAny<int>(), It.IsAny<Guid>()), Times.Once);
             Assert.AreEqual(inventoryFileId, saveErrorFileIdCalls[0].Item1);
             Assert.AreEqual(testSavedSharedFolderFileId, saveErrorFileIdCalls[0].Item2);
-
-            // verify if it saved to the file service per the toggle
-            var fileServiceSaveTimesCalled = !enableSharedFileServiceConsolidation ? Times.Once() : Times.Never();
-            _FileServiceMock.Verify(s => s.CreateTextFile(It.IsAny<string>(), It.IsAny<List<string>>()), fileServiceSaveTimesCalled);
         }
     }
 }

@@ -89,7 +89,6 @@ namespace Services.Broadcast.ApplicationServices
 
         private readonly IFileService _FileService;
         private readonly ISharedFolderService _SharedFolderService;
-        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
         private readonly IInventoryManagementApiClient _InventoryApiClient;
         private readonly Lazy<bool> _IsInventoryServiceMigrationEnabled;
 
@@ -111,7 +110,6 @@ namespace Services.Broadcast.ApplicationServices
 
             _FileService = fileService;
             _SharedFolderService = sharedFolderService;
-            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
             _InventoryApiClient = inventoryApiClient;
             _IsInventoryServiceMigrationEnabled = new Lazy<bool>(() =>
           _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION));
@@ -175,13 +173,6 @@ namespace Services.Broadcast.ApplicationServices
 
                     _SaveFiles(files, job.RequestedBy, currentDate);
                     _ScxGenerationJobRepository.SaveScxJobFiles(files, job);
-
-                    // Save to the original folder until the feature is released.
-                    // Delete this once the feature has been released.
-                    if (!_EnableSharedFileServiceConsolidation.Value)
-                    {
-                        _SaveToFolder(files);
-                    }
 
                     job.Complete(currentDate);
                 }
@@ -287,33 +278,22 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new Exception("No file id was supplied!");
             }
-            if (_IsInventoryServiceMigrationEnabled.Value)
+            Tuple<string, Stream, string> result;
+            var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderFileIdForFile(fileId);
+
+            if (sharedFileId.HasValue)
             {
-                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
-                // at that time this API will be directly called by FE from inventory microservice
-                
-                // return _InventoryApiClient.DownloadGeneratedScxFile(fileId);
+                _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
+                var file = _SharedFolderService.GetFile(sharedFileId.Value);
+                result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
+                return result;
             }
-            
-                Tuple<string, Stream, string> result;
 
-                if (_EnableSharedFileServiceConsolidation.Value)
-                {
-                    var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderFileIdForFile(fileId);
+            _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
 
-                    if (sharedFileId.HasValue)
-                    {
-                        _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
-                        var file = _SharedFolderService.GetFile(sharedFileId.Value);
-                        result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
-                        return result;
-                    }
+            result = _GetFileFromFileService(fileId);
+            return result;
 
-                    _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
-                }
-
-                result = _GetFileFromFileService(fileId);
-                return result;            
         }
 
         public int QueueScxOpenMarketsGenerationJob(InventoryScxOpenMarketsDownloadRequest inventoryScxOpenMarketsDownloadRequest, string userName, DateTime currentDate)
@@ -355,23 +335,6 @@ namespace Services.Broadcast.ApplicationServices
             return result;
         }
 
-        private void _SaveToFolder(List<InventoryScxFile> scxFiles)
-        {
-            var dropFolderPath = GetDropFolderPath();
-            if (!_EnableSharedFileServiceConsolidation.Value)
-            {
-                _FileService.CreateDirectory(dropFolderPath);
-                foreach (var scxFile in scxFiles)
-                {
-                    var path = Path.Combine(
-                        dropFolderPath,
-                        scxFile.FileName);
-
-                    _FileService.Create(path, scxFile.ScxStream);
-                }
-            }
-        }
-
         #region Helpers
 
         private string GetDropFolderPath()
@@ -404,12 +367,6 @@ namespace Services.Broadcast.ApplicationServices
                 FileName = dto.Filename
             };
             return item;
-        }
-
-        private bool _GetEnableSharedFileServiceConsolidation()
-        {
-            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
-            return result;
         }
 
         public List<ScxOpenMarketFileGenerationDetail> GetOpenMarketScxFileGenerationHistory()
@@ -496,13 +453,6 @@ namespace Services.Broadcast.ApplicationServices
                     _SaveFilesForOpenMarket(files, job.RequestedBy, currentDate);
                     _ScxGenerationJobRepository.SaveScxOpenMarketJobFiles(files, job);
 
-                    // Save to the original folder until the feature is released.
-                    // Delete this once the feature has been released.
-                    if (!_EnableSharedFileServiceConsolidation.Value)
-                    {
-                        _SaveToFolderForOpenInventoryScxFiles(files);
-                    }
-
                     job.Complete(currentDate);
                 }
                 catch (Exception ex)
@@ -518,48 +468,6 @@ namespace Services.Broadcast.ApplicationServices
                 if (caught != null)
                 {
                     throw caught;
-                }
-            }
-        }
-
-        private void _SaveFiles(List<OpenMarketInventoryScxFile> files, string createdBy, DateTime createdAt)
-        {
-            var dropFolderPath = GetDropFolderPath();
-            const string fileMediaType = "application/xml";
-            foreach (var file in files)
-            {
-                // have to copy the stream until we migrate to the SharedFileServiceand stop saving to the FileService.
-                // Delete this once the feature has been released.
-                var scxStreamCopy = _GetStreamCopy(file.ScxStream);
-
-                var sharedFile = new SharedFolderFile
-                {
-                    FolderPath = dropFolderPath,
-                    FileNameWithExtension = file.FileName,
-                    FileMediaType = fileMediaType,
-                    FileUsage = SharedFolderFileUsage.InventoryScx,
-                    CreatedDate = createdAt,
-                    CreatedBy = createdBy,
-                    FileContent = scxStreamCopy
-                };
-
-                var savedId = _SharedFolderService.SaveFile(sharedFile);
-                file.SharedFolderFileId = savedId;
-            }
-        }
-        private void _SaveToFolderForOpenInventoryScxFiles(List<OpenMarketInventoryScxFile> scxFiles)
-        {
-            var dropFolderPath = GetDropFolderPath();
-            if (!_EnableSharedFileServiceConsolidation.Value)
-            {
-                _FileService.CreateDirectory(dropFolderPath);
-                foreach (var scxFile in scxFiles)
-                {
-                    var path = Path.Combine(
-                        dropFolderPath,
-                        scxFile.FileName);
-
-                    _FileService.Create(path, scxFile.ScxStream);
                 }
             }
         }
@@ -597,35 +505,21 @@ namespace Services.Broadcast.ApplicationServices
             {
                 throw new Exception("No file id was supplied!");
             }
-            if (_IsInventoryServiceMigrationEnabled.Value)
+            Tuple<string, Stream, string> result;
+            var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderForOpenMarketFile(fileId);
+
+            if (sharedFileId.HasValue)
             {
-                //This call to inventory microservice is disabled When FE call inventory microservice api directly 
-                // at that time this API will be directly called by FE from inventory microservice
-
-                //return _InventoryApiClient.DownloadGeneratedScxFileForOpenMarket(fileId);
-            }
-           // else
-            //{
-                Tuple<string, Stream, string> result;
-
-                if (_EnableSharedFileServiceConsolidation.Value)
-                {
-                    var sharedFileId = _ScxGenerationJobRepository.GetSharedFolderForOpenMarketFile(fileId);
-
-                    if (sharedFileId.HasValue)
-                    {
-                        _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
-                        var file = _SharedFolderService.GetFile(sharedFileId.Value);
-                        result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
-                        return result;
-                    }
-
-                    _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
-                }
-
-                result = _GetOpenMarketFileFromFileService(fileId);
+                _LogInfo($"Translated fileId '{fileId}' as sharedFolderFileId '{sharedFileId.Value}'");
+                var file = _SharedFolderService.GetFile(sharedFileId.Value);
+                result = _BuildPackageReturn(file.FileContent, file.FileNameWithExtension);
                 return result;
-            //}
+            }
+
+            _LogWarning($"Given fileId '{fileId}' did not map to a sharedFolderFileId.  Checking with FileService.");
+
+            result = _GetOpenMarketFileFromFileService(fileId);
+            return result;
         }
 
         private Tuple<string, Stream, string> _GetOpenMarketFileFromFileService(int fileId)

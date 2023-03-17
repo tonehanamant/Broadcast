@@ -4,8 +4,6 @@ namespace Services.Broadcast.Entities
 {
     public class MigrateFilesToAttachmentServiceResult
 	{
-		public bool ConsolidationEnabled { get; set; }
-		public bool MigrationEnabled { get; set; }
 		public int TotalFileHistoryCount { get; set; }
 		public int TotalErrorFileHistoryCount { get; set; }
 		public List<string> MigratedFileNames { get; set; } = new List<string>();
@@ -18,8 +16,6 @@ namespace Services.Broadcast.Entities
 			get
 			{
 				var message =
-					$"ConsolidationEnabled: {ConsolidationEnabled}; " +
-					$"MigrationEnabled: {MigrationEnabled}; " +
 					$"TotalFileHistoryCount: {TotalFileHistoryCount}; " +
 					$"TotalErrorFileHistoryCount: {TotalErrorFileHistoryCount}; " +
 					$"MigratedFileNamesCount: {MigratedFileNames.Count}; " +

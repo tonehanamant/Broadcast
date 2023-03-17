@@ -12,7 +12,6 @@
         public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";              
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
-        public static string ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION = "broadcast-enable-shared-file-service-consolidation";
         public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";
         public static string ENABLE_PARTIAL_PLAN_SAVE = "broadcast-enable-partial-plan-save";
         public static string ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2 = "broadcast-weekly-breakdown-engine-v-2";
@@ -24,7 +23,6 @@
         /// This feature toggle is used to check the new locking microservice
         /// </summary>
         public static string ENABLE_UNIFIED_CAMPAIGN = "broadcast-enable-unified-campaign";
-        public static string ENABLE_ATTACHMENT_MICRO_SERVICE = "broadcast-enable-attachment-micro-service";
         public static string ENABLE_PROGRAM_LINEUP_ALLOCATION_BY_AFFILIATE = "broadcast-program-lineup-allocation-by-affiliate";
         public static string ENABLE_CENTRALIZED_PROGRAM_LIST = "broadcast-enable-centralized-program-list";
         public static string ENABLE_STATION_SECONDARY_AFFILIATIONS = "broadcast-enable-station-secondary-affiliations";

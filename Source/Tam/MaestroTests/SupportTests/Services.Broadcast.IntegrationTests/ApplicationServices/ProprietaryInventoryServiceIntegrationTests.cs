@@ -943,9 +943,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
         {
             const string fileName = @"Diginet_InvalidFile1.xlsx";
 
-            _SetFeatureToggle(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION, true);
-            _SetFeatureToggle(FeatureToggles.ENABLE_ATTACHMENT_MICRO_SERVICE, true);
-
             using (new TransactionScopeWrapper())
             {
                 var request = new FileRequest

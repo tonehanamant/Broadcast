@@ -183,19 +183,16 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly ISpotExceptionsOutOfSpecRepositoryV2 _SpotExceptionsOutOfSpecRepositoryV2;
 
         private readonly IDateTimeEngine _DateTimeEngine;
-        private readonly IFileService _FileService;
         private readonly ISharedFolderService _SharedFolderService;
         private readonly IGenreCache _GenreCache;
         private readonly IAabEngine _AabEngine;
         private readonly IPlanRepository _PlanRepository;
-        private readonly Lazy<bool> _EnableSharedFileServiceConsolidation;
         private readonly Lazy<bool> _IsSpotExceptionEnabled;
 
         public SpotExceptionsOutOfSpecServiceV2(
           IDataRepositoryFactory dataRepositoryFactory,
           IFeatureToggleHelper featureToggleHelper,
           IDateTimeEngine dateTime,
-          IFileService fileService,
           ISharedFolderService sharedFolderService,
           IGenreCache genreCache,
           IAabEngine aabEngine,
@@ -204,10 +201,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             _SpotExceptionsOutOfSpecRepositoryV2 = dataRepositoryFactory.GetDataRepository<ISpotExceptionsOutOfSpecRepositoryV2>();
             _DateTimeEngine = dateTime;
-            _FileService = fileService;
             _SharedFolderService = sharedFolderService;
             _GenreCache = genreCache;
-            _EnableSharedFileServiceConsolidation = new Lazy<bool>(_GetEnableSharedFileServiceConsolidation);
             _AabEngine = aabEngine;
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
             _IsSpotExceptionEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS));
@@ -953,13 +948,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             };
             var fileId = _SharedFolderService.SaveFile(sharedFolderFile);
 
-            // Save to the File Service until the toggle is enabled and then we can remove it.
-            if (!_EnableSharedFileServiceConsolidation.Value)
-            {
-                _FileService.CreateDirectory(folderPath);
-                _FileService.Create(folderPath, fileName, fileStream);
-            }
-
             return fileId;
         }
 
@@ -971,16 +959,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             var path = Path.Combine(_GetBroadcastAppFolder(), BroadcastConstants.FolderNames.OUT_OF_SPEC_EXPORT_REPORT);
             return path;
-        }
-
-        /// <summary>
-        /// Gets the enable shared file service consolidation.
-        /// </summary>
-        /// <returns></returns>
-        private bool _GetEnableSharedFileServiceConsolidation()
-        {
-            var result = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION);
-            return result;
         }
 
         private bool _SaveOutOfSpecSpotDecisionsDone(SaveOutOfSpecSpotBulkEditRequestDto outOfSpecBulkEditRequest, string userName)

@@ -306,8 +306,6 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
             //Inventory Microservice service
             unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();
-            // Migration Related
-            unityContainer.RegisterType<IInventoryErrorFilesMigrationService, InventoryErrorFilesMigrationService>();
             unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();
             //launch darkly
             unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();

@@ -190,19 +190,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         #region DownloadGeneratedScxFile
 
         [Test]
-        [TestCase(true,  true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public void DownloadGeneratedScxFileFromFileService(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DownloadGeneratedScxFileFromFileService(bool existInSharedFolderService)
         {
             // Arrange
             var savedFileGuid = existInSharedFolderService
                     ? new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5") 
                     : (Guid?)null;
-
-            _FeatureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _ScxGenerationJobRepository.Setup(s => s.GetScxFileName(It.IsAny<int>()))
                 .Returns("fileTwo.txt");
@@ -235,21 +230,17 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(result.Item2);
             Assert.AreEqual("text/plain", result.Item3);
 
-            var shouldCheckSharedFolderService = enableSharedFileServiceConsolidation;
-            if (shouldCheckSharedFolderService)
+            _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderFileIdForFile(It.IsAny<int>()), Times.Once);
+            if (existInSharedFolderService)
             {
-                _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderFileIdForFile(It.IsAny<int>()), Times.Once);
-                if (existInSharedFolderService)
-                {
-                    _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Once);
-                }
-                else
-                {
-                    _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
-                }
+                _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Once);
+            }
+            else
+            {
+                _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
             }
 
-            var shouldHaveCheckedFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+            var shouldHaveCheckedFileService = !existInSharedFolderService;
             if (shouldHaveCheckedFileService)
             {
                 _ScxGenerationJobRepository.Verify(s => s.GetScxFileName(It.IsAny<int>()), Times.Once);
@@ -269,9 +260,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         public void DownloadGeneratedScxFileWithFileNotFound(bool enableSharedFileServiceConsolidation)
         {
             // Arrange
-            _FeatureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _ScxGenerationJobRepository.Setup(s => s.GetScxFileName(It.IsAny<int>()))
                 .Returns("fileUnfound.txt");
@@ -311,15 +299,13 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         #region ProcessScxGenerationJob
 
         [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void ProcessScxGenerationJobUpdatesStatus(bool enableSharedFileServiceConsolidation)
+        public void ProcessScxGenerationJobUpdatesStatus()
         {
             var savedFileGuid = new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5");
 
-            _FeatureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
+            //_FeatureToggle.Setup(s =>
+            //        s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
+            //    .Returns(enableSharedFileServiceConsolidation);
 
             var updateJobCallCount = 0;
             var testJob = new ScxGenerationJob
@@ -374,16 +360,16 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsTrue(savedScxJobFiles[0][0]?.SharedFolderFileId.HasValue ?? false);
             Assert.AreEqual(savedFileGuid, savedScxJobFiles[0][0]?.SharedFolderFileId.Value);
 
-            if (enableSharedFileServiceConsolidation)
-            {
+            //if (enableSharedFileServiceConsolidation)
+            //{
                 _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Never);
                 _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Never);
-            }
-            else
-            {
-                _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Once);
-                _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once);
-            }
+            //}
+            //else
+            //{
+            //    _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Once);
+            //    _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once);
+            //}
         }
 
         #endregion
@@ -569,15 +555,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 It.IsAny<EnqueuedState>()));
         }
         [Test]
-        [TestCase(false)]
-        [TestCase(true)]
-        public void ProcessScxGenerationJobUpdatesStatusForOpenmarket(bool enableSharedFileServiceConsolidation)
+        public void ProcessScxGenerationJobUpdatesStatusForOpenmarket()
         {
             var savedFileGuid = new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5");
-
-            _FeatureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             var updateJobCallCount = 0;
             var testJob = new ScxOpenMarketsGenerationJob
@@ -633,17 +613,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.AreEqual(1, savedScxJobFiles.Count);
             Assert.IsTrue(savedScxJobFiles[0][0]?.SharedFolderFileId.HasValue ?? false);
             Assert.AreEqual(savedFileGuid, savedScxJobFiles[0][0]?.SharedFolderFileId.Value);
+            _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Never);
+            _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Never);
 
-            if (enableSharedFileServiceConsolidation)
-            {
-                _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Never);
-                _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Never);
-            }
-            else
-            {
-                _FileService.Verify(s => s.CreateDirectory(It.IsAny<string>()), Times.Once);
-                _FileService.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<Stream>()), Times.Once);
-            }
         }
 
         [Test]
@@ -721,19 +693,14 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public void DownloadGeneratedScxFileForOpenMarket(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
+        [TestCase(true)]
+        [TestCase(false)]
+        public void DownloadGeneratedScxFileForOpenMarket(bool existInSharedFolderService)
         {
             // Arrange
             var savedFileGuid = existInSharedFolderService
                     ? new Guid("4FAED53D-759A-4088-9A33-DE2C9107CCC5")
                     : (Guid?)null;
-
-            _FeatureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileName(It.IsAny<int>()))
                 .Returns("fileTwo.txt");
@@ -766,21 +733,18 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(result.Item2);
             Assert.AreEqual("text/plain", result.Item3);
 
-            var shouldCheckSharedFolderService = enableSharedFileServiceConsolidation;
-            if (shouldCheckSharedFolderService)
+            _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()), Times.Once);
+            if (existInSharedFolderService)
             {
-                _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()), Times.Once);
-                if (existInSharedFolderService)
-                {
-                    _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Once);
-                }
-                else
-                {
-                    _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
-                }
+                _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Once);
+            }
+            else
+            {
+                _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
             }
 
-            var shouldHaveCheckedFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+
+            var shouldHaveCheckedFileService = !existInSharedFolderService;
             if (shouldHaveCheckedFileService)
             {
                 _ScxGenerationJobRepository.Verify(s => s.GetOpenMarketScxFileName(It.IsAny<int>()), Times.Once);
@@ -795,14 +759,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void DownloadGeneratedOpenMarketScxFileWithFileNotFound(bool enableSharedFileServiceConsolidation)
+        public void DownloadGeneratedOpenMarketScxFileWithFileNotFound()
         {
             // Arrange
-            _FeatureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
 
             _ScxGenerationJobRepository.Setup(s => s.GetOpenMarketScxFileName(It.IsAny<int>()))
                 .Returns("fileUnfound.txt");
@@ -826,12 +785,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             // Assert
             Assert.AreEqual("File not found.  Please regenerate.", caught.Message);
 
-            if (enableSharedFileServiceConsolidation)
-            {
-                _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()), Times.Once);
-                _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
-            }
-
+            _ScxGenerationJobRepository.Verify(s => s.GetSharedFolderForOpenMarketFile(It.IsAny<int>()), Times.Once);
+            _SharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), Times.Never);
             _ScxGenerationJobRepository.Verify(s => s.GetOpenMarketScxFileName(It.IsAny<int>()), Times.Once);
             _FileService.Verify(s => s.GetFiles(It.IsAny<string>()), Times.Once);
             _FileService.Verify(s => s.GetFileStream(It.IsAny<string>()), Times.Never);

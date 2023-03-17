@@ -83,8 +83,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
             const string testUser = "TestUser";
             const string templatePath = @".\Files\Excel templates";
 
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION] = enableSharedFileServiceConsolidation;
-
             var testRequest = new InventoryExportRequestDto
             {
                 Genre = InventoryExportGenreTypeEnum.News,
@@ -200,9 +198,6 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices.Inventory
         {
             const string testUser = "TestUser";
             const string templatePath = @".\Files\Excel templates";
-
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_INVENTORY_SERVICE_MIGRATION] = true;
 
             var testRequest = new InventoryExportRequestDto
             {

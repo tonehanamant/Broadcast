@@ -1,23 +1,5 @@
 [
   {
-    "Genre": null,
-    "MatchConfidence": 1.0,
-    "MatchedName": "black-ish",
-    "MatchType": 1,
-    "OriginalName": "BLACK-ISH",
-    "ProgramName": "BLACK-ISH",
-    "ShowType": "Series"
-  },
-  {
-    "Genre": null,
-    "MatchConfidence": 1.0,
-    "MatchedName": "black-ish",
-    "MatchType": 1,
-    "OriginalName": "BLACK-ISH 2X",
-    "ProgramName": "BLACK-ISH",
-    "ShowType": "Series"
-  },
-  {
     "Genre": "Drama",
     "MatchConfidence": 0.61667,
     "MatchedName": "America Undercover",
@@ -897,6 +879,24 @@
     "MatchType": 4,
     "OriginalName": "WE ARE AUSTIN",
     "ProgramName": "WE ARE AUSTIN",
+    "ShowType": "Series"
+  },
+  {
+    "Genre": "Drama",
+    "MatchConfidence": 0.61953,
+    "MatchedName": "America Undercover",
+    "MatchType": 4,
+    "OriginalName": "MIL MAKEOVR/XTREME",
+    "ProgramName": "MIL MAKEOVR/XTREME",
+    "ShowType": "Series"
+  },
+  {
+    "Genre": "Comedy",
+    "MatchConfidence": 0.53175,
+    "MatchedName": "The Simpsons",
+    "MatchType": 4,
+    "OriginalName": "TODAY SHOW III",
+    "ProgramName": "TODAY SHOW III",
     "ShowType": "Series"
   }
 ]

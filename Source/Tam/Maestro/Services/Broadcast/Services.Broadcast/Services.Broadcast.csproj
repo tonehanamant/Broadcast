@@ -783,7 +783,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationServices\InventoryErrorFilesMigrationService.cs" />
     <Compile Include="ApplicationServices\Inventory\InventoryMarketAffiliatesExportService.cs" />
     <Compile Include="ApplicationServices\ReelIsciIngestService.cs" />
     <Compile Include="ApplicationServices\AdvertiserService.cs" />

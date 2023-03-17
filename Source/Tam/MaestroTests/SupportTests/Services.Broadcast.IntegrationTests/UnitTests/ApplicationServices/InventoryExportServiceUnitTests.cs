@@ -38,9 +38,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         private const string TEST_TEMPLATE_PATH = @".\Files\Excel templates";
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void GenerateExportForOpenMarket(bool enableSharedFileServiceConsolidation)
+        public void GenerateExportForOpenMarket()
         {
             /*** Arrange ***/
             var request = new InventoryExportRequestDto
@@ -62,7 +60,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var inventoryExportEngine = new Mock<IInventoryExportEngine>();
-            var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
@@ -183,8 +180,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns("TestFileName.xlsx");
 
             var fileServiceCreateFilesCalled = new List<Tuple<string, string, Stream>>();
-            fileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, string, Stream>((sd, fn, st) => fileServiceCreateFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
 
             var updatedJobs = new List<InventoryExportJobDto>();
             inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
@@ -223,16 +218,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Callback<SharedFolderFile>((f) => savedSharedFolderFiles.Add(f))
                 .Returns(savedSharedFolderFileId);
 
-            featureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
-
             // instantiate our test server with all our setup mocks.
             var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
@@ -274,23 +264,12 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(savedSharedFolderFiles[0].FileContent);
             Assert.AreEqual(SharedFolderFileUsage.InventoryExport, savedSharedFolderFiles[0].FileUsage);
 
-            if (enableSharedFileServiceConsolidation)
-            {
-                Assert.AreEqual(0, fileServiceCreateFilesCalled.Count);
-            }
-            else
-            {
-                Assert.AreEqual(1, fileServiceCreateFilesCalled.Count);
-                Assert.IsTrue(fileServiceCreateFilesCalled[0].Item1.EndsWith(@"\InventoryExports"));
-                Assert.AreEqual("TestFileName.xlsx", fileServiceCreateFilesCalled[0].Item2);
-                Assert.IsNotNull(fileServiceCreateFilesCalled[0].Item3);
-            }
+            Assert.AreEqual(0, fileServiceCreateFilesCalled.Count);
+           
         }
 
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void GenerateExportForOpenMarket_Unenriched(bool enableSharedFileServiceConsolidation)
+        public void GenerateExportForOpenMarket_Unenriched()
         {
             /*** Arrange ***/
             var request = new InventoryExportRequestDto
@@ -311,7 +290,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var inventoryExportEngine = new Mock<IInventoryExportEngine>();
-            var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
@@ -440,8 +418,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 .Returns("TestFileName.xlsx");
 
             var fileServiceCreateFilesCalled = new List<Tuple<string, string, Stream>>();
-            fileService.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>()))
-                .Callback<string, string, Stream>((sd, fn, st) => fileServiceCreateFilesCalled.Add(new Tuple<string, string, Stream>(sd, fn, st)));
 
             var updatedJobs = new List<InventoryExportJobDto>();
             inventoryExportJobRepository.Setup(s => s.UpdateJob(It.IsAny<InventoryExportJobDto>()))
@@ -479,16 +455,11 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             dateTimeEngine.Setup(s => s.GetCurrentMoment())
                 .Returns(testCurrentTimestamp);
 
-            featureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
-
             // instantiate our test server with all our setup mocks.
             var service = new InventoryExportService(broadcastDataRepositoryFactory.Object,
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
@@ -530,17 +501,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             Assert.IsNotNull(savedSharedFolderFiles[0].FileContent);
             Assert.AreEqual(SharedFolderFileUsage.InventoryExport, savedSharedFolderFiles[0].FileUsage);
 
-            if (enableSharedFileServiceConsolidation)
-            {
-                Assert.AreEqual(0, fileServiceCreateFilesCalled.Count);
-            }
-            else
-            {
-                Assert.AreEqual(1, fileServiceCreateFilesCalled.Count);
-                Assert.IsTrue(fileServiceCreateFilesCalled[0].Item1.EndsWith(@"\InventoryExports"));
-                Assert.AreEqual("TestFileName.xlsx", fileServiceCreateFilesCalled[0].Item2);
-                Assert.IsNotNull(fileServiceCreateFilesCalled[0].Item3);
-            }
+            Assert.AreEqual(0, fileServiceCreateFilesCalled.Count);
         }
 
         private InventoryExportDto _GetInventoryExportDto(int inventoryId, int mediaWeekId, int stationId, int daypartId, string programNameSeed, string inventoryProgramNameSeed)
@@ -703,7 +664,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
@@ -724,10 +684,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
         }
 
         [Test]
-        [TestCase(true, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public void DownloadOpenMarketExportFile(bool enableSharedFileServiceConsolidation, bool existInSharedFolderService)
+        public void DownloadOpenMarketExportFile()
         {
             /*** Arrange ***/
             // instantiate our mocks.
@@ -739,7 +696,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
-
+            bool existInSharedFolderService = true;
             var inventoryRepository = new Mock<IInventoryRepository>();
             var inventoryExportRepository = new Mock<IInventoryExportRepository>();
             var inventoryExportJobRepository = new Mock<IInventoryExportJobRepository>();
@@ -784,10 +741,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var sharedFolderService = new Mock<ISharedFolderService>();
             var dateTimeEngine = new Mock<IDateTimeEngine>();
 
-            featureToggle.Setup(s =>
-                    s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SHARED_FILE_SERVICE_CONSOLIDATION))
-                .Returns(enableSharedFileServiceConsolidation);
-
             sharedFolderService.Setup(s => s.GetFile(It.IsAny<Guid>()))
                 .Returns(new SharedFolderFile { FileName = "TestFileName", FileExtension = ".xlsx", FileContent = new MemoryStream() });
 
@@ -796,7 +749,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
@@ -817,11 +769,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
 
             inventoryExportJobRepository.Verify(s => s.GetJob(It.IsAny<int>()), Times.Once);
 
-            var shouldCheckSharedFolderService = enableSharedFileServiceConsolidation;
-            var sharedFolderServiceGetFileTimesCalled = shouldCheckSharedFolderService && existInSharedFolderService ? Times.Once() : Times.Never();
+            var sharedFolderServiceGetFileTimesCalled = existInSharedFolderService ? Times.Once() : Times.Never();
             sharedFolderService.Verify(s => s.GetFile(It.IsAny<Guid>()), sharedFolderServiceGetFileTimesCalled);
 
-            var shouldHaveCheckedFileService = !enableSharedFileServiceConsolidation || !existInSharedFolderService;
+            var shouldHaveCheckedFileService = !existInSharedFolderService;
             var fileServiceGetFileStreamTimesCalled = shouldHaveCheckedFileService ? Times.Once() : Times.Never();
             fileService.Verify(s => s.GetFileStream(It.IsAny<string>(), It.IsAny<string>()), fileServiceGetFileStreamTimesCalled);
 
@@ -873,7 +824,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var inventoryExportEngine = new Mock<IInventoryExportEngine>();
-            var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
@@ -904,7 +854,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
@@ -956,7 +905,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var inventoryExportEngine = new Mock<IInventoryExportEngine>();
-            var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
@@ -987,7 +935,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,
@@ -1012,7 +959,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
             var quarterCalculationEngine = new Mock<IQuarterCalculationEngine>();
             var mediaMonthAndWeekAggregateCache = new Mock<IMediaMonthAndWeekAggregateCache>();
             var inventoryExportEngine = new Mock<IInventoryExportEngine>();
-            var fileService = new Mock<IFileService>();
             var spotLengthEngine = new Mock<ISpotLengthEngine>();
             var daypartCache = new Mock<IDaypartCache>();
             var marketService = new Mock<IMarketService>();
@@ -1058,7 +1004,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices
                 quarterCalculationEngine.Object,
                 mediaMonthAndWeekAggregateCache.Object,
                 inventoryExportEngine.Object,
-                fileService.Object,
                 sharedFolderService.Object,
                 spotLengthEngine.Object,
                 daypartCache.Object,

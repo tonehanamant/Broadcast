@@ -4,6 +4,10 @@
     "Id": 11
   },
   {
+    "Display": "ANT",
+    "Id": 33
+  },
+  {
     "Display": "AZA",
     "Id": 7
   },
@@ -24,8 +28,16 @@
     "Id": 6
   },
   {
+    "Display": "CTV",
+    "Id": 30
+  },
+  {
     "Display": "CW",
     "Id": 8
+  },
+  {
+    "Display": "DFY",
+    "Id": 31
   },
   {
     "Display": "ETV",
@@ -68,6 +80,10 @@
     "Id": 16
   },
   {
+    "Display": "MYS",
+    "Id": 29
+  },
+  {
     "Display": "NBC",
     "Id": 5
   },
@@ -78,6 +94,10 @@
   {
     "Display": "TEL",
     "Id": 1
+  },
+  {
+    "Display": "TRN",
+    "Id": 32
   },
   {
     "Display": "UMA",
