@@ -505,9 +505,9 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                 if (plan.IsAduPlan && _IsAduForPlanningv2Enabled.Value)
                 {
-                    _PlanValidator.ValidateAduPlan(plan);
                     // init goal related properties
                     _InitAduOnlyPlanGoals(plan);
+                    _PlanValidator.ValidateAduPlan(plan);
                 }
                 else
                 {

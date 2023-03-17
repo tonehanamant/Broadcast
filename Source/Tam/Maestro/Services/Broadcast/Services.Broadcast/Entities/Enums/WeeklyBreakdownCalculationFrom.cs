@@ -8,6 +8,7 @@
         Impressions = 1,
         Ratings = 2,
         Percentage = 3,
-        Units = 4
+        Units = 4,
+        ADUImpressions = 5
     }
 }

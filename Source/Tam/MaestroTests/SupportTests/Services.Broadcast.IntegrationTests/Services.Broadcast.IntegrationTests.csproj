@@ -791,6 +791,7 @@
     <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsServiceUnitTestsV2.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsUnpostedServiceUnitTestsV2.cs" />
+    <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineV2UnitTests.cs" />
     <Compile Include="UnitTests\Validators\SpotExceptionsValidatorUnitTests.cs" />
     <None Include="appsettings.Debug-Tests-Development.json">
       <DependentUpon>appsettings.json</DependentUpon>

@@ -4,6 +4,7 @@ using Common.Services.Repositories;
 using Moq;
 using NUnit.Framework;
 using Services.Broadcast.BusinessEngines;
+using Services.Broadcast.Entities.DTO.Program;
 using Services.Broadcast.Entities.Enums;
 using Services.Broadcast.Entities.Plan;
 using Services.Broadcast.Helpers;
@@ -14,7 +15,6 @@ using Services.Broadcast.Validators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Services.Broadcast.Entities.DTO.Program;
 using Tam.Maestro.Data.Entities.DataTransferObjects;
 using Tam.Maestro.Services.ContractInterfaces.Common;
 using CreativeLength = Services.Broadcast.Entities.CreativeLength;
@@ -3415,201 +3415,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.PlanServices
             var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
-        }
-
-        [Test]
-        [TestCase(false, true, true, 16000)]
-        [TestCase(false, true, false, 8888.8888888888887d)]
-        [TestCase(false, false, true, 8000)]
-        [TestCase(false, false, false, 8000)]
-        [TestCase(true, true, true, 8000)]
-        [TestCase(true, true, false, 4444.444444444444d)]
-        [TestCase(true, false, true, 4000)]
-        [TestCase(true, false, false, 4000)]
-        public void CalculateWeeklyADUImpressions_TwoCreatives(bool aduForPlanningV2Enabled,
-            bool equivalized, bool weekHasSpotLengthId, double expectedResult)
-        {
-            // Arrange
-            // spot length delivery multipliers are setup in the test class constructor
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = aduForPlanningV2Enabled;
-
-            var weeklyBreakdownWeek = new WeeklyBreakdownWeek
-            {
-                WeekNumber = 1,
-                MediaWeekId = 937,
-                StartDate = new DateTime(2021, 12, 6),
-                EndDate = new DateTime(2021, 12, 12),
-                NumberOfActiveDays = 7,
-                ActiveDays = "M-Su",
-                WeeklyImpressions = 0,
-                WeeklyImpressionsPercentage = 0,
-                WeeklyRatings = 0,
-                WeeklyBudget = 0,
-                WeeklyAdu = 4000,
-                AduImpressions = 0,
-                SpotLengthId = weekHasSpotLengthId ? (int?)2 : null,
-                SpotLengthDuration = null,
-                DaypartCodeId = null,
-                PercentageOfWeek = null,
-                IsUpdated = false,
-                UnitImpressions = 0,
-                WeeklyUnits = 0,
-                IsLocked = false
-            };
-            
-            var creatives = new List<CreativeLength>
-                {
-                    new CreativeLength {SpotLengthId = 1,Weight = 80},
-                    new CreativeLength {SpotLengthId = 2,Weight = 20}
-                };
-
-            // Act
-            var result = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(weeklyBreakdownWeek, equivalized: equivalized, impressionsPerUnit: 2, creatives);
-
-            // Assert
-            Assert.AreEqual(expectedResult, result);
-        }
-
-        [Test]
-        [TestCase(false, true, true, 16000)]
-        [TestCase(false, true, false, 16000)]
-        [TestCase(false, false, true, 8000)]
-        [TestCase(false, false, false, 8000)]
-        [TestCase(true, true, true, 8000)]
-        [TestCase(true, true, false, 8000)]
-        [TestCase(true, false, true, 4000)]
-        [TestCase(true, false, false, 4000)]
-        public void CalculateWeeklyADUImpressions_SingleCreative(bool aduForPlanningV2Enabled,
-            bool equivalized, bool weekHasSpotLengthId, double expectedResult)
-        {
-            // Arrange
-            // spot length delivery multipliers are setup in the test class constructor
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = aduForPlanningV2Enabled;
-
-            var weeklyBreakdownWeek = new WeeklyBreakdownWeek
-            {
-                WeekNumber = 1,
-                MediaWeekId = 937,
-                StartDate = new DateTime(2021, 12, 6),
-                EndDate = new DateTime(2021, 12, 12),
-                NumberOfActiveDays = 7,
-                ActiveDays = "M-Su",
-                WeeklyImpressions = 0,
-                WeeklyImpressionsPercentage = 0,
-                WeeklyRatings = 0,
-                WeeklyBudget = 0,
-                WeeklyAdu = 4000,
-                AduImpressions = 0,
-                SpotLengthId = weekHasSpotLengthId ? (int?)2 : null,
-                SpotLengthDuration = null,
-                DaypartCodeId = null,
-                PercentageOfWeek = null,
-                IsUpdated = false,
-                UnitImpressions = 0,
-                WeeklyUnits = 0,
-                IsLocked = false
-            };
-
-            var creatives = new List<CreativeLength>
-                {
-                    new CreativeLength {SpotLengthId = 2,Weight = 100}
-                };
-
-            // Act
-            var result = _WeeklyBreakdownEngine.CalculateWeeklyADUImpressions(weeklyBreakdownWeek, equivalized: equivalized, impressionsPerUnit: 2, creatives);
-
-            // Assert
-            Assert.AreEqual(expectedResult, result);
-        }
-
-        [Test]
-        public void CalculatePlanWeeklyGoalBreakdown_AduPlan()
-        {
-            // Arrange
-            // spot length delivery multipliers are setup in the test class constructor
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2] = true;
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_ADU_FOR_PLANNING_V2] = true;
-
-            var weightedCreatives = new List<CreativeLength>
-                    {
-                        new CreativeLength { SpotLengthId = 1, Weight = 100 }
-                    };
-
-            _CreativeLengthEngineMock.Setup(s => s.DistributeWeight(It.IsAny<IEnumerable<CreativeLength>>()))
-                .Returns(weightedCreatives);
-
-            var request = new WeeklyBreakdownRequest
-            { 
-                    FlightDays = new List<int> { 1,2,3,4,5,6,7 },
-                    FlightStartDate = new DateTime(2023, 03, 27),
-                    FlightEndDate = new DateTime(2023, 4, 9, 23, 59 ,59),
-                    FlightHiatusDays = new List<DateTime>(),
-                    // TotalImpressions = null,
-                    DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
-                    Equivalized = true,
-                    Weeks = new List<WeeklyBreakdownWeek>(),
-                    CreativeLengths = weightedCreatives,
-                    Dayparts = new List<PlanDaypartDto>
-                    {
-                        new PlanDaypartDto { DaypartCodeId = 1 }
-                    },
-                    WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
-                    IsAduOnly = true,
-                    ImpressionsPerUnit = 0,
-                    TotalBudget = 0,
-                    TotalImpressions = 0,
-                    TotalRatings = 0
-            };
-
-            var cachedWeeks = new List<DisplayMediaWeek>
-            {
-                new DisplayMediaWeek
-                {
-                    Id = 1005,
-                    Week = 1,
-                    MediaMonthId = 499,
-                    Year = 2023,
-                    Month = 4,
-                    WeekStartDate = new DateTime(2023, 3, 27),
-                    WeekEndDate = new DateTime(2023,4, 2),
-                    MonthStartDate = new DateTime(2023, 3, 27),
-                    MonthEndDate = new DateTime(2023, 4, 30)
-                },
-                new DisplayMediaWeek
-                {
-                    Id = 1006,
-                    Week = 2,
-                    MediaMonthId = 499,
-                    Year = 2023,
-                    Month = 4,
-                    WeekStartDate = new DateTime(2023, 4, 3),
-                    WeekEndDate = new DateTime(2023,4, 9),
-                    MonthStartDate = new DateTime(2023, 3, 27),
-                    MonthEndDate = new DateTime(2023, 4, 30)
-                }
-            };
-
-            _MediaMonthAndWeekAggregateCacheMock
-                .Setup(m => m.GetDisplayMediaWeekByFlight(It.IsAny<DateTime>(), It.IsAny<DateTime>()))
-                .Returns(cachedWeeks);
-
-            // Act
-            var result = _WeeklyBreakdownEngine.CalculatePlanWeeklyGoalBreakdown(request);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(2, result.Weeks.Count);
-            Assert.AreEqual(2, result.RawWeeklyBreakdownWeeks.Count);
-            Assert.AreEqual(14, result.TotalActiveDays);
-            Assert.AreEqual(0, result.TotalShareOfVoice);
-            Assert.AreEqual(0, result.TotalImpressions);
-            Assert.AreEqual(0, result.TotalRatingPoints);
-            Assert.AreEqual(0, result.TotalImpressionsPercentage);
-            Assert.AreEqual(0, result.TotalBudget);
-            Assert.AreEqual(0, result.TotalUnits);
-        }
+        }        
 
         #region Handling Delivery Type Change
 

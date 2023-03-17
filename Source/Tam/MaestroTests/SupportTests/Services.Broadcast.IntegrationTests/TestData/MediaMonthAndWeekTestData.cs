@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tam.Maestro.Data.Entities;
+using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.IntegrationTests.TestData
 {
@@ -11,6 +12,31 @@ namespace Services.Broadcast.IntegrationTests.TestData
         {
             var result = _MediaWeeks.Where(w => w.StartDate <= end && w.EndDate >= start)
                 .OrderBy(m => m.StartDate).ToList();
+            return result;
+        }
+
+        public static List<DisplayMediaWeek> GetDisplayMediaWeekByFlight(DateTime start, DateTime end)
+        {
+            var mediaWeeks = GetMediaWeeksIntersecting(start, end);
+
+            var result = mediaWeeks.Select(w =>
+            {
+                var month = GetMediaMonthById(w.MediaMonthId);
+                var week = new DisplayMediaWeek
+                {
+                    Id = w.Id,
+                    WeekStartDate = w.StartDate,
+                    WeekEndDate = w.EndDate,
+                    MediaMonthId = w.MediaMonthId,
+                    Year = month.Year,
+                    Month = month.Month,
+                    Week = w.WeekNumber,
+                    MonthStartDate = month.StartDate,
+                    MonthEndDate = month.EndDate
+                };
+                return week;
+            }).ToList();
+
             return result;
         }
 

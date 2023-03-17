@@ -1,5 +1,4 @@
-﻿using Common.Services.ApplicationServices;
-using Common.Services.Extensions;
+﻿using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -604,17 +603,7 @@ namespace Services.Broadcast.BusinessEngines
 
                 _PlanValidator.ValidateImpressionsPerUnit(request.ImpressionsPerUnit, request.TotalImpressions);
             }
-            else if (request.IsAduOnly && _IsAduForPlanningv2Enabled.Value)
-            {
-                // Init goal related properties
-                request.TotalBudget = 0;
-                request.TotalImpressions = 0;
-                request.TotalRatings = 0;
-                request.TotalBudget = 0;
-
-                request.ImpressionsPerUnit = 1;
-            }
-
+            
             /*** Prepare to calculate ***/
 
             // apply the fully defined and validated weights on the request.
@@ -791,20 +780,21 @@ namespace Services.Broadcast.BusinessEngines
             {
                 request.DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek;
             }
-                foreach (var week in request.Weeks)
+
+            foreach (var week in request.Weeks)
+            {
+                if (!week.IsLocked)
                 {
-                    if (!week.IsLocked)
-                    {
-                        week.WeeklyBudget = 0;
-                        week.WeeklyUnits = 0;
-                        week.WeeklyRatings = 0;
-                        week.WeeklyImpressions = 0;
-                        week.WeeklyImpressionsPercentage = 0;
-                        week.WeeklyAdu = 0;
-                        week.AduImpressions = 0;
-                        week.IsUpdated = false;
-                    }
+                    week.WeeklyBudget = 0;
+                    week.WeeklyUnits = 0;
+                    week.WeeklyRatings = 0;
+                    week.WeeklyImpressions = 0;
+                    week.WeeklyImpressionsPercentage = 0;
+                    week.WeeklyAdu = 0;
+                    week.AduImpressions = 0;
+                    week.IsUpdated = false;
                 }
+            }
 
             var totalImpressionsPercentage = 0d;
             foreach (var week in request.Weeks)
@@ -823,10 +813,17 @@ namespace Services.Broadcast.BusinessEngines
             result.TotalAduImpressions = request.Weeks.Sum(x => x.AduImpressions);
 
             result.RawWeeklyBreakdownWeeks = _PopulateRawWeeklyBreakdownWeeks(request, result.Weeks);
+
+            if (_IsAduForPlanningv2Enabled.Value)
+            {
+                return result;
+            }
+
             foreach (var rawWeek in result.RawWeeklyBreakdownWeeks)
             {
                 rawWeek.WeeklyAdu = result.Weeks.Where(x => x.WeekNumber == rawWeek.WeekNumber).Select(x => x.WeeklyAdu).FirstOrDefault();
             }
+
             return result;
         }
 
@@ -1142,27 +1139,16 @@ namespace Services.Broadcast.BusinessEngines
 
             weeklyBreakdown.TotalAduImpressions = weeklyBreakdown.Weeks.Sum(x => x.AduImpressions);
 
-            if (request.IsAduOnly && _IsAduForPlanningv2Enabled.Value)
-            {
-                weeklyBreakdown.TotalImpressions = 0;
-                weeklyBreakdown.TotalShareOfVoice = 0;
-                weeklyBreakdown.TotalImpressionsPercentage = 0;
-
-                weeklyBreakdown.TotalRatingPoints = 0;
-                weeklyBreakdown.TotalBudget = 0;
-                weeklyBreakdown.TotalUnits = 0;
-                return;
-            }
-
             weeklyBreakdown.TotalImpressions = weeklyBreakdown.Weeks.Sum(w => w.WeeklyImpressions);
-            var impressionsTotalRatio = weeklyBreakdown.TotalImpressions / request.TotalImpressions;
+            var impressionsTotalRatio = request.TotalImpressions == 0 ? 0 :
+                    weeklyBreakdown.TotalImpressions / request.TotalImpressions;
 
             weeklyBreakdown.TotalShareOfVoice = Math.Round(100 * impressionsTotalRatio, 0);
             weeklyBreakdown.TotalImpressionsPercentage = weeklyBreakdown.TotalShareOfVoice;
 
             weeklyBreakdown.TotalRatingPoints = Math.Round(request.TotalRatings * impressionsTotalRatio, 1);
             weeklyBreakdown.TotalBudget = request.TotalBudget * (decimal)impressionsTotalRatio;
-            weeklyBreakdown.TotalUnits = weeklyBreakdown.Weeks.Sum(w => w.WeeklyUnits);            
+            weeklyBreakdown.TotalUnits = weeklyBreakdown.Weeks.Sum(w => w.WeeklyUnits);
         }
 
         private void _RemoveOutOfFlightWeeks(List<WeeklyBreakdownWeek> requestWeeks, List<DisplayMediaWeek> flightWeeks)
@@ -1901,7 +1887,7 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        private int _CalculateADU(double impressionsPerUnit, double aduImpressions
+        internal int _CalculateADU(double impressionsPerUnit, double aduImpressions
             , bool? equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)
         {
             if (impressionsPerUnit == 0)
