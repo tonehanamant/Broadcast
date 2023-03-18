@@ -72,6 +72,8 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<int> fluidity_child_category { get; set; }
         public Nullable<int> fluidity_category { get; set; }
         public Nullable<bool> is_adu_plan { get; set; }
+        public Nullable<double> adu_impressions { get; set; }
+        public Nullable<double> hh_adu_impressions { get; set; }
     
         public virtual audience audience { get; set; }
         public virtual media_months media_months { get; set; }

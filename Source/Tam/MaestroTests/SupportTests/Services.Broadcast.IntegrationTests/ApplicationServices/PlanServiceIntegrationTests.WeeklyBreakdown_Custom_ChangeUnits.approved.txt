@@ -114,6 +114,7 @@
     }
   ],
   "TotalActiveDays": 17,
+  "TotalAduImpressions": 0.0,
   "TotalBudget": 23000.00,
   "TotalImpressions": 1150.0,
   "TotalImpressionsPercentage": 115.0,

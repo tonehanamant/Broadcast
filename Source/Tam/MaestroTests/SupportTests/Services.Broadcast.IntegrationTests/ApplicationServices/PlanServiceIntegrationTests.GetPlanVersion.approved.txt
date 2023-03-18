@@ -1,4 +1,5 @@
 ﻿{
+  "AduImpressions": 0.0,
   "AudienceId": 31,
   "AudienceType": 1,
   "AvailableMarkets": [
@@ -230,6 +231,7 @@
   "FluidityChildCategory": null,
   "FluidityPercentage": null,
   "GoalBreakdownType": 1,
+  "HhAduImpressions": null,
   "HHCPM": 10.0000,
   "HHCPP": 5.0000,
   "HHImpressions": 10.0,
@@ -272,6 +274,7 @@
   "Vpvh": 0.012,
   "WeeklyBreakdownTotals": {
     "TotalActiveDays": 0,
+    "TotalAduImpressions": 0.0,
     "TotalBudget": 0.0000,
     "TotalImpressions": 0.0,
     "TotalImpressionsPercentage": 0.0,

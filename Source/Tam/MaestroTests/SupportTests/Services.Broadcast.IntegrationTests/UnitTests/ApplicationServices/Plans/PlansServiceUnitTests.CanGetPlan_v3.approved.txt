@@ -83,6 +83,7 @@
   "FluidityChildCategory": null,
   "FluidityPercentage": null,
   "GoalBreakdownType": 1,
+  "HhAduImpressions": null,
   "HHCPM": null,
   "HHCPP": null,
   "HHImpressions": 1.0,

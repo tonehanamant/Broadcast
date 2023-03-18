@@ -150,6 +150,11 @@ namespace Services.Broadcast.Entities.Plan
         /// </summary>
         public double AduImpressions { get; set; }
 
+        /// <summary>
+        /// The Total number of ADU Impressions for the plan for the HH Audience.
+        /// </summary>
+        public double HHAduImpressions { get; set; }
+
         public double? TRP { get; set; }
 
         public bool HasHiatus { get; set; }

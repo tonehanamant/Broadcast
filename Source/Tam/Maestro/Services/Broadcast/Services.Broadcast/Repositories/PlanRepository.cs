@@ -732,8 +732,6 @@ namespace Services.Broadcast.Repositories
             //drafts don't have summary, so we're doing SingleOrDefault
             var planSummary = planVersion.plan_version_summaries.SingleOrDefault();
 
-            var totalAduImpresions = planVersion.plan_version_weekly_breakdown.Sum(w => w.adu_impressions);
-
             var dto = new PlanDto
             {
                 Id = entity.id,
@@ -779,7 +777,8 @@ namespace Services.Broadcast.Repositories
                 HHCPP = planVersion.hh_cpp,
                 HHImpressions = planVersion.hh_impressions,
                 HHRatingPoints = planVersion.hh_rating_points,
-                AduImpressions = totalAduImpresions,
+                AduImpressions = planVersion.adu_impressions ?? 0,
+                HhAduImpressions = planVersion.hh_adu_impressions,
                 HHUniverse = planVersion.hh_universe,
                 AvailableMarketsWithSovCount = planSummary?.available_market_with_sov_count ?? null,
                 BlackoutMarketCount = planSummary?.blackout_market_count ?? null,
@@ -1038,6 +1037,8 @@ namespace Services.Broadcast.Repositories
             version.hh_impressions = planDto.HHImpressions;
             version.hh_rating_points = planDto.HHRatingPoints;
             version.hh_universe = planDto.HHUniverse;
+            version.hh_adu_impressions = planDto.HhAduImpressions;
+            version.adu_impressions = planDto.AduImpressions;
             version.is_draft = planDto.IsDraft;
             version.is_adu_plan = planDto.IsAduPlan;
             version.version_number = planDto.VersionNumber;

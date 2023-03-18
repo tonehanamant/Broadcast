@@ -238,9 +238,14 @@ namespace Services.Broadcast.Entities.Plan
         public double? TargetRatingPoints { get; set; }
 
         /// <summary>
-        /// Gets or sets the adu impressions.
+        /// Gets or sets the adu impressions for the Primary Audience.
         /// </summary>
         public double AduImpressions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the adu impressions for Nielsen Hh Audience.
+        /// </summary>
+        public double? HhAduImpressions { get; set; }
 
         /// <summary>
         /// Gets or sets the target CPP.

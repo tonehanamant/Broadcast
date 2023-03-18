@@ -211,6 +211,7 @@
           <Property Name="plan_status_count_scenario" Type="int" />
           <Property Name="plan_status_count_canceled" Type="int" />
           <Property Name="plan_status_count_rejected" Type="int" />
+          <Property Name="hh_adu_impressions" Type="float" />
         </EntityType>
         <EntityType Name="campaigns">
           <Key>
@@ -1638,6 +1639,8 @@
           <Property Name="fluidity_child_category" Type="int" />
           <Property Name="fluidity_category" Type="int" />
           <Property Name="is_adu_plan" Type="bit" />
+          <Property Name="adu_impressions" Type="float" />
+          <Property Name="hh_adu_impressions" Type="float" />
         </EntityType>
         <EntityType Name="plans">
           <Key>
@@ -14560,6 +14563,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="hh_cpm" Type="Double" />
           <Property Name="hh_impressions" Type="Double" />
           <Property Name="hh_rating_points" Type="Double" />
+          <Property Name="hh_adu_impressions" Type="Double" />
         </EntityType>
         <Association Name="FK_campaign_summaries_campaign">
           <End Type="BroadcastModel.campaign" Role="campaign" Multiplicity="1">
@@ -18355,6 +18359,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="fluidity_categories" Relationship="BroadcastModel.FK_plan_versions_fluidity_categories" FromRole="plan_versions" ToRole="fluidity_categories" />
           <NavigationProperty Name="plan" Relationship="BroadcastModel.FK_plan_versions_plans" FromRole="plan_versions" ToRole="plan" />
           <Property Name="is_adu_plan" Type="Boolean" />
+          <Property Name="adu_impressions" Type="Double" />
+          <Property Name="hh_adu_impressions" Type="Double" />
         </EntityType>
         <Association Name="FK_plan_versions_audiences">
           <End Type="BroadcastModel.audience" Role="audience" Multiplicity="0..1" />
@@ -21133,6 +21139,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="campaign_summaries">
             <EntityTypeMapping TypeName="BroadcastModel.campaign_summaries">
               <MappingFragment StoreEntitySet="campaign_summaries">
+                <ScalarProperty Name="hh_adu_impressions" ColumnName="hh_adu_impressions" />
                 <ScalarProperty Name="hh_rating_points" ColumnName="hh_rating_points" />
                 <ScalarProperty Name="hh_impressions" ColumnName="hh_impressions" />
                 <ScalarProperty Name="hh_cpm" ColumnName="hh_cpm" />
@@ -22607,6 +22614,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_versions">
             <EntityTypeMapping TypeName="BroadcastModel.plan_versions">
               <MappingFragment StoreEntitySet="plan_versions">
+                <ScalarProperty Name="hh_adu_impressions" ColumnName="hh_adu_impressions" />
+                <ScalarProperty Name="adu_impressions" ColumnName="adu_impressions" />
                 <ScalarProperty Name="is_adu_plan" ColumnName="is_adu_plan" />
                 <ScalarProperty Name="fluidity_category" ColumnName="fluidity_category" />
                 <ScalarProperty Name="fluidity_child_category" ColumnName="fluidity_child_category" />

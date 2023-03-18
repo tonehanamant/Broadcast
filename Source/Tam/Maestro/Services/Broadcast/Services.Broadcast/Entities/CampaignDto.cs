@@ -92,6 +92,8 @@ namespace Services.Broadcast.Entities
 
         public double? HHRatingPoints { get; set; }
 
+        public double? HHAduImpressions { get; set; }
+
         public bool HasPlans { get; set; }
 
         public List<PlanSummaryDto> Plans { get; set; }

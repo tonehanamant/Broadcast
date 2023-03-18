@@ -330,6 +330,7 @@ namespace Services.Broadcast.ApplicationServices
             campaign.HHCPM = summary.HHCPM;
             campaign.HHImpressions = summary.HHImpressions;
             campaign.HHRatingPoints = summary.HHRatingPoints;
+            campaign.HHAduImpressions = summary.HHAduImpressions;
 
             campaign.CampaignStatus = summary.CampaignStatus;
             campaign.PlanStatuses = _MapToPlanStatuses(summary);

@@ -40,6 +40,7 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<double> hh_cpm { get; set; }
         public Nullable<double> hh_impressions { get; set; }
         public Nullable<double> hh_rating_points { get; set; }
+        public Nullable<double> hh_adu_impressions { get; set; }
     
         public virtual campaign campaign { get; set; }
     }

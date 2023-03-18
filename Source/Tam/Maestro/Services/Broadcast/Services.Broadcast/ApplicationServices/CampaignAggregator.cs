@@ -121,6 +121,7 @@ namespace Services.Broadcast.ApplicationServices
             summary.HHImpressions = filteredPlans.Sum(p => p.HHImpressions);
             summary.HHCPM = (filteredPlans.Sum(p => p.Budget) / Convert.ToDecimal(summary.HHImpressions)) * 1000;
             summary.HHRatingPoints = filteredPlans.Sum(p => p.HHRatingPoints);
+            summary.HHAduImpressions = filteredPlans.Sum(p => p.HhAduImpressions);
         }
 
         protected void AggregateCampaignStatus(List<PlanDto> plans, List<PlanDto> filteredPlans, CampaignSummaryDto summary)

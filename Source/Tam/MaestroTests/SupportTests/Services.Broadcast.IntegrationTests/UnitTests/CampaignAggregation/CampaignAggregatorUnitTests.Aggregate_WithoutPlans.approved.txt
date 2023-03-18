@@ -7,6 +7,7 @@
   "FlightEndDate": null,
   "FlightHiatusDays": null,
   "FlightStartDate": null,
+  "HHAduImpressions": null,
   "HHCPM": null,
   "HHImpressions": null,
   "HHRatingPoints": null,

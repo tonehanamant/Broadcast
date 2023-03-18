@@ -476,7 +476,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
 
             // weekly breakdown weeks were cleared in when sentToGroupWeklyBreakdownBySd
             _WeeklyBreakdownEngineMock
-                .Verify(x => x.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()), Times.Once);
+                .Verify(x => x.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<IEnumerable<WeeklyBreakdownWeek>>()), Times.Exactly(2));
             var groupWeeklyBreakdownInput = sentToGroupWeklyBreakdownBySd.First();
             foreach (var weekitem in groupWeeklyBreakdownInput)
             {

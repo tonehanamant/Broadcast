@@ -2659,6 +2659,26 @@ GO
 
 /*************************************** END BS-2281 *****************************************/
 
+/*************************************** START BS-2277 ***************************************/
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+	WHERE Name = N'adu_impressions' 
+	AND Object_ID = Object_ID(N'plan_versions'))
+BEGIN
+	ALTER TABLE plan_versions 
+		ADD adu_impressions FLOAT NULL
+
+	ALTER TABLE plan_versions 
+		ADD hh_adu_impressions FLOAT NULL
+
+	ALTER TABLE campaign_summaries
+		ADD hh_adu_impressions FLOAT NULL
+END
+
+GO
+
+/*************************************** END BS-2277 *****************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

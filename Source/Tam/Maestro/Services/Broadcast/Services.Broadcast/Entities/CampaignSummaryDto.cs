@@ -76,6 +76,14 @@ namespace Services.Broadcast.Entities
         public double? HHRatingPoints { get; set; }
 
         /// <summary>
+        /// The household adu impressions.
+        /// </summary>
+        /// <value>
+        /// The hh adu impressions.
+        /// </value>
+        public double? HHAduImpressions { get; set; }
+
+        /// <summary>
         /// The campaign status.
         /// </summary>
         public PlanStatusEnum? CampaignStatus { get; set; }

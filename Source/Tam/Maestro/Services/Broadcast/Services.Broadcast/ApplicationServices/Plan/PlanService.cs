@@ -528,6 +528,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 plan.WeeklyBreakdownWeeks =
                     _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                 _CalculateDeliveryDataPerAudience(plan);
+                _CalculateAudienceAduDeliveryData(plan);
                 _CalculatePlanVpvh(plan);
                 _SetPlanVersionNumber(plan);
                 _SetPlanFlightDays(plan);
@@ -666,11 +667,13 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 {
                     plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
                     _CalculateDeliveryDataPerAudience(plan);
+                    _CalculateAudienceAduDeliveryData(plan);
                     _CalculatePlanVpvh(plan);
                 }
                 else if (plan.Budget.HasValue && plan.TargetImpressions.HasValue && plan.ImpressionsPerUnit.HasValue && !plan.WeeklyBreakdownWeeks.IsNullOrEmpty())
                 {
                     plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(plan);
+                    _CalculateAudienceAduDeliveryData(plan);
                 }
                 if (!plan.Dayparts.IsNullOrEmpty())
                 {
@@ -1027,6 +1030,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             plan.AduImpressions *= 1000;
+            plan.HhAduImpressions *= 1000;
 
             if (_IsAduForPlanningv2Enabled.Value)
             {
@@ -1049,6 +1053,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             plan.HHImpressions /= 1000;
             plan.AduImpressions /= 1000;
+            plan.HhAduImpressions /= 1000;
 
             foreach (var audience in plan.SecondaryAudiences)
             {
@@ -1123,6 +1128,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             }
 
             plan.RawWeeklyBreakdownWeeks = plan.WeeklyBreakdownWeeks;
+            
             // Because in DB we store weekly breakdown split 'by week by ad length by daypart'
             // we need to group them back based on the plan delivery type
             plan.WeeklyBreakdownWeeks = _WeeklyBreakdownEngine.GroupWeeklyBreakdownWeeksBasedOnDeliveryType(plan);
@@ -1236,7 +1242,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UnifiedCampaignLastSentAt = plan.UnifiedCampaignLastSentAt,
                 UnifiedCampaignLastReceivedAt = plan.UnifiedCampaignLastReceivedAt,
                 NielsenTransmittalCode = plan.NielsenTransmittalCode,
-                AduImpressions = plan.AduImpressions
+                AduImpressions = plan.AduImpressions,
+                HhAduImpressions = plan.HhAduImpressions
             };
 
             dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);
@@ -1312,7 +1319,8 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 UnifiedTacticLineId = plan.UnifiedTacticLineId,
                 UnifiedCampaignLastSentAt = plan.UnifiedCampaignLastSentAt,
                 UnifiedCampaignLastReceivedAt = plan.UnifiedCampaignLastReceivedAt,
-                AduImpressions = plan.AduImpressions
+                AduImpressions = plan.AduImpressions,
+                HhAduImpressions = plan.HhAduImpressions
             };
 
             dto.PricingParameters = PlanPostingTypeHelper.GetNtiAndNsiPricingParameters(plan.PricingParameters, ntiToNsiConversionRate);
@@ -1920,6 +1928,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 IsAduPlan = false
             };
         }
+        
 
         private void _CalculateDeliveryDataPerAudience(PlanDto plan)
         {
@@ -1931,7 +1940,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             if (!(plan.SecondaryAudiences.IsNullOrEmpty()))
             {
                 _CalculateSecondaryAudiencesDeliveryData(plan, hhImpressionsByStandardDaypart, totalHhImpressions);
-            }
+            }            
         }
 
         private Dictionary<int, double> _GetHhImpressionsByStandardDaypart(PlanDto plan)
@@ -1942,12 +1951,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
             foreach (var item in weeklyBreakdownByStandardDaypart)
             {
-                var targetAudienceImpressions = item.Impressions;
-
-                if (plan.IsAduPlan && _IsAduForPlanningv2Enabled.Value)
-                {
-                    targetAudienceImpressions = item.AduImpressions;
-                }
+                var targetAudienceImpressions = item.Impressions;                
 
                 var targetAudienceVpvh = plan
                    .Dayparts.Where(x => x.DaypartCodeId == item.StandardDaypartId)
@@ -2018,6 +2022,33 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planAudience.Universe = planDeliveryBudget.Universe.Value;
                 planAudience.Vpvh = ProposalMath.CalculateVpvh(totalImpressionsForAudience, hhImpressions);
             });
+        }
+
+        private void _CalculateAudienceAduDeliveryData(PlanDto plan)
+        {
+            plan.AduImpressions = plan.WeeklyBreakdownWeeks.Sum(w => w.AduImpressions);
+
+            // Calculate the Hh Adu Impressions
+            if (plan.Dayparts.Any(x => x.DaypartCodeId > 0))
+            {
+                var hhAduImpressionsByStandardDaypart = new Dictionary<int, double>();
+                var weeklyBreakdownByStandardDaypart = _WeeklyBreakdownEngine.GroupWeeklyBreakdownByStandardDaypart(plan.WeeklyBreakdownWeeks);
+
+                foreach (var item in weeklyBreakdownByStandardDaypart)
+                {
+                    var targetAudienceAduImpressions = item.AduImpressions;
+
+                    var targetAudienceVpvh = plan
+                       .Dayparts.Where(x => x.DaypartCodeId == item.StandardDaypartId)
+                       .SelectMany(s => s.VpvhForAudiences)
+                       .Where(s => s.AudienceId == plan.AudienceId)
+                       .Average(s => s.Vpvh);
+
+                    hhAduImpressionsByStandardDaypart[item.StandardDaypartId] = ProposalMath.CalculateHhImpressionsUsingVpvh(targetAudienceAduImpressions, targetAudienceVpvh);
+                }
+                var totalHhAduImpressions = Math.Floor(hhAduImpressionsByStandardDaypart.Sum(x => x.Value));
+                plan.HhAduImpressions = totalHhAduImpressions;
+            }
         }
 
         public PlanLockResponse LockPlan(int planId)
@@ -2356,6 +2387,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
                 planToCopy.WeeklyBreakdownWeeks =
                     _WeeklyBreakdownEngine.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(planToCopy);
                 _CalculateDeliveryDataPerAudience(planToCopy);
+                _CalculateAudienceAduDeliveryData(planToCopy);
                 _CalculatePlanVpvh(planToCopy);
                 plans.Add(planToCopy);
             }

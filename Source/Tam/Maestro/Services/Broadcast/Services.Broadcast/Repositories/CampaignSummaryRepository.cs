@@ -90,6 +90,7 @@ namespace Services.Broadcast.Repositories
                     HHCPM = _ToNullableDecimal(entity.hh_cpm),
                     HHImpressions = entity.hh_impressions,
                     HHRatingPoints = entity.hh_rating_points,
+                    HHAduImpressions = entity.hh_adu_impressions,
                     CampaignStatus = (PlanStatusEnum?) entity.campaign_status,
                     PlanStatusCountWorking = entity.plan_status_count_working,
                     PlanStatusCountReserved = entity.plan_status_count_reserved,
@@ -219,6 +220,7 @@ namespace Services.Broadcast.Repositories
             entity.hh_cpm = _ToNullableDouble(dto.HHCPM);
             entity.hh_impressions = dto.HHImpressions;
             entity.hh_rating_points = dto.HHRatingPoints;
+            entity.hh_adu_impressions = dto.HHAduImpressions;
             entity.campaign_status = (int?) dto.CampaignStatus;
             entity.components_modified = dto.ComponentsModified;
             entity.last_aggregated = dto.LastAggregated;

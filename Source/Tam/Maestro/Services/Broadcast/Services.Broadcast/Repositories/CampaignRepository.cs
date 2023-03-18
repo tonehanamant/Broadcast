@@ -374,8 +374,6 @@ namespace Services.Broadcast.Repositories
                         var draft = planVersions
                              .Where(x => x.plan_id == version.plan_id && x.is_draft == true).OrderBy(x => x.id).FirstOrDefault();
 
-                        var totalAduImpressions = version.plan_version_weekly_breakdown.Sum(w => w.adu_impressions);
-
                         return new PlanSummaryDto
                         {
                             ProcessingStatus = (PlanAggregationProcessingStatusEnum)summary.processing_status,
@@ -401,7 +399,8 @@ namespace Services.Broadcast.Repositories
                             Dayparts = version.plan_version_dayparts.Select(d => d.standard_dayparts.code).ToList(),
                             TargetImpressions = version.target_impression,
                             TRP = version.target_rating_points,
-                            AduImpressions = totalAduImpressions,
+                            AduImpressions = version.adu_impressions ?? 0,
+                            HHAduImpressions = version.hh_adu_impressions ?? 0,
                             TotalActiveDays = summary.active_day_count,
                             TotalHiatusDays = summary.hiatus_days_count,
                             HasHiatus = summary.hiatus_days_count.HasValue && summary.hiatus_days_count.Value > 0,
