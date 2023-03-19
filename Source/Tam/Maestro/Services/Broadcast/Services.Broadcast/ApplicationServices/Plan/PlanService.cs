@@ -2024,7 +2024,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
             });
         }
 
-        private void _CalculateAudienceAduDeliveryData(PlanDto plan)
+        internal void _CalculateAudienceAduDeliveryData(PlanDto plan)
         {
             plan.AduImpressions = plan.WeeklyBreakdownWeeks.Sum(w => w.AduImpressions);
 

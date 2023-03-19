@@ -4854,5 +4854,76 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 }
             };
         }
+
+        // This tests that the Calculation works without dayparts.
+        [Test]
+        public void CalculateAudienceAduDeliveryData_WithoutDayparts()
+        {
+            var plan = new PlanDto
+            {
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek { AduImpressions = 3200 },
+                    new WeeklyBreakdownWeek { AduImpressions = 1800 }
+                },
+                Dayparts = new List<PlanDaypartDto>()
+            };
+
+            _PlanService._CalculateAudienceAduDeliveryData(plan);
+
+            Assert.AreEqual(5000, plan.AduImpressions);
+            Assert.IsNull(plan.HhAduImpressions);
+        }
+
+        // This tests that the Calculation works with dayparts.
+        [Test]
+        public void CalculateAudienceAduDeliveryData_WithDayparts()
+        {
+            // Arrange
+            var plan = new PlanDto
+            {
+                AudienceId = 3,
+                WeeklyBreakdownWeeks = new List<WeeklyBreakdownWeek>
+                {
+                    new WeeklyBreakdownWeek { AduImpressions = 7500, },
+                    new WeeklyBreakdownWeek { AduImpressions = 2500 }
+                },
+                Dayparts = new List<PlanDaypartDto>
+                {
+                    new PlanDaypartDto
+                    {
+                        DaypartCodeId = 2,
+                        VpvhForAudiences = new List<PlanDaypartVpvhForAudienceDto>
+                        {
+                            new PlanDaypartVpvhForAudienceDto 
+                            { 
+                                AudienceId = 3, 
+                                Vpvh = 2,
+                                VpvhType = VpvhTypeEnum.FourBookAverage
+                            }
+                        }                        
+                    }
+                }
+            };
+
+            var groupWeeklyBreakdownByStandardDaypartReturn = new List<WeeklyBreakdownByStandardDaypart>
+            {
+                new WeeklyBreakdownByStandardDaypart
+                {
+                    AduImpressions = 10000,
+                    StandardDaypartId = 2
+                }
+            };
+
+            _WeeklyBreakdownEngineMock.Setup(s => s.GroupWeeklyBreakdownByStandardDaypart(It.IsAny<List<WeeklyBreakdownWeek>>()))
+                .Returns(groupWeeklyBreakdownByStandardDaypartReturn);
+
+            // Act
+            _PlanService._CalculateAudienceAduDeliveryData(plan);
+
+            // Assert
+            Assert.AreEqual(10000, plan.AduImpressions);
+            Assert.AreEqual(5000, plan.HhAduImpressions);
+        }
     }
 }

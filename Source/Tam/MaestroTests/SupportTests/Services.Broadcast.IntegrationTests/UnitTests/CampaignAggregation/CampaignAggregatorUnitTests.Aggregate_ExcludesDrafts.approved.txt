@@ -7,7 +7,7 @@
   "FlightEndDate": "2019-08-20T00:00:00",
   "FlightHiatusDays": 2,
   "FlightStartDate": "2019-08-01T00:00:00",
-  "HHAduImpressions": 0.0,
+  "HHAduImpressions": 5000.0,
   "HHCPM": 100.0,
   "HHImpressions": 10000.0,
   "HHRatingPoints": 2.0,

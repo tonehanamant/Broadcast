@@ -46,7 +46,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 2,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 },
                 new PlanDto
                 {
@@ -70,7 +72,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 50,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 }
             };
             var planRepository = new Mock<IPlanRepository>();
@@ -114,7 +118,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 2,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 },
                 new PlanDto
                 {
@@ -138,7 +144,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 50,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 },
                 new PlanDto
                 {
@@ -162,7 +170,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 50,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 },
                 new PlanDto
                 {
@@ -185,7 +195,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 50,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 },
                 new PlanDto
                 {
@@ -209,7 +221,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                     HHCPM = 0.05m,
                     HHRatingPoints = 50,
                     HHCPP = 1,
-                    TargetUniverse = 2000000
+                    TargetUniverse = 2000000,
+                    HhAduImpressions = 5000,
+                    AduImpressions = 1200
                 }
             };
             var planRepository = new Mock<IPlanRepository>();
@@ -379,6 +393,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 HHRatingPoints = 2,
                 HHCPP = 1,
                 TargetUniverse = 2000000,
+                HhAduImpressions = 5000,
+                AduImpressions = 1200,
                 IsDraft = false
               },
               new PlanDto
@@ -404,6 +420,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.CampaignAggregation
                 HHRatingPoints = 50,
                 HHCPP = 1,
                 TargetUniverse = 2000000,
+                HhAduImpressions = 5000,
+                AduImpressions = 1200,
                 IsDraft = true
               }
             };
