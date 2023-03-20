@@ -36,8 +36,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly ISpotExceptionsRepository _SpotExceptionsRepository;
         private readonly ISpotExceptionsApiClient _SpotExceptionsApiClient;
 
-        private readonly Lazy<bool> _IsNotifyDataReadyEnabled;
-
         public SpotExceptionsService(
             IDataRepositoryFactory dataRepositoryFactory,
             ISpotExceptionsApiClient spotExceptionsApiClient,
@@ -47,9 +45,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         {
             _SpotExceptionsRepository = dataRepositoryFactory.GetDataRepository<ISpotExceptionsRepository>();
             _SpotExceptionsApiClient = spotExceptionsApiClient;
-
-            _IsNotifyDataReadyEnabled = new Lazy<bool>(() =>
-               _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC));
         }
 
         /// <inheritdoc />
@@ -66,46 +61,14 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
             bool result;
 
-            if (_IsNotifyDataReadyEnabled.Value)
+            _LogInfo($"Attempting to notify consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");
+            var syncRequest = new ResultsSyncRequest
             {
-                
-                _LogInfo($"Attempting to notify consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");
-                var syncRequest = new ResultsSyncRequest
-                {
-                    RequestedBy = triggerDecisionSyncRequest.UserName
-                };
-                result = await _SpotExceptionsApiClient.PublishSyncRequestAsync(syncRequest);
-                _LogInfo($"Successfully notified consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");
-            }
-            else
-            {
-                var dateTime = DateTime.Now;
-
-                _LogWarning($"Mocking the sync and just marking synced without notifying the DataLake.  Requested by '{triggerDecisionSyncRequest.UserName}';");
-                // this is the mock.
-                try
-                {
-                    var isSyncedOutOfSpecDecision = await _SpotExceptionsRepository.SyncOutOfSpecDecisionsAsync(triggerDecisionSyncRequest, dateTime);
-                    var isSyncedRecommandedPlanDecision = await _SpotExceptionsRepository.SyncRecommendedPlanDecisionsAsync(triggerDecisionSyncRequest, dateTime);
-
-                    if (isSyncedOutOfSpecDecision == false && isSyncedRecommandedPlanDecision == false)
-                    {
-                        result = false;
-                    }
-                    else
-                    {
-                        result = true;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    var msg = $"Could not retrieve the data from the Database";
-                    throw new CadentException(msg, ex);
-                }
-
-                _LogInfo($"Completed results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
-            }
-
+                RequestedBy = triggerDecisionSyncRequest.UserName
+            };
+            result = await _SpotExceptionsApiClient.PublishSyncRequestAsync(syncRequest);
+            _LogInfo($"Successfully notified consumers that results data is ready.  Requested by '{triggerDecisionSyncRequest.UserName}'.");
+            
             _LogInfo($"Completed results sync. Requested by '{triggerDecisionSyncRequest.UserName}';");
 
             return result;

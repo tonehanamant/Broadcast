@@ -45,8 +45,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _DateTimeEngineMock = new Mock<IDateTimeEngine>();
 
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
-                .Returns(true);
 
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 

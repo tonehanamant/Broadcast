@@ -39,8 +39,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             _SpotExceptionsApiClientMock = new Mock<ISpotExceptionsApiClient>();
 
             _FeatureToggleMock = new Mock<IFeatureToggleHelper>();
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
-                .Returns(true);
 
             _ConfigurationSettingsHelperMock = new Mock<IConfigurationSettingsHelper>();
 
@@ -100,102 +98,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
             // Assert
             Assert.NotNull(caught);
             _SpotExceptionsApiClientMock.Verify(s => s.PublishSyncRequestAsync(It.IsAny<ResultsSyncRequest>()), Times.Once);
-        }
-
-
-        [Test]
-        public async Task TriggerDecisionSync_Exist_Mock()
-        {
-            // Arrange
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
-                .Returns(false);
-
-            bool result = false;
-            bool expectedResult = true;
-            var spotExceptionSaveDecisionsPlansRequest = new SpotExceptionsOutOfSpecSaveDecisionsRequestDto();
-
-            var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto
-            {
-                UserName = "Test User"
-            };
-
-            var spotExceptionsOutOfSpecDecisionsPlansResult = new List<SpotExceptionsOutOfSpecDecisionsToSaveRequestDto>
-            {
-                new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
-                {
-                    TodoId = 21,
-                    AcceptAsInSpec = true
-                },
-                new SpotExceptionsOutOfSpecDecisionsToSaveRequestDto
-                {
-                    DoneId = 22,
-                    AcceptAsInSpec = true
-                }
-            };
-
-            spotExceptionSaveDecisionsPlansRequest.Decisions.AddRange(spotExceptionsOutOfSpecDecisionsPlansResult);
-
-            _SpotExceptionsRepositoryMock
-                .Setup(s => s.SyncOutOfSpecDecisionsAsync(It.IsAny<TriggerDecisionSyncRequestDto>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(expectedResult));
-
-            // Act
-            result = await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest);
-
-            // Assert
-            Assert.AreEqual(expectedResult, result);
-        }
-
-        [Test]
-        public async Task TriggerDecisionSync_DoesNotExist_Mock()
-        {
-            // Arrange
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
-                .Returns(false);
-
-            bool result = false;
-            bool expectedResult = false;
-
-            var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto
-            {
-                UserName = "Test User"
-            };
-
-            _SpotExceptionsRepositoryMock
-                .Setup(s => s.SyncOutOfSpecDecisionsAsync(It.IsAny<TriggerDecisionSyncRequestDto>(), It.IsAny<DateTime>()))
-                .Returns(Task.FromResult(expectedResult));
-
-            // Act
-            result = await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest);
-
-            // Assert
-            Assert.AreEqual(expectedResult, result);
-        }
-
-        [Test]
-        public void TriggerDecisionSync_ThrowsException_Mock()
-        {
-            // Arrange
-            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTION_NOTIFY_SYNC))
-                .Returns(false);
-
-            var triggerDecisionSyncRequest = new TriggerDecisionSyncRequestDto
-            {
-                UserName = "Test User"
-            };
-
-            _SpotExceptionsRepositoryMock
-                .Setup(s => s.SyncOutOfSpecDecisionsAsync(It.IsAny<TriggerDecisionSyncRequestDto>(), It.IsAny<DateTime>()))
-                .Callback(() =>
-                {
-                    throw new CadentException("Throwing a test exception.");
-                });
-
-            // Act
-            var result = Assert.Throws<CadentException>(async () => await _SpotExceptionsService.TriggerDecisionSync(triggerDecisionSyncRequest));
-
-            // Assert
-            Assert.AreEqual("Could not retrieve the data from the Database", result.Message);
         }
 
         [Test]
