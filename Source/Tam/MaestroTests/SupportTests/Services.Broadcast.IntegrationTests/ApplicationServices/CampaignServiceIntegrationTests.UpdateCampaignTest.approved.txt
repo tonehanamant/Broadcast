@@ -13,6 +13,7 @@
   "FlightStartDate": "2019-08-01T00:00:00",
   "HasHiatus": true,
   "HasPlans": false,
+  "HHAduImpressions": null,
   "HHCPM": 2500.0,
   "HHImpressions": 5500.0,
   "HHRatingPoints": 23.0,

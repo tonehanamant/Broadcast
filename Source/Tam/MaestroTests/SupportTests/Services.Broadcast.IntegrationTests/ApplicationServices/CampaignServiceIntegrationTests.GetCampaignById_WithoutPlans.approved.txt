@@ -13,6 +13,7 @@
   "FlightStartDate": null,
   "HasHiatus": null,
   "HasPlans": false,
+  "HHAduImpressions": null,
   "HHCPM": null,
   "HHImpressions": null,
   "HHRatingPoints": null,

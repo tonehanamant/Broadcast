@@ -15,7 +15,7 @@ namespace Services.Broadcast.Entities.Plan
         public double WeeklyImpressionsPercentage { get; set; }
         public double WeeklyRatings { get; set; }
         public decimal WeeklyBudget { get; set; }
-        public int WeeklyAdu { get; set; }
+        public double WeeklyAdu { get; set; }
         public double AduImpressions { get; set; }
         public int? SpotLengthId { get; set; }
         public int? SpotLengthDuration { get; set; }
@@ -55,7 +55,7 @@ namespace Services.Broadcast.Entities.Plan
         public string ActiveDays { get; set; }
         public double Impressions { get; set; }
         public decimal Budget { get; set; }
-        public int Adu { get; set; }
+        public double Adu { get; set; }
         public double Units { get; set; }
         public bool IsLocked { get; set; }
         public int? SpotLengthId { get; set; }

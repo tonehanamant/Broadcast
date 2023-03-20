@@ -285,7 +285,7 @@ namespace Services.Broadcast.BusinessEngines
                     var itemWeeklyAdu = week.WeeklyAdu;
                     if (_IsAduForPlanningv2Enabled.Value)
                     {
-                        itemWeeklyAdu = Convert.ToInt32(itemAduImpressions);
+                        itemWeeklyAdu = itemAduImpressions;
                     }
 
                     var newWeeklyBreakdownItem = new WeeklyBreakdownWeek

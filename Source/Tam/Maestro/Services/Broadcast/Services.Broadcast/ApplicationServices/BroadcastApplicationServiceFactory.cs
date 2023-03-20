@@ -72,6 +72,13 @@ namespace Services.Broadcast.ApplicationServices
 
                         _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelper>();
 
+                        //locking service
+                        _instance.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();
+                        _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>();
+                        _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
+
+                        _instance.RegisterType<IAttachmentMicroServiceApiClient, AttachmentMicroServiceApiClient>();
+
                         RegisterApplicationServices(_instance);
                     }
                 }
@@ -299,18 +306,12 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<ISpotExceptionsSyncService, SpotExceptionsSyncService>();
             unityContainer.RegisterType<ISpotExceptionsApiClient, SpotExceptionsApiClient>();
             unityContainer.RegisterType<ISpotExceptionsValidator, SpotExceptionsValidator>();
-
-            //locking service
-            unityContainer.RegisterType<IGeneralLockingApiClient, GeneralLockingApiClient>();
-            unityContainer.RegisterType<IBroadcastLockingService, BroadcastLockingService>();
-            unityContainer.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>();
+            
             //Inventory Microservice service
             unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();
             unityContainer.RegisterType<IInventoryManagementApiClient, InventoryManagementApiClient>();
             //launch darkly
-            unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();
-
-            unityContainer.RegisterType<IAttachmentMicroServiceApiClient, AttachmentMicroServiceApiClient>();
+            unityContainer.RegisterType<IFeatureToggleHelper, FeatureToggleHelper>();            
 
             // singletons
             unityContainer.RegisterType<IInventorySummaryCache, InventorySummaryCache>(new ContainerControlledLifetimeManager()); // singleton

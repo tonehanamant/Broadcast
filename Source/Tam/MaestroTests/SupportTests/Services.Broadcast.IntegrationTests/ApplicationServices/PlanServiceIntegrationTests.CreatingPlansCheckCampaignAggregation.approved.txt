@@ -13,6 +13,7 @@
   "FlightStartDate": "2020-02-24T00:00:00",
   "HasHiatus": false,
   "HasPlans": true,
+  "HHAduImpressions": 0.0,
   "HHCPM": 0.0837209333477557,
   "HHImpressions": 77638886.0,
   "HHRatingPoints": 63.699999999999989,
@@ -24,6 +25,7 @@
   "Notes": null,
   "Plans": [
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -43,6 +45,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -72,6 +75,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -91,6 +95,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -120,6 +125,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -139,6 +145,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -168,6 +175,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -187,6 +195,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -216,6 +225,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -235,6 +245,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -264,6 +275,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -283,6 +295,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -312,6 +325,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -331,6 +345,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -360,6 +375,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -379,6 +395,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -408,6 +425,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -427,6 +445,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -456,6 +475,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -475,6 +495,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -504,6 +525,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -523,6 +545,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -552,6 +575,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -571,6 +595,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,
@@ -600,6 +625,7 @@
       "VersionNumber": 1
     },
     {
+      "AduImpressions": 0.0,
       "AudienceId": 31,
       "AvailableMarketCount": 2,
       "AvailableMarketsWithSovCount": 2,
@@ -619,6 +645,7 @@
       "FlightStartDate": "2020-02-24T00:00:00",
       "FluidityPercentage": null,
       "HasHiatus": false,
+      "HHAduImpressions": 0.0,
       "HHCPM": 0.0837,
       "HHImpressions": 5972222.0,
       "IsAduPlan": false,

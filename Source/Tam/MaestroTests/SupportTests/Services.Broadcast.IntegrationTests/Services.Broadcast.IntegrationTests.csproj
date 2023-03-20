@@ -789,6 +789,9 @@
     <Compile Include="ApplicationServices\BroadcastAudienceCacheIntegrationTests.cs" />
     <Compile Include="DaypartCacheTests.cs" />
     <Compile Include="ApplicationServices\FeatureToggleHelperTests.cs" />
+    <Compile Include="Stubs\AttacmentMicroServiceApiClientStub.cs" />
+    <Compile Include="Stubs\BroadcastLockingManagerApplicationServiceStub.cs" />
+    <Compile Include="Stubs\BroadcastLockingServiceStub.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsServiceUnitTestsV2.cs" />
     <Compile Include="UnitTests\ApplicationServices\SpotExceptions\SpotExceptionsUnpostedServiceUnitTestsV2.cs" />
     <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineV2UnitTests.cs" />

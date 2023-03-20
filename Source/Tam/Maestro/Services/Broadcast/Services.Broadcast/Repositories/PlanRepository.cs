@@ -989,7 +989,7 @@ namespace Services.Broadcast.Repositories
                 MediaWeekId = arg.media_weeks.id,
                 WeeklyBudget = arg.budget,
                 AduImpressions = arg.adu_impressions,
-                WeeklyAdu = Convert.ToInt32(arg.adu_impressions),
+                WeeklyAdu = arg.adu_impressions,
                 SpotLengthId = arg.spot_length_id,
                 DaypartCodeId = arg.standard_daypart_id,
                 PercentageOfWeek = arg.percentage_of_week,

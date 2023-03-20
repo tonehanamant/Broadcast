@@ -1,7 +1,7 @@
 ﻿[
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "Adu": 8,
+    "Adu": 8.0,
     "Budget": 300.0,
     "CustomName": null,
     "DaypartCodeId": 1,
@@ -18,7 +18,7 @@
   },
   {
     "ActiveDays": "M,Tu,W,Th",
-    "Adu": 0,
+    "Adu": 0.0,
     "Budget": 70.0,
     "CustomName": null,
     "DaypartCodeId": 1,
@@ -35,7 +35,7 @@
   },
   {
     "ActiveDays": "M,Tu,W",
-    "Adu": 12,
+    "Adu": 12.0,
     "Budget": 90.0,
     "CustomName": null,
     "DaypartCodeId": 1,

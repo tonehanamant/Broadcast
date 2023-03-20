@@ -16,6 +16,7 @@
   "FlightStartDate": null,
   "FluidityPercentage": null,
   "HasHiatus": false,
+  "HHAduImpressions": 0.0,
   "HHCPM": null,
   "HHImpressions": null,
   "IsAduPlan": false,

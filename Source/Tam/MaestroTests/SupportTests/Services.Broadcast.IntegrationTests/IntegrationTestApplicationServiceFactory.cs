@@ -54,8 +54,8 @@ namespace Services.Broadcast.IntegrationTests
 
                     var stubbedSmsClient = new StubbedSMSClient();
                     
-                    _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationService>(new ContainerControlledLifetimeManager());
-                    _instance.RegisterType<IBroadcastLockingService, BroadcastLockingService>(new ContainerControlledLifetimeManager());
+                    _instance.RegisterType<IBroadcastLockingManagerApplicationService, BroadcastLockingManagerApplicationServiceStub>(new ContainerControlledLifetimeManager());
+                    _instance.RegisterType<IBroadcastLockingService, BroadcastLockingServiceStub>(new ContainerControlledLifetimeManager());
                     _instance.RegisterInstance<ISMSClient>(stubbedSmsClient);
                     BroadcastApplicationServiceFactory.RegisterApplicationServices(_instance);
 
@@ -72,7 +72,7 @@ namespace Services.Broadcast.IntegrationTests
                     _instance.RegisterType<IAsyncTaskHelper, AsyncTaskHelperStub>();
 
                     _instance.RegisterType<ILockingCacheStub, LockingCacheStub>();
-
+                    _instance.RegisterType<IAttachmentMicroServiceApiClient, AttacmentMicroServiceApiClientStub>();
                 }
             }
         }
