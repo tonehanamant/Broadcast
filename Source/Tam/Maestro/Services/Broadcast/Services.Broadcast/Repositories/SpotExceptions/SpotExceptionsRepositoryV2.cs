@@ -122,7 +122,7 @@ namespace Services.Broadcast.Repositories.SpotExceptions
         {
             _InReadUncommitedTransaction(context =>
             {
-                var existingJob = context.spot_exceptions_results_jobs.First();
+                var existingJob = context.spot_exceptions_results_jobs.FirstOrDefault();
 
                 if (existingJob != null)
                 {
@@ -130,6 +130,8 @@ namespace Services.Broadcast.Repositories.SpotExceptions
                     existingJob.databricks_run_id = -1;
                     existingJob.queued_at = date;
                     existingJob.queued_by = request.RequestedBy;
+
+                    context.spot_exceptions_results_jobs.Add(existingJob);
                 }
                 else
                 {
