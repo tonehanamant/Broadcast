@@ -53,7 +53,6 @@ namespace Services.Broadcast.BusinessEngines
 
         internal Lazy<int> _ThresholdInSecondsForProgramIntersect;
         protected Lazy<int> _NumberOfFallbackQuartersForPricing;
-        protected Lazy<bool> _UseTrueIndependentStations;
         private readonly Lazy<bool> _IsPricingBuyingProgramsQueryv2;
 
         protected Lazy<List<Day>> _CadentDayDefinitions;
@@ -91,7 +90,6 @@ namespace Services.Broadcast.BusinessEngines
             // register lazy delegates - settings
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(_GetThresholdInSecondsForProgramIntersectInPricing);
             _NumberOfFallbackQuartersForPricing = new Lazy<int>(_GetNumberOfFallbackQuartersForPricing);
-            _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _IsPricingBuyingProgramsQueryv2 = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_BUYING_PROGRAMS_QUERY_V2));
 
             // register lazy delegates - domain data
@@ -139,8 +137,7 @@ namespace Services.Broadcast.BusinessEngines
             _LogInfo($"Starting to filter by Daypart... Input Record Count : {foundPrograms.Count};", processingId);
 
             var programs = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(request.Dayparts, foundPrograms, daypartDays,
-                _CadentDayDefinitions.Value, _StandardDaypartDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value,
-                _UseTrueIndependentStations.Value);
+                _CadentDayDefinitions.Value, _StandardDaypartDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value);
 
             _LogInfo($"Filtering complete. Input Record Count : {foundPrograms.Count}; Output Record Count : {programs.Count};", processingId);
 
@@ -224,8 +221,7 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.Start(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
             var filteredPrograms = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, allPrograms, daypartDays,
-                _CadentDayDefinitions.Value, _StandardDaypartDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value,
-                _UseTrueIndependentStations.Value);
+                _CadentDayDefinitions.Value, _StandardDaypartDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value);
 
             diagnostic.End(PlanPricingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 

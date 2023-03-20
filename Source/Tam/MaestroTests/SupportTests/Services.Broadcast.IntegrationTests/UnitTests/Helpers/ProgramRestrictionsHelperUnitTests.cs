@@ -57,7 +57,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays, 
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -98,7 +98,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -138,7 +138,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -218,7 +218,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -296,32 +296,31 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
 
         [Test]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, false, 3)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, true, 3)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, true, 3)]
-        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, false, 3)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, false, 0)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, true, 0)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, true, 0)]
-        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, false, 0)]
-        [TestCase("IND", ContainTypeEnum.Include, "IND", true, true, 3)]
-        [TestCase("IND", ContainTypeEnum.Include, "IND", true, false, 3)]
-        [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, false, 0)]
-        [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, true, 0)]
-        [TestCase("IND", ContainTypeEnum.Exclude, "IND", false, false, 0)]
-        [TestCase("IND", ContainTypeEnum.Include, "CBS", true, true, 0)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, 3)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", true, 3)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, 3)]
+        [TestCase("ABC", ContainTypeEnum.Include, "ABC", false, 3)]
+        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, 0)]
+        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", true, 0)]
+        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, 0)]
+        [TestCase("ABC", ContainTypeEnum.Exclude, "ABC", false, 0)]
+        [TestCase("IND", ContainTypeEnum.Include, "IND", true, 3)]
+        [TestCase("IND", ContainTypeEnum.Include, "IND", true, 3)]
+        [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, 0)]
+        [TestCase("IND", ContainTypeEnum.Exclude, "IND", true, 0)]
+        [TestCase("IND", ContainTypeEnum.Exclude, "IND", false, 3)]
+        [TestCase("IND", ContainTypeEnum.Include, "CBS", true, 0)]
         public void AffiliateRestrictionsTest(
             string restrictedAffiliate,
             ContainTypeEnum containType,
             string inventoryAffiliate,
             bool isStationTrueIndependent,
-            bool useTrueIndependentStations,
             int expectedCount)
         {
             // setup feature flags
@@ -461,7 +460,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, useTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -539,7 +538,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -616,7 +615,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -689,7 +688,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -798,7 +797,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -908,7 +907,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -1017,7 +1016,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planCoveredDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
             Assert.AreEqual(expectedProgramStandardDaypartId, result.First().StandardDaypartId);
@@ -1186,7 +1185,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedCount, result.Count);
         }
@@ -1229,7 +1228,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(expectedProgramCount, result.Count);
             if (expectFriends)
@@ -1293,7 +1292,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("Friends", result[0].ManifestDayparts[0].PrimaryProgram.Name);
@@ -1320,7 +1319,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.Helpers
 
             var result = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, programs, planFlightDays,
                 _GetCadentDayDefinitions(), DaypartsTestData.GetDayIdsFromStandardDayparts(),
-                ThresholdInSecondsForProgramIntersect, UseTrueIndependentStations);
+                ThresholdInSecondsForProgramIntersect);
 
             Assert.AreEqual(programs.Count, result.Count);
         }

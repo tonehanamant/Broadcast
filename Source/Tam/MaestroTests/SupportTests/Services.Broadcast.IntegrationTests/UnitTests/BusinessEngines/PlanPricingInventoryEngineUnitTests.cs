@@ -112,10 +112,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
         }
 
-        private PlanPricingInventoryEngineTestClass _GetTestClass(bool useTrueIndependentStations = false)
+        private PlanPricingInventoryEngineTestClass _GetTestClass()
         {
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             var planPricingInventoryEngine = new PlanPricingInventoryEngineTestClass(
@@ -276,7 +275,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     ProvidedImpressions = 10000
                 }
             };
-            var testClass = _GetTestClass(false);
+            var testClass = _GetTestClass();
 
             var result = testClass.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
 
@@ -311,7 +310,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 .Setup(x => x.GetSpotCostMultiplierBySpotLengthId(It.IsAny<int>()))
                 .Returns(0.5m);
 
-            var testClass = _GetTestClass(false);
+            var testClass = _GetTestClass();
 
             var result = testClass.CalculateProgramCpmAndFilterByMinAndMaxCpm(programs, null, null);
 
@@ -1578,7 +1577,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                     }
                 });
             
-            var testClass = _GetTestClass(false);
+            var testClass = _GetTestClass();
 
             // Act
             var inventory = testClass.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
@@ -1724,7 +1723,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProvidedImpressions = 1500;
                     }
                 });
-            var testClass = _GetTestClass(false);
+            var testClass = _GetTestClass();
 
             // Act
             var inventory = testClass.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());
@@ -1875,7 +1874,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProvidedImpressions = 1500;
                     }
                 });
-            var testClass = _GetTestClass(false);
+            var testClass = _GetTestClass();
 
             // Act
             var inventory = testClass.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic, Guid.NewGuid());

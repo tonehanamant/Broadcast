@@ -78,7 +78,6 @@ namespace Services.Broadcast.BusinessEngines
             _StandardDaypartRepository = broadcastDataRepositoryFactory.GetDataRepository<IStandardDaypartRepository>();
 
             // register lazy delegates - settings
-            _UseTrueIndependentStations = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS));
             _ThresholdInSecondsForProgramIntersect = new Lazy<int>(_GetThresholdInSecondsForProgramIntersectInPricing);
             _NumberOfFallbackQuarters = new Lazy<int>(_GetNumberOfFallbackQuarters);
             _IsPricingBuyingProgramsQueryv2 = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PRICING_BUYING_PROGRAMS_QUERY_V2));
@@ -117,8 +116,7 @@ namespace Services.Broadcast.BusinessEngines
             diagnostic.Start(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 
             var programs = ProgramRestrictionsHelper.FilterProgramsByDaypartAndSetStandardDaypart(plan.Dayparts, allPrograms, daypartDays,
-                _CadentDayDefinitions.Value, _DaypartDefaultDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value,
-                _UseTrueIndependentStations.Value);
+                _CadentDayDefinitions.Value, _DaypartDefaultDayIds.Value, _ThresholdInSecondsForProgramIntersect.Value);
 
             diagnostic.End(PlanBuyingJobDiagnostic.SW_KEY_FILTERING_OUT_INVENTORY_BY_DAYPARTS_AND_ASSOCIATING_WITH_STANDARD_DAYPART);
 

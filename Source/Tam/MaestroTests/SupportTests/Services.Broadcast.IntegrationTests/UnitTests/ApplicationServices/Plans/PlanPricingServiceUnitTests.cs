@@ -84,11 +84,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IConfigurationSettingsHelper> _ConfigurationSettingsHelperMock;
 
-        protected PlanPricingService _GetService(bool useTrueIndependentStations = false,
-                                                               bool isPostingTypeToggleEnabled = false)
+        protected PlanPricingService _GetService(bool isPostingTypeToggleEnabled = false)
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);           
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
 
@@ -6340,7 +6338,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<int?>())).Returns(6.75M);
 
             // TODO SDE : this should be reworked for these to be true, as they are in production
-            var service = _GetService(false,true);
+            var service = _GetService(true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, null);
@@ -6414,7 +6412,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<PostingTypeEnum>(), It.IsAny<int?>())).Returns(6.75M);
 
             // TODO SDE : this should be reworked for these to be true, as they are in production
-            var service = _GetService(false,true);
+            var service = _GetService(true);
 
             // Act
             var result = service.GetAllCurrentPricingExecutions(planId, PlanVersionId);
@@ -10305,7 +10303,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetDeliveryMultiplierBySpotLengthId(It.IsAny<int>()))
                 .Returns<int>(id => id == 1 ? 1 : 0.5);
 
-            var service = _GetService(false, isMultiCreativeLengthAllowed);
+            var service = _GetService(isMultiCreativeLengthAllowed);
 
             // Act
             await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
@@ -10583,7 +10581,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _MediaMonthAndWeekAggregateCacheMock.Setup(s => s.GetMediaWeekById(It.IsAny<int>()))
                 .Returns<int>(MediaMonthAndWeekTestData.GetMediaWeek);
 
-            var service = _GetService(false, isMultiCreativeLengthAllowed);
+            var service = _GetService(isMultiCreativeLengthAllowed);
 
             // Act
             await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
@@ -12644,7 +12642,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(plan);
 
-            var service = _GetService(false, false);
+            var service = _GetService(false);
 
             // Act
             await service.RunPricingJobAsync(parameters, jobId, CancellationToken.None);
@@ -12719,7 +12717,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
             _PlanPricingInventoryEngineMock.Setup(s => s.GetInventoryForQuote(It.IsAny<QuoteRequestDto>(), It.IsAny<Guid>()))
                 .Returns(programs);
 
-            var service = _GetService(true, true);
+            var service = _GetService(true);
 
             // Act
             var caught = Assert.Throws<CadentException>(() => service.GetQuoteReportData(request));

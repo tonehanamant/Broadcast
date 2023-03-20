@@ -25,8 +25,7 @@ namespace Services.Broadcast.Helpers
             DisplayDaypart planDays,
             List<Day> cadentDayDefinitions,
             Dictionary<int, List<int>> daypartDefaultDayIds,
-            int thresholdInSecondsForProgramIntersect,
-            bool useTrueIndependentStations
+            int thresholdInSecondsForProgramIntersect
             ) where T : BasePlanInventoryProgram
         {
             var result = new List<T>();
@@ -38,7 +37,7 @@ namespace Services.Broadcast.Helpers
                 {
                     continue;
                 }
-                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program, useTrueIndependentStations);
+                var planDaypartsMatchByRestrictions = _GetPlanDaypartsThatMatchProgramByRestrictions(planDaypartsMatchedByTimeAndDays, program);
                 if (planDaypartsMatchByRestrictions.Count == 0)
                 {
                     continue;
@@ -143,8 +142,7 @@ namespace Services.Broadcast.Helpers
             return result;
         }
 
-        private static List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program, 
-            bool useTrueIndependentStations)
+        private static List<ProgramInventoryDaypart> _GetPlanDaypartsThatMatchProgramByRestrictions(List<ProgramInventoryDaypart> programInventoryDayparts, BasePlanInventoryProgram program)
         {
             var result = new List<ProgramInventoryDaypart>();
 
@@ -160,7 +158,7 @@ namespace Services.Broadcast.Helpers
                 if (!_IsProgramAllowedByShowTypeRestrictions(inventoryDaypart))
                     continue;
 
-                if (!_IsProgramAllowedByAffiliateRestrictions(inventoryDaypart, program, useTrueIndependentStations))
+                if (!_IsProgramAllowedByAffiliateRestrictions(inventoryDaypart, program))
                     continue;
 
                 result.Add(inventoryDaypart);
@@ -169,7 +167,7 @@ namespace Services.Broadcast.Helpers
             return result;
         }
 
-        private static bool _IsProgramAllowedByAffiliateRestrictions(ProgramInventoryDaypart programInventoryDaypart, BasePlanInventoryProgram program, bool useTrueIndependentStations)
+        private static bool _IsProgramAllowedByAffiliateRestrictions(ProgramInventoryDaypart programInventoryDaypart, BasePlanInventoryProgram program)
         {
             var affiliateRestrictions = programInventoryDaypart.PlanDaypart.Restrictions.AffiliateRestrictions;
 
@@ -178,7 +176,7 @@ namespace Services.Broadcast.Helpers
 
             var restrictedAffiliates = affiliateRestrictions.Affiliates.Select(x => x.Display);
             bool hasIntersections;
-            if (restrictedAffiliates.Any(x => x.Equals("IND")) && useTrueIndependentStations && program.Station.Affiliation.Equals("IND"))
+            if (restrictedAffiliates.Any(x => x.Equals("IND")) && program.Station.Affiliation.Equals("IND"))
             {
                 hasIntersections = program.Station.IsTrueInd == true;
             }

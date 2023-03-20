@@ -111,11 +111,10 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
             _ConfigurationSettingsHelper = new Mock<IConfigurationSettingsHelper>();
         }
 
-        private PlanBuyingInventoryEngineTestClass _GetTestClass(bool useTrueIndependentStations = false)
+        private PlanBuyingInventoryEngineTestClass _GetTestClass()
         {
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_BUYING_NAVIGATION_PANEL_TOOLS, true);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
@@ -278,7 +277,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var testEngine = _GetTestClass(false);
+            var testEngine = _GetTestClass();
             var result = testEngine._CalculateProgramCpmAndFilterByMinAndMaxCpms(programs, null, null);
 
             Approvals.Verify(IntegrationTestHelper.ConvertToJson(result));
@@ -307,7 +306,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                 }
             };
 
-            var testEngine = _GetTestClass(false);
+            var testEngine = _GetTestClass();
             testEngine._ApplyInflationFactorToSpotCost(programs, inflationFactor);
 
             Assert.AreEqual((decimal)expectedResult, programs.Single().ManifestRates.Single().Cost);
@@ -1525,7 +1524,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProjectedImpressions = 1500;
                     }
                 });
-            var testEngine = _GetTestClass(false);
+            var testEngine = _GetTestClass();
 
             // Act
             var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);
@@ -1671,7 +1670,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
                         program.ProvidedImpressions = 1500;
                     }
                 });
-            var testEngine = _GetTestClass(false);
+            var testEngine = _GetTestClass();
 
             // Act
             var inventory = testEngine.GetInventoryForPlan(plan, parameters, inventorySourceIds, diagnostic);

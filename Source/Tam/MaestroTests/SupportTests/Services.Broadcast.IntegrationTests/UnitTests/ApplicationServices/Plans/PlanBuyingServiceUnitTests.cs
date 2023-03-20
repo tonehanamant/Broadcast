@@ -87,11 +87,9 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         private LaunchDarklyClientStub _LaunchDarklyClientStub;
         private Mock<IConfigurationSettingsHelper> _IConfigurationSettingsHelperMock;
 
-        protected PlanBuyingService _GetService(bool useTrueIndependentStations = false,
-             bool isPostingTypeToggleEnabled = false)
+        protected PlanBuyingService _GetService(bool isPostingTypeToggleEnabled = false)
         {
             _LaunchDarklyClientStub = new LaunchDarklyClientStub();
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.USE_TRUE_INDEPENDENT_STATIONS, useTrueIndependentStations);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_BARTER_INVENTORY, false);
             _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY, false);
 
@@ -1317,7 +1315,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                    ))
                 .Returns(new PlanBuyingResultRepFirmDto());
 
-            var service = _GetService(false, allowMultipleCreativeLengths);
+            var service = _GetService(allowMultipleCreativeLengths);
 
             // Act
             await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
@@ -4755,7 +4753,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetGoalCpm(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<PostingTypeEnum>())).Returns(6.75M);
 
             // TODO SDE : this should be reworked for these to be true, as they are in production
-            var service = _GetService(false,true);
+            var service = _GetService(true);
 
             // Act
             var result = service.GetCurrentBuyingExecution_v2(planId, PostingTypeEnum.NSI);
@@ -8384,7 +8382,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                 .Setup(x => x.GetPlan(It.IsAny<int>(), It.IsAny<int?>()))
                 .Returns(plan);
 
-            var service = _GetService(false, false);
+            var service = _GetService(false);
 
             // Act
             await service.RunBuyingJobAsync(parameters, jobId, CancellationToken.None);
