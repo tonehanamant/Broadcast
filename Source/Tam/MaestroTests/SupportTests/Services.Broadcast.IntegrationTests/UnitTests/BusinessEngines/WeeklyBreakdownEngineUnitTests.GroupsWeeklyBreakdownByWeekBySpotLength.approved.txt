@@ -1,7 +1,7 @@
 ﻿[
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "Adu": 4,
+    "Adu": 4.0,
     "Budget": 100.0,
     "EndDate": "2020-05-10T00:00:00",
     "Impressions": 1000.0,
@@ -16,7 +16,7 @@
   },
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "Adu": 2,
+    "Adu": 2.0,
     "Budget": 200.0,
     "EndDate": "2020-05-10T00:00:00",
     "Impressions": 1500.0,
@@ -31,7 +31,7 @@
   },
   {
     "ActiveDays": "M,Tu,W,Th",
-    "Adu": 0,
+    "Adu": 0.0,
     "Budget": 70.0,
     "EndDate": "2020-05-03T00:00:00",
     "Impressions": 800.0,
@@ -46,7 +46,7 @@
   },
   {
     "ActiveDays": "M,Tu,W",
-    "Adu": 8,
+    "Adu": 8.0,
     "Budget": 60.0,
     "EndDate": "2020-04-26T00:00:00",
     "Impressions": 1000.0,
@@ -61,7 +61,7 @@
   },
   {
     "ActiveDays": "M,Tu,W",
-    "Adu": 2,
+    "Adu": 2.0,
     "Budget": 30.0,
     "EndDate": "2020-04-26T00:00:00",
     "Impressions": 500.0,

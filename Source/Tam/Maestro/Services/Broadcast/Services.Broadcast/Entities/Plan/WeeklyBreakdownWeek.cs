@@ -76,7 +76,7 @@ namespace Services.Broadcast.Entities.Plan
         public double RatingPoints { get; set; }
         public decimal Budget { get; set; }
         public int SpotLengthId { get; set; }
-        public int Adu { get; set; }
+        public double Adu { get; set; }
         public double Units { get; set; }
         public bool IsLocked { get; set; }
     }
@@ -92,7 +92,7 @@ namespace Services.Broadcast.Entities.Plan
         public double Impressions { get; set; }
         public decimal Budget { get; set; }
         public int DaypartCodeId { get; set; }
-        public int Adu { get; set; }
+        public double Adu { get; set; }
         public double Units { get; set; }
         public bool IsLocked { get; set; }
         public int? DaypartOrganizationId { get; set; }

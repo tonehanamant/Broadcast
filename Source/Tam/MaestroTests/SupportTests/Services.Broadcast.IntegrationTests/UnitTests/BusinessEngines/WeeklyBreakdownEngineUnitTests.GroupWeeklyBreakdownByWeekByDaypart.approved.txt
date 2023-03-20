@@ -1,7 +1,7 @@
 [
   {
     "ActiveDays": "M,Tu,W,Th,F",
-    "Adu": 6,
+    "Adu": 6.0,
     "Budget": 300.0,
     "CustomName": null,
     "DaypartCodeId": 1,
@@ -20,7 +20,7 @@
   },
   {
     "ActiveDays": "M,Tu,W,Th",
-    "Adu": 0,
+    "Adu": 0.0,
     "Budget": 70.0,
     "CustomName": null,
     "DaypartCodeId": 1,
@@ -39,7 +39,7 @@
   },
   {
     "ActiveDays": "M,Tu,W",
-    "Adu": 3,
+    "Adu": 3.0,
     "Budget": 30.0,
     "CustomName": null,
     "DaypartCodeId": 1,
@@ -58,7 +58,7 @@
   },
   {
     "ActiveDays": "M,Tu,W",
-    "Adu": 6,
+    "Adu": 6.0,
     "Budget": 60.0,
     "CustomName": null,
     "DaypartCodeId": 2,

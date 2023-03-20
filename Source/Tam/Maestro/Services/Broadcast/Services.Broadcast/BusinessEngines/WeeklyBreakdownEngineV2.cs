@@ -1887,12 +1887,12 @@ namespace Services.Broadcast.BusinessEngines
             }
         }
 
-        internal int _CalculateADU(double impressionsPerUnit, double aduImpressions
+        internal double _CalculateADU(double impressionsPerUnit, double aduImpressions
             , bool? equivalized, int? spotLengthId, List<CreativeLength> creativeLengths = null)
         {
             if (impressionsPerUnit == 0)
             {   //for older plans, where the user did not set an impressions per unit value, we need to show the user the ADU value based on the old math
-                return (int)(aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
+                return (aduImpressions / _DefaultImpressionsPerUnitForOldPlans);
             }
 
             if (_IsAduForPlanningv2Enabled.Value)
@@ -1909,16 +1909,16 @@ namespace Services.Broadcast.BusinessEngines
             {
                 if (spotLengthId.HasValue)
                 {
-                    return (int)Math.Round(_CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId.Value), 0);
+                    return Math.Round(_CalculateUnitsForSingleSpotLength(impressionsPerUnit, aduImpressions, spotLengthId.Value), 0);
                 }
                 else
                 {
-                    return (int)Math.Round(_CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions), 0);
+                    return Math.Round(_CalculateUnitsForMultipleSpotLengths(creativeLengths, impressionsPerUnit, aduImpressions), 0);
                 }
             }
             else
             {
-                return (int)(aduImpressions / impressionsPerUnit);
+                return (aduImpressions / impressionsPerUnit);
             }
         }
 
