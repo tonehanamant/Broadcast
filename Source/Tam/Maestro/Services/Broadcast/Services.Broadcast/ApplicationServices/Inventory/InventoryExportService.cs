@@ -40,7 +40,7 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         /// <summary>
         /// Generates the inventory export file for the Open Market inventory source.
         /// </summary>
-        int GenerateExportForOpenMarket(InventoryExportRequestDto inventoryExportDto, string userName, string templatesFilePath);
+        int GenerateExportForOpenMarket(InventoryExportRequestDto request, string userName, string templatesFilePath);
 
         /// <summary>
         /// Downloads the generated export file.
@@ -110,7 +110,18 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetInventoryGenreTypes();
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetInventoryGenreTypes();
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -124,7 +135,18 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetOpenMarketExportInventoryQuarters(inventorySourceId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetOpenMarketExportInventoryQuarters(inventorySourceId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -142,8 +164,19 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                request.UserName = userName;
-                return _InventoryManagementApiClient.GenerateExportForOpenMarket(request);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    request.UserName = userName;
+                    var result = _InventoryManagementApiClient.GenerateExportForOpenMarket(request);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             const int spotLengthMinutes = 30;
             const int inventorySourceIdOpenMarket = 1;

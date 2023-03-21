@@ -75,8 +75,19 @@ namespace Services.Broadcast.ApplicationServices.Inventory
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                request.UserName = userName;
-                return _InventoryManagementApiClient.GenerateOpenMarketAffiliates(request);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    request.UserName = userName;
+                    var result = _InventoryManagementApiClient.GenerateOpenMarketAffiliates(request);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             _LogInfo($"Gathering the report data...");
             var marketAffiliateReportData = GetMarketAffiliatesReportData(request);

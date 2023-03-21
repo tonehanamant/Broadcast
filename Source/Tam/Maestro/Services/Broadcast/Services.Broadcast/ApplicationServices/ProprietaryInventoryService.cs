@@ -139,17 +139,34 @@ namespace Services.Broadcast.ApplicationServices
             InventoryFileSaveResult result = new InventoryFileSaveResult();
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                InventoryFileSaveRequestDto fileRequest = new InventoryFileSaveRequestDto
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
                 {
-                    FileName = request.FileName,
-                    RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
-                    UserName = userName
-                };
-                result = _InventoryApiClient.SaveInventoryFile(fileRequest);
-                if (result.Status== FileStatusEnum.Loaded)
+                    InventoryFileSaveRequestDto fileRequest = new InventoryFileSaveRequestDto
+                    {
+                        FileName = request.FileName,
+                        RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
+                        UserName = userName
+                    };
+                    result = _InventoryApiClient.SaveInventoryFile(fileRequest);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+
+                    if (result.Status == FileStatusEnum.Loaded)
+                    {
+                        _LogInfo("Queueing the secondary processing jobs.");
+                        _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
+                        _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(result.FileId, userName);
+                        _LogInfo("Completed queueing the secondary processing jobs.");
+                    }
+                    else
+                    {
+                        _LogInfo($"Not queueing the secondary processing jobs because the result status is not '{FileStatusEnum.Loaded}' it is '{result.Status}'.");
+                    }
+                }
+                catch (Exception ex)
                 {
-                    _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
-                    _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(result.FileId, userName);
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
                 }
             }
             else

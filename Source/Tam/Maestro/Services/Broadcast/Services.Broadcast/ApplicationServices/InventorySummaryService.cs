@@ -106,7 +106,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetInventorySources();
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetInventorySources();
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -118,7 +129,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if(_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetInventorySourceTypes();
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetInventorySourceTypes();
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -132,7 +154,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetInventoryQuarters();
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetInventoryQuarters();
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -149,7 +182,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {                
-                return _InventoryManagementApiClient.GetInventoryQuarters(inventorySourceId,standardDaypartId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetInventoryQuarters(inventorySourceId, standardDaypartId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -191,8 +235,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                List<InventorySummaryDto> inventorySummaries = _LoadInventorySummaries(inventorySummaryFilterDto);
-                return inventorySummaries;
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _LoadInventorySummaries(inventorySummaryFilterDto);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -737,7 +791,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if(_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetStandardDayparts(inventorySourceId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetStandardDayparts(inventorySourceId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -749,7 +814,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryManagementApiClient.GetInventoryUnits(inventorySourceId,standardDaypartId, startDate, endDate);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryManagementApiClient.GetInventoryUnits(inventorySourceId, standardDaypartId, startDate, endDate);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {

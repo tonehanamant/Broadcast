@@ -145,7 +145,17 @@ namespace Services.Broadcast.ApplicationServices
             var job = _ScxGenerationJobRepository.GetJobById(jobId);
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                 _InventoryApiClient.ProcessScxGenerationJob(jobId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    _InventoryApiClient.ProcessScxGenerationJob(jobId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -246,7 +256,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-              return  _InventoryApiClient.GetScxFileGenerationHistory(sourceId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryApiClient.GetScxFileGenerationHistory(sourceId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -373,7 +394,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-               return _InventoryApiClient.GetOpenMarketScxFileGenerationHistory();
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryApiClient.GetOpenMarketScxFileGenerationHistory();
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -422,7 +454,17 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)  
             {
-                _InventoryApiClient.ProcessScxOpenMarketGenerationJob(jobId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    _InventoryApiClient.ProcessScxOpenMarketGenerationJob(jobId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {

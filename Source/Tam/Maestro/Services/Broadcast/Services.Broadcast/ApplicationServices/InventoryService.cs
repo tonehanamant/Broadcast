@@ -205,18 +205,35 @@ namespace Services.Broadcast.ApplicationServices
             InventoryFileSaveResult result;
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                InventoryFileSaveRequestDto fileRequest = new InventoryFileSaveRequestDto
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
                 {
-                    FileName = request.FileName,
-                    RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
-                    UserName = userName
-                };
-                result = _InventoryApiClient.SaveInventoryFile(fileRequest);
-                if (result.Status == FileStatusEnum.Loaded)
-                {
-                    _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
-                    _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(result.FileId, userName);
+                    InventoryFileSaveRequestDto fileRequest = new InventoryFileSaveRequestDto
+                    {
+                        FileName = request.FileName,
+                        RawData = FileStreamExtensions.ConvertToBase64String(request.StreamData),
+                        UserName = userName
+                    };
+                    result = _InventoryApiClient.SaveInventoryFile(fileRequest);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    
+                    if (result.Status == FileStatusEnum.Loaded)
+                    {
+                        _LogInfo("Queueing the secondary processing jobs.");
+                        _InventoryRatingsService.QueueInventoryFileRatingsJob(result.FileId);
+                        _InventoryProgramsProcessingService.QueueProcessInventoryProgramsByFileJob(result.FileId, userName);
+                        _LogInfo("Completed queueing the secondary processing jobs.");
+                    }
+                    else
+                    {
+                        _LogInfo($"Not queueing the secondary processing jobs because the result status is not '{FileStatusEnum.Loaded}' it is '{result.Status}'.");
+                    }
                 }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }                
             }
             else
             {
@@ -812,7 +829,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryApiClient.GetInventoryUploadHistory(inventorySourceId, quarter, year);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryApiClient.GetInventoryUploadHistory(inventorySourceId, quarter, year);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -981,7 +1009,18 @@ namespace Services.Broadcast.ApplicationServices
         {
             if (_IsInventoryServiceMigrationEnabled.Value)
             {
-                return _InventoryApiClient.GetInventoryUploadHistoryQuarters(inventorySourceId);
+                _LogInfo("Calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                try
+                {
+                    var result = _InventoryApiClient.GetInventoryUploadHistoryQuarters(inventorySourceId);
+                    _LogInfo("Completed calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.");
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    _LogError("Exception calling the Inventory Management Service for this operation per the toggle 'enable-inventory-service-migration'.", ex);
+                    throw;
+                }
             }
             else
             {
@@ -989,9 +1028,7 @@ namespace Services.Broadcast.ApplicationServices
                 var quarters = _QuarterCalculationEngine.GetQuartersForDateRanges(uploadHistoryDates);
                 return quarters.OrderByDescending(q => q.Year).ThenByDescending(q => q.Quarter).ToList();
             }
-
         }
-
 
         /// <summary>
         /// For unit testing.  Abstracts from the static Configuration Service.
