@@ -1,12 +1,12 @@
 [
   {
-    "AduImpressions": 0.0,
+    "AduImpressions": 3000.0,
     "Budget": 400.0,
     "Impressions": 3800.0,
     "StandardDaypartId": 1
   },
   {
-    "AduImpressions": 0.0,
+    "AduImpressions": 2000.0,
     "Budget": 60.0,
     "Impressions": 1000.0,
     "StandardDaypartId": 2

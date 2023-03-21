@@ -1,4 +1,5 @@
-﻿using Common.Services.Extensions;
+﻿using Common.Services.ApplicationServices;
+using Common.Services.Extensions;
 using Common.Services.Repositories;
 using Services.Broadcast.Entities;
 using Services.Broadcast.Entities.Enums;
@@ -15,6 +16,86 @@ using Tam.Maestro.Services.ContractInterfaces.Common;
 
 namespace Services.Broadcast.BusinessEngines
 {
+    public interface IWeeklyBreakdownEngine : IApplicationService
+    {
+        /// <summary>
+        ///GroupWeeklyBreakdownByWeek
+        /// </summary>
+        List<WeeklyBreakdownByWeek> GroupWeeklyBreakdownByWeek(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit = 0, List<CreativeLength> creativeLengths = null, bool? equivalized = false);
+        /// <summary>
+        /// GroupWeeklyBreakdownByWeekBySpotLength
+        /// </summary>
+        List<WeeklyBreakdownByWeekBySpotLength> GroupWeeklyBreakdownByWeekBySpotLength(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit, bool? equivalized);
+        /// <summary>
+        /// GetWeekNumberByMediaWeekDictionary
+        /// </summary>       
+        Dictionary<int, int> GetWeekNumberByMediaWeekDictionary(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
+        /// <summary>
+        /// CalculatePlanWeeklyGoalBreakdown
+        /// </summary>
+        WeeklyBreakdownResponseDto CalculatePlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
+        /// <summary>
+        /// GroupWeeklyBreakdownByStandardDaypart
+        /// </summary>
+        List<WeeklyBreakdownByStandardDaypart> GroupWeeklyBreakdownByStandardDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown);
+        /// <summary>
+        /// RecalculatePercentageOfWeekBasedOnImpressions
+        /// </summary>
+        void RecalculatePercentageOfWeekBasedOnImpressions(List<WeeklyBreakdownWeek> weeks);
+        /// <summary>
+        /// SetWeekNumberAndSpotLengthDuration
+        /// </summary>
+        void SetWeekNumberAndSpotLengthDuration(IEnumerable<WeeklyBreakdownWeek> weeks);
+
+        /// <summary>
+        /// Calculates the adu Impressions
+        /// </summary>
+        /// <param name="week">Week object</param>
+        /// <param name="equivalized">Equivalized flag</param>
+        /// <param name="impressionsPerUnit">Impressions per unit value</param>
+        /// <param name="creativeLengths">List of creative lengths</param>
+        /// <returns>Number of adu impressions</returns>
+        double CalculateWeeklyADUImpressions(WeeklyBreakdownWeek week, bool? equivalized
+            , double impressionsPerUnit, List<CreativeLength> creativeLengths);
+
+        /// <summary>
+        /// Groups the weekly breakdown by week by daypart
+        /// </summary>
+        List<WeeklyBreakdownByWeekByDaypart> GroupWeeklyBreakdownByWeekByDaypart(IEnumerable<WeeklyBreakdownWeek> weeklyBreakdown
+            , double impressionsPerUnit, bool? equivalized, List<CreativeLength> creativeLengths);
+
+        /// <summary>
+        /// Calculates the adu with decimals.
+        /// </summary>
+        /// <param name="impressionsPerUnit">The impressions per unit.</param>
+        /// <param name="aduImpressions">The adu impressions total.</param>
+        /// <param name="equivalized">Equivalized flag</param>
+        /// <param name="spotLengthId">Spot length</param>
+        /// <returns>Adu number as double</returns>
+        double CalculateADUWithDecimals(double impressionsPerUnit, double aduImpressions
+            , bool? equivalized, int spotLengthId);
+
+        List<WeeklyBreakdownWeek> GroupWeeklyBreakdownWeeksBasedOnDeliveryType(PlanDto plan);
+
+        /// <summary>
+        /// Based on the plan delivery type, splits weekly breakdown into all combinations of plan ad lengths and dayparts
+        /// And distributes goals based on ad length and daypart weights
+        /// </summary>
+        List<WeeklyBreakdownWeek> DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(
+            PlanDto plan,
+            double? customImpressionsGoal = null,
+            decimal? customBudgetGoal = null);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        WeeklyBreakdownResponseDto ClearPlanWeeklyGoalBreakdown(WeeklyBreakdownRequest request);
+    }
+
     public class WeeklyBreakdownEngineV2 : IWeeklyBreakdownEngine
     {
         private readonly IPlanValidator _PlanValidator;

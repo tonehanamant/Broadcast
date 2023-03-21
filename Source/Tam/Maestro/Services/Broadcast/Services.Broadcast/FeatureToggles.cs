@@ -13,7 +13,6 @@
         public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
         public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";
         public static string ENABLE_PARTIAL_PLAN_SAVE = "broadcast-enable-partial-plan-save";
-        public static string ENABLE_WEEKLY_BREAKDOWN_ENGINE_V2 = "broadcast-weekly-breakdown-engine-v-2";
         public static string ENABLE_PRICING_REMOVE_UNMATCHED = "broadcast-enable-pricing-remove-unmatched";
         public static string ENABLE_VARIOUS_GENRE_RESTRICTION = "broadcast-enable-various-genre-restriction";
         public static string ENABLE_BUYING_NAVIGATION_PANEL_TOOLS = "broadcast-enable-buying-navigation-panel-tools";

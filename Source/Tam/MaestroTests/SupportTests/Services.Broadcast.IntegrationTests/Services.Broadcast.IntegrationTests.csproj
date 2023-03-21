@@ -932,7 +932,6 @@
     <Compile Include="UnitTests\BusinessEngines\ProgramNameMappingsExportEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\TrackingEngineUnitTests.cs" />
     <Compile Include="UnitTests\BusinessEngines\VpvhExportEngineUnitTests.cs" />
-    <Compile Include="UnitTests\BusinessEngines\WeeklyBreakdownEngineUnitTests.cs" />
     <Compile Include="UnitTests\Cache\AabCacheUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\BarterFileImporterUnitTests.cs" />
     <Compile Include="UnitTests\Converters\RateImport\DiginetFileImporterUnitTests.cs" />

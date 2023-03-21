@@ -113,7 +113,7 @@
       "WeekNumber": 1
     },
     {
-      "ActiveDays": "Tu-F",
+      "ActiveDays": "M,Tu,W,F,Sa,Su",
       "AduImpressions": 30.0,
       "CustomName": null,
       "DaypartCodeId": 15,
@@ -124,7 +124,7 @@
       "IsLocked": false,
       "IsUpdated": false,
       "MediaWeekId": 845,
-      "NumberOfActiveDays": 4,
+      "NumberOfActiveDays": 6,
       "PercentageOfWeek": 39.0,
       "PlanDaypartId": 0,
       "SpotLengthDuration": 30,
@@ -141,7 +141,7 @@
       "WeekNumber": 2
     },
     {
-      "ActiveDays": "Tu-F",
+      "ActiveDays": "M,Tu,W,F,Sa,Su",
       "AduImpressions": 30.0,
       "CustomName": null,
       "DaypartCodeId": 20,
@@ -152,7 +152,7 @@
       "IsLocked": false,
       "IsUpdated": false,
       "MediaWeekId": 845,
-      "NumberOfActiveDays": 4,
+      "NumberOfActiveDays": 6,
       "PercentageOfWeek": 39.0,
       "PlanDaypartId": 0,
       "SpotLengthDuration": 30,
@@ -169,7 +169,7 @@
       "WeekNumber": 2
     },
     {
-      "ActiveDays": "Tu-F",
+      "ActiveDays": "M,Tu,W,F,Sa,Su",
       "AduImpressions": 30.0,
       "CustomName": null,
       "DaypartCodeId": 15,
@@ -180,7 +180,7 @@
       "IsLocked": false,
       "IsUpdated": false,
       "MediaWeekId": 845,
-      "NumberOfActiveDays": 4,
+      "NumberOfActiveDays": 6,
       "PercentageOfWeek": 11.0,
       "PlanDaypartId": 0,
       "SpotLengthDuration": 60,
@@ -197,7 +197,7 @@
       "WeekNumber": 2
     },
     {
-      "ActiveDays": "Tu-F",
+      "ActiveDays": "M,Tu,W,F,Sa,Su",
       "AduImpressions": 30.0,
       "CustomName": null,
       "DaypartCodeId": 20,
@@ -208,7 +208,7 @@
       "IsLocked": false,
       "IsUpdated": false,
       "MediaWeekId": 845,
-      "NumberOfActiveDays": 4,
+      "NumberOfActiveDays": 6,
       "PercentageOfWeek": 11.0,
       "PlanDaypartId": 0,
       "SpotLengthDuration": 60,
@@ -561,7 +561,7 @@
       "WeekNumber": 5
     }
   ],
-  "TotalActiveDays": 27,
+  "TotalActiveDays": 29,
   "TotalAduImpressions": 0.0,
   "TotalBudget": 413.145539906103000,
   "TotalImpressions": 176.0,
@@ -627,7 +627,7 @@
       "WeekNumber": 1
     },
     {
-      "ActiveDays": "Tu-F",
+      "ActiveDays": "M,Tu,W,F,Sa,Su",
       "AduImpressions": 0.0,
       "CustomName": null,
       "DaypartCodeId": null,
@@ -638,7 +638,7 @@
       "IsLocked": false,
       "IsUpdated": false,
       "MediaWeekId": 845,
-      "NumberOfActiveDays": 4,
+      "NumberOfActiveDays": 6,
       "PercentageOfWeek": 78.0,
       "PlanDaypartId": 0,
       "SpotLengthDuration": 30,

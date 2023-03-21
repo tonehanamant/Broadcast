@@ -96,7 +96,7 @@ namespace Services.Broadcast.ApplicationServices
             unityContainer.RegisterType<IDateTimeEngine, DateTimeEngine>();
             unityContainer.RegisterType<IDateAdjustmentEngine, DateAdjustmentEngine>();
             unityContainer.RegisterType<ITrackingEngine, TrackingEngine>();
-            unityContainer.RegisterType<IWeeklyBreakdownEngine, WeeklyBreakdownEngine>();
+            unityContainer.RegisterType<IWeeklyBreakdownEngine, WeeklyBreakdownEngineV2>();
             unityContainer.RegisterType<ICreativeLengthEngine, CreativeLengthEngine>();
             unityContainer.RegisterType<IScxScheduleConverter, ScxScheduleConverter>();
             unityContainer.RegisterType<ICsvHelper, CsvHelper>();
