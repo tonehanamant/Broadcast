@@ -600,20 +600,9 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             {
                 var doneOutOfSpecsToAdd = new List<SpotExceptionsOutOfSpecsDoneDto>();
                 var doneOutOfSpecsEditedToAdd = new List<SpotExceptionsOutOfSpecsDoneDto>();
-
                 var existingOutOfSpecsToDo = await _SpotExceptionsOutOfSpecRepository.GetOutOfSpecSpotsToDoByIds(spotExceptionsOutOfSpecSaveRequest.Decisions.Select(x => x.TodoId).ToList());
-                var outOfSpecDoComments = existingOutOfSpecsToDo.Select(doneOutOfSpecToAdd => new SpotExceptionOutOfSpecCommentsDto
-                {
-                    SpotUniqueHashExternal = doneOutOfSpecToAdd.SpotUniqueHashExternal,
-                    ExecutionIdExternal = doneOutOfSpecToAdd.ExecutionIdExternal,
-                    IsciName = doneOutOfSpecToAdd.IsciName,
-                    RecommendedPlanId = doneOutOfSpecToAdd.RecommendedPlanId.Value,
-                    StationLegacyCallLetters = doneOutOfSpecToAdd.StationLegacyCallLetters,
-                    ProgramAirTime = doneOutOfSpecToAdd.ProgramAirTime,
-                    ReasonCode = doneOutOfSpecToAdd.SpotExceptionsOutOfSpecReasonCode.Id,
-                    Comments = spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments == null ? doneOutOfSpecToAdd.Comments : spotExceptionsOutOfSpecSaveRequest.Decisions.First().Comments
-                }).ToList();
                 var firstRequest = spotExceptionsOutOfSpecSaveRequest.Decisions.First();
+
                 if (string.IsNullOrEmpty(firstRequest.ProgramName) && string.IsNullOrEmpty(firstRequest.GenreName) && string.IsNullOrEmpty(firstRequest.DaypartCode))
                 {
                     doneOutOfSpecsToAdd = existingOutOfSpecsToDo.Select(existingOutOfSpecToDo => new SpotExceptionsOutOfSpecsDoneDto
@@ -720,7 +709,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                         _SpotExceptionsOutOfSpecRepository.AddOutOfSpecEditedToDone(doneOutOfSpecsEditedToAdd);
                     }
                     _SpotExceptionsOutOfSpecRepository.DeleteOutOfSpecsFromToDo(existingOutOfSpecsToDo.Select(x => x.Id).ToList());
-                   await _SpotExceptionsOutOfSpecRepository.SaveOutOfSpecCommentsAsync(outOfSpecDoComments,userName,DateTime.Now);
+
                     transaction.Complete();
                     isSaved = true;
                 }

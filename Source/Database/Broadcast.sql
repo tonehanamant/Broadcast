@@ -2679,6 +2679,19 @@ GO
 
 /*************************************** END BS-2277 *****************************************/
 
+/*************************************** START BP-6510 ***************************************/
+
+IF (SELECT COUNT(id) FROM spot_exceptions_out_of_spec_comments WHERE comment is null ) > 0
+BEGIN
+
+	DELETE FROM spot_exceptions_out_of_spec_comments 
+		WHERE comment is null
+
+END
+GO
+
+/*************************************** END BP-6510 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
