@@ -77,7 +77,7 @@ namespace BroadcastJobScheduler
 
             _RecurringJobManager.AddOrUpdate(
                 "spot-exception-ingest-run",
-                () => _ISpotExceptionsServiceV2.SpotExceptionIngestRan(_GetSpotExceptionIngestJobRunHour()),
+                () => _ISpotExceptionsServiceV2.SpotExceptionIngestRun(_GetSpotExceptionIngestJobRunHour()),
                 Cron.Daily(_GetSpotExceptionIngestJobRunHour()),
                 TimeZoneInfo.Local,
                 queue: "spotexceptioningestrun");
@@ -98,7 +98,7 @@ namespace BroadcastJobScheduler
 
         private int _GetSpotExceptionIngestJobRunHour()
         {
-            return AppSettingHelper.GetConfigSetting("SpotExceptioningestJobRunHours", 0);
+            return AppSettingHelper.GetConfigSetting("SpotExceptionIngestJobRunHours", 0);
         }
     }
 }

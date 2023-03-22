@@ -51,6 +51,7 @@ namespace BroadcastJobScheduler.JobQueueMonitors
                 "reelisciingest",
                 "planstatustransitionv2",
                 "spotexceptionssyncingest",
+                "spotexceptioningestrun",
                 "default"
             };
         }

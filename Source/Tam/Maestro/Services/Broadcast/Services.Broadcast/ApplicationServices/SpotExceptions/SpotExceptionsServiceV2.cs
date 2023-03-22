@@ -33,7 +33,8 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         /// Spots the exception ingest ran.
         /// </summary>
         /// <param name="ranByHour">Name of the user.</param>
-        void SpotExceptionIngestRan(int ranByHour);
+        [Queue("spotexceptioningestrun")]
+        void SpotExceptionIngestRun(int ranByHour);
     }
 
     public class SpotExceptionsServiceV2 : BroadcastBaseClass, ISpotExceptionsServiceV2
@@ -121,7 +122,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
 
         /// <inheritdoc />
         [AutomaticRetry(Attempts = 0, OnAttemptsExceeded = AttemptsExceededAction.Fail)]
-        public void SpotExceptionIngestRan(int ranByHour)
+        public void SpotExceptionIngestRun(int ranByHour)
         {
             _SpotExceptionsApiClient.SyncSuccessfullyRanByTimeOfDayAsync(ranByHour);
         }
