@@ -46,20 +46,22 @@ namespace Services.Broadcast.ReportGenerators.SpotExceptions
         {
             var templateFilePath = Path.Combine(TEMPLATES_FILE_PATH, OUTOFSPEC_EXPORT_TEMPLATE_FILENAME);            
             var package = new ExcelPackage(new FileInfo(templateFilePath), useStream: true);
-          
-            var outOfSpecGroupedByAdvertiser = outOfSpecExportReportData.GroupBy(x => x.AdvertiserName).OrderByDescending(c => c.Key)
-                            .Select(std => new
-                            {
-                                Key = std.Key,
-                                OutPfSpec = std.OrderBy(x => x.Date).ThenBy(x => x.TimeAired)
-                            });
-            foreach (var outOfSpecItem in outOfSpecGroupedByAdvertiser)
+            if (outOfSpecExportReportData.Any())
             {
-                package.Workbook.Worksheets.Copy(BASE_SHEET, outOfSpecItem.Key);
-                ExcelWorksheet newsWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, outOfSpecItem.Key);
-                new OutOfSpecReportGenerator(newsWorksheet)._PopulateOutOfSpecReportTabS(outOfSpecItem.OutPfSpec.ToList());                
+                var outOfSpecGroupedByAdvertiser = outOfSpecExportReportData.GroupBy(x => x.AdvertiserName).OrderByDescending(c => c.Key)
+                                .Select(std => new
+                                {
+                                    Key = std.Key,
+                                    OutPfSpec = std.OrderBy(x => x.Date).ThenBy(x => x.TimeAired)
+                                });
+                foreach (var outOfSpecItem in outOfSpecGroupedByAdvertiser)
+                {
+                    package.Workbook.Worksheets.Copy(BASE_SHEET, outOfSpecItem.Key);
+                    ExcelWorksheet newsWorksheet = ExportSharedLogic.GetWorksheet(templateFilePath, package, outOfSpecItem.Key);
+                    new OutOfSpecReportGenerator(newsWorksheet)._PopulateOutOfSpecReportTabS(outOfSpecItem.OutPfSpec.ToList());
+                }
+                package.Workbook.Worksheets.Delete(BASE_SHEET);
             }
-            package.Workbook.Worksheets.Delete(BASE_SHEET);
             //set the first tab as the active tab in the file
             package.Workbook.Worksheets.First().Select();
 

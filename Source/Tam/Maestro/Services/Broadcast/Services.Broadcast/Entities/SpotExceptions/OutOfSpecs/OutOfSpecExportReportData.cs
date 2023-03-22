@@ -5,7 +5,7 @@ namespace Services.Broadcast.Entities.SpotExceptions.OutOfSpecs
 {
     public class OutOfSpecExportReportData
     {       
-        private const string FILENAME_FORMAT = "Template - Out of Spec Report Buying Team.xlsx";
+        private const string FILENAME_FORMAT = "Out of Spec Report Buying Team.xlsx";
 
         /// <summary>
         /// Gets or sets the name of the out of spec export file.
