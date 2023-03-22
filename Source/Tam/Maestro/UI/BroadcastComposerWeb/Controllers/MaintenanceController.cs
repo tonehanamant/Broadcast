@@ -167,6 +167,32 @@ namespace BroadcastComposerWeb.Controllers
             TempData["TabId"] = "reference_data";
             return RedirectToAction("Index");
         }
+        public ActionResult ExportMissingStations()
+        {
+            try
+            {               
+                var currentDate = DateTime.Now.ToString("yyyyMMdd");
+                var service = _ApplicationServiceFactory.GetApplicationService<IStationService>();
+                MemoryStream memoryStream= service.GetStationsMissingMarkets();
+                TempData["Message"] = $"Export Completed.";              
+                
+                byte[] bytesInStream = memoryStream.ToArray(); 
+                memoryStream.Close();
+
+                Response.Clear();
+                Response.ContentType = "application/force-download";
+                Response.AddHeader("content-disposition", $"attachment;    filename=MissingStationsReport_{currentDate}.xlsx");
+                Response.BinaryWrite(bytesInStream);
+                Response.End();
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = ex.Message;
+            }
+
+            TempData["TabId"] = "reference_data";
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         [Route("ImportProgramMappings")]

@@ -8,6 +8,8 @@ using Services.Broadcast.Repositories;
 using System;
 using System.Collections.Generic;
 using Services.Broadcast.BusinessEngines;
+using System.IO;
+using Services.Broadcast.Extensions;
 
 namespace Services.Broadcast.ApplicationServices
 {
@@ -24,6 +26,11 @@ namespace Services.Broadcast.ApplicationServices
         void ImportStationsFromForecastDatabase(string createdBy, DateTime createdDate);
 
         int ResetLastStationsFromForecastDatabaseJob(string username);
+
+        /// <summary>
+        /// Get Station Missing Market and Affiliations data.
+        /// </summary>   
+        MemoryStream GetStationsMissingMarkets();
     }
 
     public class StationService : BroadcastBaseClass, IStationService
@@ -36,7 +43,7 @@ namespace Services.Broadcast.ApplicationServices
         public StationService(
             IDataRepositoryFactory broadcastDataRepositoryFactory,
             IStationMappingService stationMappingService,
-            IDateTimeEngine dateTimeEngine,IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper
+            IDateTimeEngine dateTimeEngine, IFeatureToggleHelper featureToggleHelper, IConfigurationSettingsHelper configurationSettingsHelper
             ) : base(featureToggleHelper, configurationSettingsHelper)
         {
             _NsiStationRepository = broadcastDataRepositoryFactory.GetDataRepository<INsiStationRepository>();
@@ -190,6 +197,15 @@ namespace Services.Broadcast.ApplicationServices
             var deletedCount = _StationRepository.DeleteStationMonthDetailsForMonth(latestSourceMediaMonthId);
             _LogInfo($"Deleted {deletedCount} station month detail records.", username);
             return deletedCount;
+        }
+        public MemoryStream GetStationsMissingMarkets()
+        {
+            _LogInfo($"Gathering the missing station report data...");
+            var stationDetails = _StationRepository.GetStationsMissingMarkets();
+            _LogInfo($"Preparing to generate the missing station report file.");
+            var report = MissingStationsReportGenerator.Generate(stationDetails);
+            _LogInfo($"Exporting generated missing station report file");
+            return report;
         }
     }
 }

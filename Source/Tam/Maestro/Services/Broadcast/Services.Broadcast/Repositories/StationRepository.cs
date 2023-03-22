@@ -111,6 +111,11 @@ namespace Services.Broadcast.Repositories
         List<DisplayBroadcastStation> GetBroadcastStationsByIds(IEnumerable<int> stationIds);
 
         int DeleteStationMonthDetailsForMonth(int mediaMonthId);
+
+        /// <summary>
+        /// Get Station Missing Market and Affiliations data.
+        /// </summary>      
+        List<StationsGapDto> GetStationsMissingMarkets();
     }
 
     public class StationRepository : BroadcastRepositoryBase, IStationRepository
@@ -556,6 +561,30 @@ namespace Services.Broadcast.Repositories
                         .Count();
                     context.SaveChanges();
                     return deletedCount;
+                });
+        }
+
+        public List<StationsGapDto> GetStationsMissingMarkets()
+        {
+            return _InReadUncommitedTransaction(
+                context =>
+                {
+                    var stnDetails = (from stn in context.stations 
+                                      join mkt in context.markets 
+                                      on stn.market_code equals mkt.market_code
+                                      into StationMarketGroup 
+                                      from market in StationMarketGroup.DefaultIfEmpty() 
+                                      where stn.market==null || stn.affiliation == null
+                                      orderby stn.legacy_call_letters
+                                      select new StationsGapDto
+                                      {
+                                          LegacyCallLetters = stn.legacy_call_letters,
+                                          MarketCode = (int)stn.market_code,
+                                          MarketName = market.geography_name,
+                                          Affiliation = stn.affiliation
+
+                                      }).ToList();
+                    return stnDetails;
                 });
         }
     }

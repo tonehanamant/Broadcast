@@ -988,10 +988,12 @@
     <Compile Include="Entities\SpotExceptions\Unposted\SpotExceptionsUnpostedNoReelRosterDto.cs" />
     <Compile Include="Entities\SpotExceptions\Unposted\SpotExceptionsUnpostedRequestDto.cs" />
     <Compile Include="Entities\SpotLengthDto.cs" />
+    <Compile Include="Entities\StationsGapDto.cs" />
     <Compile Include="Exceptions\CadentException.cs" />
     <Compile Include="Exceptions\PlanValidationException.cs" />
     <Compile Include="Exceptions\PlanSaveException.cs" />
     <Compile Include="Exceptions\SpotExceptionsException.cs" />
+    <Compile Include="Extensions\MissingStationsReportGenerator.cs" />
     <Compile Include="Extensions\SpotExceptionsIngestApiResponseExtensions.cs" />
     <Compile Include="FeatureToggles.cs" />
     <Compile Include="BusinessEngines\AabEngine.cs" />
