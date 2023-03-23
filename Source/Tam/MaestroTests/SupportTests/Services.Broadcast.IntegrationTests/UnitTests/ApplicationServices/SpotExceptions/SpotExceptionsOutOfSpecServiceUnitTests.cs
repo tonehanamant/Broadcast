@@ -2127,7 +2127,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     DaypartCode="ROSP",
                     InventorySourceName = "TVB",
                     TimeZone="ET",
-                    MarketCode=351
+                    MarketCode=351,
+                    MarketRank = 1
                 },
                 new SpotExceptionsOutOfSpecsToDoDto
                 {
@@ -2180,7 +2181,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     Comments = "test Comment",
                     InventorySourceName = "TVB",
                     TimeZone="ET",
-                    MarketCode=352
+                    MarketCode=352,
+                    MarketRank = 2
                 }               
             };
         }
@@ -2250,7 +2252,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     Comments = "test Comment",
                     InventorySourceName = "TVB",
                     TimeZone="ET",
-                    MarketCode=351
+                    MarketCode=351,
+                    MarketRank = 2
                 },
                 new SpotExceptionsOutOfSpecsDoneDto
                 {
@@ -2313,7 +2316,8 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Spot
                     Comments = "test Comment",
                     InventorySourceName = "TVB",
                     TimeZone="CT",
-                    MarketCode=352
+                    MarketCode=352,
+                    MarketRank = 4
                 }
             };
         }

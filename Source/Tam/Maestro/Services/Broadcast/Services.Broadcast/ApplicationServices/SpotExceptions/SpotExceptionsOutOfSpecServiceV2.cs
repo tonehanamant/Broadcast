@@ -187,7 +187,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
         private readonly IGenreCache _GenreCache;
         private readonly IAabEngine _AabEngine;
         private readonly IPlanRepository _PlanRepository;
-        private readonly Lazy<bool> _IsSpotExceptionEnabled;
 
         public SpotExceptionsOutOfSpecServiceV2(
           IDataRepositoryFactory dataRepositoryFactory,
@@ -205,7 +204,6 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
             _GenreCache = genreCache;
             _AabEngine = aabEngine;
             _PlanRepository = dataRepositoryFactory.GetDataRepository<IPlanRepository>();
-            _IsSpotExceptionEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS));
         }
 
         /// <inheritdoc />
@@ -1138,7 +1136,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(activePlan =>
                     {
                         marketRank = activePlan.MarketRank == null ? 0 : activePlan.MarketRank.Value;
-                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : activePlan.DMA;
+                        DMA = marketRank + fourHundred;
                         timeZone = _GetMarketTimeZoneCode(timeZones, activePlan.MarketCode);
                         return new OutOfSpecSpotsResultDto
                         {
@@ -1457,7 +1455,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(queuedPlan =>
                     {
                         marketRank = queuedPlan.MarketRank == null ? 0 : queuedPlan.MarketRank.Value;
-                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : queuedPlan.DMA;
+                        DMA = marketRank + fourHundred;
                         timeZone = _GetMarketTimeZoneCode(timeZones, queuedPlan.MarketCode);
                         return new OutOfSpecDonePlanSpotsDto
                         {
@@ -1522,7 +1520,7 @@ namespace Services.Broadcast.ApplicationServices.SpotExceptions
                     .Select(syncedPlan =>
                     {
                         marketRank = syncedPlan.MarketRank == null ? 0 : syncedPlan.MarketRank.Value;
-                        DMA = _IsSpotExceptionEnabled.Value ? marketRank + fourHundred : syncedPlan.DMA;
+                        DMA = marketRank + fourHundred;
                         timeZone = _GetMarketTimeZoneCode(timeZones, syncedPlan.MarketCode);
                         return new OutOfSpecDonePlanSpotsDto
                         {

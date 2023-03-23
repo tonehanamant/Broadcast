@@ -115,7 +115,6 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.BusinessEngines
         {
             // setup feature flags
             var launchDarklyClientStub = new LaunchDarklyClientStub();
-            launchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_BUYING_NAVIGATION_PANEL_TOOLS, true);
             var featureToggleHelper = new FeatureToggleHelper(launchDarklyClientStub);
 
             var testClass = new PlanBuyingInventoryEngineTestClass(

@@ -88,8 +88,7 @@ namespace Services.Broadcast.ApplicationServices
                 Environment = new AppSettings().Environment.ToString(),
                 HostName = Environment.MachineName,               
                 // Keep These : these are referenced by the NavBar.cshtml           
-                DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK),               
-                DisplaySpotExceptionsLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.ENABLE_SPOT_EXCEPTIONS)
+                DisplayBuyingLink = IsFeatureToggleEnabledUserAnonymous(FeatureToggles.DISPLAY_BUYING_LINK)
             };
             
             return environmentInfo;

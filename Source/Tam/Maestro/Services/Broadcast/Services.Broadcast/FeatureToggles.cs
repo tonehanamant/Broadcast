@@ -10,12 +10,10 @@
         public static string PRICING_MODEL_PROPRIETARY_O_AND_O_INVENTORY = "broadcast-pricing-model-proprietary-o-and-o-inventory";
         public static string CAMPAIGNS_LOCKING = "broadcast-campaigns-locking";              
         public static string ENABLE_SAVE_INGESTED_INVENTORY_FILE = "broadcast-enable-save-ingested-inventory-file";
-        public static string ENABLE_SPOT_EXCEPTIONS = "broadcast-enable-spot-exceptions";
         public static string ENABLE_PARALLEL_PRICINGAPICLIENT_REQUESTS = "broadcast-enable-parallel-pricing-requests";
         public static string ENABLE_PARTIAL_PLAN_SAVE = "broadcast-enable-partial-plan-save";
         public static string ENABLE_PRICING_REMOVE_UNMATCHED = "broadcast-enable-pricing-remove-unmatched";
         public static string ENABLE_VARIOUS_GENRE_RESTRICTION = "broadcast-enable-various-genre-restriction";
-        public static string ENABLE_BUYING_NAVIGATION_PANEL_TOOLS = "broadcast-enable-buying-navigation-panel-tools";
         public static string ENABLE_UM_REEL_ROSTER = "broadcast-enable-um-reel-roster";
         /// <summary>
         /// This feature toggle is used to check the new locking microservice

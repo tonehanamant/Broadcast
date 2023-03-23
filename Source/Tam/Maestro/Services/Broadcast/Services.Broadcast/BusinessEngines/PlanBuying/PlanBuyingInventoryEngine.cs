@@ -803,15 +803,8 @@ namespace Services.Broadcast.BusinessEngines
             IEnumerable<PlanBuyingInventoryProgram> programs,
             PlanDto plan, ProgramInventoryOptionalParametersDto parameters)
         {
-            var hutBookId = plan.HUTBookId;
-            var shareBookId = plan.ShareBookId;
-
-            var enableParameterBooks = _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_BUYING_NAVIGATION_PANEL_TOOLS);
-            if (enableParameterBooks)
-            {
-                hutBookId = parameters.HUTBookId;
-                shareBookId = parameters.ShareBookId;
-            }
+            var hutBookId = parameters.HUTBookId;
+            var shareBookId = parameters.ShareBookId;
 
             var impressionsRequest = new ImpressionsRequestDto
             {

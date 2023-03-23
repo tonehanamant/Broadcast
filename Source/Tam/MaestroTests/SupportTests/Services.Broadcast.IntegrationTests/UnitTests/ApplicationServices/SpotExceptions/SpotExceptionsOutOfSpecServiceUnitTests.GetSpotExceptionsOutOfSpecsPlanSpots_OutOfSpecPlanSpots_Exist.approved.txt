@@ -6,14 +6,14 @@
       "Comments": "test Comment",
       "Day": "Friday",
       "DaypartCode": "ROSP",
-      "DMA": 58,
+      "DMA": 401,
       "EstimateId": 191760,
       "GenreName": "Comedy",
       "HouseIsci": "289J76GN16H",
       "Id": 3,
       "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "MarketRank": 0,
+      "MarketRank": 1,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -33,14 +33,14 @@
       "Comments": "test Comment",
       "Day": "Friday",
       "DaypartCode": null,
-      "DMA": 58,
+      "DMA": 402,
       "EstimateId": 191760,
       "GenreName": null,
       "HouseIsci": "289J76GN16H",
       "Id": 4,
       "InventorySourceName": "TVB",
       "Market": "Cincinnati",
-      "MarketRank": 0,
+      "MarketRank": 2,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -63,7 +63,7 @@
       "Day": "Friday",
       "DaypartCode": null,
       "DecisionString": "",
-      "DMA": 58,
+      "DMA": 404,
       "EstimateId": 191760,
       "FlightEndDate": "12/09/2019",
       "GenreName": null,
@@ -71,7 +71,7 @@
       "Id": 2,
       "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "MarketRank": 0,
+      "MarketRank": 4,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
@@ -95,7 +95,7 @@
       "Day": "Friday",
       "DaypartCode": null,
       "DecisionString": "",
-      "DMA": 58,
+      "DMA": 402,
       "EstimateId": 191760,
       "FlightEndDate": "12/09/2019",
       "GenreName": null,
@@ -103,7 +103,7 @@
       "Id": 1,
       "InventorySourceName": "TVB",
       "Market": "Minot-Bsmrck-Dcknsn(Wlstn)",
-      "MarketRank": 0,
+      "MarketRank": 2,
       "PlanDaypartCodes": [
         "ROSP",
         "TDNS"
