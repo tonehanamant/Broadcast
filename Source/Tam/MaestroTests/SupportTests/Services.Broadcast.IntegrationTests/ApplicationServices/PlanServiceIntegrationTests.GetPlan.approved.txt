@@ -2004,8 +2004,10 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "1||",
       "EndTimeSeconds": 36000,
+      "Friday": true,
       "IsEndTimeModified": false,
       "IsStartTimeModified": false,
+      "Monday": true,
       "Restrictions": {
         "AffiliateRestrictions": {
           "Affiliates": [],
@@ -2029,7 +2031,11 @@
           "ShowTypes": []
         }
       },
+      "Saturday": true,
       "StartTimeSeconds": 14400,
+      "Sunday": true,
+      "Thursday": true,
+      "Tuesday": true,
       "VpvhForAudiences": [
         {
           "AudienceId": 40,
@@ -2039,6 +2045,7 @@
           "VpvhType": 2
         }
       ],
+      "Wednesday": true,
       "WeekdaysWeighting": null,
       "WeekendWeighting": null,
       "WeightingGoalPercent": null
@@ -2051,8 +2058,10 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "5||",
       "EndTimeSeconds": 300,
+      "Friday": true,
       "IsEndTimeModified": false,
       "IsStartTimeModified": false,
+      "Monday": true,
       "Restrictions": {
         "AffiliateRestrictions": {
           "Affiliates": [],
@@ -2071,7 +2080,11 @@
           "ShowTypes": []
         }
       },
+      "Saturday": true,
       "StartTimeSeconds": 57600,
+      "Sunday": true,
+      "Thursday": true,
+      "Tuesday": true,
       "VpvhForAudiences": [
         {
           "AudienceId": 40,
@@ -2081,6 +2094,7 @@
           "VpvhType": 2
         }
       ],
+      "Wednesday": true,
       "WeekdaysWeighting": null,
       "WeekendWeighting": null,
       "WeightingGoalPercent": null
@@ -2093,8 +2107,10 @@
       "DaypartTypeId": 1,
       "DaypartUniquekey": "16||",
       "EndTimeSeconds": 300,
+      "Friday": true,
       "IsEndTimeModified": false,
       "IsStartTimeModified": true,
+      "Monday": true,
       "Restrictions": {
         "AffiliateRestrictions": {
           "Affiliates": [],
@@ -2118,7 +2134,11 @@
           "ShowTypes": []
         }
       },
+      "Saturday": true,
       "StartTimeSeconds": 46800,
+      "Sunday": true,
+      "Thursday": true,
+      "Tuesday": true,
       "VpvhForAudiences": [
         {
           "AudienceId": 40,
@@ -2128,6 +2148,7 @@
           "VpvhType": 2
         }
       ],
+      "Wednesday": true,
       "WeekdaysWeighting": null,
       "WeekendWeighting": null,
       "WeightingGoalPercent": null

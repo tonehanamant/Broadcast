@@ -49,6 +49,21 @@ namespace Services.Broadcast.ApplicationServices
 
             DaypartTimeHelper.AddOneSecondToEndTime(standardDaypartDtos);
 
+            // Default for the BS-2641: Daypart Timing - BE Provide Interfaces
+            // remove this when populate appropriatly
+            standardDaypartDtos.ForEach(d =>
+            {
+                var weekDayEnabled = d.Id != 23;
+
+                d.Monday = weekDayEnabled;
+                d.Tuesday = weekDayEnabled;
+                d.Wednesday = weekDayEnabled;
+                d.Thursday = weekDayEnabled;
+                d.Friday = weekDayEnabled;
+                d.Saturday = true;
+                d.Sunday = true;
+            });
+
             return standardDaypartDtos;
         }
     }

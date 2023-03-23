@@ -71,8 +71,10 @@
           "DaypartTypeId": 1,
           "DaypartUniquekey": "1||",
           "EndTimeSeconds": 0,
+          "Friday": false,
           "IsEndTimeModified": false,
           "IsStartTimeModified": false,
+          "Monday": false,
           "PlanDaypartId": 0,
           "Restrictions": {
             "AffiliateRestrictions": {
@@ -92,8 +94,13 @@
               "ShowTypes": []
             }
           },
+          "Saturday": false,
           "StartTimeSeconds": 0,
+          "Sunday": false,
+          "Thursday": false,
+          "Tuesday": false,
           "VpvhForAudiences": [],
+          "Wednesday": false,
           "WeekdaysWeighting": null,
           "WeekendWeighting": null,
           "WeightingGoalPercent": 60.0
@@ -106,8 +113,10 @@
           "DaypartTypeId": 1,
           "DaypartUniquekey": "2||",
           "EndTimeSeconds": 0,
+          "Friday": false,
           "IsEndTimeModified": false,
           "IsStartTimeModified": false,
+          "Monday": false,
           "PlanDaypartId": 0,
           "Restrictions": {
             "AffiliateRestrictions": {
@@ -127,8 +136,13 @@
               "ShowTypes": []
             }
           },
+          "Saturday": false,
           "StartTimeSeconds": 0,
+          "Sunday": false,
+          "Thursday": false,
+          "Tuesday": false,
           "VpvhForAudiences": [],
+          "Wednesday": false,
           "WeekdaysWeighting": null,
           "WeekendWeighting": null,
           "WeightingGoalPercent": 40.0
@@ -946,8 +960,10 @@
           "DaypartTypeId": 1,
           "DaypartUniquekey": "1||",
           "EndTimeSeconds": 0,
+          "Friday": false,
           "IsEndTimeModified": false,
           "IsStartTimeModified": false,
+          "Monday": false,
           "PlanDaypartId": 0,
           "Restrictions": {
             "AffiliateRestrictions": {
@@ -967,8 +983,13 @@
               "ShowTypes": []
             }
           },
+          "Saturday": false,
           "StartTimeSeconds": 0,
+          "Sunday": false,
+          "Thursday": false,
+          "Tuesday": false,
           "VpvhForAudiences": [],
+          "Wednesday": false,
           "WeekdaysWeighting": null,
           "WeekendWeighting": null,
           "WeightingGoalPercent": 60.0
@@ -981,8 +1002,10 @@
           "DaypartTypeId": 1,
           "DaypartUniquekey": "2||",
           "EndTimeSeconds": 0,
+          "Friday": false,
           "IsEndTimeModified": false,
           "IsStartTimeModified": false,
+          "Monday": false,
           "PlanDaypartId": 0,
           "Restrictions": {
             "AffiliateRestrictions": {
@@ -1002,8 +1025,13 @@
               "ShowTypes": []
             }
           },
+          "Saturday": false,
           "StartTimeSeconds": 0,
+          "Sunday": false,
+          "Thursday": false,
+          "Tuesday": false,
           "VpvhForAudiences": [],
+          "Wednesday": false,
           "WeekdaysWeighting": null,
           "WeekendWeighting": null,
           "WeightingGoalPercent": 40.0
@@ -1821,8 +1849,10 @@
           "DaypartTypeId": 1,
           "DaypartUniquekey": "1||",
           "EndTimeSeconds": 0,
+          "Friday": false,
           "IsEndTimeModified": false,
           "IsStartTimeModified": false,
+          "Monday": false,
           "PlanDaypartId": 0,
           "Restrictions": {
             "AffiliateRestrictions": {
@@ -1842,8 +1872,13 @@
               "ShowTypes": []
             }
           },
+          "Saturday": false,
           "StartTimeSeconds": 0,
+          "Sunday": false,
+          "Thursday": false,
+          "Tuesday": false,
           "VpvhForAudiences": [],
+          "Wednesday": false,
           "WeekdaysWeighting": null,
           "WeekendWeighting": null,
           "WeightingGoalPercent": 60.0
@@ -1856,8 +1891,10 @@
           "DaypartTypeId": 1,
           "DaypartUniquekey": "2||",
           "EndTimeSeconds": 0,
+          "Friday": false,
           "IsEndTimeModified": false,
           "IsStartTimeModified": false,
+          "Monday": false,
           "PlanDaypartId": 0,
           "Restrictions": {
             "AffiliateRestrictions": {
@@ -1877,8 +1914,13 @@
               "ShowTypes": []
             }
           },
+          "Saturday": false,
           "StartTimeSeconds": 0,
+          "Sunday": false,
+          "Thursday": false,
+          "Tuesday": false,
           "VpvhForAudiences": [],
+          "Wednesday": false,
           "WeekdaysWeighting": null,
           "WeekendWeighting": null,
           "WeightingGoalPercent": 40.0

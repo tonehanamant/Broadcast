@@ -1140,6 +1140,21 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _HandleAvailableMarketSovs(plan);
             _AddDaypartToWeeklyBreakdownResult(plan);
 
+            // Default for the BS-2641: Daypart Timing - BE Provide Interfaces
+            // remove this when populate appropriatly
+            plan.Dayparts.ForEach(d =>
+            {
+                var weekDayEnabled = d.DaypartCodeId != 23;
+
+                d.Monday = weekDayEnabled;
+                d.Tuesday = weekDayEnabled;
+                d.Wednesday = weekDayEnabled;
+                d.Thursday = weekDayEnabled;
+                d.Friday = weekDayEnabled;
+                d.Saturday = true;
+                d.Sunday = true;
+            });
+
             return plan;
         }
 

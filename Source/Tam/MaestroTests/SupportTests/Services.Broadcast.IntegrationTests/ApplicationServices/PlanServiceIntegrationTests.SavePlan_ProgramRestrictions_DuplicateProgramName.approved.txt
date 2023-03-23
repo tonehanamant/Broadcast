@@ -127,8 +127,10 @@
       "DaypartTypeId": 2,
       "DaypartUniquekey": "2||",
       "EndTimeSeconds": 2000,
+      "Friday": true,
       "IsEndTimeModified": true,
       "IsStartTimeModified": true,
+      "Monday": true,
       "Restrictions": {
         "AffiliateRestrictions": {
           "Affiliates": [
@@ -179,7 +181,11 @@
           ]
         }
       },
+      "Saturday": true,
       "StartTimeSeconds": 0,
+      "Sunday": true,
+      "Thursday": true,
+      "Tuesday": true,
       "VpvhForAudiences": [
         {
           "AudienceId": 31,
@@ -189,6 +195,7 @@
           "VpvhType": 2
         }
       ],
+      "Wednesday": true,
       "WeekdaysWeighting": null,
       "WeekendWeighting": null,
       "WeightingGoalPercent": 28.0
@@ -216,7 +223,7 @@
   "FluidityChildCategory": null,
   "FluidityPercentage": null,
   "GoalBreakdownType": 1,
-  "HhAduImpressions": 0.0,
+  "HhAduImpressions": 0.078,
   "HHCPM": 2.8571,
   "HHCPP": 0.0000,
   "HHImpressions": 35.0,

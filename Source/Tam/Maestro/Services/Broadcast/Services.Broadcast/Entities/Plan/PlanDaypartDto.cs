@@ -85,6 +85,41 @@ namespace Services.Broadcast.Entities.Plan
         public bool IsEndTimeModified { get; set; }
 
         /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Monday { get; set; }
+
+        /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Tuesday { get; set; }
+
+        /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Wednesday { get; set; }
+
+        /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Thursday { get; set; }
+
+        /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Friday { get; set; }
+
+        /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Saturday { get; set; }
+
+        /// <summary>
+        /// True when the daypart covers this day of the week.
+        /// </summary>
+        public bool Sunday { get; set; }
+
+        /// <summary>
         /// Gets or sets the weighting goal percent.
         /// </summary>
         /// <value>

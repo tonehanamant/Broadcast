@@ -24,8 +24,8 @@
     "HHImpressions": 5500.0,
     "HHRatingPoints": 23.5,
     "MaxFluidityPercent": null,
-    "ModifiedBy": "integration_test",
-    "ModifiedDate": "2020-01-01T00:00:00",
+    "ModifiedBy": "test user",
+    "ModifiedDate": "2019-11-04T00:00:00",
     "Name": "Test Campaign 1",
     "Notes": null,
     "Plans": [
@@ -677,6 +677,55 @@
         "TotalActiveDays": 35,
         "TotalHiatusDays": 0,
         "TRP": 4.1,
+        "VersionNumber": 1
+      },
+      {
+        "AduImpressions": 63.0,
+        "AudienceId": 31,
+        "AvailableMarketCount": 2,
+        "AvailableMarketsWithSovCount": 2,
+        "AvailableMarketTotalUsCoveragePercent": 80.5,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 100.0000,
+        "Dayparts": [
+          "MDN"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2018-10-31T23:59:59",
+        "FlightStartDate": "2018-10-01T00:00:00",
+        "FluidityPercentage": null,
+        "HasHiatus": false,
+        "HHAduImpressions": 78.0,
+        "HHCPM": 2.8571,
+        "HHImpressions": 35000.0,
+        "IsAduPlan": false,
+        "IsDraft": null,
+        "ModifiedBy": "testUser",
+        "ModifiedDate": "2019-11-04T00:00:00",
+        "Name": "New Plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 4,
+            "Year": 2018
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "Product1",
+        "SpotLengthValues": [
+          30,
+          60
+        ],
+        "Status": 1,
+        "TargetCPM": 12.0000,
+        "TargetImpressions": 100000.0,
+        "TotalActiveDays": 31,
+        "TotalHiatusDays": 0,
+        "TRP": 100.0,
         "VersionNumber": 1
       }
     ],
