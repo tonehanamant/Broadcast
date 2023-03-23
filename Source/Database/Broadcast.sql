@@ -2692,6 +2692,94 @@ GO
 
 /*************************************** END BP-6510 ***************************************/
 
+/*************************************** START BP-1071 - Part 1 ***************************************/
+
+DECLARE @sql_add_columns NVARCHAR(MAX) = '
+ALTER TABLE plan_version_audience_daypart_vpvh 
+	ADD plan_version_daypart_id INT NULL
+
+ALTER TABLE plan_version_audience_daypart_vpvh WITH CHECK 
+	ADD CONSTRAINT [FK_plan_version_audience_daypart_vpvh_plan_version_daypart] FOREIGN KEY([plan_version_daypart_id])
+		REFERENCES [dbo].[plan_version_dayparts] ([id])
+
+ALTER TABLE plan_version_weekly_breakdown 
+	ADD plan_version_daypart_id INT NULL
+
+ALTER TABLE plan_version_weekly_breakdown WITH CHECK 
+	ADD CONSTRAINT [FK_plan_version_weekly_breakdown_plan_version_daypart] FOREIGN KEY([plan_version_daypart_id])
+		REFERENCES [dbo].[plan_version_dayparts] ([id])
+
+ALTER TABLE plan_version_dayparts
+	ADD custom_daypart_organization_id INT NULL
+
+ALTER TABLE plan_version_dayparts 
+	ADD custom_daypart_name NVARCHAR(100) NULL
+		
+ALTER TABLE plan_version_dayparts WITH CHECK 
+	ADD CONSTRAINT [FK_plan_version_dayparts_custom_daypart_organizations] FOREIGN KEY([custom_daypart_organization_id])
+		REFERENCES [dbo].[custom_daypart_organizations] ([id])'
+
+DECLARE @sql_populate NVARCHAR(MAX) = '
+UPDATE v SET
+	plan_version_daypart_id = a.plan_version_daypart_id
+FROM plan_version_audience_daypart_vpvh v
+JOIN 
+(
+	SELECT d.id as plan_version_daypart_id, 
+			d.plan_version_id,
+			d.standard_daypart_id,  
+			c.id AS daypart_customization_id
+	FROM plan_version_dayparts d
+	LEFT OUTER JOIN plan_version_daypart_customizations c
+		ON c.plan_version_daypart_id = d.id
+) a
+	ON v.plan_version_id = a.plan_version_id
+	AND v.standard_daypart_id = a.standard_daypart_id
+	AND COALESCE(v.daypart_customization_id, 0) = COALESCE(a.daypart_customization_id, 0)
+WHERE v.plan_version_daypart_id IS NULL
+
+UPDATE w SET
+	plan_version_daypart_id = a.plan_version_daypart_id
+FROM plan_version_weekly_breakdown w
+JOIN 
+(
+	SELECT d.id as plan_version_daypart_id, 
+			d.plan_version_id,
+			d.standard_daypart_id,  
+			c.id AS daypart_customization_id,
+			c.custom_daypart_name,
+			c.custom_daypart_organization_id
+	FROM plan_version_dayparts d
+	LEFT OUTER JOIN plan_version_daypart_customizations c
+		ON c.plan_version_daypart_id = d.id
+) a
+	ON w.plan_version_id = a.plan_version_id
+	AND w.standard_daypart_id = a.standard_daypart_id
+	AND COALESCE(w.custom_daypart_name, 0) = COALESCE(a.custom_daypart_name, 0)
+	AND COALESCE(w.custom_daypart_organization_id, 0) = COALESCE(a.custom_daypart_organization_id, 0)
+WHERE w.plan_version_daypart_id IS NULL
+
+UPDATE d SET
+	custom_daypart_organization_id = c.custom_daypart_organization_id,
+	custom_daypart_name = c.custom_daypart_name
+FROM plan_version_dayparts d
+JOIN plan_version_daypart_customizations c
+	ON c.plan_version_daypart_id = d.id
+WHERE d.custom_daypart_name <> c.custom_daypart_name'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'plan_version_daypart_id'
+          AND Object_ID = Object_ID(N'plan_version_audience_daypart_vpvh'))
+BEGIN
+	EXEC (@sql_add_columns)
+END
+
+EXEC (@sql_populate)
+
+GO
+/*************************************** END BP-1071 - Part 1 ***************************************/
+
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version
