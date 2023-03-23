@@ -2755,7 +2755,7 @@ JOIN
 ) a
 	ON w.plan_version_id = a.plan_version_id
 	AND w.standard_daypart_id = a.standard_daypart_id
-	AND COALESCE(w.custom_daypart_name, 0) = COALESCE(a.custom_daypart_name, 0)
+	AND COALESCE(w.custom_daypart_name, '''') = COALESCE(a.custom_daypart_name, '''')
 	AND COALESCE(w.custom_daypart_organization_id, 0) = COALESCE(a.custom_daypart_organization_id, 0)
 WHERE w.plan_version_daypart_id IS NULL
 

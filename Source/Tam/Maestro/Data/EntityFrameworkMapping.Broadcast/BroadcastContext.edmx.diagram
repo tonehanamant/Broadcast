@@ -607,6 +607,9 @@
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_recommended_plans_done_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_spot_exceptions_unposted_no_plan_genres_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_staged_recommended_plan_details_staged_recommended_plans" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_dayparts_custom_daypart_organizations" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_audience_daypart_vpvh_plan_version_daypart" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_version_daypart" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

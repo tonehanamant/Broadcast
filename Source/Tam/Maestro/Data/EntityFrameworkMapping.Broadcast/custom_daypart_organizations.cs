@@ -17,11 +17,13 @@ namespace EntityFrameworkMapping.Broadcast
         public custom_daypart_organizations()
         {
             this.plan_version_daypart_customizations = new HashSet<plan_version_daypart_customizations>();
+            this.plan_version_dayparts = new HashSet<plan_version_dayparts>();
         }
     
         public int id { get; set; }
         public string organization_name { get; set; }
     
         public virtual ICollection<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
+        public virtual ICollection<plan_version_dayparts> plan_version_dayparts { get; set; }
     }
 }

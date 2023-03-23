@@ -31,10 +31,12 @@ namespace EntityFrameworkMapping.Broadcast
         public Nullable<bool> is_locked { get; set; }
         public Nullable<int> custom_daypart_organization_id { get; set; }
         public string custom_daypart_name { get; set; }
+        public Nullable<int> plan_version_daypart_id { get; set; }
     
         public virtual media_weeks media_weeks { get; set; }
         public virtual spot_lengths spot_lengths { get; set; }
         public virtual standard_dayparts standard_dayparts { get; set; }
         public virtual plan_versions plan_versions { get; set; }
+        public virtual plan_version_dayparts plan_version_dayparts { get; set; }
     }
 }
