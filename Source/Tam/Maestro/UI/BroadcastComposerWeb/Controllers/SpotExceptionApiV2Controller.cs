@@ -80,6 +80,45 @@ namespace BroadcastComposerWeb.Controllers
         }
 
         /// <summary>
+        /// Gets the out of spec spots to do.
+        /// </summary>
+        /// <param name="OutOfSpecSpotsRequest">The out of spec spots request.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-spots-todo")]
+        public BaseResponse<List<OutOfSpecSpotsResultDto>> GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest));
+        }
+
+        /// <summary>
+        /// Get the out of spec spots queue.
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest">Get Out Of Spec spots Queue data.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-spots-queue")]
+        public BaseResponse<List<OutOfSpecDonePlanSpotsDto>> GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GetOutOfSpecSpotsQueued(outOfSpecSpotsRequest));
+        }
+
+        /// <summary>
+        /// Get the out of spec spots history.
+        /// </summary>
+        /// <param name="outOfSpecSpotsRequest">Get Out Of Spec spots History data.</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("out-of-spec-spots-history")]
+        public BaseResponse<List<OutOfSpecDonePlanSpotsDto>> GetOutOfSpecSpotsHistory(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
+        {
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GetOutOfSpecSpotsHistory(outOfSpecSpotsRequest));
+        }
+
+        /// <summary>
         /// Gets the spot exceptions out of spec spot inventory sources.
         /// </summary>
         /// <param name="outOfSpecSpotsRequest"></param>
@@ -146,45 +185,6 @@ namespace BroadcastComposerWeb.Controllers
 
             return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
                 .SaveOutOfSpecCommentsDone(outOfSpecCommentRequest, userName));
-        }
-
-        /// <summary>
-        /// Get the out of spec spot to do.
-        /// </summary>
-        /// <param name="OutOfSpecSpotsRequest">The save out of spec spot comments request.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("out-of-spec-spots-todo")]
-        public BaseResponse<List<OutOfSpecSpotsResultDto>> GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequestDto OutOfSpecSpotsRequest)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
-                .GetOutOfSpecSpotsToDo(OutOfSpecSpotsRequest));
-        }
-
-        /// <summary>
-        /// Get the out of spec spots queue.
-        /// </summary>
-        /// <param name="outOfSpecSpotsRequest">Get Out Of Spec spots Queue data.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("out-of-spec-spots-queue")]
-        public BaseResponse<List<OutOfSpecDonePlanSpotsDto>> GetOutOfSpecSpotsQueue(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
-                .GetOutOfSpecSpotsQueue(outOfSpecSpotsRequest));
-        }
-
-        /// <summary>
-        /// Get the out of spec spots history.
-        /// </summary>
-        /// <param name="outOfSpecSpotsRequest">Get Out Of Spec spots History data.</param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("out-of-spec-spots-history")]
-        public BaseResponse<List<OutOfSpecDonePlanSpotsDto>> GetOutOfSpecSpotsHistory(OutOfSpecSpotsRequestDto outOfSpecSpotsRequest)
-        {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
-                .GetOutOfSpecSpotsHistory(outOfSpecSpotsRequest));
         }
 
         /// <summary>
@@ -292,7 +292,8 @@ namespace BroadcastComposerWeb.Controllers
         [Route("out-of-spec-advertisers")]
         public BaseResponse<List<MasterIdName>> GetOutofSpecAdvertisers(OutOfSpecPlanAdvertisersRequestDto outofSpecPlanAdvertisersRequest)
         {
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .GetOutOfSpecAdvertisers(outofSpecPlanAdvertisersRequest));
         }
 
         /// <summary>
@@ -306,7 +307,8 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<bool> SaveOutofSpecToDoAcceptanceAndComment(OutOfSpecSaveAcceptanceRequestDto outOfSpecTodoAcceptanceRequest)
         {
             var userName = _GetCurrentUserFullName();
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecDecisionsToDoPlans(outOfSpecTodoAcceptanceRequest, userName));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecDecisionsToDoPlans(outOfSpecTodoAcceptanceRequest, userName));
         }
 
         /// <summary>
@@ -320,7 +322,8 @@ namespace BroadcastComposerWeb.Controllers
         public BaseResponse<bool> SaveOutofSpecDoneAcceptanceAndComment(OutOfSpecSaveAcceptanceRequestDto outOfSpecTodoAcceptanceRequest)
         {
             var userName = _GetCurrentUserFullName();
-            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>().SaveOutOfSpecDecisionsDonePlans(outOfSpecTodoAcceptanceRequest, userName));
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionsOutOfSpecServiceV2>()
+                .SaveOutOfSpecDecisionsDonePlans(outOfSpecTodoAcceptanceRequest, userName));
         }
 
         /// <summary>
