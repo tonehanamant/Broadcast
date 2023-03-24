@@ -2256,12 +2256,16 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     TotalImpressions = 1000,
                     ImpressionsPerUnit = 1001,
                     FlightDays = new List<int> { 1, 2, 3, 4, 5 },
-                    CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
+                    CreativeLengths = new List<CreativeLength>
+                    {
+                        new CreativeLength {SpotLengthId = 1, Weight = 60},
+                        new CreativeLength {SpotLengthId = 2, Weight = 70}
+                    },
                     Dayparts = new List<PlanDaypartDto>()
                     {
-                        new PlanDaypartDto { DaypartCodeId = 0}
-                    },
-                    IsAduOnly = false
+                        new PlanDaypartDto { DaypartCodeId = 0},
+                        new PlanDaypartDto { DaypartCodeId = 1}
+                    }
                 }, false), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
             }
         }
@@ -2282,7 +2286,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                     CreativeLengths = new List<CreativeLength>
                     {
-                        new CreativeLength {SpotLengthId = 1 }
+                        new CreativeLength {SpotLengthId = 1, Weight = 60},
+                        new CreativeLength {SpotLengthId = 2, Weight = 70}
                     },
                     FlightEndDate = new DateTime(2019, 03, 05),
                     FlightStartDate = new DateTime(2019, 02, 01),
@@ -2343,7 +2348,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ImpressionsPerUnit = 100,
                     CreativeLengths = new List<CreativeLength>
                     {
-                        new CreativeLength {SpotLengthId = 1 }
+                        new CreativeLength {SpotLengthId = 1, Weight = 60},
+                        new CreativeLength {SpotLengthId = 2, Weight = 80}
                     },
                     Dayparts = new List<PlanDaypartDto>
                     {
@@ -2377,7 +2383,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ImpressionsPerUnit = 100,
                     CreativeLengths = new List<CreativeLength>
                     {
-                        new CreativeLength {SpotLengthId = 1 }
+                        new CreativeLength {SpotLengthId = 1, Weight = 60},
+                        new CreativeLength {SpotLengthId = 2, Weight = 60},
                     },
                     Dayparts = new List<PlanDaypartDto>
                     {
@@ -2409,7 +2416,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ImpressionsPerUnit = 100,
                     CreativeLengths = new List<CreativeLength>
                     {
-                        new CreativeLength {SpotLengthId = 1 }
+                        new CreativeLength {SpotLengthId = 1, Weight = 60},
+                        new CreativeLength {SpotLengthId = 2, Weight = 60}
                     },
                     Dayparts = new List<PlanDaypartDto>
                     {
@@ -2498,7 +2506,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60},
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 08, 03),
@@ -2528,7 +2537,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 08, 03),
@@ -2558,7 +2568,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 08, 05),
@@ -2588,7 +2599,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 09, 29),
@@ -2618,7 +2630,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = Entities.Enums.PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 08, 01),
@@ -2655,7 +2668,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                 TotalRatings = 0.000907291831869388,
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 70}
                 },
                 WeeklyBreakdownCalculationFrom = WeeklyBreakdownCalculationFrom.Impressions,
                 Weeks = new List<WeeklyBreakdownWeek> { new WeeklyBreakdownWeek {
@@ -2749,7 +2763,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 70}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 FlightStartDate = new DateTime(2019, 09, 30),
@@ -2802,7 +2817,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     },
                 CreativeLengths = new List<CreativeLength>
                     {
-                        new CreativeLength {SpotLengthId = 1 }
+                        new CreativeLength {SpotLengthId = 1, Weight = 60},
+                        new CreativeLength {SpotLengthId = 2, Weight = 70}
                     },
                 DeliveryType = PlanGoalBreakdownTypeEnum.EvenDelivery,
                 FlightStartDate = new DateTime(2019, 12, 01),
@@ -2878,7 +2894,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 FlightStartDate = new DateTime(2020, 01, 13),
@@ -2911,7 +2928,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 FlightStartDate = new DateTime(2019, 12, 30),
@@ -3583,7 +3601,8 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
 
                 CreativeLengths = new List<CreativeLength>
                 {
-                    new CreativeLength {SpotLengthId = 1 }
+                    new CreativeLength {SpotLengthId = 1, Weight = 60},
+                    new CreativeLength {SpotLengthId = 2, Weight = 60}
                 },
                 DeliveryType = PlanGoalBreakdownTypeEnum.CustomByWeek,
                 FlightStartDate = new DateTime(2019, 08, 03),

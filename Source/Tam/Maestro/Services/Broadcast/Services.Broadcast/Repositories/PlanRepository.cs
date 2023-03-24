@@ -72,14 +72,6 @@ namespace Services.Broadcast.Repositories
         List<PlanDto> GetPlansForCampaign(int campaignId);
 
         /// <summary>
-        /// Creates the or update draft.
-        /// </summary>
-        /// <param name="plan">The plan.</param>
-        /// <param name="createdBy">The created by.</param>
-        /// <param name="createdDate">The created date.</param>
-        void CreateOrUpdateDraft(PlanDto plan, string createdBy, DateTime createdDate);
-
-        /// <summary>
         /// Saves the plan draft.
         /// </summary>
         /// <param name="plan">The plan.</param>
@@ -414,47 +406,6 @@ namespace Services.Broadcast.Repositories
 
                     planDto.VersionId = plan.latest_version_id;
                 });
-        }
-
-        /// <inheritdoc/>
-        public void CreateOrUpdateDraft(PlanDto planDto, string createdBy, DateTime createdDate)
-        {
-            _InReadUncommitedTransaction(
-                   context =>
-                   {
-                       var plan = (from p in context.plans
-                                   where p.id == planDto.Id
-                                   select p)
-                           .Include(p => p.plan_versions)
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_flight_hiatus_days))
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts))
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_secondary_audiences))
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
-                           .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
-                       .Single(x => x.id == planDto.Id, "Invalid plan id");
-
-                       //there can be only 1 draft on a plan, so we're doing Single here
-                       var draftVersion = plan.plan_versions.Where(x => x.is_draft == true).SingleOrDefault();
-                       if (draftVersion == null)
-                       {
-                           //there is no draft on the plan, so we create a new version as the draft
-                           draftVersion = new plan_versions();
-                           plan.plan_versions.Add(draftVersion);
-                           _SetCreatedDate(draftVersion, createdBy, createdDate);
-                       }
-                       else
-                       {
-                           draftVersion.modified_by = createdBy;
-                           draftVersion.modified_date = createdDate;
-                       }
-
-                       _MapFromDto(planDto, context, plan, draftVersion);
-
-                       context.SaveChanges();
-
-                       planDto.VersionId = draftVersion.id;
-                   });
         }
 
         /// <inheritdoc/>

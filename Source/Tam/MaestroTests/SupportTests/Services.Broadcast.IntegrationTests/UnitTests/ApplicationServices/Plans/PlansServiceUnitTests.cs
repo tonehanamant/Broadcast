@@ -193,8 +193,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
                     }
                 });
 
-            _LaunchDarklyClientStub = new LaunchDarklyClientStub();           
-            _LaunchDarklyClientStub.FeatureToggles.Add(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE, false);
+            _LaunchDarklyClientStub = new LaunchDarklyClientStub();     
 
             var featureToggleHelper = new FeatureToggleHelper(_LaunchDarklyClientStub);
 
@@ -517,9 +516,7 @@ namespace Services.Broadcast.IntegrationTests.UnitTests.ApplicationServices.Plan
         [Test]
         public async Task SavePlanDraft()
         {
-            // Arrange
-            _LaunchDarklyClientStub.FeatureToggles[FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE] = true;
-
+            // Arrang
             _WeeklyBreakdownEngineMock
                 .Setup(x => x.DistributeGoalsByWeeksAndSpotLengthsAndStandardDayparts(It.IsAny<PlanDto>(), It.IsAny<double?>(), It.IsAny<decimal?>()))
                 .Returns(new List<WeeklyBreakdownWeek>());

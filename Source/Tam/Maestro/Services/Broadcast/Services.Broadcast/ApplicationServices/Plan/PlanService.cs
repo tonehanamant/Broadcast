@@ -340,7 +340,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
         private readonly IDateTimeEngine _DateTimeEngine;
         private readonly IPlanIsciRepository _PlanIsciRepository;        
 
-        private readonly Lazy<bool> _IsPartialPlanSaveEnabled;
         private readonly Lazy<bool> _IsAduForPlanningv2Enabled;
         private readonly Lazy<bool> _IsUnifiedCampaignEnabled;
 
@@ -398,7 +397,6 @@ namespace Services.Broadcast.ApplicationServices.Plan
             _LockingEngine = lockingEngine;
             _DateTimeEngine = dateTimeEngine;
             _PlanIsciRepository = broadcastDataRepositoryFactory.GetDataRepository<IPlanIsciRepository>();
-            _IsPartialPlanSaveEnabled = new Lazy<bool>(() => _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PARTIAL_PLAN_SAVE));
             _CampaignServiceApiClient = campaignServiceApiClient;
             _IsUnifiedCampaignEnabled = new Lazy<bool>(() =>
                _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_UNIFIED_CAMPAIGN));
@@ -412,7 +410,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
         {
             int result;
             _SetFlightTimes(plan);
-            if (_IsPartialPlanSaveEnabled.Value && Convert.ToBoolean(plan.IsDraft))
+            if (Convert.ToBoolean(plan.IsDraft))
             {
                 result = _DoSavePlanDraft(plan, createdBy, createdDate);
             }
@@ -547,18 +545,7 @@ namespace Services.Broadcast.ApplicationServices.Plan
 
                     if (lockingResult.Success)
                     {
-                        /*
-                            If LD flag: broadcast-enable-partial-plan-save is off then only we will use CreateOrUpdateDraft to save draft.
-                            Once we remove code of LD flag: broadcast-enable-partial-plan-save at that time we need to remove code of CreateOrUpdateDraft to save draft.
-                         */
-                        if (plan.IsDraft ?? false)
-                        {
-                            _PlanRepository.CreateOrUpdateDraft(plan, createdBy, createdDate);
-                        }
-                        else
-                        {
-                            _PlanRepository.SavePlan(plan, createdBy, createdDate);
-                        }
+                        _PlanRepository.SavePlan(plan, createdBy, createdDate);                        
                     }
                     else
                     {
