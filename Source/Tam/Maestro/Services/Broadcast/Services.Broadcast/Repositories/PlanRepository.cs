@@ -341,7 +341,9 @@ namespace Services.Broadcast.Repositories
                     var version = new plan_versions();
                     newPlan.plan_versions.Add(version);
 
-                    _MapFromDto(planDto, context, newPlan, version);
+                    var standardDayparts = context.standard_dayparts.ToList();
+
+                    _MapFromDto(planDto, context, newPlan, version, standardDayparts);
                     _SetCreatedDate(version, createdBy, createdDate);
 
                     context.plans.Add(newPlan);
@@ -360,13 +362,15 @@ namespace Services.Broadcast.Repositories
             _InReadUncommitedTransaction(
                 context =>
                 {
+                    var standardDayparts = context.standard_dayparts.ToList();
+
                     foreach (var plan in plans)
                     {
                         var newPlan = new plan();
                         var version = new plan_versions();
                         newPlan.plan_versions.Add(version);
 
-                        _MapFromDto(plan, context, newPlan, version);
+                        _MapFromDto(plan, context, newPlan, version, standardDayparts);
                         _SetCreatedDate(version, createdBy, createdDate);
                         context.plans.Add(newPlan);
                         context.SaveChanges();
@@ -396,8 +400,9 @@ namespace Services.Broadcast.Repositories
                         .Single(p => p.id == planDto.Id, "Invalid plan id.");
                     var version = new plan_versions();
                     plan.plan_versions.Add(version);
+                    var standardDayparts = context.standard_dayparts.ToList();
 
-                    _MapFromDto(planDto, context, plan, version);
+                    _MapFromDto(planDto, context, plan, version, standardDayparts);
                     _SetCreatedDate(version, createdBy, createdDate);
 
                     context.SaveChanges();
@@ -450,8 +455,9 @@ namespace Services.Broadcast.Repositories
                            draftVersion.modified_by = createdBy;
                            draftVersion.modified_date = createdDate;
                        }
-                      
-                       _MapFromDto(plan, context, planEntity, draftVersion);
+                       var standardDayparts = context.standard_dayparts.ToList();
+
+                       _MapFromDto(plan, context, planEntity, draftVersion, standardDayparts);
                       
 
                        if (plan.Id == 0)
@@ -683,6 +689,8 @@ namespace Services.Broadcast.Repositories
             //drafts don't have summary, so we're doing SingleOrDefault
             var planSummary = planVersion.plan_version_summaries.SingleOrDefault();
 
+            var weeklyBreakdownWeeks = planVersion.plan_version_weekly_breakdown.Select(w => _MapWeeklyBreakdownWeeks(w, planVersion)).ToList();
+
             var dto = new PlanDto
             {
                 Id = entity.id,
@@ -718,7 +726,7 @@ namespace Services.Broadcast.Repositories
                 CoverageGoalPercent = planVersion.coverage_goal_percent,
                 AvailableMarkets = planVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
                 BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
-                WeeklyBreakdownWeeks = planVersion.plan_version_weekly_breakdown.Select(_MapWeeklyBreakdownWeeks).ToList(),
+                WeeklyBreakdownWeeks = weeklyBreakdownWeeks,
                 ModifiedBy = planVersion.modified_by ?? planVersion.created_by,
                 ModifiedDate = entity.plan_versions.Max(x => x.modified_date) ?? entity.plan_versions.Max(x => x.created_date), //planVersion.modified_date ?? planVersion.created_date,
                 Vpvh = planVersion.target_vpvh,
@@ -926,9 +934,9 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private WeeklyBreakdownWeek _MapWeeklyBreakdownWeeks(plan_version_weekly_breakdown arg)
+        private WeeklyBreakdownWeek _MapWeeklyBreakdownWeeks(plan_version_weekly_breakdown arg, plan_versions planVersion)
         {
-            return new WeeklyBreakdownWeek
+            var weeklyBreakdownWeek = new WeeklyBreakdownWeek
             {
                 ActiveDays = arg.active_days_label,
                 EndDate = arg.media_weeks.end_date,
@@ -949,6 +957,18 @@ namespace Services.Broadcast.Repositories
                 DaypartOrganizationId = arg.custom_daypart_organization_id,
                 CustomName = arg.custom_daypart_name
             };
+
+            var planVersionDaypart = planVersion.plan_version_dayparts
+                .FirstOrDefault(w => w.standard_daypart_id == arg.standard_daypart_id 
+                                  && w.custom_daypart_name == arg.custom_daypart_name
+                                  && w.custom_daypart_organization_id == arg.custom_daypart_organization_id);
+
+            if (planVersionDaypart != null)
+            {
+                weeklyBreakdownWeek.PlanDaypartId = planVersionDaypart.id;
+            }
+
+            return weeklyBreakdownWeek;
         }
 
         private static PlanAudienceDto _MapSecondaryAudiences(plan_version_secondary_audiences x)
@@ -966,7 +986,7 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private void _MapFromDto(PlanDto planDto, QueryHintBroadcastContext context, plan plan, plan_versions version)
+        private void _MapFromDto(PlanDto planDto, QueryHintBroadcastContext context, plan plan, plan_versions version, List<standard_dayparts> standardDayparts)
         {
             plan.name = planDto.Name;
             plan.product_id = planDto.ProductId;
@@ -1008,7 +1028,7 @@ namespace Services.Broadcast.Repositories
             _MapPlanBudget(version, planDto);
             _MapPlanFlightDays(version, planDto, context);
             _MapPlanFlightHiatus(version, planDto, context);
-            _MapDayparts(version, planDto, context);
+            _MapDayparts(version, planDto, context, standardDayparts);
             _MapPlanSecondaryAudiences(version, planDto, context);
             _MapPlanMarkets(version, planDto, context);
             _MapWeeklyBreakdown(version, planDto, context);
@@ -1207,12 +1227,14 @@ namespace Services.Broadcast.Repositories
             };
         }
 
-        private static void _MapDayparts(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
+        private static void _MapDayparts(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context, List<standard_dayparts> standardDayparts)
         {
-            context.plan_version_dayparts.RemoveRange(entity.plan_version_dayparts);
+            context.plan_version_dayparts.RemoveRange(entity.plan_version_dayparts);            
 
             foreach (var daypart in planDto.Dayparts)
             {
+                var standardDaypart = standardDayparts.Single(sd => sd.id == daypart.DaypartCodeId);
+
                 var vpvhAudiences = daypart.VpvhForAudiences.Select(v => new plan_version_daypart_audience_vpvhs
                 {
                     audience_id = v.AudienceId,
@@ -1235,7 +1257,8 @@ namespace Services.Broadcast.Repositories
                     weekend_weighting = daypart.WeekendWeighting,
                     custom_daypart_name = daypart.CustomName,
                     custom_daypart_organization_id = daypart.DaypartOrganizationId,
-                    plan_version_daypart_audience_vpvhs = vpvhAudiences
+                    plan_version_daypart_audience_vpvhs = vpvhAudiences,
+                    daypart_id = standardDaypart.daypart_id
                 };
 
                 if (daypart.Restrictions != null)

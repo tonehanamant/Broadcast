@@ -2862,6 +2862,110 @@ EXEC (@sql_view_repair_2)
 GO
 /*************************************** END BP-1071 - Part 2 ***************************************/
 
+/*************************************** START BP-1071 - Part 3 ***************************************/
+
+DECLARE @sql_populate_daypart_id VARCHAR(MAX) = '
+UPDATE d SET
+	daypart_id = s.daypart_id
+FROM plan_version_dayparts d
+JOIN standard_dayparts s
+	ON d.standard_daypart_id = s.id'
+
+IF NOT EXISTS(SELECT 1 FROM sys.columns 
+          WHERE Name = N'daypart_id'
+          AND Object_ID = Object_ID(N'plan_version_dayparts'))
+BEGIN
+	ALTER TABLE plan_version_dayparts
+		ADD daypart_id INT NULL
+
+	ALTER TABLE plan_version_dayparts WITH CHECK 
+	ADD CONSTRAINT [FK_plan_version_dayparts_daypart_id] FOREIGN KEY([daypart_id])
+		REFERENCES [dbo].[dayparts] ([id])
+
+	EXEC (@sql_populate_daypart_id)
+
+	ALTER TABLE plan_version_dayparts
+		ALTER COLUMN daypart_id INT NOT NULL
+END
+
+DECLARE @sql_view_repair_1 VARCHAR(MAX) = '
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_dayparts]
+/* View for external consumers. */
+AS
+	SELECT [id]
+		,[standard_daypart_id]
+		,[start_time_seconds]
+		,[end_time_seconds]
+		,[weighting_goal_percent]
+		,[daypart_type]
+		,[is_start_time_modified]
+		,[is_end_time_modified]
+		,[plan_version_id]
+		,[show_type_restrictions_contain_type]
+		,[genre_restrictions_contain_type]
+		,[program_restrictions_contain_type]
+		,[affiliate_restrictions_contain_type]
+		,[weekdays_weighting]
+		,[weekend_weighting]
+		,[daypart_id]
+	FROM [dbo].[plan_version_dayparts]'
+
+EXEC (@sql_view_repair_1)
+
+DECLARE @sql_view_repair_2 VARCHAR(MAX) = '
+CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_flat]
+/* View for external consumers. */
+AS
+	SELECT
+		pvd.id AS plan_version_daypart_id
+		, pvd.plan_version_id AS plan_version_id
+		, pvd.standard_daypart_id 
+		, sd.code AS standard_daypart_code
+		, sd.[name] AS standard_daypart_name
+		, sd.daypart_type AS daypart_type_id
+		, CASE sd.daypart_type
+			WHEN 1 THEN ''News''
+			WHEN 2 THEN ''Entertainment/Non-News''
+			WHEN 3 THEN ''ROS''
+			WHEN 4 THEN ''Sports''
+			ELSE NULL
+		END AS [daypart_type_name]
+		, pvd.custom_daypart_organization_id	
+		, pvd.custom_daypart_name
+		, pvd.custom_daypart_organization_id AS organization_id
+		, cdo.organization_name
+		, d.id AS daypart_id
+		, d.tier
+		, pvd.start_time_seconds 
+		, pvd.is_start_time_modified
+		, pvd.end_time_seconds 
+		, pvd.is_end_time_modified
+		, d.mon
+		, d.tue
+		, d.wed
+		, d.thu
+		, d.fri
+		, d.sat
+		, d.sun
+		, d.daypart_text
+		, d.total_hours
+		, pvd.weighting_goal_percent
+		, pvd.weekdays_weighting
+		, pvd.weekend_weighting
+	FROM plan_version_dayparts pvd
+	JOIN standard_dayparts sd
+		ON pvd.standard_daypart_id = sd.id	
+	LEFT OUTER JOIN custom_daypart_organizations cdo
+		ON cdo.id = pvd.custom_daypart_organization_id
+	JOIN vw_ccc_daypart d
+		ON pvd.daypart_id = d.id'
+
+EXEC (@sql_view_repair_2)
+
+GO
+
+/*************************************** END BP-1071 - Part 3 ***************************************/
+
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
 -- Update the Schema Version of the database to the current release version

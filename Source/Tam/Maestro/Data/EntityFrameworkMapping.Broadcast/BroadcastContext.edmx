@@ -1284,6 +1284,7 @@
           <Property Name="weekend_weighting" Type="float" />
           <Property Name="custom_daypart_organization_id" Type="int" />
           <Property Name="custom_daypart_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="daypart_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="plan_version_flight_days">
           <Key>
@@ -5110,6 +5111,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_version_dayparts_daypart_id">
+          <End Role="dayparts" Type="Self.dayparts" Multiplicity="1" />
+          <End Role="plan_version_dayparts" Type="Self.plan_version_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dayparts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_dayparts">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_plan_version_dayparts_plan_versions">
           <End Role="plan_versions" Type="Self.plan_versions" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -8675,6 +8688,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="custom_daypart_organizations" EntitySet="custom_daypart_organizations" />
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
           </AssociationSet>
+          <AssociationSet Name="FK_plan_version_dayparts_daypart_id" Association="Self.FK_plan_version_dayparts_daypart_id">
+            <End Role="dayparts" EntitySet="dayparts" />
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+          </AssociationSet>
           <AssociationSet Name="FK_plan_version_dayparts_plan_versions" Association="Self.FK_plan_version_dayparts_plan_versions">
             <End Role="plan_versions" EntitySet="plan_versions" />
             <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
@@ -11194,6 +11211,10 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             <End Role="standard_dayparts" EntitySet="standard_dayparts" />
             <End Role="plan_version_weekly_breakdown" EntitySet="plan_version_weekly_breakdown" />
           </AssociationSet>
+          <AssociationSet Name="FK_plan_version_dayparts_daypart_id" Association="BroadcastModel.FK_plan_version_dayparts_daypart_id">
+            <End Role="daypart" EntitySet="dayparts" />
+            <End Role="plan_version_dayparts" EntitySet="plan_version_dayparts" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="audience_audiences">
           <Key>
@@ -11273,6 +11294,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <NavigationProperty Name="inventory_file_proprietary_header" Relationship="BroadcastModel.FK_inventory_file_proprietary_header_dayparts" FromRole="daypart" ToRole="inventory_file_proprietary_header" />
           <NavigationProperty Name="station_inventory_manifest_dayparts" Relationship="BroadcastModel.FK_station_inventory_manifest_dayparts_dayparts" FromRole="daypart" ToRole="station_inventory_manifest_dayparts" />
           <NavigationProperty Name="standard_dayparts" Relationship="BroadcastModel.FK_daypart_defaults_dayparts1" FromRole="daypart" ToRole="standard_dayparts" />
+          <NavigationProperty Name="plan_version_dayparts" Relationship="BroadcastModel.FK_plan_version_dayparts_daypart_id" FromRole="daypart" ToRole="plan_version_dayparts" />
           </EntityType>
         <EntityType Name="day">
           <Key>
@@ -14886,6 +14908,8 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <Property Name="custom_daypart_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="custom_daypart_organizations" Relationship="BroadcastModel.FK_plan_version_dayparts_custom_daypart_organizations" FromRole="plan_version_dayparts" ToRole="custom_daypart_organizations" />
           <NavigationProperty Name="plan_version_daypart_audience_vpvhs" Relationship="BroadcastModel.FK_plan_version_daypart_audience_vpvhs_plan_version_daypart" FromRole="plan_version_dayparts" ToRole="plan_version_daypart_audience_vpvhs" />
+          <Property Name="daypart_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="daypart" Relationship="BroadcastModel.FK_plan_version_dayparts_daypart_id" FromRole="plan_version_dayparts" ToRole="daypart" />
         </EntityType>
         <EntityType Name="scx_generation_job_files">
           <Key>
@@ -19666,6 +19690,18 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_plan_version_dayparts_daypart_id">
+          <End Type="BroadcastModel.daypart" Role="daypart" Multiplicity="1" />
+          <End Type="BroadcastModel.plan_version_dayparts" Role="plan_version_dayparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="daypart">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="plan_version_dayparts">
+              <PropertyRef Name="daypart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -21286,6 +21322,7 @@ warning 6002: The table/view 'broadcast_integration_staging.dbo.vw_ccc_daypart' 
           <EntitySetMapping Name="plan_version_dayparts">
             <EntityTypeMapping TypeName="BroadcastModel.plan_version_dayparts">
               <MappingFragment StoreEntitySet="plan_version_dayparts">
+                <ScalarProperty Name="daypart_id" ColumnName="daypart_id" />
                 <ScalarProperty Name="custom_daypart_name" ColumnName="custom_daypart_name" />
                 <ScalarProperty Name="custom_daypart_organization_id" ColumnName="custom_daypart_organization_id" />
                 <ScalarProperty Name="standard_daypart_id" ColumnName="standard_daypart_id" />

@@ -604,6 +604,7 @@
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_plan_versions" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_spot_lengths" />
         <AssociationConnector Association="BroadcastModel.FK_plan_version_weekly_breakdown_standard_dayparts" />
+        <AssociationConnector Association="BroadcastModel.FK_plan_version_dayparts_daypart_id" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

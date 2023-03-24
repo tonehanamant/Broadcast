@@ -41,6 +41,7 @@ namespace EntityFrameworkMapping.Broadcast
         public int standard_daypart_id { get; set; }
         public Nullable<int> custom_daypart_organization_id { get; set; }
         public string custom_daypart_name { get; set; }
+        public int daypart_id { get; set; }
     
         public virtual ICollection<plan_version_daypart_affiliate_restrictions> plan_version_daypart_affiliate_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_genre_restrictions> plan_version_daypart_genre_restrictions { get; set; }
@@ -51,5 +52,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual plan_versions plan_versions { get; set; }
         public virtual custom_daypart_organizations custom_daypart_organizations { get; set; }
         public virtual ICollection<plan_version_daypart_audience_vpvhs> plan_version_daypart_audience_vpvhs { get; set; }
+        public virtual daypart daypart { get; set; }
     }
 }
