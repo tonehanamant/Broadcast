@@ -2255,17 +2255,6 @@ AS
 
 GO
 
-CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_customizations]
-/* View for external consumers. */
-AS
-	SELECT [id]
-		,[plan_version_daypart_id]
-		,[custom_daypart_organization_id]
-		,[custom_daypart_name]
-	FROM [dbo].[plan_version_daypart_customizations]
-
-GO
-
 CREATE OR ALTER VIEW [dbo].[vw_plan_version_flight_hiatus_days]
 /* View for external consumers. */
 AS
@@ -2488,56 +2477,6 @@ AS
 
 GO
 
-CREATE OR ALTER VIEW [dbo].[vw_plan_version_daypart_flat]
-/* View for external consumers. */
-AS
-	SELECT
-		pvd.id AS plan_version_daypart_id
-		, pvd.plan_version_id AS plan_version_id
-		, pvd.standard_daypart_id 
-		, sd.code AS standard_daypart_code
-		, sd.[name] AS standard_daypart_name
-		, sd.daypart_type AS daypart_type_id
-		, CASE sd.daypart_type
-			WHEN 1 THEN 'News'
-			WHEN 2 THEN 'Entertainment/Non-News'
-			WHEN 3 THEN 'ROS'
-			WHEN 4 THEN 'Sports'
-			ELSE NULL
-		END AS [daypart_type_name]
-		, pvdc.custom_daypart_organization_id	
-		, pvdc.custom_daypart_name
-		, pvdc.custom_daypart_organization_id AS organization_id
-		, cdo.organization_name
-		, d.id AS daypart_id
-		, d.tier
-		, pvd.start_time_seconds 
-		, pvd.is_start_time_modified
-		, pvd.end_time_seconds 
-		, pvd.is_end_time_modified
-		, d.mon
-		, d.tue
-		, d.wed
-		, d.thu
-		, d.fri
-		, d.sat
-		, d.sun
-		, d.daypart_text
-		, d.total_hours
-		, pvd.weighting_goal_percent
-		, pvd.weekdays_weighting
-		, pvd.weekend_weighting
-	FROM plan_version_dayparts pvd
-	JOIN standard_dayparts sd
-		ON pvd.standard_daypart_id = sd.id
-	LEFT OUTER JOIN plan_version_daypart_customizations pvdc
-		ON pvdc.plan_version_daypart_id = pvd.id
-	LEFT OUTER JOIN custom_daypart_organizations cdo
-		ON cdo.id = pvdc.custom_daypart_organization_id
-	JOIN vw_ccc_daypart d
-		ON sd.daypart_id = d.id
-GO
-
 /*************************************** END BS-640 ***************************************/
 
 /*************************************** START BS-692 ***************************************/
@@ -2712,22 +2651,12 @@ BEGIN
 	EXEC (@sql_add_columns)
 END
 
-DECLARE @sql_populate NVARCHAR(MAX) = 'UPDATE d SET
-	custom_daypart_organization_id = c.custom_daypart_organization_id,
-	custom_daypart_name = c.custom_daypart_name
-FROM plan_version_dayparts d
-JOIN plan_version_daypart_customizations_backup c
-	ON c.plan_version_daypart_id = d.id
-WHERE COALESCE(d.custom_daypart_name, '''') <> COALESCE(c.custom_daypart_name, '''')'
-
-EXEC (@sql_populate)
-
 GO
 /*************************************** END BP-1071 - Part 1 ***************************************/
 
 /*************************************** START BP-1071 - Part 2 ***************************************/
 
-/*** Migrate Audience VPVHs ***/
+/*** Migrate Audience VPVHs and Drop Dayparts Customizations ***/
 DECLARE @sql_create_vpvh NVARCHAR(MAX) = '
 CREATE TABLE [dbo].[plan_version_daypart_audience_vpvhs](
 	[id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -2768,7 +2697,7 @@ INSERT INTO plan_version_daypart_audience_vpvhs (plan_version_daypart_id, audien
 					d.standard_daypart_id,  
 					c.id AS daypart_customization_id
 			FROM plan_version_dayparts d
-			LEFT OUTER JOIN plan_version_daypart_customizations c
+			LEFT OUTER JOIN plan_version_daypart_customizations_backup c
 				ON c.plan_version_daypart_id = d.id
 		) a
 			ON v.plan_version_id = a.plan_version_id
@@ -2783,6 +2712,17 @@ INSERT INTO plan_version_daypart_audience_vpvhs (plan_version_daypart_id, audien
 
 DECLARE @sql_delete_source_vpvh NVARCHAR(MAX) = '
 DROP TABLE plan_version_audience_daypart_vpvh'
+
+DECLARE @sql_delete_backup_custom NVARCHAR(MAX) = '
+DROP TABLE plan_version_daypart_customizations_backup'
+
+DECLARE @sql_backup_custom NVARCHAR(MAX) = '
+SELECT *
+	INTO plan_version_daypart_customizations_backup
+FROM plan_version_daypart_customizations'
+
+DECLARE @sql_delete_source_custom NVARCHAR(MAX) = '
+DROP TABLE plan_version_daypart_customizations'
 
 IF OBJECT_ID('plan_version_daypart_audience_vpvhs') IS NULL 
 BEGIN    
@@ -2800,33 +2740,6 @@ BEGIN
 	EXEC (@sql_backup_vpvh)
 END
 
--- populate the target from the backup
-IF (OBJECT_ID('plan_version_daypart_audience_vpvhs') IS NOT NULL 
-	AND OBJECT_ID('plan_version_audience_daypart_vpvh_backup') IS NOT NULL)
-BEGIN
-	EXEC (@sql_populate_vpvh)
-END
-
--- drop the source
-IF (OBJECT_ID('plan_version_audience_daypart_vpvh_backup') IS NOT NULL
-	AND OBJECT_ID('plan_version_audience_daypart_vpvh') IS NOT NULL)
-BEGIN
-	EXEC (@sql_delete_source_vpvh)
-END
-
-/*** Drop Dayparts Customizations ***/
-DECLARE @sql_delete_backup_custom NVARCHAR(MAX) = '
-DROP TABLE plan_version_daypart_customizations_backup'
-
-DECLARE @sql_backup_custom NVARCHAR(MAX) = '
-SELECT *
-	INTO plan_version_daypart_customizations_backup
-FROM plan_version_daypart_customizations'
-
-DECLARE @sql_delete_source_custom NVARCHAR(MAX) = '
-DROP TABLE plan_version_daypart_customizations'
-
--- if the source table exists then back it up
 IF (OBJECT_ID('plan_version_daypart_customizations') IS NOT NULL)
 BEGIN
 	IF (OBJECT_ID('plan_version_daypart_customizations_backup') IS NOT NULL)
@@ -2837,7 +2750,31 @@ BEGIN
 	EXEC (@sql_backup_custom)
 END
 
+-- populate the target from the backup
+IF (OBJECT_ID('plan_version_daypart_audience_vpvhs') IS NOT NULL 
+	AND OBJECT_ID('plan_version_audience_daypart_vpvh_backup') IS NOT NULL)
+BEGIN
+	EXEC (@sql_populate_vpvh)
+END
+
+-- populate from the backup
+DECLARE @sql_populate_custom NVARCHAR(MAX) = 'UPDATE d SET
+	custom_daypart_organization_id = c.custom_daypart_organization_id,
+	custom_daypart_name = c.custom_daypart_name
+FROM plan_version_dayparts d
+JOIN plan_version_daypart_customizations_backup c
+	ON c.plan_version_daypart_id = d.id
+WHERE COALESCE(d.custom_daypart_name, '''') <> COALESCE(c.custom_daypart_name, '''')'
+
+EXEC (@sql_populate_custom)
+
 -- drop the source
+IF (OBJECT_ID('plan_version_audience_daypart_vpvh_backup') IS NOT NULL
+	AND OBJECT_ID('plan_version_audience_daypart_vpvh') IS NOT NULL)
+BEGIN
+	EXEC (@sql_delete_source_vpvh)
+END
+
 IF (OBJECT_ID('plan_version_daypart_customizations_backup') IS NOT NULL
 	AND OBJECT_ID('plan_version_daypart_customizations') IS NOT NULL)
 BEGIN
@@ -2924,7 +2861,6 @@ EXEC (@sql_view_repair_2)
 
 GO
 /*************************************** END BP-1071 - Part 2 ***************************************/
-
 
 /*************************************** END UPDATE SCRIPT *******************************************************/
 
