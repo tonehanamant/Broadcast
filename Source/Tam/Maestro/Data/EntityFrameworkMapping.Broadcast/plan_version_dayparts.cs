@@ -20,10 +20,8 @@ namespace EntityFrameworkMapping.Broadcast
             this.plan_version_daypart_genre_restrictions = new HashSet<plan_version_daypart_genre_restrictions>();
             this.plan_version_daypart_program_restrictions = new HashSet<plan_version_daypart_program_restrictions>();
             this.plan_version_daypart_show_type_restrictions = new HashSet<plan_version_daypart_show_type_restrictions>();
-            this.plan_version_daypart_customizations = new HashSet<plan_version_daypart_customizations>();
             this.plan_version_daypart_goals = new HashSet<plan_version_daypart_goals>();
-            this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
-            this.plan_version_weekly_breakdown = new HashSet<plan_version_weekly_breakdown>();
+            this.plan_version_daypart_audience_vpvhs = new HashSet<plan_version_daypart_audience_vpvhs>();
         }
     
         public int id { get; set; }
@@ -49,11 +47,9 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_daypart_program_restrictions> plan_version_daypart_program_restrictions { get; set; }
         public virtual ICollection<plan_version_daypart_show_type_restrictions> plan_version_daypart_show_type_restrictions { get; set; }
         public virtual standard_dayparts standard_dayparts { get; set; }
-        public virtual ICollection<plan_version_daypart_customizations> plan_version_daypart_customizations { get; set; }
         public virtual ICollection<plan_version_daypart_goals> plan_version_daypart_goals { get; set; }
         public virtual plan_versions plan_versions { get; set; }
         public virtual custom_daypart_organizations custom_daypart_organizations { get; set; }
-        public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
-        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
+        public virtual ICollection<plan_version_daypart_audience_vpvhs> plan_version_daypart_audience_vpvhs { get; set; }
     }
 }

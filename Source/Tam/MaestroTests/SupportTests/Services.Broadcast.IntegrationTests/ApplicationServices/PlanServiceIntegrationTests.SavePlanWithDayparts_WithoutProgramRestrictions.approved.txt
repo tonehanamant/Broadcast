@@ -83,107 +83,7 @@
     }
   ],
   "Currency": 1,
-  "CustomDayparts": [
-    {
-      "CustomDaypartName": null,
-      "CustomDaypartOrganizationId": 0,
-      "CustomDaypartOrganizationName": null,
-      "DaypartTypeId": 0,
-      "EndTimeSeconds": 0,
-      "Id": 0,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
-        }
-      },
-      "StartTimeSeconds": 0,
-      "VpvhForAudiences": [],
-      "WeekdaysWeighting": null,
-      "WeekendWeighting": null,
-      "WeightingGoalPercent": null
-    },
-    {
-      "CustomDaypartName": null,
-      "CustomDaypartOrganizationId": 0,
-      "CustomDaypartOrganizationName": null,
-      "DaypartTypeId": 0,
-      "EndTimeSeconds": 0,
-      "Id": 0,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
-        }
-      },
-      "StartTimeSeconds": 0,
-      "VpvhForAudiences": [],
-      "WeekdaysWeighting": null,
-      "WeekendWeighting": null,
-      "WeightingGoalPercent": null
-    },
-    {
-      "CustomDaypartName": null,
-      "CustomDaypartOrganizationId": 0,
-      "CustomDaypartOrganizationName": null,
-      "DaypartTypeId": 0,
-      "EndTimeSeconds": 0,
-      "Id": 0,
-      "IsEndTimeModified": false,
-      "IsStartTimeModified": false,
-      "Restrictions": {
-        "AffiliateRestrictions": {
-          "Affiliates": [],
-          "ContainType": 2
-        },
-        "GenreRestrictions": {
-          "ContainType": 2,
-          "Genres": []
-        },
-        "ProgramRestrictions": {
-          "ContainType": 2,
-          "Programs": []
-        },
-        "ShowTypeRestrictions": {
-          "ContainType": 2,
-          "ShowTypes": []
-        }
-      },
-      "StartTimeSeconds": 0,
-      "VpvhForAudiences": [],
-      "WeekdaysWeighting": null,
-      "WeekendWeighting": null,
-      "WeightingGoalPercent": null
-    }
-  ],
+  "CustomDayparts": [],
   "Dayparts": [
     {
       "CustomName": null,
@@ -238,7 +138,6 @@
       "VpvhForAudiences": [
         {
           "AudienceId": 31,
-          "DaypartCustomizationId": null,
           "StartingPoint": "2019-01-12T12:30:29",
           "Vpvh": 0.8,
           "VpvhType": 2
@@ -314,7 +213,6 @@
       "VpvhForAudiences": [
         {
           "AudienceId": 31,
-          "DaypartCustomizationId": null,
           "StartingPoint": "2019-01-12T12:30:29",
           "Vpvh": 0.7,
           "VpvhType": 3
@@ -382,7 +280,6 @@
       "VpvhForAudiences": [
         {
           "AudienceId": 31,
-          "DaypartCustomizationId": null,
           "StartingPoint": "2019-01-12T12:30:29",
           "Vpvh": 0.9,
           "VpvhType": 4

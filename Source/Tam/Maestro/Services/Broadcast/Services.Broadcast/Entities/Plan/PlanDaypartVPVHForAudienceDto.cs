@@ -9,6 +9,5 @@ namespace Services.Broadcast.Entities.Plan
         public double Vpvh { get; set; }
         public VpvhTypeEnum VpvhType { get; set; }
         public DateTime StartingPoint { get; set; }
-        public int? DaypartCustomizationId { get; set; }
     }
 }

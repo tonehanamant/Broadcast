@@ -12,213 +12,6 @@
       "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
       "Name": "Agency1"
     },
-    "Budget": 37800000.0,
-    "CampaignStatus": 6,
-    "FlightActiveDays": 170,
-    "FlightEndDate": "2020-01-26T00:00:00",
-    "FlightHiatusDays": 10,
-    "FlightStartDate": "2019-07-31T00:00:00",
-    "HasHiatus": true,
-    "HasPlans": true,
-    "HHCPM": 7.40250000000001,
-    "HHImpressions": 5106382978.7234049,
-    "HHRatingPoints": 4632.9795669926189,
-    "MaxFluidityPercent": null,
-    "ModifiedBy": "Sebastian Roibu",
-    "ModifiedDate": "2019-11-20T14:54:10.593",
-    "Name": "Test Gorilla Glue",
-    "Notes": "",
-    "Plans": [
-      {
-        "AduImpressions": 0.0,
-        "AudienceId": 32,
-        "AvailableMarketCount": 146,
-        "AvailableMarketsWithSovCount": 0,
-        "AvailableMarketTotalUsCoveragePercent": 88.790999999999912,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 5000000.0000,
-        "Dayparts": [
-          "EM",
-          "MDN",
-          "PT"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": true,
-        "FlightEndDate": "2019-12-29T00:00:00",
-        "FlightStartDate": "2019-10-02T00:00:00",
-        "FluidityPercentage": null,
-        "HasHiatus": false,
-        "HHAduImpressions": 0.0,
-        "HHCPM": 4.7000,
-        "HHImpressions": 1063829787.2340426,
-        "IsAduPlan": false,
-        "IsDraft": false,
-        "ModifiedBy": "CROSSMW\\sroibu",
-        "ModifiedDate": "2019-11-20T14:57:08.05",
-        "Name": "First plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 4,
-            "Year": 2019
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "PetMed Express",
-        "SpotLengthValues": [
-          30
-        ],
-        "Status": 1,
-        "TargetCPM": 20.0000,
-        "TargetImpressions": 250000000.0,
-        "TotalActiveDays": 89,
-        "TotalHiatusDays": 0,
-        "TRP": 427.90200400543659,
-        "VersionNumber": 1
-      },
-      {
-        "AduImpressions": 0.0,
-        "AudienceId": 32,
-        "AvailableMarketCount": 170,
-        "AvailableMarketsWithSovCount": 0,
-        "AvailableMarketTotalUsCoveragePercent": 77.065999999999946,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 25000000.0000,
-        "Dayparts": [
-          "EM",
-          "ENLN",
-          "SYN"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": false,
-        "FlightEndDate": "2019-10-13T00:00:00",
-        "FlightStartDate": "2019-07-31T00:00:00",
-        "FluidityPercentage": null,
-        "HasHiatus": false,
-        "HHAduImpressions": 0.0,
-        "HHCPM": 11.7499,
-        "HHImpressions": 2127659574.4680853,
-        "IsAduPlan": false,
-        "IsDraft": false,
-        "ModifiedBy": "automated status update",
-        "ModifiedDate": "2020-01-02T08:16:37.37",
-        "Name": "Second plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 3,
-            "Year": 2019
-          },
-          {
-            "Quarter": 4,
-            "Year": 2019
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "PetMed Express",
-        "SpotLengthValues": [
-          45
-        ],
-        "Status": 6,
-        "TargetCPM": 50.0000,
-        "TargetImpressions": 500000000.0,
-        "TotalActiveDays": 75,
-        "TotalHiatusDays": 0,
-        "TRP": 855.80400801087319,
-        "VersionNumber": 3
-      },
-      {
-        "AduImpressions": 0.0,
-        "AudienceId": 32,
-        "AvailableMarketCount": 164,
-        "AvailableMarketsWithSovCount": 0,
-        "AvailableMarketTotalUsCoveragePercent": 52.238000000000007,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 7800000.0000,
-        "Dayparts": [
-          "EM",
-          "EF",
-          "PA"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": true,
-        "FlightEndDate": "2020-01-26T00:00:00",
-        "FlightStartDate": "2019-11-06T00:00:00",
-        "FluidityPercentage": null,
-        "HasHiatus": true,
-        "HHAduImpressions": 0.0,
-        "HHCPM": 4.0733,
-        "HHImpressions": 1914893617.0212767,
-        "IsAduPlan": false,
-        "IsDraft": false,
-        "ModifiedBy": "CROSSMW\\sroibu",
-        "ModifiedDate": "2019-11-20T15:02:25.8533333",
-        "Name": "Third plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 4,
-            "Year": 2019
-          },
-          {
-            "Quarter": 1,
-            "Year": 2020
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "PetMed Express",
-        "SpotLengthValues": [
-          10
-        ],
-        "Status": 3,
-        "TargetCPM": 17.3333,
-        "TargetImpressions": 450000000.0,
-        "TotalActiveDays": 72,
-        "TotalHiatusDays": 10,
-        "TRP": 770.22360720978588,
-        "VersionNumber": 1
-      }
-    ],
-    "PlanStatuses": [
-      {
-        "Count": 1,
-        "PlanStatus": 1
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 3
-      },
-      {
-        "Count": 1,
-        "PlanStatus": 6
-      }
-    ],
-    "UnifiedCampaignLastReceivedAt": null,
-    "UnifiedCampaignLastSentAt": null,
-    "UnifiedId": null
-  },
-  {
-    "Advertiser": {
-      "AgencyId": 1,
-      "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
-      "Id": 1,
-      "MasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
-      "Name": "Advertiser1"
-    },
-    "Agency": {
-      "Id": 1,
-      "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
-      "Name": "Agency1"
-    },
     "Budget": 1500.0,
     "CampaignStatus": 4,
     "FlightActiveDays": 26,
@@ -231,8 +24,8 @@
     "HHImpressions": 5500.0,
     "HHRatingPoints": 23.5,
     "MaxFluidityPercent": null,
-    "ModifiedBy": "test user",
-    "ModifiedDate": "2019-11-04T00:00:00",
+    "ModifiedBy": "integration_test",
+    "ModifiedDate": "2020-01-01T00:00:00",
     "Name": "Test Campaign 1",
     "Notes": null,
     "Plans": [
@@ -885,55 +678,6 @@
         "TotalHiatusDays": 0,
         "TRP": 4.1,
         "VersionNumber": 1
-      },
-      {
-        "AduImpressions": 63.0,
-        "AudienceId": 31,
-        "AvailableMarketCount": 2,
-        "AvailableMarketsWithSovCount": 2,
-        "AvailableMarketTotalUsCoveragePercent": 80.5,
-        "BlackoutMarketCount": null,
-        "BlackoutMarketTotalUsCoveragePercent": null,
-        "Budget": 100.0000,
-        "Dayparts": [
-          "MDN"
-        ],
-        "DraftId": null,
-        "DraftModifiedBy": null,
-        "DraftModifiedDate": null,
-        "Equivalized": true,
-        "FlightEndDate": "2018-10-31T23:59:59",
-        "FlightStartDate": "2018-10-01T00:00:00",
-        "FluidityPercentage": null,
-        "HasHiatus": false,
-        "HHAduImpressions": 78.0,
-        "HHCPM": 2.8571,
-        "HHImpressions": 35000.0,
-        "IsAduPlan": false,
-        "IsDraft": null,
-        "ModifiedBy": "testUser",
-        "ModifiedDate": "2019-11-04T00:00:00",
-        "Name": "New Plan",
-        "PlanSummaryQuarters": [
-          {
-            "Quarter": 4,
-            "Year": 2018
-          }
-        ],
-        "PostingType": 2,
-        "ProcessingStatus": 1,
-        "ProductName": "Product1",
-        "SpotLengthValues": [
-          30,
-          60
-        ],
-        "Status": 1,
-        "TargetCPM": 12.0000,
-        "TargetImpressions": 100000.0,
-        "TotalActiveDays": 31,
-        "TotalHiatusDays": 0,
-        "TRP": 100.0,
-        "VersionNumber": 1
       }
     ],
     "PlanStatuses": [
@@ -951,6 +695,213 @@
       },
       {
         "Count": 2,
+        "PlanStatus": 6
+      }
+    ],
+    "UnifiedCampaignLastReceivedAt": null,
+    "UnifiedCampaignLastSentAt": null,
+    "UnifiedId": null
+  },
+  {
+    "Advertiser": {
+      "AgencyId": 1,
+      "AgencyMasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Id": 1,
+      "MasterId": "4cda85d1-2f40-4b27-a4ad-72a012907e3c",
+      "Name": "Advertiser1"
+    },
+    "Agency": {
+      "Id": 1,
+      "MasterId": "a8b10a69-fbd6-43fe-b143-156b7297b62d",
+      "Name": "Agency1"
+    },
+    "Budget": 37800000.0,
+    "CampaignStatus": 6,
+    "FlightActiveDays": 170,
+    "FlightEndDate": "2020-01-26T00:00:00",
+    "FlightHiatusDays": 10,
+    "FlightStartDate": "2019-07-31T00:00:00",
+    "HasHiatus": true,
+    "HasPlans": true,
+    "HHCPM": 7.40250000000001,
+    "HHImpressions": 5106382978.7234049,
+    "HHRatingPoints": 4632.9795669926189,
+    "MaxFluidityPercent": null,
+    "ModifiedBy": "Sebastian Roibu",
+    "ModifiedDate": "2019-11-20T14:54:10.593",
+    "Name": "Test Gorilla Glue",
+    "Notes": "",
+    "Plans": [
+      {
+        "AduImpressions": 0.0,
+        "AudienceId": 32,
+        "AvailableMarketCount": 146,
+        "AvailableMarketsWithSovCount": 0,
+        "AvailableMarketTotalUsCoveragePercent": 88.790999999999912,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 5000000.0000,
+        "Dayparts": [
+          "EM",
+          "MDN",
+          "PT"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2019-12-29T00:00:00",
+        "FlightStartDate": "2019-10-02T00:00:00",
+        "FluidityPercentage": null,
+        "HasHiatus": false,
+        "HHAduImpressions": 0.0,
+        "HHCPM": 4.7000,
+        "HHImpressions": 1063829787.2340426,
+        "IsAduPlan": false,
+        "IsDraft": false,
+        "ModifiedBy": "CROSSMW\\sroibu",
+        "ModifiedDate": "2019-11-20T14:57:08.05",
+        "Name": "First plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 4,
+            "Year": 2019
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "PetMed Express",
+        "SpotLengthValues": [
+          30
+        ],
+        "Status": 1,
+        "TargetCPM": 20.0000,
+        "TargetImpressions": 250000000.0,
+        "TotalActiveDays": 89,
+        "TotalHiatusDays": 0,
+        "TRP": 427.90200400543659,
+        "VersionNumber": 1
+      },
+      {
+        "AduImpressions": 0.0,
+        "AudienceId": 32,
+        "AvailableMarketCount": 170,
+        "AvailableMarketsWithSovCount": 0,
+        "AvailableMarketTotalUsCoveragePercent": 77.065999999999946,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 25000000.0000,
+        "Dayparts": [
+          "EM",
+          "ENLN",
+          "SYN"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": false,
+        "FlightEndDate": "2019-10-13T00:00:00",
+        "FlightStartDate": "2019-07-31T00:00:00",
+        "FluidityPercentage": null,
+        "HasHiatus": false,
+        "HHAduImpressions": 0.0,
+        "HHCPM": 11.7499,
+        "HHImpressions": 2127659574.4680853,
+        "IsAduPlan": false,
+        "IsDraft": false,
+        "ModifiedBy": "automated status update",
+        "ModifiedDate": "2020-01-02T08:16:37.37",
+        "Name": "Second plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 3,
+            "Year": 2019
+          },
+          {
+            "Quarter": 4,
+            "Year": 2019
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "PetMed Express",
+        "SpotLengthValues": [
+          45
+        ],
+        "Status": 6,
+        "TargetCPM": 50.0000,
+        "TargetImpressions": 500000000.0,
+        "TotalActiveDays": 75,
+        "TotalHiatusDays": 0,
+        "TRP": 855.80400801087319,
+        "VersionNumber": 3
+      },
+      {
+        "AduImpressions": 0.0,
+        "AudienceId": 32,
+        "AvailableMarketCount": 164,
+        "AvailableMarketsWithSovCount": 0,
+        "AvailableMarketTotalUsCoveragePercent": 52.238000000000007,
+        "BlackoutMarketCount": null,
+        "BlackoutMarketTotalUsCoveragePercent": null,
+        "Budget": 7800000.0000,
+        "Dayparts": [
+          "EM",
+          "EF",
+          "PA"
+        ],
+        "DraftId": null,
+        "DraftModifiedBy": null,
+        "DraftModifiedDate": null,
+        "Equivalized": true,
+        "FlightEndDate": "2020-01-26T00:00:00",
+        "FlightStartDate": "2019-11-06T00:00:00",
+        "FluidityPercentage": null,
+        "HasHiatus": true,
+        "HHAduImpressions": 0.0,
+        "HHCPM": 4.0733,
+        "HHImpressions": 1914893617.0212767,
+        "IsAduPlan": false,
+        "IsDraft": false,
+        "ModifiedBy": "CROSSMW\\sroibu",
+        "ModifiedDate": "2019-11-20T15:02:25.8533333",
+        "Name": "Third plan",
+        "PlanSummaryQuarters": [
+          {
+            "Quarter": 4,
+            "Year": 2019
+          },
+          {
+            "Quarter": 1,
+            "Year": 2020
+          }
+        ],
+        "PostingType": 2,
+        "ProcessingStatus": 1,
+        "ProductName": "PetMed Express",
+        "SpotLengthValues": [
+          10
+        ],
+        "Status": 3,
+        "TargetCPM": 17.3333,
+        "TargetImpressions": 450000000.0,
+        "TotalActiveDays": 72,
+        "TotalHiatusDays": 10,
+        "TRP": 770.22360720978588,
+        "VersionNumber": 1
+      }
+    ],
+    "PlanStatuses": [
+      {
+        "Count": 1,
+        "PlanStatus": 1
+      },
+      {
+        "Count": 1,
+        "PlanStatus": 3
+      },
+      {
+        "Count": 1,
         "PlanStatus": 6
       }
     ],

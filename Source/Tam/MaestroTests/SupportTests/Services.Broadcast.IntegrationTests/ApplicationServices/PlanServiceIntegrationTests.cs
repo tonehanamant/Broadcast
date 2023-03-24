@@ -2257,6 +2257,10 @@ namespace Services.Broadcast.IntegrationTests.ApplicationServices
                     ImpressionsPerUnit = 1001,
                     FlightDays = new List<int> { 1, 2, 3, 4, 5 },
                     CreativeLengths = new List<CreativeLength> { new CreativeLength { SpotLengthId = 1 } },
+                    Dayparts = new List<PlanDaypartDto>()
+                    {
+                        new PlanDaypartDto { DaypartCodeId = 0}
+                    },
                     IsAduOnly = false
                 }, false), Throws.TypeOf<PlanValidationException>().With.Message.EqualTo("Impressions per Unit must be less or equal to delivery impressions."));
             }

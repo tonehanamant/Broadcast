@@ -12,22 +12,18 @@ namespace EntityFrameworkMapping.Broadcast
     using System;
     using System.Collections.Generic;
     
-    public partial class plan_version_audience_daypart_vpvh
+    public partial class plan_version_daypart_audience_vpvhs
     {
         public int id { get; set; }
-        public int plan_version_id { get; set; }
+        public int plan_version_daypart_id { get; set; }
         public int audience_id { get; set; }
         public int standard_daypart_id { get; set; }
         public int vpvh_type { get; set; }
         public double vpvh_value { get; set; }
         public System.DateTime starting_point { get; set; }
-        public Nullable<int> daypart_customization_id { get; set; }
-        public Nullable<int> plan_version_daypart_id { get; set; }
     
         public virtual audience audience { get; set; }
-        public virtual plan_version_daypart_customizations plan_version_daypart_customizations { get; set; }
-        public virtual standard_dayparts standard_dayparts { get; set; }
-        public virtual plan_versions plan_versions { get; set; }
         public virtual plan_version_dayparts plan_version_dayparts { get; set; }
+        public virtual standard_dayparts standard_dayparts { get; set; }
     }
 }

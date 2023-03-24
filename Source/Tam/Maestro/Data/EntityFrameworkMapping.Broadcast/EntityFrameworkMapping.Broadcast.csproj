@@ -529,9 +529,6 @@
     <Compile Include="plan_versions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_audience_daypart_vpvh.cs">
-      <DependentUpon>BroadcastContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="plan_version_available_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
@@ -595,10 +592,10 @@
     <Compile Include="plan_version_daypart_affiliate_restrictions.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_daypart_available_markets.cs">
+    <Compile Include="plan_version_daypart_audience_vpvhs.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="plan_version_daypart_customizations.cs">
+    <Compile Include="plan_version_daypart_available_markets.cs">
       <DependentUpon>BroadcastContext.tt</DependentUpon>
     </Compile>
     <Compile Include="plan_version_daypart_flight_days.cs">

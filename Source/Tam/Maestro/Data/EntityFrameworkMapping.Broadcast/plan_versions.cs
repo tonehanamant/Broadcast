@@ -16,7 +16,6 @@ namespace EntityFrameworkMapping.Broadcast
     {
         public plan_versions()
         {
-            this.plan_version_audience_daypart_vpvh = new HashSet<plan_version_audience_daypart_vpvh>();
             this.plan_version_available_markets = new HashSet<plan_version_available_markets>();
             this.plan_version_blackout_markets = new HashSet<plan_version_blackout_markets>();
             this.plan_version_buying_job = new HashSet<plan_version_buying_job>();
@@ -78,7 +77,6 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual audience audience { get; set; }
         public virtual media_months media_months { get; set; }
         public virtual media_months media_months1 { get; set; }
-        public virtual ICollection<plan_version_audience_daypart_vpvh> plan_version_audience_daypart_vpvh { get; set; }
         public virtual ICollection<plan_version_available_markets> plan_version_available_markets { get; set; }
         public virtual ICollection<plan_version_blackout_markets> plan_version_blackout_markets { get; set; }
         public virtual ICollection<plan_version_buying_job> plan_version_buying_job { get; set; }
@@ -91,8 +89,8 @@ namespace EntityFrameworkMapping.Broadcast
         public virtual ICollection<plan_version_pricing_parameters> plan_version_pricing_parameters { get; set; }
         public virtual ICollection<plan_version_secondary_audiences> plan_version_secondary_audiences { get; set; }
         public virtual ICollection<plan_version_summaries> plan_version_summaries { get; set; }
-        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
         public virtual fluidity_categories fluidity_categories { get; set; }
         public virtual plan plan { get; set; }
+        public virtual ICollection<plan_version_weekly_breakdown> plan_version_weekly_breakdown { get; set; }
     }
 }

@@ -584,8 +584,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions.Select(r => r.affiliate))))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_customizations)))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_customizations.Select(r => r.custom_daypart_organizations))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.custom_daypart_organizations)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_audience_vpvhs)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
@@ -596,7 +596,6 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(pp => pp.plan_version_pricing_parameter_inventory_proprietary_summaries)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(pp => pp.plan_version_pricing_parameter_inventory_proprietary_summaries.Select(r => r.inventory_proprietary_summary))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                         .Single(s => s.id == planId, "Invalid plan id.");
 
                     if (entity.deleted_at.HasValue)
@@ -701,6 +700,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions.Select(r => r.affiliate))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.custom_daypart_organizations)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_audience_vpvhs)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
@@ -711,7 +712,6 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(pp => pp.plan_version_pricing_parameter_inventory_proprietary_summaries)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(pp => pp.plan_version_pricing_parameter_inventory_proprietary_summaries.Select(r => r.inventory_proprietary_summary))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                     .ToList();
 
                 return entitiesRaw.Select(e => _MapToDto(e, markets, null, true)).ToList();
@@ -763,8 +763,7 @@ namespace Services.Broadcast.Repositories
                 Currency = EnumHelper.GetEnum<PlanCurrenciesEnum>(planVersion.currency.Value),
                 GoalBreakdownType = EnumHelper.GetEnum<PlanGoalBreakdownTypeEnum>(planVersion.goal_breakdown_type.Value),
                 SecondaryAudiences = planVersion.plan_version_secondary_audiences.Select(_MapSecondaryAudiences).ToList(),
-                Dayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanDaypartDto(d, planVersion)).ToList(),
-                CustomDayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanCustomDaypartDto(d)).ToList(),
+                Dayparts = planVersion.plan_version_dayparts.Select(d => _MapPlanDaypartDto(d)).ToList(),
                 CoverageGoalPercent = planVersion.coverage_goal_percent,
                 AvailableMarkets = planVersion.plan_version_available_markets.Select(e => _MapAvailableMarketDto(e, markets)).ToList(),
                 BlackoutMarkets = planVersion.plan_version_blackout_markets.Select(e => _MapBlackoutMarketDto(e, markets)).ToList(),
@@ -839,6 +838,8 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_program_restrictions.Select(r => r.genre))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_affiliate_restrictions.Select(r => r.affiliate))))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.custom_daypart_organizations)))
+                        .Include(p => p.plan_versions.Select(x => x.plan_version_dayparts.Select(d => d.plan_version_daypart_audience_vpvhs)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_available_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_blackout_markets))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_weekly_breakdown))
@@ -849,7 +850,6 @@ namespace Services.Broadcast.Repositories
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(pp => pp.plan_version_pricing_parameter_inventory_proprietary_summaries)))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_pricing_parameters.Select(pp => pp.plan_version_pricing_parameter_inventory_proprietary_summaries.Select(r => r.inventory_proprietary_summary))))
                         .Include(p => p.plan_versions.Select(x => x.plan_version_buying_parameters))
-                        .Include(p => p.plan_versions.Select(x => x.plan_version_audience_daypart_vpvh))
                     .ToList();
                 return entitiesRaw.Select(e => _MapToDto(e, markets)).ToList();
             });
@@ -1058,7 +1058,6 @@ namespace Services.Broadcast.Repositories
             _MapPlanFlightDays(version, planDto, context);
             _MapPlanFlightHiatus(version, planDto, context);
             _MapDayparts(version, planDto, context);
-            _MapAudienceDaypartVpvh(version, planDto, context);
             _MapPlanSecondaryAudiences(version, planDto, context);
             _MapPlanMarkets(version, planDto, context);
             _MapWeeklyBreakdown(version, planDto, context);
@@ -1147,9 +1146,16 @@ namespace Services.Broadcast.Repositories
             });
         }
 
-        private static PlanDaypartDto _MapPlanDaypartDto(plan_version_dayparts entity, plan_versions planVersion)
+        private static PlanDaypartDto _MapPlanDaypartDto(plan_version_dayparts entity)
         {
-            var planVersionDaypartCustomization = entity.plan_version_daypart_customizations.SingleOrDefault();
+            var vpvhForAudiences = entity.plan_version_daypart_audience_vpvhs.Select(x => new PlanDaypartVpvhForAudienceDto
+            {
+                AudienceId = x.audience_id,
+                Vpvh = x.vpvh_value,
+                VpvhType = (VpvhTypeEnum)x.vpvh_type,
+                StartingPoint = x.starting_point
+            }).ToList();
+
             var dto = new PlanDaypartDto
             {
                 DaypartCodeId = entity.standard_daypart_id,
@@ -1161,37 +1167,12 @@ namespace Services.Broadcast.Repositories
                 WeightingGoalPercent = entity.weighting_goal_percent,
                 WeekdaysWeighting = entity.weekdays_weighting,
                 WeekendWeighting = entity.weekend_weighting,
-                DaypartOrganizationId = planVersionDaypartCustomization?.custom_daypart_organization_id,
+                DaypartOrganizationId = entity.custom_daypart_organization_id,
                 PlanDaypartId = entity.id,
-                CustomName = planVersionDaypartCustomization?.custom_daypart_name,
-                DaypartOrganizationName = planVersionDaypartCustomization?.custom_daypart_organizations.organization_name,
-                VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
-                     .Where(x => x.standard_daypart_id == entity.standard_daypart_id)
-                    .Select(x => new PlanDaypartVpvhForAudienceDto
-                    {
-                        AudienceId = x.audience_id,
-                        Vpvh = x.vpvh_value,
-                        VpvhType = (VpvhTypeEnum)x.vpvh_type,
-                        StartingPoint = x.starting_point,
-                        DaypartCustomizationId = x.daypart_customization_id
-                    })
-                    .ToList()
+                CustomName = entity.custom_daypart_name,
+                DaypartOrganizationName = entity.custom_daypart_organizations?.organization_name,
+                VpvhForAudiences = vpvhForAudiences
             };
-
-            if ((int)DaypartTypeEnum.Sports == entity.daypart_type)
-            {
-                dto.VpvhForAudiences = planVersion.plan_version_audience_daypart_vpvh
-                     .Where(x => x.standard_daypart_id == entity.standard_daypart_id && x.daypart_customization_id == planVersionDaypartCustomization.id)
-                    .Select(x => new PlanDaypartVpvhForAudienceDto
-                    {
-                        AudienceId = x.audience_id,
-                        Vpvh = x.vpvh_value,
-                        VpvhType = (VpvhTypeEnum)x.vpvh_type,
-                        StartingPoint = x.starting_point,
-                        DaypartCustomizationId = x.daypart_customization_id
-                    })
-                    .ToList();
-            }
 
             // if the contain type has ever been set
             if (entity.show_type_restrictions_contain_type.HasValue)
@@ -1231,19 +1212,6 @@ namespace Services.Broadcast.Repositories
                 };
             }
 
-            return dto;
-        }
-        private PlanCustomDaypartDto _MapPlanCustomDaypartDto(plan_version_dayparts entity)
-        {
-            var planVersionDaypartCustomization = entity.plan_version_daypart_customizations.SingleOrDefault();
-            PlanCustomDaypartDto dto = new PlanCustomDaypartDto();
-            if (planVersionDaypartCustomization != null)
-            {
-                dto.Id = planVersionDaypartCustomization.id;
-                dto.CustomDaypartOrganizationId = planVersionDaypartCustomization.custom_daypart_organization_id;
-                dto.CustomDaypartName = planVersionDaypartCustomization.custom_daypart_name;
-
-            }
             return dto;
         }
 
@@ -1294,6 +1262,15 @@ namespace Services.Broadcast.Repositories
 
             foreach (var daypart in planDto.Dayparts)
             {
+                var vpvhAudiences = daypart.VpvhForAudiences.Select(v => new plan_version_daypart_audience_vpvhs
+                {
+                    audience_id = v.AudienceId,
+                    standard_daypart_id = daypart.DaypartCodeId,
+                    vpvh_type = (int)v.VpvhType,
+                    vpvh_value = v.Vpvh,
+                    starting_point = v.StartingPoint
+                }).ToList();
+
                 var newDaypart = new plan_version_dayparts
                 {
                     standard_daypart_id = daypart.DaypartCodeId,
@@ -1304,7 +1281,10 @@ namespace Services.Broadcast.Repositories
                     is_end_time_modified = daypart.IsEndTimeModified,
                     weighting_goal_percent = daypart.WeightingGoalPercent,
                     weekdays_weighting = daypart.WeekdaysWeighting,
-                    weekend_weighting = daypart.WeekendWeighting
+                    weekend_weighting = daypart.WeekendWeighting,
+                    custom_daypart_name = daypart.CustomName,
+                    custom_daypart_organization_id = daypart.DaypartOrganizationId,
+                    plan_version_daypart_audience_vpvhs = vpvhAudiences
                 };
 
                 if (daypart.Restrictions != null)
@@ -1315,68 +1295,7 @@ namespace Services.Broadcast.Repositories
                     _HydrateAffiliateRestrictions(newDaypart, daypart.Restrictions.AffiliateRestrictions);
                 }
 
-                if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()))
-                {
-                    _MapCustomDayparts(newDaypart, daypart);
-                }
-
                 entity.plan_version_dayparts.Add(newDaypart);
-            }
-        }
-
-        private static void _MapCustomDayparts(plan_version_dayparts planVersionDaypart, PlanDaypartDto planDaypart)
-        {
-            var planVersionDaypartCustomization = new plan_version_daypart_customizations
-            {
-                custom_daypart_organization_id = Convert.ToInt32(planDaypart.DaypartOrganizationId),
-                custom_daypart_name = planDaypart.CustomName
-            };
-            planVersionDaypart.plan_version_daypart_customizations.Add(planVersionDaypartCustomization);
-        }
-
-        private static void _MapAudienceDaypartVpvh(plan_versions entity, PlanDto planDto, QueryHintBroadcastContext context)
-        {
-            context.plan_version_audience_daypart_vpvh.RemoveRange(entity.plan_version_audience_daypart_vpvh);
-
-            foreach (var daypart in planDto.Dayparts)
-            {
-                if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()))
-                {
-                    var planVersionDaypartCustomizations = entity.plan_version_dayparts.SelectMany(customDayparts => customDayparts.plan_version_daypart_customizations);
-
-                    var planVersionDaypartCustomization = planVersionDaypartCustomizations.Single(customDaypart => customDaypart.custom_daypart_name == daypart.CustomName
-                    && customDaypart.custom_daypart_organization_id == daypart.DaypartOrganizationId
-                    );
-                    foreach (var vpvhForAudience in daypart.VpvhForAudiences)
-                    {
-                        planVersionDaypartCustomization.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
-                        {
-                            plan_version_id = entity.id,
-                            audience_id = vpvhForAudience.AudienceId,
-                            standard_daypart_id = daypart.DaypartCodeId,
-                            vpvh_type = (int)vpvhForAudience.VpvhType,
-                            vpvh_value = vpvhForAudience.Vpvh,
-                            starting_point = vpvhForAudience.StartingPoint,
-
-                        });
-                    }
-                }
-                else
-                {
-                    foreach (var vpvhForAudience in daypart.VpvhForAudiences)
-                    {
-                        entity.plan_version_audience_daypart_vpvh.Add(new plan_version_audience_daypart_vpvh
-                        {
-                            plan_version_id = entity.id,
-                            audience_id = vpvhForAudience.AudienceId,
-                            standard_daypart_id = daypart.DaypartCodeId,
-                            vpvh_type = (int)vpvhForAudience.VpvhType,
-                            vpvh_value = vpvhForAudience.Vpvh,
-                            starting_point = vpvhForAudience.StartingPoint,
-
-                        });
-                    }
-                }
             }
         }
 

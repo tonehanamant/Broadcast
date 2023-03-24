@@ -296,21 +296,10 @@ namespace Services.Broadcast.Entities.Campaign
 
         private static double _GetVpvhByStandardDaypartAndAudience(PlanDto plan, string standardDaypartId, int? audienceId)
         {
-            double vpvhByStandardDaypartAndAudience = 0.0;
-            var daypart = plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId);
-            if (EnumHelper.IsCustomDaypart(daypart.DaypartTypeId.GetDescriptionAttribute()))
-            {
-                var daypartCustomizations = plan.CustomDayparts.Single(x => x.CustomDaypartOrganizationId == daypart.DaypartOrganizationId && x.CustomDaypartName == daypart.CustomName);
-                vpvhByStandardDaypartAndAudience = plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId && x.DaypartCustomizationId == daypartCustomizations.Id).Vpvh;
-            }
-            else
-            {
-                vpvhByStandardDaypartAndAudience = plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId).VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
-            }
+            var vpvhByStandardDaypartAndAudience = plan.Dayparts.Single(x => x.DaypartUniquekey == standardDaypartId)
+                .VpvhForAudiences.Single(x => x.AudienceId == audienceId).Vpvh;
             return vpvhByStandardDaypartAndAudience;
         }
-
-
 
         private double? _GetCalculatedVpvh(int daypartCodeId, int planId, Dictionary<int, List<PlanPricingResultsDaypartDto>> planPricingResultsDayparts)
         {
