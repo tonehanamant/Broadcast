@@ -1,0 +1,185 @@
+IBroadcastUnifiedCampaignService.cs
+
+using Cadent.Services.CampaignService.Common.BroadcastModels.Requests;
+using Cadent.Services.CampaignService.Common.BroadcastModels.Responses;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Cadent.Service.CampaignService.Services.Broadcast.Interfaces
+{
+    public interface IBroadcastUnifiedCampaignService
+    {
+        Task<ProcessDownstreamMassageResponse> ProcessDownstreamMessage(ProcessDownstreamMassageRequest processDownstreamMassageRequest);
+    }
+}
+
+
+
+
+ProcessDownstreamMassageResponse.cs
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Cadent.Services.CampaignService.Common.BroadcastModels.Responses
+{
+    public class ProcessDownstreamMassageResponse
+    {
+        public ProcessDownstreamMassageResponse()
+        {
+            CallbackUrls = new CallbackUrl();
+        }
+
+        public int Version { get; set; }
+        public string Source { get; set; }
+        public string Action { get; set; }
+        public string ObjectType { get; set; }
+        public int ObjectId { get; set; }
+        public CallbackUrl CallbackUrls { get; set; }
+    }
+
+    public class CallbackUrl
+    {
+        public string Broadcast { get; set; }
+        public string Cable { get; set; }
+    }
+}
+
+
+
+ProcessDownstreamMassageRequest
+
+using Cadent.Services.CampaignService.Common.BroadcastModels.Responses;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Cadent.Services.CampaignService.Common.BroadcastModels.Requests
+{
+    public class ProcessDownstreamMassageRequest
+    {
+        public int Version { get; set; }
+        public string Source { get; set; }
+        public string Action { get; set; }
+        public string ObjectType { get; set; }
+        public int ObjectId { get; set; }
+        public CallbackUrl CallbackUrls { get; set; }
+    }
+}
+
+
+BroadcastUnifiedCampaignService.cs
+
+using Cadent.Library.Service.Core.Common.Base.BaseClasses;
+using Cadent.Service.CampaignService.Services.Broadcast.Interfaces;
+using Cadent.Services.CampaignService.Common.BroadcastModels.Requests;
+using Cadent.Services.CampaignService.Common.BroadcastModels.Responses;
+using Cadent.Services.CampaignService.Data.Broadcast.Interfaces;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Cadent.Service.CampaignService.Services.Broadcast.Services
+{
+    public class BroadcastUnifiedCampaignService : CadentCommonBase, IBroadcastUnifiedCampaignService
+    {
+        public BroadcastUnifiedCampaignService(ILogger<BroadcastUnifiedCampaignService> logger, IServiceProvider svcProvider) : base(logger, svcProvider)
+        { }
+
+        #region Public Methods
+
+        /// <inheritdoc />
+        public async Task<ProcessDownstreamMassageResponse> ProcessDownstreamMessage(ProcessDownstreamMassageRequest processDownstreamMassageRequest)
+        {
+            LogInformationEvent(
+                $"Begin Publishing Broadcast Downstream Message for version :{processDownstreamMassageRequest.Version} ,Source :{processDownstreamMassageRequest.Source} , Action :{processDownstreamMassageRequest.Action} , Object Type :{processDownstreamMassageRequest.ObjectType} , Object Id :{processDownstreamMassageRequest.ObjectId} ");
+
+            int campaignId = processDownstreamMassageRequest.ObjectId;
+            var baseUrl = "localhost:2133";
+            return new ProcessDownstreamMassageResponse
+            {
+                Version = processDownstreamMassageRequest.Version,
+                Source = processDownstreamMassageRequest.Source,
+                Action = processDownstreamMassageRequest.Action,
+                ObjectType = processDownstreamMassageRequest.ObjectType,
+                ObjectId = campaignId,
+                CallbackUrls =
+                {
+                    Cable = $"{baseUrl}/api/v1/CampaignWorkflow/{campaignId}/cable",
+                    Broadcast = $"{baseUrl}/api/v1/CampaignWorkflow/{campaignId}/broadcast"
+                }
+            };
+        }
+
+        #endregion
+    }
+}
+
+
+services.AddScoped<IBroadcastUnifiedCampaignService, BroadcastUnifiedCampaignService>();
+
+
+
+
+
+BroadcastUnifiedCampaignController.cs
+
+
+using Cadent.Library.Models.Common.Services;
+using Cadent.Library.Service.Core.Common.Base.BaseClasses;
+using Cadent.Library.Service.Core.Common.Base.Extensions;
+using Cadent.Service.CampaignService.Services.Broadcast.Interfaces;
+using Cadent.Service.CampaignService.Services.Broadcast.Services;
+using Cadent.Services.CampaignService.Common.BroadcastModels.Requests;
+using Cadent.Services.CampaignService.Common.BroadcastModels.Responses;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
+
+namespace Cadent.Service.CampaignService.Api.Controllers
+{
+	[ApiVersion("1")]
+	public class BroadcastUnifiedCampaignController : CadentSecureController
+	{
+		#region Private Variables
+
+		private readonly IBroadcastUnifiedCampaignService _broadcastUnifiedCampaignService;
+
+		#endregion
+
+		#region Constructors
+
+		public BroadcastUnifiedCampaignController(ILogger<BroadcastUnifiedCampaignController> logger, IServiceProvider svcProvider,
+			IBroadcastUnifiedCampaignService broadcastPlanService) : base(logger, svcProvider)
+		{
+			_broadcastUnifiedCampaignService = broadcastPlanService;
+		}
+
+		#endregion
+
+
+		[HttpPost]
+		[Route("ProcessDownstreamMessage")]
+		[ProducesDefaultResponseType(typeof(ApiItemResponseTyped<ProcessDownstreamMassageResponse>))]
+		public async Task<IActionResult> ProcessDownstreamMessage(
+			ProcessDownstreamMassageRequest processDownstreamMassageRequest)
+		{
+			if (!headerContext.AuthenticatedUsername.StartsWith("S2S-"))
+			{
+				return Forbid("Not a Service Token!!!");
+			}
+
+			var response = await ExecuteAndConvertToApiResponseAsync(() =>
+               _broadcastUnifiedCampaignService.ProcessDownstreamMessage(processDownstreamMassageRequest));
+
+			return Ok(response);
+		}
+
+	}
+}

@@ -1,0 +1,50 @@
+
+private Lazy<bool> _EnablePlanIsciByWeek;
+
+_EnablePlanIsciByWeek = new Lazy<bool>(_GetEnablePlanIsciByWeek);
+
+private bool _GetEnablePlanIsciByWeek()
+        {
+            var result =  _FeatureToggleHelper.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK);
+            return result;
+        }
+
+
+if (_EnablePlanIsciByWeek.Value)
+            {
+                if (!isciSearch.WeekStartDate.HasValue || !isciSearch.WeekEndDate.HasValue)
+                {
+                    throw new InvalidOperationException("WeekStartDate and WeekEndDate are both required.");
+                }
+
+                queryStartDate = isciSearch.WeekStartDate.Value;
+                queryEndDate = isciSearch.WeekEndDate.Value;
+            }
+            else
+            {
+                var mediaMonthsDates = _MediaMonthAndWeekAggregateCache.GetMediaMonthById(isciSearch.MediaMonth.Id);
+                queryStartDate = mediaMonthsDates.StartDate;
+                queryEndDate = mediaMonthsDates.EndDate;
+            }
+			
+			
+			
+			
+			
+			
+			test case
+			public void GetAvailableIscis_DatesPerToggle(bool toggleEnabled)
+        {
+            // Arrange
+            _FeatureToggleMock.Setup(s => s.IsToggleEnabledUserAnonymous(FeatureToggles.ENABLE_PLAN_ISCI_BY_WEEK))
+                .Returns(toggleEnabled);
+
+            IsciSearchDto isciSearch = new IsciSearchDto
+            {
+                MediaMonth = new MediaMonthDto { Id = 479, Month = 5, Year = 2021 },
+                WeekStartDate = new DateTime(2021,11,01),
+                WeekEndDate = new DateTime(2021, 11, 7),
+                UnmappedOnly = false
+            };
+			
+

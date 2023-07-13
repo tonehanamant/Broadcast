@@ -1,0 +1,169 @@
+        [Test]
+        public void SaveIsciMappings_IsciProductMappings()
+        {
+            //Arrange
+            var createdBy = "Test User";
+            var isciProductList = new List<IsciProductMappingDto>
+            {
+                new IsciProductMappingDto()
+                {
+                    ProductName = "NewProduct1",
+                    Isci = "NewIsci"
+                },
+                new IsciProductMappingDto()
+                {
+                    ProductName = "ListDuplicateProduct1",
+                    Isci = "ListDuplicateIsci"
+                },
+                new IsciProductMappingDto()
+                {
+                    ProductName = "ListDuplicateProduct2",
+                    Isci = "ListDuplicateIsci"
+                },
+                new IsciProductMappingDto()
+                {
+                    ProductName = "DbDupProduct1",
+                    Isci = "DbDuplicateIsci"
+                }
+            };
+            var getIsciProductMappingsCalls = new List<string>();
+            _ReelIsciProductRepository.Setup(s => s.GetIsciProductMappings(It.IsAny<List<string>>()))
+                .Callback<List<string>>((a) => getIsciProductMappingsCalls = a)
+                .Returns(new List<IsciProductMappingDto>
+                {
+                    new IsciProductMappingDto()
+                    {
+                        ProductName = "DbDuplicateProduct2",
+                        Isci = "DbDuplicateIsci"
+                    }
+                });
+            var savedProductMappings = new List<IsciProductMappingDto>();
+            _ReelIsciProductRepository.Setup(s =>
+                    s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(),
+                        It.IsAny<DateTime>()))
+                .Callback<List<IsciProductMappingDto>, string, DateTime>((a, b, c) => savedProductMappings = a)
+                .Returns(1);
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
+                .Returns(new List<IsciMappedPlanCountDto>
+                {
+                    new IsciMappedPlanCountDto
+                    {
+                        Isci = "Isci1",
+                        MappedPlanCount = 1
+                    },
+                    new IsciMappedPlanCountDto
+                    {
+                        Isci = "Isci2",
+                        MappedPlanCount = 1
+                    }
+                });
+            _ReelIsciProductRepository.Setup(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()))
+                .Returns<List<string>>((t) => t.Count);
+            var saveRequest = new IsciPlanMappingsSaveRequestDto()
+            {
+                IsciProductMappings = isciProductList
+            };
+            //Act
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
+            //Assert
+            Assert.IsTrue(result);
+            _ReelIsciProductRepository.Verify(s =>
+                s.GetIsciProductMappings(It.IsAny<List<string>>()), Times.Once);
+            _ReelIsciProductRepository.Verify(s =>
+                s.SaveIsciProductMappings(It.IsAny<List<IsciProductMappingDto>>(), It.IsAny<string>(),
+                    It.IsAny<DateTime>()), Times.Once);
+            _PlanIsciRepositoryMock.Verify(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()), Times.Never);
+            _ReelIsciProductRepository.Verify(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()), Times.Never);
+            var toVerify = new
+            {
+                getIsciProductMappingsCalls,
+                savedProductMappings
+            };
+            Approvals.Verify(IntegrationTestHelper.ConvertToJson(toVerify));
+        }
+        [Test]
+        public void SaveIsciMappings_Delete()
+        {
+            //Arrange
+            var createdBy = "Test User";
+            var toDelete = new List<int> {1, 2, 5};
+            var saveRequest = new IsciPlanMappingsSaveRequestDto()
+            {
+                IsciPlanMappingsDeleted = toDelete
+            };
+            var deletedPlanIsciIds = new List<int>();
+            _PlanIsciRepositoryMock.Setup(s =>
+                    s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<List<int>, string, DateTime>((a, b, c) => deletedPlanIsciIds = a)
+                .Returns(2);
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
+                .Returns(new List<IsciMappedPlanCountDto>
+                {
+                    new IsciMappedPlanCountDto
+                    {
+                        Isci = "Isci1",
+                        MappedPlanCount = 1
+                    },
+                    new IsciMappedPlanCountDto
+                    {
+                        Isci = "Isci2",
+                        MappedPlanCount = 1
+                    }
+                });
+            _ReelIsciProductRepository.Setup(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()))
+                .Returns<List<string>>((t) => t.Count);
+            //Act
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
+            //Assert
+            Assert.IsTrue(result);
+            _PlanIsciRepositoryMock.Verify(s =>
+                s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+            Assert.AreEqual(toDelete, deletedPlanIsciIds);
+            _PlanIsciRepositoryMock.Verify(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()), Times.Once);
+            _ReelIsciProductRepository.Verify(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()), Times.Never);
+        }
+        [Test]
+        public void SaveIsciMappings_Delete_CleanupIsciProduct()
+        {
+            //Arrange
+            var createdBy = "Test User";
+            var toDelete = new List<int> { 1, 2, 5 };
+            var saveRequest = new IsciPlanMappingsSaveRequestDto()
+            {
+                IsciPlanMappingsDeleted = toDelete
+            };
+            var deletedPlanIsciIds = new List<int>();
+            _PlanIsciRepositoryMock.Setup(s =>
+                    s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()))
+                .Callback<List<int>, string, DateTime>((a, b, c) => deletedPlanIsciIds = a)
+                .Returns(2);
+            _PlanIsciRepositoryMock.Setup(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()))
+                .Returns(new List<IsciMappedPlanCountDto>
+                {
+                    new IsciMappedPlanCountDto
+                    {
+                        Isci = "Isci1",
+                        MappedPlanCount = 1
+                    },
+                    new IsciMappedPlanCountDto
+                    {
+                        Isci = "Isci2",
+                        MappedPlanCount = 0
+                    }
+                });
+            var deletedProductMappingsIscis = new List<string>();
+            _ReelIsciProductRepository.Setup(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()))
+                .Callback<List<string>>(t => deletedProductMappingsIscis = t)
+                .Returns<List<string>>((t) => t.Count);
+            //Act
+            var result = _PlanIsciService.SaveIsciMappings(saveRequest, createdBy);
+            //Assert
+            Assert.IsTrue(result);
+            _PlanIsciRepositoryMock.Verify(s =>
+                s.DeleteIsciPlanMappings(It.IsAny<List<int>>(), It.IsAny<string>(), It.IsAny<DateTime>()), Times.Once);
+            Assert.AreEqual(toDelete, deletedPlanIsciIds);
+            _PlanIsciRepositoryMock.Verify(s => s.GetIsciPlanMappingCounts(It.IsAny<List<int>>()), Times.Once);
+            _ReelIsciProductRepository.Verify(s => s.DeleteIsciProductMapping(It.IsAny<List<string>>()), Times.Once);
+            Assert.AreEqual(1, deletedProductMappingsIscis.Count);
+            Assert.AreEqual("Isci2", deletedProductMappingsIscis[0]);
+        }

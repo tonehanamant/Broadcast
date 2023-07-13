@@ -1,0 +1,4 @@
+if (request.Dayparts.Where(e => e.DaypartTypeId == DaypartTypeEnum.Sports).Any())
+            {
+                daypartsToAdd = standardDayparts.Where(d => existingWeekDaypartIds.Contains(d.DaypartUniquekey)).ToList();
+            }

@@ -1,0 +1,169 @@
+{
+  "WeekStartDate": "2021-10-04T14:19:22.681Z",
+  "WeekEndDate": "2021-10-10T14:19:22.681Z"
+}
+
+{
+  "PlanId": 218,
+  "WeekStartDate": "2021-10-04T14:19:22.681Z",
+  "WeekEndDate": "2021-10-10T14:19:22.681Z"
+}
+
+{
+  "PlanId": 216,
+  "WeekStartDate": "2022-04-10T14:19:22.681Z",  
+  "WeekEndDate": "2022-04-10T14:19:22.681Z"
+}
+
+POST /api/v1/spot_exceptions/spot-exception-recommanded-plans
+
+custom_daypart_organization_id=d.DaypartOrganizationId,
+                    custom_daypart_name=d.CustomName
+
+public List<SpotExceptionsOutOfSpecPlansDto> GetSpotExceptionsOutOfSpecPlans(DateTime weekStartDate, DateTime weekEndDate)
+        {
+            weekStartDate = weekStartDate.Date;
+            weekEndDate = weekEndDate.Date.AddDays(1).AddMinutes(-1);
+
+            return _InReadUncommitedTransaction(context =>
+            {
+                var spotExceptionsOutOfSpecPlansEntities = context.spot_exceptions_out_of_specs
+                    .Where(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.program_air_time >= weekStartDate && spotExceptionsOutOfSpecActivePlansDb.program_air_time <= weekEndDate)
+                    .Include(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.plan)
+                    .Include(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.spot_lengths)
+                    .Include(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.daypart)
+                    .Include(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.audience)
+                    .Include(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.spot_exceptions_out_of_spec_decisions)
+                    .Where(e => !context.spot_exceptions_out_of_spec_decisions.Select(spotExceptionsOutOfSpecActivePlansDb => spotExceptionsOutOfSpecActivePlansDb.spot_exceptions_out_of_spec_id).Contains(e.id))
+                    
+                    .GroupJoin(
+                        context.stations
+                        .Include(stationDb => stationDb.market),
+                        spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.station_legacy_call_letters,
+                        stationDb => stationDb.legacy_call_letters,
+                        (spotExceptionsRecommendedPlanDb, stationDb) => new { SpotExceptionsRecommendedPlan = spotExceptionsRecommendedPlanDb, Station = stationDb.FirstOrDefault() })
+                    .ToList();
+
+                var spotExceptionsRecommendedPlans = spotExceptionsOutOfSpecPlansEntities.Select(spotExceptionsRecommendedPlanEntity => _MapSpotExceptionsOutOfSpecActivePlanToDto(spotExceptionsRecommendedPlanEntity.SpotExceptionsRecommendedPlan, spotExceptionsRecommendedPlanEntity.Station)).ToList();
+                return spotExceptionsRecommendedPlans;
+            });
+        }
+
+        private SpotExceptionsOutOfSpecPlansDto _MapSpotExceptionsOutOfSpecActivePlanToDto(spot_exceptions_out_of_specs spot_Exceptions_Out_Of_Specs, station stationEntity)
+        {
+            const string flightStartDateFormat = "MM/dd";
+            const string flightEndDateFormat = "MM/dd/yyyy";
+            var spotExceptionsRecommendedPlan = new SpotExceptionsOutOfSpecPlansDto
+            {
+                PlanId = spot_Exceptions_Out_Of_Specs.id,
+                AdvertiserName = spot_Exceptions_Out_Of_Specs.advertiser_name,
+                PlanName = spot_Exceptions_Out_Of_Specs.plan?.name,
+                AffectedSportsCount = 0,
+                Impressions = 0,
+                SyncedTimestamp = "",
+                SpotLengthString = "",
+                AudienceName = spot_Exceptions_Out_Of_Specs.audience?.name,
+                FlightString = spot_Exceptions_Out_Of_Specs.flight_start_date.HasValue && spot_Exceptions_Out_Of_Specs.flight_end_date.HasValue ? $"{Convert.ToDateTime(spot_Exceptions_Out_Of_Specs.flight_start_date).ToString(flightStartDateFormat)}-{Convert.ToDateTime(spot_Exceptions_Out_Of_Specs.flight_end_date).ToString(flightEndDateFormat)}" : null,
+            };
+            return spotExceptionsRecommendedPlan;
+        }
+
+
+
+
+
+
+
+Service Code
+
+public SpotExceptionsOutOfSpecActivePlans GetSpotExceptionsOutofSpecsPlans(SpotExceptionsOutofSpecsPlansRequestDto spotExceptionsOutofSpecsPlansRequestDto)
+        {
+            var spotExceptionsOutOfSpecPostsResults = new SpotExceptionsOutOfSpecActivePlans();
+            const string flightStartDateFormat = "MM/dd";
+            const string flightEndDateFormat = "MM/dd/yyyy";
+
+            var spotExceptionsoutOfSpecsPosts = _SpotExceptionRepository.GetSpotExceptionsOutOfSpecPosts(spotExceptionsOutofSpecsPlansRequestDto.WeekStartDate, spotExceptionsOutofSpecsPlansRequestDto.WeekEndDate);
+            if (spotExceptionsoutOfSpecsPosts?.Any() ?? false)
+            {
+                var decisionTableIdList = spotExceptionsoutOfSpecsPosts.Where(e => e.SpotExceptionsOutOfSpecDecision != null).Select(e=>e.SpotExceptionsOutOfSpecDecision.SpotExceptionsOutOfSpecId).ToList();
+                if(decisionTableIdList.Count() >0)
+                {
+                    spotExceptionsoutOfSpecsPosts= spotExceptionsoutOfSpecsPosts.Where(e => !decisionTableIdList.Contains(e.Id)).ToList();
+                }
+                spotExceptionsOutOfSpecPostsResults.Active = spotExceptionsoutOfSpecsPosts.Select(spotExceptionsOutOfSpec =>
+                {
+                    var spotExceptionsOutOfSpecPostsResult = new SpotExceptionsOutOfSpecPlansDto
+                    {
+                        PlanId = spotExceptionsOutOfSpec.Id,
+                        AdvertiserName = spotExceptionsOutOfSpec.AdvertiserName,
+                        PlanName = spotExceptionsOutOfSpec.RecommendedPlanName,
+                        AffectedSportsCount = spotExceptionsoutOfSpecsPosts.Where(e => e.Id == spotExceptionsOutOfSpec.Id).GroupBy(e => e.RecommendedPlanId).Count(),
+                        Impressions = 0,
+                        SyncedTimestamp = null,
+                        SpotLengthString = spotExceptionsOutOfSpec.SpotLength != null ? $":{spotExceptionsOutOfSpec.SpotLength.Length}" : null,
+                        AudienceName = spotExceptionsOutOfSpec.ProgramAudience?.Name,
+                        FlightString = spotExceptionsOutOfSpec.FlightStartDate.HasValue && spotExceptionsOutOfSpec.FlightEndDate.HasValue ? $"{Convert.ToDateTime(spotExceptionsOutOfSpec.FlightStartDate).ToString(flightStartDateFormat)} - {Convert.ToDateTime(spotExceptionsOutOfSpec.FlightEndDate).ToString(flightEndDateFormat)}"+" " + $"({GetTotalNumberOfWeeks(Convert.ToDateTime(spotExceptionsOutOfSpec.FlightStartDate), Convert.ToDateTime(spotExceptionsOutOfSpec.FlightEndDate)).ToString() + " " + "Weeks"})" : null,
+
+                    };
+                    return spotExceptionsOutOfSpecPostsResult;
+                }).ToList();
+            }
+            return spotExceptionsOutOfSpecPostsResults; 
+        }
+
+        private int GetTotalNumberOfWeeks(DateTime startDate, DateTime endDate)
+        {
+            if (endDate < startDate)
+            {
+                throw new Exception("EndDate should be greater than StartDate");
+            }
+            startDate = startDate.Date;
+            endDate = endDate.Date.AddDays(1); 
+            var dateDifference = endDate - startDate;
+            var totalDays = dateDifference.TotalDays;
+            int numberOfWeeks = Convert.ToInt32(totalDays / 7);
+            var reminder = totalDays % 7;
+            numberOfWeeks = reminder > 0 ? numberOfWeeks + 1 : numberOfWeeks;
+            return numberOfWeeks;
+        }
+
+
+Tag in release
+
+plan controller
+save plan api=>
+weekly breakdown week
+
+saveNewPlan
+
+PlanRepository
+Line 866
+
+public int? DaypartOrganizationId { get; set; }
+public string CustomName { get; set; }
+
+
+
+var spotExceptionsUnpostedNoPlanEntities = context.spot_exceptions_out_of_specs
+                  .Include(x => x.spot_exceptions_out_of_spec_decisions)
+                    .Where(spotExceptionsRecommendedPlanDb => spotExceptionsRecommendedPlanDb.program_air_time >= weekStartDate && spotExceptionsRecommendedPlanDb.program_air_time <= weekEndDate)
+                  .ToList();
+
+                var queuedDecisionCount = 0;
+                spotExceptionsUnpostedNoPlanEntities.ForEach(x =>
+                {
+                    queuedDecisionCount += x.spot_exceptions_out_of_spec_decisions.Where(e => e.synced_at == null).Count();
+                });
+
+
+
+15Mahesh@1997
+
+
+Dev->caws-sql-cd.cadent.tv
+
+QA-> qa-db.dev.cadent.tv
+
+Stage-> stg-db.dev.cadent.tv
+
+Prod-> cadsql04.crossmw.com

@@ -1,0 +1,88 @@
+[HttpPost]
+        [Route("out-of-spec-saves")]
+        public BaseResponse<bool> SaveOutofSpecDecisionsPlans(SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest)
+        {
+            var userName = _GetCurrentUserFullName();
+            return _ConvertToBaseResponse(() => _ApplicationServiceFactory.GetApplicationService<ISpotExceptionService>().SaveOutofSpecDecisionsPlans(spotExceptionOutOfSpecSaveDecisionsPlansRequest,userName));
+        }
+		
+		bool SaveOutofSpecDecisionsPlans(SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest,string userName);
+		
+		public bool SaveOutofSpecDecisionsPlans(SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest, string userName)
+        {
+            var createdAt = _DateTimeEngine.GetCurrentMoment();
+
+            var isSpotExceptionsOutOfSpecDecision = _SpotExceptionRepository.SaveSpotExceptionsOutOfSpecsDecisionsPlans(spotExceptionOutOfSpecSaveDecisionsPlansRequest, userName, createdAt);
+
+            return isSpotExceptionsOutOfSpecDecision;
+        }
+		
+		
+		
+		bool SaveSpotExceptionsOutOfSpecsDecisionsPlans(SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest, string userName, DateTime createdAt);
+		
+		public bool SaveSpotExceptionsOutOfSpecsDecisionsPlans(
+           SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto spotExceptionOutOfSpecSaveDecisionsPlansRequest,
+            string userName, DateTime createdAt)
+        {
+            return _InReadUncommitedTransaction(context =>
+            {
+                bool isSpotExceptionsOutOfSpecDecisionSaved = false;
+                int recordCount = 0;
+                foreach (var spotExceptionsOutOfSpecDecisionsPlans in spotExceptionOutOfSpecSaveDecisionsPlansRequest.Decisions)
+                {
+                    var alreadyRecordExists = context.spot_exceptions_out_of_spec_decisions.SingleOrDefault(x =>
+                        x.spot_exceptions_out_of_spec_id == spotExceptionsOutOfSpecDecisionsPlans.Id);
+                    if (alreadyRecordExists == null)
+                    {
+                        context.spot_exceptions_out_of_spec_decisions.Add(new spot_exceptions_out_of_spec_decisions
+                        {
+                            spot_exceptions_out_of_spec_id = spotExceptionsOutOfSpecDecisionsPlans.Id,
+                            accepted_as_in_spec = spotExceptionsOutOfSpecDecisionsPlans.AcceptAsInSpec,
+                            decision_notes = spotExceptionsOutOfSpecDecisionsPlans.DecisionNotes,
+                            username = userName,
+                            created_at = createdAt
+                        });
+                    }
+                    else
+                    {
+                        alreadyRecordExists.accepted_as_in_spec =
+                            spotExceptionsOutOfSpecDecisionsPlans.AcceptAsInSpec;
+                        alreadyRecordExists.decision_notes = spotExceptionsOutOfSpecDecisionsPlans.DecisionNotes;
+                        alreadyRecordExists.username = userName;
+                        alreadyRecordExists.created_at = createdAt;
+                    }
+                }
+
+                recordCount = context.SaveChanges();
+                if (recordCount > 0)
+                {
+                    isSpotExceptionsOutOfSpecDecisionSaved = true;
+                }
+
+                return isSpotExceptionsOutOfSpecDecisionSaved;
+            });
+        }
+		
+		
+		
+		using System.Collections.Generic;
+
+namespace Services.Broadcast.Entities.SpotExceptions
+{
+    public class SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto
+    {
+        public SpotExceptionOutOfSpecSaveDecisionsPlansRequestDto()
+        {
+            Decisions = new List<SpotExceptionsOutOfSpecDecisionsPlansDto>();
+        }
+        public List<SpotExceptionsOutOfSpecDecisionsPlansDto> Decisions { get; set; }
+    }
+
+    public class SpotExceptionsOutOfSpecDecisionsPlansDto
+    {
+        public int Id { get; set; }
+        public bool AcceptAsInSpec { get; set; }
+        public string DecisionNotes { get; set; }
+    }
+}

@@ -1,0 +1,35 @@
+
+
+
+Old Server names
+
+CPA-DEV-SQLQA.dev.cadent.tv  ==>Old QA server name
+CPA-DEV-SQLDEV.dev.cadent.tv\CD ==> old Cd server name
+CPA-DEV-SQLDEV.dev.cadent.tv\maestro2_dev ==> old Maestro server name
+cadsql-stg.cadent.tv    ===> old staging server name 
+
+=========================================================================
+
+
+Here are new Urls for CD and a Dev Db :
+
+
+
+new CD App Url : https://internal-aws-cd.cadent.tv/broadcastreact/campaigns
+new CD Hangfire Dashboard Url : https://internal-aws-cd.cadent.tv/broadcast/jobs
+new CD Maintenance Screen Url : https://internal-aws-cd.cadent.tv/broadcast/maintenance
+
+new CD Db Server Url : caws-sql-cd.cadent.tv
+
+
+
+
+
+new Dev Db Server Url : cpa-dev-sqldev.dev.cadent.tv\maestro2_dev
+
+
+Hengfire job https://cd.cadent.tv/broadcast/jobs
+http://cpa-dev-cd1.dev.cadent.tv/broadcast/jobs
+
+maintenance page url
+https://internal-cd.cadent.tv/broadcast/maintenance
